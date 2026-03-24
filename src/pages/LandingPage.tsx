@@ -186,10 +186,10 @@ export default function LandingPage() {
                     <span>We bring the operations.</span>
                 </h2>
                 <p className="lp-hero-subtitle">
-                    Orbit is the full-stack US market entry platform for international brands — coordinating compliance, logistics, warehousing, e-commerce, and marketing under one contract, so you're live in 14 days.
+                    Orbit is the full-stack US market entry platform for international brands — coordinating compliance, logistics, warehousing, e-commerce, and marketing under one contract. Go live in the US market in 14 days.
                 </p>
                 <div className="lp-hero-supporting">
-                    One platform. Seven functions. Continuous orchestration.
+                    One platform. Six functions. Continuous orchestration.
                 </div>
                 <div className="lp-hero-cta">
                     <button
@@ -232,7 +232,10 @@ export default function LandingPage() {
             <section className="lp-problem-section" id="problem">
                 <div className="lp-problem-header">
                     <div className="lp-problem-header-left">
-                        <div className="lp-section-tag">01 / PROBLEM</div>
+                        <div className="lp-section-tag">
+                            <span className="lp-problem-blinker"></span>
+                            01 / PROBLEM
+                        </div>
                         <h2>Three ways founders burn time entering the US</h2>
                     </div>
                     <div className="lp-problem-header-right">
@@ -245,7 +248,7 @@ export default function LandingPage() {
                         <div className="lp-problem-num">001</div>
                         <div>
                             <div className="lp-problem-title">Scattered Consultants</div>
-                            <div className="lp-problem-subtitle">"Seven vendors, zero coordination"</div>
+                            <div className="lp-problem-subtitle">"Six vendors, zero coordination"</div>
                         </div>
                         <div>
                             <p className="lp-problem-desc">You hire a compliance firm, a 3PL, a marketing agency, and an Amazon specialist — and then spend all your time on coordination calls that none of them attend together. The cost of misalignment falls on you.</p>
@@ -264,7 +267,7 @@ export default function LandingPage() {
                             <div className="lp-problem-subtitle">"I'll figure it out myself"</div>
                         </div>
                         <div>
-                            <p className="lp-problem-desc">FDA filings, tariff codes, warehouse contracts, Amazon PPC — you're doing seven jobs none of which is building your brand. Compliance errors are costly. The learning curve is 6–12 months. You lose the market window.</p>
+                            <p className="lp-problem-desc">FDA filings, tariff codes, warehouse contracts, Amazon PPC — you're doing six jobs none of which is building your brand. Compliance errors are costly. The learning curve is 6–12 months. You lose the market window.</p>
                             <ul className="lp-problem-issues">
                                 <li><span className="lp-issue-dash">—</span> Founders burn out on logistics</li>
                                 <li><span className="lp-issue-dash">—</span> Compliance mistakes cost $50K+</li>
@@ -284,7 +287,7 @@ export default function LandingPage() {
                             <ul className="lp-problem-issues">
                                 <li><span className="lp-issue-dash">—</span> Handoff gaps fall through the cracks</li>
                                 <li><span className="lp-issue-dash">—</span> Difficult to pivot when one part breaks</li>
-                                <li><span className="lp-issue-dash">—</span> Still running 5 projects instead of 7</li>
+                                <li><span className="lp-issue-dash">—</span> Still running 4 projects instead of 6</li>
                             </ul>
                         </div>
                     </div>
@@ -298,10 +301,10 @@ export default function LandingPage() {
                 <div className="lp-functions-header">
                     <div>
                         <div className="lp-section-tag">02 / WHAT WE HANDLE</div>
-                        <h2>Six functions.<br />One contract.</h2>
+                        <h2>Seven functions.<br />One contract.</h2>
                     </div>
                     <div className="lp-functions-header-right">
-                        <p>One team. One contract. Your brand live in the US.</p>
+                        <p>One team. One contract. Your brand launched in the US.</p>
                     </div>
                 </div>
 
@@ -423,7 +426,7 @@ export default function LandingPage() {
                         <div className="lp-process-step">
                             <div className="lp-step-num-display">03</div>
                             <div className="lp-process-step-tag">LAUNCH</div>
-                            <h4>Live in the US.</h4>
+                            <h4>Your Brand is Live in the US</h4>
                             <p>Your product is compliant, warehoused in the US, listed on the right channels, and backed by a live marketing programme. You brief us on the brand. We run the operations.</p>
                             <div className="lp-process-step-footer">
                                 <span className="lp-process-step-time">Day 3 → Day 14</span>
@@ -433,32 +436,94 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* ── Differentiators Section ── */}
-            <section className="lp-diff-section" id="why">
-                <div className="lp-diff-inner">
-                    <div className="lp-diff-header">
-                        <div className="lp-section-tag">04 / WHY ORBIT</div>
-                        <h2 className="lp-diff-h2">Two things<br />no one else offers.</h2>
-                    </div>
-                    <div className="lp-diff-bento">
-                        <div className="lp-diff-tile">
-                            <div className="lp-diff-eyebrow">01 — Cultural Fit</div>
-                            <h4>We Speak Both Languages</h4>
-                            <p>Our team has worked with brands from Korea, India, and Thailand navigating US consumer culture. We know what translates and what needs reframing before you invest in the wrong message for the wrong audience.</p>
+            {/* ── NEW 04 / WHY ORBIT (Formerly Product) ── */}
+            <section className="lp-product" id="why">
+                <div
+                    className={`lp-icons ${iconsVisible ? "lp-icons-animate" : ""}`}
+                    ref={iconsRef}
+                >
+                    {iconList.map((Icon, i) => (
+                        <div
+                            className="lp-icon-bubble"
+                            key={i}
+                            style={{ "--i": i } as React.CSSProperties}
+                        >
+                            <Icon size={28} strokeWidth={1.5} />
                         </div>
-
-                        <div className="lp-diff-tile">
-                            <div className="lp-diff-eyebrow">02 — AI-Powered</div>
-                            <h4>Agents Catch What Humans Miss</h4>
-                            <p>Compliance and market intelligence agents monitor regulatory changes and competitive shifts in real time — flagging issues the moment they appear, not in your quarterly review.</p>
+                    ))}
+                </div>
+                <div className="lp-product-intro">
+                    <div className="lp-product-content">
+                        <div className="lp-product-text">
+                            <div className="lp-section-tag">04 / WHY ORBIT</div>
+                            <h2>
+                                Not another app you need to manage.<br />
+                                <span className="lp-text-gradient">A team that runs your US business.</span>
+                            </h2>
+                            <div className="lp-product-copy">
+                                <p>
+                                    Traditional commerce software provides dashboards.
+                                    <strong> Orbit provides coordinated execution.</strong>
+                                </p>
+                                <p>
+                                    Every part of your US operation — inventory, compliance, orders, logistics — runs in sync. You see the status. We handle the execution.
+                                </p>
+                            </div>
+                            <a href="/product" className="lp-product-tech-link">See how it works technically →</a>
+                        </div>
+                        <div className="lp-product-image">
+                            {/* Dashboard Screenshot */}
+                            <img
+                                src="/assets/dashboard_mockup.png"
+                                alt="Orbit Dashboard Interface showing SKU performance and stock analytics"
+                                className="lp-dashboard-img"
+                            />
                         </div>
                     </div>
                 </div>
             </section>
 
+            {/* ── Two-Column CTA (For Brands/Warehouses) ── */}
+            <section className="lp-who" id="who">
+                <div
+                    className="lp-who-card lp-who-card--suppliers"
+                    onMouseEnter={() => setSupplierHovered(true)}
+                    onMouseLeave={() => setSupplierHovered(false)}
+                >
+                    <SupplierParticleCanvas hovered={supplierHovered} />
+                    <h3>
+                        For brands
+                        <span>Manage brand operations</span>
+                    </h3>
 
+                    <button
+                        className="lp-btn lp-btn-accent"
+                        onClick={() => goTo("/auth")}
+                    >
+                        Get Started
+                    </button>
+                </div>
+                <div
+                    className="lp-who-card lp-who-card--warehouse"
+                    onMouseEnter={() => setWarehouseHovered(true)}
+                    onMouseLeave={() => setWarehouseHovered(false)}
+                >
+                    <WarehouseParticleCanvas hovered={warehouseHovered} />
+                    <h3>
+                        For warehouses
+                        <span>Power your facility</span>
+                    </h3>
 
-            {/* ── Proof / Testimonials ── */}
+                    <button
+                        className="lp-btn lp-btn-secondary"
+                        onClick={() => goTo("/warehouse/login")}
+                    >
+                        Warehouse Login
+                    </button>
+                </div>
+            </section>
+
+            {/* ── Proof / Testimonials (05 / RESULTS) ── */}
             <section className="lp-proof-section" id="proof">
                 <div className="lp-proof-inner">
                     <div style={{ marginBottom: '2rem' }}>
@@ -508,95 +573,10 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* ── Two-Column CTA ── */}
-            <section className="lp-who" id="who">
-                <div
-                    className="lp-who-card lp-who-card--suppliers"
-                    onMouseEnter={() => setSupplierHovered(true)}
-                    onMouseLeave={() => setSupplierHovered(false)}
-                >
-                    <SupplierParticleCanvas hovered={supplierHovered} />
-                    <h3>
-                        For brands
-                        <span>Manage brand operations</span>
-                    </h3>
-
-                    <button
-                        className="lp-btn lp-btn-accent"
-                        onClick={() => goTo("/auth")}
-                    >
-                        Get Started
-                    </button>
-                </div>
-                <div
-                    className="lp-who-card lp-who-card--warehouse"
-                    onMouseEnter={() => setWarehouseHovered(true)}
-                    onMouseLeave={() => setWarehouseHovered(false)}
-                >
-                    <WarehouseParticleCanvas hovered={warehouseHovered} />
-                    <h3>
-                        For warehouses
-                        <span>Power your facility</span>
-                    </h3>
-
-                    <button
-                        className="lp-btn lp-btn-secondary"
-                        onClick={() => goTo("/warehouse/login")}
-                    >
-                        Warehouse Login
-                    </button>
-                </div>
-            </section>
-
-            {/* ── Product Section ── */}
-            <section className="lp-product" id="product">
-                <div
-                    className={`lp-icons ${iconsVisible ? "lp-icons-animate" : ""}`}
-                    ref={iconsRef}
-                >
-                    {iconList.map((Icon, i) => (
-                        <div
-                            className="lp-icon-bubble"
-                            key={i}
-                            style={{ "--i": i } as React.CSSProperties}
-                        >
-                            <Icon size={28} strokeWidth={1.5} />
-                        </div>
-                    ))}
-                </div>
-                <div className="lp-product-intro">
-                    <div className="lp-product-content">
-                        <div className="lp-product-text">
-                            <h2>
-                                Not another app to manage.<br />
-                                <span className="lp-text-gradient">A team that runs your US business.</span>
-                            </h2>
-                            <div className="lp-product-copy">
-                                <p>
-                                    Traditional commerce software provides dashboards.
-                                    <strong> Orbit provides coordinated execution.</strong>
-                                </p>
-                                <p>
-                                    Every part of your US operation — inventory, compliance, orders, logistics — runs in sync. You see the status. We handle the execution.
-                                </p>
-                            </div>
-                            <a href="/product" className="lp-product-tech-link">See how it works technically →</a>
-                        </div>
-                        <div className="lp-product-image">
-                            {/* Dashboard Screenshot */}
-                            <img
-                                src="/assets/dashboard_mockup.png"
-                                alt="Orbit Dashboard Interface showing SKU performance and stock analytics"
-                                className="lp-dashboard-img"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ── Pricing Section ── */}
+            {/* ── Pricing Section (06 / PRICING) ── */}
             <section className="lp-pricing-section" id="pricing">
                 <div className="lp-pricing-header">
+                    <div className="lp-section-tag" style={{ justifyContent: 'center', marginBottom: '1rem' }}>06 / PRICING</div>
                     <h2>Pricing and plans</h2>
                     <p className="lp-pricing-sub">Local Businesses or Enterprises, A Plan for All</p>
                 </div>
@@ -609,7 +589,7 @@ export default function LandingPage() {
                     <div className="lp-feature-pill">100% Transparency</div>
                 </div>
 
-                <div className="lp-custom-plan-banner">
+                <div className="lp-custom-plan-banner" style={{ maxWidth: '1080px' }}>
                     <div className="lp-custom-banner-left">
                         <div className="lp-custom-banner-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
@@ -618,40 +598,15 @@ export default function LandingPage() {
                         </div>
                         <div className="lp-custom-banner-texts">
                             <h3>Custom Plan For You</h3>
-                            <p>Need more? Need Better? Contact Sales</p>
+                            <p>For enterprises requiring tailored solutions, integrations, and support.</p>
                         </div>
                     </div>
                     <div className="lp-custom-banner-right">
-                        <p>For enterprises requiring tailored solutions, integrations, and support</p>
-                        <button className="lp-btn-purple">Talk To Sales →</button>
-                    </div>
-                </div>
-            </section>
-
-            {/* ── Contact / CTA Form ── */}
-            <section className="lp-cta-section" id="contact">
-                <div className="lp-cta-inner">
-                    <div className="lp-cta-copy">
-                        <div className="lp-section-tag">06 / GET STARTED</div>
-                        <h2 className="lp-cta-h2">Ready to bring your brand to the US?</h2>
-                        <p className="lp-cta-desc">Fill in the form and we'll send you a custom US launch plan within 48 hours — market intelligence, compliance checklist, and a 90-day revenue projection for your category.</p>
-                        <ul className="lp-cta-promise-list">
-                            <li><span className="lp-promise-icon">→</span> Full compliance audit for your product category</li>
-                            <li><span className="lp-promise-icon">→</span> Recommended logistics and warehousing setup</li>
-                            <li><span className="lp-promise-icon">→</span> 90-day revenue projection based on your category</li>
-                            <li><span className="lp-promise-icon">→</span> No commitment required to receive the plan</li>
-                        </ul>
-                    </div>
-
-                    <div className="lp-contact-form-wrap">
-                        <div className="lp-form-title">Just drop us your email and we'll reach out</div>
-                        <form onSubmit={(e) => { e.preventDefault(); const btn = e.currentTarget.querySelector('.lp-form-submit') as HTMLButtonElement; if (btn) { btn.textContent = '✓ Received — plan arriving within 48h'; btn.style.background = '#158d75'; btn.disabled = true; } }}>
-                            <div className="lp-form-group" style={{ marginBottom: "1.5rem" }}>
-                                <label className="lp-form-label" htmlFor="f-email">Email</label>
-                                <input className="lp-form-input" id="f-email" type="email" placeholder="you@brand.com" required />
+                        <form className="lp-pricing-email-form" onSubmit={(e) => { e.preventDefault(); const btn = e.currentTarget.querySelector('button') as HTMLButtonElement; if (btn) { btn.textContent = '✓ Received'; btn.style.background = '#158d75'; btn.disabled = true; } }}>
+                            <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
+                                <input type="email" placeholder="you@brand.com" required style={{ border: '1px solid var(--lp-outline)', borderRadius: '999px', padding: '0.8rem 1.2rem', fontSize: '0.95rem', minWidth: '220px', background: 'var(--lp-surface-variant)', outline: 'none' }} />
+                                <button type="submit" className="lp-btn-purple">Talk To Sales →</button>
                             </div>
-                            <button className="lp-form-submit" type="submit">Contact The Team →</button>
-                            <p className="lp-form-footnote">48h turnaround · No sales call without your consent</p>
                         </form>
                     </div>
                 </div>
@@ -673,18 +628,6 @@ export default function LandingPage() {
                                 onClick={() => goTo("/auth")}
                             >
                                 Launch on Orbit
-                            </button>
-                            <button
-                                className="lp-btn lp-btn-secondary"
-                                onClick={() => goTo("/auth")}
-                            >
-                                Manage Brand Operations
-                            </button>
-                            <button
-                                className="lp-btn lp-btn-secondary"
-                                onClick={() => goTo("/warehouse/login")}
-                            >
-                                Power Your Warehouse
                             </button>
                         </div>
                     </div>
