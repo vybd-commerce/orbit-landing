@@ -216,17 +216,6 @@ export default function LandingPage() {
 
 
 
-            {/* ── Stats Band ── */}
-            <div className="lp-stats-band">
-                <div className="lp-stat-item">
-                    <span className="lp-stat-number">3</span>
-                    <span className="lp-stat-label">Brands Launched — Cohort 1</span>
-                </div>
-                <div className="lp-stat-item">
-                    <span className="lp-stat-number lp-stat-accent">100%</span>
-                    <span className="lp-stat-label">Compliance Rate</span>
-                </div>
-            </div>
 
             {/* ── Problem Section ── */}
             <section className="lp-problem-section" id="problem">
@@ -243,14 +232,17 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                <div className="lp-problem-list">
-                    <div className="lp-problem-item">
-                        <div className="lp-problem-num">001</div>
-                        <div>
-                            <div className="lp-problem-title">Scattered Consultants</div>
-                            <div className="lp-problem-subtitle">"Six vendors, zero coordination"</div>
+                <div className="lp-problem-bento">
+                    {/* Item 1 */}
+                    <div className="lp-problem-bento-item lp-problem-span-2">
+                        <div className="lp-problem-bento-header-wrap">
+                            <div className="lp-problem-bento-header">
+                                <span className="lp-problem-bento-num">001</span>
+                                <h3 className="lp-problem-bento-title">Scattered Consultants</h3>
+                            </div>
+                            <div className="lp-problem-bento-subtitle">"Six vendors, zero coordination"</div>
                         </div>
-                        <div>
+                        <div className="lp-problem-bento-content-wrap">
                             <p className="lp-problem-desc">You hire a compliance firm, a 3PL, a marketing agency, and an Amazon specialist — and then spend all your time on coordination calls that none of them attend together. The cost of misalignment falls on you.</p>
                             <ul className="lp-problem-issues">
                                 <li><span className="lp-issue-dash">—</span> No single point of accountability</li>
@@ -260,14 +252,17 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    <div className="lp-problem-item">
-                        <div className="lp-problem-num">002</div>
-                        <div>
-                            <div className="lp-problem-title">Full DIY</div>
-                            <div className="lp-problem-subtitle">"I'll figure it out myself"</div>
+                    {/* Item 2 */}
+                    <div className="lp-problem-bento-item">
+                        <div className="lp-problem-bento-header-wrap">
+                            <div className="lp-problem-bento-header">
+                                <span className="lp-problem-bento-num">002</span>
+                                <h3 className="lp-problem-bento-title">Full DIY</h3>
+                            </div>
+                            <div className="lp-problem-bento-subtitle">"I'll figure it out myself"</div>
                         </div>
-                        <div>
-                            <p className="lp-problem-desc">FDA filings, tariff codes, warehouse contracts, Amazon PPC — you're doing six jobs none of which is building your brand. Compliance errors are costly. The learning curve is 6–12 months. You lose the market window.</p>
+                        <div className="lp-problem-bento-content-wrap">
+                            <p className="lp-problem-desc">FDA filings, tariff codes, warehouse contracts, Amazon PPC — you're doing six jobs none of which is building your brand. Compliance errors are costly.</p>
                             <ul className="lp-problem-issues">
                                 <li><span className="lp-issue-dash">—</span> Founders burn out on logistics</li>
                                 <li><span className="lp-issue-dash">—</span> Compliance mistakes cost $50K+</li>
@@ -276,14 +271,17 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    <div className="lp-problem-item">
-                        <div className="lp-problem-num">003</div>
-                        <div>
-                            <div className="lp-problem-title">Single-Function Providers</div>
-                            <div className="lp-problem-subtitle">"Great at one thing, blind to the rest"</div>
+                    {/* Item 3 */}
+                    <div className="lp-problem-bento-item">
+                        <div className="lp-problem-bento-header-wrap">
+                            <div className="lp-problem-bento-header">
+                                <span className="lp-problem-bento-num">003</span>
+                                <h3 className="lp-problem-bento-title">Single-Function Providers</h3>
+                            </div>
+                            <div className="lp-problem-bento-subtitle">"Great at one thing, blind to the rest"</div>
                         </div>
-                        <div>
-                            <p className="lp-problem-desc">You find a best-in-class 3PL and a great compliance partner — then discover they've never worked together and you're the integration layer. You've reduced the vendor count but not the coordination problem.</p>
+                        <div className="lp-problem-bento-content-wrap">
+                            <p className="lp-problem-desc">You find a best-in-class 3PL and a great compliance partner — then discover they've never worked together. You've reduced vendor count but not the coordination problem.</p>
                             <ul className="lp-problem-issues">
                                 <li><span className="lp-issue-dash">—</span> Handoff gaps fall through the cracks</li>
                                 <li><span className="lp-issue-dash">—</span> Difficult to pivot when one part breaks</li>
