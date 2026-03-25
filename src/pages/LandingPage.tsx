@@ -26,6 +26,14 @@ import {
     GitBranch,
     Share2,
     ArrowRight,
+    ArrowUpRight,
+    Calendar,
+    CreditCard,
+    Search,
+    Sparkles,
+    TrendingUp,
+    Rocket,
+    Check
 } from "lucide-react";
 import "./LandingPage.css";
 
@@ -158,9 +166,10 @@ export default function LandingPage() {
 
                     <nav className="lp-nav">
                         <ul>
-                            <li><a href="#product">Platform</a></li>
-                            <li><a href="#who">Network</a></li>
+                            <li><a href="#functions">Solution</a></li>
+                            <li><a href="#why">Platform</a></li>
                             <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#proof">Testimonials</a></li>
                             <li><a href="/product">How It Works</a></li>
                         </ul>
                     </nav>
@@ -453,16 +462,12 @@ export default function LandingPage() {
                 <div className="lp-product-intro">
                     <div className="lp-product-content">
                         <div className="lp-product-text">
-                            <div className="lp-section-tag">04 / WHY ORBIT</div>
+                            {/* <div className="lp-section-tag">04 / WHY ORBIT</div> */}
                             <h2>
                                 Not another app you need to manage.<br />
                                 <span className="lp-text-gradient">A team that runs your US business.</span>
                             </h2>
                             <div className="lp-product-copy">
-                                <p>
-                                    Traditional commerce software provides dashboards.
-                                    <strong> Orbit provides coordinated execution.</strong>
-                                </p>
                                 <p>
                                     Every part of your US operation — inventory, compliance, orders, logistics — runs in sync. You see the status. We handle the execution.
                                 </p>
@@ -524,27 +529,24 @@ export default function LandingPage() {
             {/* ── Proof / Testimonials (05 / RESULTS) ── */}
             <section className="lp-proof-section" id="proof">
                 <div className="lp-proof-inner">
-                    <div style={{ marginBottom: '2rem' }}>
-                        <div className="lp-section-tag">05 / RESULTS</div>
-                        <h2 className="lp-proof-h2">Early cohort.<br />Real numbers.</h2>
-                    </div>
-
-                    <div className="lp-proof-numbers">
-                        <div className="lp-proof-num-item">
-                            <span className="lp-proof-num-value lp-proof-num-accent">3</span>
-                            <span className="lp-proof-num-label">Brands Launched</span>
+                    <div className="lp-testimonial-header-split">
+                        <div className="lp-testimonial-header-left">
+                            <div className="lp-tag-testimonial">
+                                <ArrowUpRight size={14} strokeWidth={2.5} /> Testimonials
+                            </div>
+                            <h2 className="lp-testimonial-hero-quote">
+                                “Orbit has been, simply, transformative for us”
+                            </h2>
                         </div>
-                        <div className="lp-proof-num-item">
-                            <span className="lp-proof-num-value">11.4</span>
-                            <span className="lp-proof-num-label">Avg. Days to Live</span>
-                        </div>
-                        <div className="lp-proof-num-item">
-                            <span className="lp-proof-num-value lp-proof-num-accent">100%</span>
-                            <span className="lp-proof-num-label">Compliance Rate</span>
-                        </div>
-                        <div className="lp-proof-num-item">
-                            <span className="lp-proof-num-value">3</span>
-                            <span className="lp-proof-num-label">Countries in Cohort 1</span>
+                        <div className="lp-testimonial-header-right">
+                            <p className="lp-testimonial-subtext">
+                                —says the Co-Founder of Bayangrom, one of India's fastest growing apparel brand
+                            </p>
+                            <div className="lp-testimonial-actions">
+                                <button className="lp-btn lp-btn-primary lp-btn-consult">
+                                    Book A Consult <Calendar size={14} style={{ marginBottom: '-1px' }} />
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -574,24 +576,98 @@ export default function LandingPage() {
             {/* ── Pricing Section (06 / PRICING) ── */}
             <section className="lp-pricing-section" id="pricing">
                 <div className="lp-pricing-header">
-                    <div className="lp-section-tag" style={{ justifyContent: 'center', marginBottom: '1rem' }}>06 / PRICING</div>
+                    {/* <div className="lp-section-tag" style={{ justifyContent: 'center', marginBottom: '1rem' }}>06 / PRICING</div> */}
                     <h2>Pricing and plans</h2>
-                    <p className="lp-pricing-sub">Local Businesses or Enterprises, A Plan for All</p>
+                    {/* <p className="lp-pricing-sub">Local Businesses or Enterprises, A Plan for All</p> */}
                 </div>
-                
+
                 <LlmLogos />
 
                 <div className="lp-pricing-features">
-                    <div className="lp-feature-pill">No Long Term Contracts</div>
-                    <div className="lp-feature-pill">Cancel Anytime</div>
-                    <div className="lp-feature-pill">100% Transparency</div>
+                    <div className="lp-feature-pill"><Calendar size={14} className="lp-pricing-feat-icon" /> No Long Term Contracts</div>
+                    <div className="lp-feature-pill"><CreditCard size={14} className="lp-pricing-feat-icon" /> Cancel Anytime</div>
+                    <div className="lp-feature-pill"><Search size={14} className="lp-pricing-feat-icon" /> 100% Transparency</div>
+                </div>
+
+                {/* ── Pricing Tiers Grid ── */}
+                <div className="lp-pricing-roi-banner" style={{ textAlign: 'center', marginBottom: '1.5rem', fontSize: '0.85rem', color: 'var(--lp-on-surface-variant)' }}>
+                    <span style={{ display: 'inline-block', padding: '0.3rem 1.2rem', background: 'var(--lp-surface-variant)', borderRadius: '999px' }}>
+                        <strong>ROI:</strong> A typical client saves ~$93,000 annually by consolidating agencies and hires.
+                    </span>
+                </div>
+
+                <div className="lp-pricing-grid">
+                    {/* Launch Tier */}
+                    <div className="lp-pricing-card">
+                        <div className="lp-pricing-card-top">
+                            <div className="lp-pricing-icon" style={{ color: '#4CAF50' }}>
+                                <Sparkles size={28} strokeWidth={1.5} />
+                            </div>
+                            <h3>Launch</h3>
+                            <div className="lp-pricing-price">$499<span>/ mo</span></div>
+                            <div className="lp-pricing-gmv">+ 9% GMV Fee</div>
+                            <p className="lp-pricing-desc">For brands doing &lt;$25k/mo US sales. Foundational market entry and compliance setup.</p>
+                            <button className="lp-btn-dark lp-btn-pricing" style={{ width: '100%', justifyContent: 'center' }}>Get Started →</button>
+                        </div>
+                        <div className="lp-pricing-card-bottom">
+                            <ul className="lp-pricing-list">
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> AI-powered onboarding for 1 product category</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Setup for 1 sales channel (Shopify/Amazon)</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> AI-powered compliance intelligence snapshot</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Growth Tier */}
+                    <div className="lp-pricing-card">
+                        <div className="lp-pricing-card-top">
+                            <div className="lp-pricing-icon" style={{ color: '#FF7043' }}>
+                                <TrendingUp size={28} strokeWidth={1.5} />
+                            </div>
+                            <h3>Growth</h3>
+                            <div className="lp-pricing-price">$999<span>/ mo</span></div>
+                            <div className="lp-pricing-gmv">+ 7% GMV Fee</div>
+                            <p className="lp-pricing-desc">For brands doing $25k - $100k/mo. Scaling operations with advanced AI and analytics.</p>
+                            <button className="lp-btn-dark lp-btn-pricing" style={{ width: '100%', justifyContent: 'center' }}>Get Started →</button>
+                        </div>
+                        <div className="lp-pricing-card-bottom">
+                            <ul className="lp-pricing-list">
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Full compliance roadmaps for up to 3 categories</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Multi-warehouse strategy for 2-day shipping</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Fulfillment Orchestration Agent</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Replaces multiple agencies and hires</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Scale Tier */}
+                    <div className="lp-pricing-card">
+                        <div className="lp-pricing-card-top">
+                            <div className="lp-pricing-icon" style={{ color: '#42A5F5' }}>
+                                <Rocket size={28} strokeWidth={1.5} />
+                            </div>
+                            <h3>Scale</h3>
+                            <div className="lp-pricing-price">$1,999<span>/ mo</span></div>
+                            <div className="lp-pricing-gmv">+ 6% GMV Fee</div>
+                            <p className="lp-pricing-desc">For brands doing &gt;$100k/mo. Enterprise-grade partnership and custom integration.</p>
+                            <button className="lp-btn-dark lp-btn-pricing" style={{ width: '100%', justifyContent: 'center' }}>Get Started →</button>
+                        </div>
+                        <div className="lp-pricing-card-bottom">
+                            <ul className="lp-pricing-list">
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Dedicated Account Manager</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Custom ERP or CRM integrations</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Priority access to beta features</li>
+                                <li><Check size={16} strokeWidth={2.5} className="lp-check-icon" /> Competitive fee structure for high-volume</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="lp-custom-plan-banner" style={{ maxWidth: '1080px' }}>
                     <div className="lp-custom-banner-left">
                         <div className="lp-custom-banner-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
-                                <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="#FF4D4D"/>
+                                <path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07L19.07 4.93" stroke="#FF4D4D" />
                             </svg>
                         </div>
                         <div className="lp-custom-banner-texts">
@@ -638,17 +714,13 @@ export default function LandingPage() {
                     <h3 className="lp-footer-tagline">Commerce, Coordinated.</h3>
                     <div className="lp-footer-nav">
                         <div className="lp-footer-col">
-                            <a href="#product">Download</a>
-                            <a href="#product">Product</a>
-                            <a href="#docs">Docs</a>
+                            <a href="#why">Orbit Platform</a>
+                            <a href="#functions">Solutions</a>
                             <a href="#changelog">Changelog</a>
-                            <a href="#press">Press</a>
-                            <a href="#releases">Releases</a>
                         </div>
                         <div className="lp-footer-col">
-                            <a href="/blog">Blog</a>
-                            <a href="/pricing">Pricing</a>
-                            <a href="/use-cases">Use Cases</a>
+                            <a href="#press">Press</a>
+                            <a href="#pricing">Pricing</a>
                         </div>
                     </div>
                 </div>
@@ -667,7 +739,6 @@ export default function LandingPage() {
                     <div className="lp-footer-logo-small">Orbit</div>
                     <div className="lp-footer-legal">
                         <a href="/about">About Orbit</a>
-                        <a href="/products">Orbit Products</a>
                         <a href="/privacy">Privacy</a>
                         <a href="/terms">Terms</a>
                     </div>
