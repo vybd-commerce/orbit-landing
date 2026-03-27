@@ -16,11 +16,6 @@
     --lp-secondary-btn-hover: #f0f1f5;
     --lp-nav-hover: rgba(183, 191, 217, 0.2);
     --lp-font: "Inter", "Google Sans Flex", system-ui, -apple-system, sans-serif;
-    
-    /* Problem State Tokens */
-    --color-problem-surface: #fff5f4;
-    --color-problem-accent: #c0392b;
-    --color-problem-border: rgba(192, 57, 43, 0.2);
 }
 
 /* ========================================
@@ -826,7 +821,7 @@
 
 /* Icons row */
 .lp-icons {
-    background: var(--lp-surface-variant);
+    background: transparent;
     height: clamp(16rem, 40vb, 24rem);
     display: flex;
     flex-direction: row;
@@ -2236,27 +2231,18 @@
 }
 
 .lp-fn-tile {
-    /* Default Problem State */
-    background: var(--color-problem-surface);
-    border: 1px solid var(--color-problem-border);
-    transition: all 0.25s ease;
+    background: var(--lp-surface);
     padding: 1.25rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: background 0.3s ease, color 0.3s ease;
     cursor: default;
     position: relative;
-    border-radius: 12px;
 }
 
 .lp-fn-tile:hover {
     background: var(--lp-primary);
-    border-color: var(--lp-primary);
-}
-
-.lp-fn-top {
-    display: flex;
-    flex-direction: column;
 }
 
 .lp-fn-tile-header {
@@ -2270,10 +2256,10 @@
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 10px;
     font-weight: 500;
-    color: var(--color-problem-accent);
-    opacity: 0.6;
+    color: var(--lp-on-surface-variant);
+    opacity: 0.5;
     letter-spacing: 0.04em;
-    transition: color 0.25s ease, opacity 0.25s ease;
+    transition: color 0.3s ease, opacity 0.3s ease;
 }
 
 .lp-fn-tile:hover .lp-fn-index {
@@ -2281,97 +2267,135 @@
     opacity: 0.8;
 }
 
-.lp-fn-tile-problem-hook {
-    color: var(--color-problem-accent);
+.lp-fn-category {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lp-primary);
+    background: rgba(26, 179, 148, 0.1);
+    padding: 3px 8px;
+    border-radius: 4px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-category {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.lp-fn-title {
     font-size: 1.05rem;
     font-weight: 600;
     letter-spacing: -0.02em;
+    color: var(--lp-on-surface);
     margin-bottom: 0.2rem;
-    transition: opacity 0.25s ease;
+    transition: color 0.3s ease;
 }
 
-.lp-fn-tile-problem-body {
+.lp-fn-tile:hover .lp-fn-title {
+    color: #ffffff;
+}
+
+.lp-fn-desc-short {
     font-size: 0.85rem;
-    font-weight: 400;
+    font-weight: 350;
     color: var(--lp-on-surface-variant);
     line-height: 1.65;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.3s ease;
 }
 
-.lp-fn-tile:hover .lp-fn-tile-problem-hook,
-.lp-fn-tile:hover .lp-fn-tile-problem-body {
+.lp-fn-tile:hover .lp-fn-desc-short {
     opacity: 0;
-    pointer-events: none;
-}
-
-.lp-fn-bottom {
     position: absolute;
-    bottom: 1.25rem;
-    left: 1.25rem;
-    right: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
 }
 
-.lp-fn-tile:hover .lp-fn-bottom {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.lp-fn-large-stat {
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    color: #ffffff;
-    line-height: 1;
-    margin-top: 0.5rem;
-}
-
-.lp-fn-large-stat-label {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 4px;
-}
-
-.lp-fn-solution-detail {
+.lp-fn-desc-full {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
     font-size: 0.85rem;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.9);
     line-height: 1.65;
-    margin-top: 0.5rem;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-desc-full {
+    opacity: 1;
+    max-height: 300px;
 }
 
 .lp-fn-footer {
     margin-top: 1rem;
     padding-top: 0.75rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid var(--lp-outline);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: border-color 0.3s ease;
 }
 
 .lp-fn-footer.mt-auto {
     margin-top: auto;
 }
 
+.lp-fn-tile:hover .lp-fn-footer {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
 .lp-fn-footer-label {
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--lp-on-surface-variant);
+    opacity: 0.5;
     letter-spacing: 0.06em;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-footer-label {
+    color: #ffffff;
+    opacity: 0.8;
 }
 
 .lp-fn-footer-status {
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 10px;
     font-weight: 500;
-    color: #ffffff;
+    color: var(--lp-primary);
     letter-spacing: 0.06em;
+    transition: color 0.3s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-footer-status {
+    color: #ffffff;
+}
+
+.lp-fn-large-stat {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--lp-primary);
+    line-height: 1;
+    margin-top: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-large-stat {
+    color: #ffffff;
+}
+
+.lp-fn-large-stat-label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--lp-on-surface-variant);
+    margin-top: 4px;
+    transition: color 0.3s ease;
+}
+
+.lp-fn-tile:hover .lp-fn-large-stat-label {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Grid positions */
