@@ -36,6 +36,7 @@ import {
     Check
 } from "lucide-react";
 import HeroVisual from "../components/HeroVisual";
+import ProblemBottleneck from "../components/ProblemBottleneck";
 import "./LandingPage.css";
 
 /**
@@ -246,64 +247,7 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                <div className="lp-problem-bento">
-                    {/* Item 1 */}
-                    <div className="lp-problem-bento-item lp-problem-span-2">
-                        <div className="lp-problem-bento-header-wrap">
-                            <div className="lp-problem-bento-header">
-                                <span className="lp-problem-bento-num">001</span>
-                                <h3 className="lp-problem-bento-title">Scattered Consultants</h3>
-                            </div>
-                            <div className="lp-problem-bento-subtitle">"Six vendors, zero coordination"</div>
-                        </div>
-                        <div className="lp-problem-bento-content-wrap">
-                            <p className="lp-problem-desc">You hire a compliance firm, a 3PL, a marketing agency, and an Amazon specialist — and then spend all your time on coordination calls that none of them attend together. The cost of misalignment falls on you.</p>
-                            <ul className="lp-problem-issues">
-                                <li><span className="lp-issue-dash">—</span> No single point of accountability</li>
-                                <li><span className="lp-issue-dash">—</span> Optimised individually, not for your outcome</li>
-                                <li><span className="lp-issue-dash">—</span> 4–6 months to get everything aligned</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Item 2 */}
-                    <div className="lp-problem-bento-item">
-                        <div className="lp-problem-bento-header-wrap">
-                            <div className="lp-problem-bento-header">
-                                <span className="lp-problem-bento-num">002</span>
-                                <h3 className="lp-problem-bento-title">Full DIY</h3>
-                            </div>
-                            <div className="lp-problem-bento-subtitle">"I'll figure it out myself"</div>
-                        </div>
-                        <div className="lp-problem-bento-content-wrap">
-                            <p className="lp-problem-desc">FDA filings, tariff codes, warehouse contracts, Amazon PPC — you're doing six jobs none of which is building your brand. Compliance errors are costly.</p>
-                            <ul className="lp-problem-issues">
-                                <li><span className="lp-issue-dash">—</span> Founders burn out on logistics</li>
-                                <li><span className="lp-issue-dash">—</span> Compliance mistakes cost $50K+</li>
-                                <li><span className="lp-issue-dash">—</span> No leverage — every task is manual</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Item 3 */}
-                    <div className="lp-problem-bento-item">
-                        <div className="lp-problem-bento-header-wrap">
-                            <div className="lp-problem-bento-header">
-                                <span className="lp-problem-bento-num">003</span>
-                                <h3 className="lp-problem-bento-title">Single-Function Providers</h3>
-                            </div>
-                            <div className="lp-problem-bento-subtitle">"Great at one thing, blind to the rest"</div>
-                        </div>
-                        <div className="lp-problem-bento-content-wrap">
-                            <p className="lp-problem-desc">You find a best-in-class 3PL and a great compliance partner — then discover they've never worked together. You've reduced vendor count but not the coordination problem.</p>
-                            <ul className="lp-problem-issues">
-                                <li><span className="lp-issue-dash">—</span> Handoff gaps fall through the cracks</li>
-                                <li><span className="lp-issue-dash">—</span> Difficult to pivot when one part breaks</li>
-                                <li><span className="lp-issue-dash">—</span> Still running 4 projects instead of 6</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <ProblemBottleneck />
 
 
             </section>
