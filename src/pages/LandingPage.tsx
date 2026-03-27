@@ -36,7 +36,7 @@ import {
     Check
 } from "lucide-react";
 import HeroVisual from "../components/HeroVisual";
-import ProblemBottleneck from "../components/ProblemBottleneck";
+
 import "./LandingPage.css";
 
 /**
@@ -58,6 +58,84 @@ const iconList = [
     Layers, GitBranch, MessageSquare, Share2, ArrowRight,
     Package, Truck, Warehouse, ShieldCheck,
 ];
+
+const bentoModules = [
+  {
+    id: "01",
+    label: "Market Intelligence",
+    problemHook: "Entering blind",
+    problemBody: "Most brands guess their US positioning — wrong price, wrong category, wrong channel.",
+    stat: "Day 1",
+    statLabel: "Competitive clarity",
+    solutionDetail: "We map competitors, pricing, and whitespace before you spend a dollar — so every decision is grounded in real US market data.",
+    tags: ["Competitor tracking", "Pricing analysis"],
+    status: "Active",
+  },
+  {
+    id: "02",
+    label: "Compliance & Regulatory",
+    problemHook: "Held at customs",
+    problemBody: "Manual classification errors, missing docs, and regulatory blind spots cause costly delays.",
+    stat: "100%",
+    statLabel: "AI clearance rate",
+    solutionDetail: "Auto-classification, document management, and customs clearance — handled end-to-end so nothing gets stuck at the border.",
+    tags: ["FDA", "Customs", "HS codes"],
+    status: "Active",
+  },
+  {
+    id: "03",
+    label: "Logistics & Fulfillment",
+    problemHook: "Shipments disappear",
+    problemBody: "Brands cobble together carriers with no visibility, no accountability, and surprise costs.",
+    stat: "24/7",
+    statLabel: "AI-routed freight",
+    solutionDetail: "We select the right carriers, manage every shipment, and provide end-to-end tracking from door to warehouse to customer.",
+    tags: ["Door to Warehouse", "Last-mile"],
+    status: "Active",
+  },
+  {
+    id: "04",
+    label: "Warehousing & Inventory",
+    problemHook: "Stockouts or dead stock",
+    problemBody: "Over-ordering ties up cash. Under-ordering kills your ranking. Neither should be a manual guess.",
+    stat: "0",
+    statLabel: "Minimum commitment",
+    solutionDetail: "Intelligent replenishment, optimized placement, and a flexible US footprint — inventory that moves with demand, not against it.",
+    tags: ["US-based", "No minimums"],
+    status: "Active",
+  },
+  {
+    id: "05",
+    label: "E-commerce Setup",
+    problemHook: "Weeks to first sale",
+    problemBody: "Entity setup, payment rails, storefronts, marketplace listings — brands drown in setup before selling a single unit.",
+    stat: "Day 1",
+    statLabel: "Ready to transact",
+    solutionDetail: "We build your Shopify store, personalized site, and marketplace presence — plus handle US entity formation and merchant of record setup.",
+    tags: ["Shopify", "Amazon", "US entity"],
+    status: "Active",
+  },
+  {
+    id: "06",
+    label: "Marketing & Growth",
+    problemHook: "Spending before learning",
+    problemBody: "Brands burn budget on US ads before understanding the market — wrong message, wrong audience, no ROI.",
+    stat: "Data-led",
+    statLabel: "Growth execution",
+    solutionDetail: "We build your US growth strategy after market intelligence is in — brand positioning, content, and performance marketing on proven signals.",
+    tags: ["Performance", "Brand", "D2C"],
+    status: "Active",
+  },
+];
+
+const bentoClassMap: Record<string, string> = {
+  "01": "lp-fn-intelligence",
+  "02": "lp-fn-compliance",
+  "03": "lp-fn-logistics",
+  "04": "lp-fn-warehousing",
+  "05": "lp-fn-ecommerce",
+  "06": "lp-fn-marketing",
+};
 
 export default function LandingPage() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -232,154 +310,41 @@ export default function LandingPage() {
 
 
 
-            {/* ── Problem Section ── */}
-            <section className="lp-problem-section" id="problem">
-                <div className="lp-problem-header">
-                    <div className="lp-problem-header-left">
-                        <div className="lp-section-tag">
-                            <span className="lp-problem-blinker"></span>
-                            01 / PROBLEM
-                        </div>
-                        <h2>Three ways founders burn time entering the US</h2>
-                    </div>
-                    <div className="lp-problem-header-right">
-                        <p>International brands doing $500K–5M at home are stuck choosing between broken options. Every path costs months of founder attention and still doesn't guarantee US market traction.</p>
-                    </div>
-                </div>
 
-                <ProblemBottleneck />
-
-
-            </section>
 
             {/* ── Functions Bento ── */}
             <section className="lp-functions-section" id="functions">
                 <div className="lp-functions-header">
                     <div>
                         <div className="lp-section-tag">02 / WHAT WE HANDLE</div>
-                        <h2>Six functions.<br />One contract.</h2>
+                        <h2>Six problems.<br />One contract.</h2>
                     </div>
                     <div className="lp-functions-header-right">
-                        <p>One team. One contract. Your brand launched in the US.</p>
+                        <p>Most brands don't fail in the US because of bad products.<br />They fail because the infrastructure wasn't there &mdash;<br />wrong setup, wrong compliance, wrong timing, wrong channels.<br />Orbit fixes all six.</p>
                     </div>
                 </div>
 
                 <div className="lp-fn-bento">
-                    <div className="lp-fn-tile lp-fn-intelligence">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">01</span>
-                                <span className="lp-fn-category">Core</span>
+                    {bentoModules.map((mod) => (
+                        <div className={`lp-fn-tile ${bentoClassMap[mod.id]}`} key={mod.id}>
+                            <div className="lp-fn-top">
+                                <div className="lp-fn-tile-header">
+                                    <span className="lp-fn-index">{mod.id}</span>
+                                </div>
+                                <div className="lp-fn-tile-problem-hook">{mod.problemHook}</div>
+                                <div className="lp-fn-tile-problem-body">{mod.problemBody}</div>
                             </div>
-                            <div className="lp-fn-title">Market Intelligence</div>
-                            <div className="lp-fn-desc-short">AI-powered trend mapping & competitive analysis.</div>
-                            <div className="lp-fn-desc-full">AI-powered competitive analysis, US consumer trend mapping, and category positioning research. You arrive in the US market already knowing where to play and who's buying — not guessing after the fact.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">AI</div>
-                            <div className="lp-fn-large-stat-label">Powered analysis</div>
-                            <div className="lp-fn-footer">
-                                <span className="lp-fn-footer-label">Delivered pre-launch</span>
-                                <span className="lp-fn-footer-status">Running</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="lp-fn-tile lp-fn-compliance">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">02</span>
-                            </div>
-                            <div className="lp-fn-title">Compliance</div>
-                            <div className="lp-fn-desc-short">FDA, FCC, CPSC — every requirement filed.</div>
-                            <div className="lp-fn-desc-full">FDA, FCC, CPSC — every requirement for your product category, flagged and filed before you ship a unit. No customs holds.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">100%</div>
-                            <div className="lp-fn-large-stat-label">AI clearance rate</div>
-                            <div className="lp-fn-footer">
-                                <span className="lp-fn-footer-label">All categories</span>
-                                <span className="lp-fn-footer-status">100% rate</span>
+                            <div className="lp-fn-bottom">
+                                <div className="lp-fn-large-stat">{mod.stat}</div>
+                                <div className="lp-fn-large-stat-label">{mod.statLabel}</div>
+                                <div className="lp-fn-solution-detail">{mod.solutionDetail}</div>
+                                <div className="lp-fn-footer">
+                                    <span className="lp-fn-footer-label">{mod.tags.join(" · ")}</span>
+                                    <span className="lp-fn-footer-status">{mod.status}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="lp-fn-tile lp-fn-logistics">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">03</span>
-                            </div>
-                            <div className="lp-fn-title">Logistics</div>
-                            <div className="lp-fn-desc-short">Inbound freight & last-mile.</div>
-                            <div className="lp-fn-desc-full">Inbound freight, customs brokerage, and last-mile — fully coordinated. Your product arrives on time, every time.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">24/7</div>
-                            <div className="lp-fn-large-stat-label">AI-routed freight</div>
-                            <div className="lp-fn-footer">
-                                <span className="lp-fn-footer-label">Door to warehouse</span>
-                                <span className="lp-fn-footer-status">Active</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="lp-fn-tile lp-fn-warehousing">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">04</span>
-                            </div>
-                            <div className="lp-fn-title">Warehousing &amp; Fulfilment</div>
-                            <div className="lp-fn-desc-short">Flexible US warehouse scale without minimums.</div>
-                            <div className="lp-fn-desc-full">Flexible US warehouse infrastructure. No long-term contracts, no volume minimums. Scale as your US sales grow — not based on a forecast you made before you launched.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">0</div>
-                            <div className="lp-fn-large-stat-label">Minimums via AI allocation</div>
-                            <div className="lp-fn-footer mt-auto">
-                                <span className="lp-fn-footer-label">No minimums · Flexible terms</span>
-                                <span className="lp-fn-footer-status">US-based</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="lp-fn-tile lp-fn-ecommerce">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">05</span>
-                                <span className="lp-fn-category">Revenue</span>
-                            </div>
-                            <div className="lp-fn-title">E-commerce Setup</div>
-                            <div className="lp-fn-desc-short">Amazon, Shopify, and DTC storefront built for US.</div>
-                            <div className="lp-fn-desc-full">Amazon marketplace, Shopify storefront, and DTC channel — built and optimised for US buyers. Listings, A+ content, conversion architecture, and launch campaigns ready before day one.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">Day 1</div>
-                            <div className="lp-fn-large-stat-label">AI optimized listings</div>
-                            <div className="lp-fn-footer">
-                                <span className="lp-fn-footer-label">Amazon · Shopify · DTC</span>
-                                <span className="lp-fn-footer-status">Ready day 1</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="lp-fn-tile lp-fn-marketing">
-                        <div>
-                            <div className="lp-fn-tile-header">
-                                <span className="lp-fn-index">06</span>
-                            </div>
-                            <div className="lp-fn-title">Marketing</div>
-                            <div className="lp-fn-desc-short">Performance & brand marketing for the US.</div>
-                            <div className="lp-fn-desc-full">Performance campaigns and brand positioning calibrated to US consumers — not a translated version of what worked at home.</div>
-                        </div>
-                        <div>
-                            <div className="lp-fn-large-stat">ROI</div>
-                            <div className="lp-fn-large-stat-label">AI performance scaling</div>
-                            <div className="lp-fn-footer">
-                                <span className="lp-fn-footer-label">Performance + Brand</span>
-                                <span className="lp-fn-footer-status">Scaling</span>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </section>
 

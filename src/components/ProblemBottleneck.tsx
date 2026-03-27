@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import BottleneckParticles from './BottleneckParticles';
+import type { BottleneckParticlesRef } from './BottleneckParticles';
 import '../pages/LandingPage.css';
 
 const problemsData = [
@@ -12,10 +14,10 @@ const problemsData = [
             'Optimised individually, not for your outcome',
             '4–6 months to get everything aligned'
         ],
-        color: 'var(--lp-surface-variant)', 
-        activeColor: 'rgba(26, 179, 148, 0.15)',
-        borderColor: 'var(--lp-outline)',
-        activeBorderColor: 'var(--lp-primary)'
+        color: '#ffcdd2', 
+        activeColor: 'rgba(239, 154, 154, 0.2)',
+        borderColor: '#e57373',
+        activeBorderColor: '#ef5350'
     },
     {
         id: '002',
@@ -27,10 +29,10 @@ const problemsData = [
             'Compliance mistakes cost $50K+',
             'No leverage — every task is manual'
         ],
-        color: 'var(--lp-surface-variant)', 
-        activeColor: 'rgba(26, 179, 148, 0.15)',
-        borderColor: 'var(--lp-outline)',
-        activeBorderColor: 'var(--lp-primary)'
+        color: '#ffb7b2', 
+        activeColor: 'rgba(229, 115, 115, 0.2)',
+        borderColor: '#ef5350',
+        activeBorderColor: '#e53935'
     },
     {
         id: '003',
@@ -42,18 +44,41 @@ const problemsData = [
             'Difficult to pivot when one part breaks',
             'Still running 4 projects instead of 6'
         ],
-        color: 'var(--lp-surface-variant)', 
-        activeColor: 'rgba(26, 179, 148, 0.15)',
-        borderColor: 'var(--lp-outline)',
-        activeBorderColor: 'var(--lp-primary)'
+        color: '#ff8a80', 
+        activeColor: 'rgba(211, 47, 47, 0.2)',
+        borderColor: '#e53935',
+        activeBorderColor: '#c62828'
     }
 ];
 
 export default function ProblemBottleneck() {
     const [activeId, setActiveId] = useState<string | null>(null);
+    const [burstingIds, setBurstingIds] = useState<string[]>([]);
     const [userInteracted, setUserInteracted] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    
     const containerRef = useRef<HTMLDivElement>(null);
+    const particlesRef = useRef<BottleneckParticlesRef>(null);
+
+    // Helper: Trigger burst and immediately hide the active bubble for 500ms
+    const triggerCloseBurst = (idToClose: string) => {
+        const el = document.getElementById(`bubble-${idToClose}`);
+        if (el && containerRef.current && particlesRef.current) {
+            const rect = el.getBoundingClientRect();
+            const container = containerRef.current.getBoundingClientRect();
+            // Calculate center of the active bubble
+            const x = rect.left + rect.width / 2 - container.left;
+            const y = rect.top + rect.height / 2 - container.top;
+            const color = problemsData.find(p => p.id === idToClose)?.activeBorderColor || '#ef5350';
+            
+            particlesRef.current.burst(x, y, color);
+        }
+
+        setBurstingIds(prev => [...prev, idToClose]);
+        setTimeout(() => {
+            setBurstingIds(prev => prev.filter(i => i !== idToClose));
+        }, 300); // 300ms until it respawns in the bottleneck
+    };
 
     // Intersection + Interval mapped automation logic
     useEffect(() => {
@@ -64,11 +89,14 @@ export default function ProblemBottleneck() {
             if (interval || userInteracted || isHovered) return;
             interval = setInterval(() => {
                 setActiveId(prev => {
+                    if (prev) {
+                        triggerCloseBurst(prev);
+                    }
                     if (!prev) return problemsData[0].id;
                     const idx = problemsData.findIndex(p => p.id === prev);
                     return problemsData[(idx + 1) % problemsData.length].id;
                 });
-            }, 6000); // 6s to read text
+            }, 6000); 
         };
 
         const stopAutoplay = () => {
@@ -102,8 +130,12 @@ export default function ProblemBottleneck() {
         e.stopPropagation();
         setUserInteracted(true);
         if (activeId === id) {
+            triggerCloseBurst(id);
             setActiveId(null);
         } else {
+            if (activeId) {
+                triggerCloseBurst(activeId);
+            }
             setActiveId(id);
         }
     };
@@ -115,6 +147,8 @@ export default function ProblemBottleneck() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            <BottleneckParticles ref={particlesRef} />
+
             <svg className="lp-bottleneck-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
                 {/* Hand-drawn style bottleneck lines - Wider funnel, wider neck stopping at mid-body */}
                 <path d="M 0,10 C 250,90 350,110 550,110" fill="none" stroke="var(--lp-on-surface)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" className="lp-bottleneck-line" />
@@ -124,13 +158,15 @@ export default function ProblemBottleneck() {
             <div className="lp-bottleneck-track">
                 {problemsData.map((problem, index) => {
                     const isActive = activeId === problem.id;
+                    const isBursting = burstingIds.includes(problem.id);
                     const hasActive = activeId !== null;
                     const isFaded = hasActive && !isActive;
 
                     return (
                         <div
+                            id={`bubble-${problem.id}`}
                             key={problem.id}
-                            className={`lp-bottleneck-bubble ${isActive ? 'active' : ''} ${isFaded ? 'faded' : ''}`}
+                            className={`lp-bottleneck-bubble ${isActive ? 'active' : ''} ${isFaded ? 'faded' : ''} ${isBursting ? 'bursting' : ''}`}
                             style={{
                                 '--bubble-color': problem.color,
                                 '--active-color': problem.activeColor,
