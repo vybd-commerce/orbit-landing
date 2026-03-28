@@ -3855,58 +3855,79 @@
 }
 
 .tg-orbit-label {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     color: var(--lp-primary);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .tg-orbit-heading {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 800;
     color: var(--lp-on-surface);
     margin: 0;
-    line-height: 1.1;
-    letter-spacing: -0.04em;
+    line-height: 1;
+    letter-spacing: -0.05em;
 }
 
 .tg-orbit-sub {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     color: var(--lp-on-surface-variant);
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
+    max-width: 40ch;
 }
 
 /* Active Testimonial Card */
 .tg-active-testimonial-card {
     background: #ffffff;
     border: 1px solid var(--lp-outline-variant);
-    border-radius: 24px;
-    padding: 2.5rem;
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+    border-radius: 32px;
+    padding: 3rem;
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    gap: 2.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
 }
 
 .tg-active-testimonial-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 30px 50px -15px rgba(0, 0, 0, 0.08);
+    transform: translateY(-8px);
+    box-shadow: 0 50px 120px -25px rgba(0, 0, 0, 0.12);
 }
 
-.tg-quote-header {
+.tg-card-top-row {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tg-quote-icon {
+    font-size: 5rem;
+    line-height: 1;
+    color: #f1f3f7;
+    font-family: serif;
+    margin-top: -1rem;
+    margin-left: -0.5rem;
+}
+
+.tg-card-meta {
+    display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .tg-quote-number {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     color: #9ca3af;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
 }
 
 .tg-pulse-indicator {
@@ -3914,59 +3935,71 @@
     height: 10px;
     background-color: var(--lp-primary);
     border-radius: 50%;
-    box-shadow: 0 0 0 4px rgba(26, 179, 148, 0.2);
-    animation: tg-pulse 2s infinite ease-in-out;
+    position: relative;
 }
 
-@keyframes tg-pulse {
-    0% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(26, 179, 148, 0.4);
-    }
-    70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 8px rgba(26, 179, 148, 0);
-    }
-    100% {
-        transform: scale(0.9);
-        box-shadow: 0 0 0 0 rgba(26, 179, 148, 0);
-    }
+.tg-pulse-indicator::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: var(--lp-primary);
+    opacity: 0.2;
+    animation: tg-pulse-ring 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@keyframes tg-pulse-ring {
+    0% { transform: scale(0.6); opacity: 0.4; }
+    100% { transform: scale(1.8); opacity: 0; }
 }
 
 .tg-main-quote {
-    font-size: 1.25rem;
-    line-height: 1.6;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 600;
     color: var(--lp-on-surface);
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
 .tg-main-client {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
+    margin-top: auto;
 }
 
 .tg-avatar {
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     object-fit: cover;
+    background: var(--lp-surface-variant);
 }
 
 .tg-client-details {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.2rem;
 }
 
 .tg-client-details strong {
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--lp-on-surface);
 }
 
 .tg-client-details span {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--lp-on-surface-variant);
+    font-weight: 500;
+}
+
+.tg-client-metric {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--lp-primary);
+    margin-top: 0.25rem;
 }
 
 /* Right Globe Area */

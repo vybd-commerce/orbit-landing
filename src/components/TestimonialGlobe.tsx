@@ -22,7 +22,19 @@ interface TestimonialData {
     name: string;
     title: string;
     avatar: string;
+    metric: string;
 }
+
+const baseMetrics = [
+    "→ $82K US revenue, month one",
+    "→ 2.4x conversion lift",
+    "→ US market entry in 12 days",
+    "→ 118% ROI in Q1",
+    "→ 45% lower logistics cost",
+    "→ $1.2M annual savings",
+    "→ 98% customer satisfaction",
+    "→ 3.5x faster fulfillment"
+];
 
 const testimonialsData: TestimonialData[] = [];
 for (let i = 0; i < N; i++) {
@@ -32,6 +44,7 @@ for (let i = 0; i < N; i++) {
         name: names[i % names.length],
         title: roles[i % roles.length],
         avatar: `https://i.pravatar.cc/100?img=${(i % 50) + 1}`,
+        metric: baseMetrics[i % baseMetrics.length],
     });
 }
 
@@ -59,14 +72,16 @@ export default function TestimonialGlobe() {
     const nameRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLSpanElement>(null);
     const avatarRef = useRef<HTMLImageElement>(null);
+    const metricRef = useRef<HTMLSpanElement>(null);
 
     const updateCard = useCallback((index: number) => {
         const data = testimonialsData[index];
         if (indexRef.current) indexRef.current.innerText = `#0${data.id} / ${N}`;
-        if (quoteRef.current) quoteRef.current.innerText = `"${data.quote}"`;
+        if (quoteRef.current) quoteRef.current.innerText = data.quote;
         if (nameRef.current) nameRef.current.innerText = data.name;
         if (titleRef.current) titleRef.current.innerText = data.title;
         if (avatarRef.current) avatarRef.current.src = data.avatar;
+        if (metricRef.current) metricRef.current.innerText = data.metric;
     }, []);
 
     useEffect(() => {
@@ -213,13 +228,18 @@ export default function TestimonialGlobe() {
                     </header>
 
                     <div className="tg-active-testimonial-card">
-                        <div className="tg-quote-header">
-                            <span className="tg-quote-number" ref={indexRef}>#01 / 80</span>
-                            <span className="tg-pulse-indicator"></span>
+                        <div className="tg-card-top-row">
+                            <div className="tg-quote-icon">“</div>
+                            <div className="tg-card-meta">
+                                <span className="tg-quote-number" ref={indexRef}>#01 / 80</span>
+                                <span className="tg-pulse-indicator"></span>
+                            </div>
                         </div>
+
                         <p className="tg-main-quote" ref={quoteRef}>
-                            "We've established Bluelofts to fulfill our promise of responsible development that improves lives across the United States. Orbit's infrastructure made this possible."
+                            Absolutely stunning turnaround. Orbit has been a game-changer for our international strategy.
                         </p>
+
                         <div className="tg-main-client">
                             <img
                                 src="https://i.pravatar.cc/100?img=11"
@@ -230,6 +250,7 @@ export default function TestimonialGlobe() {
                             <div className="tg-client-details">
                                 <strong ref={nameRef}>John Williams</strong>
                                 <span ref={titleRef}>CEO @ Bluelofts</span>
+                                <span className="tg-client-metric" ref={metricRef}>→ $82K US revenue, month one</span>
                             </div>
                         </div>
                     </div>
