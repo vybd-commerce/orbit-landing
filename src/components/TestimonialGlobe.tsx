@@ -3,48 +3,84 @@ import { useEffect, useRef, useCallback } from "react";
 const N = 80;
 const RADIUS = 230;
 
-const baseQuotes = [
-    "Absolutely stunning turnaround. Orbit has been a game-changer.",
-    "The only platform that understood our B2B SaaS needs right out of the box.",
-    "Our revenue doubled in a month. I cannot recommend this highly enough.",
-    "Incredible support and flawless execution across the board. They moved incredibly fast.",
-    "Smooth integration, stellar documentation, and immediately profitable.",
-    "A true game changer for our international strategy. Can't imagine selling without them.",
-    "The ROI we've seen since switching is simply undeniable. It pays for itself.",
-    "We've established Bluelofts to fulfill our promise of responsible development that improves lives.",
-];
-const names = ["John W.", "Sarah L.", "Alex D.", "Michael B.", "David W.", "Emily R.", "Priya M.", "Lisa T."];
-const roles = ["CEO @ Bluelofts", "CTO @ Bayangrom", "Founder @ TechNova", "VP Sales @ GrowthInc", "Director @ Logix", "Engineer @ SaaSable", "Lead @ HomeGoods", "CEO @ MetricsAI"];
-
 interface TestimonialData {
     id: number;
     quote: string;
     name: string;
     title: string;
-    avatar: string;
+    initials: string;
     metric: string;
 }
 
-const baseMetrics = [
-    "→ $82K US revenue, month one",
-    "→ 2.4x conversion lift",
-    "→ US market entry in 12 days",
-    "→ 118% ROI in Q1",
-    "→ 45% lower logistics cost",
-    "→ $1.2M annual savings",
-    "→ 98% customer satisfaction",
-    "→ 3.5x faster fulfillment"
+const testimonialsSource = [
+    {
+        name: "Keshida Layone",
+        initials: "KL",
+        quote: "There's a particular kind of silence when your work is good and no one who can afford it knows you exist. Orbit broke that silence. Not with noise — with precision. The right eyes found me. The rest followed.",
+        title: "Visual Artist & Founder, Fine Art Brand — USA",
+        metric: "→ First international collector sales, week three"
+    },
+    {
+        name: "Bayangrom",
+        initials: "B",
+        quote: "The brand was alive. The orders were coming. But the backend was swallowing us whole. Orbit took the weight — literally. Warehousing, shipping, fulfilment — handled. We got back to building, not firefighting.",
+        title: "Founder, Cultural Streetwear Brand — India",
+        metric: "→ Fulfilment time cut from 12 days to 3"
+    },
+    {
+        name: "Emsworth Terry Cotton",
+        initials: "ETC",
+        quote: "We didn't need someone to just sell for us. We needed to understand the room — who was already in it, what they were charging, where the gap was. Orbit came back with answers we hadn't thought to ask for. We positioned around them and it landed exactly right.",
+        title: "Founder, Premium Cotton Goods Brand — UK",
+        metric: "→ Wholesale enquiries up 4x, month two"
+    },
+    {
+        name: "Karama",
+        initials: "K",
+        quote: "Every market has a language. Ours didn't translate — not because the brand wasn't strong, but because we were speaking to people who didn't have the context yet. Orbit built that bridge. Same brand, new conversation.",
+        title: "Creative Director, Fashion Brand — USA",
+        metric: "→ First international stockist secured, week six"
+    },
+    {
+        name: "Ji-Hoon K.",
+        initials: "JK",
+        quote: "We'd been trying to crack the US market for eighteen months. We had a great product, a team that believed in it, and no idea how to navigate FDA requirements at the same time as an Amazon launch. Orbit had us live in twelve days. I still don't fully understand how they moved that fast.",
+        title: "Founder, Premium Skincare Brand — Seoul, Korea",
+        metric: "→ $82K US revenue, month one"
+    },
+    {
+        name: "Priya M.",
+        initials: "PM",
+        quote: "We went from zero US presence to $40K in revenue in our first month. I didn't have to think about warehousing or Amazon once.",
+        title: "CEO, Home Goods Brand — Bangalore, India",
+        metric: "→ $40K US revenue, month one"
+    },
+    {
+        name: "Lucas M.",
+        initials: "LM",
+        quote: "Compliance in the US is a massive roadblock for European health tech. We anticipated six months of deep legal review before even seeing a customer. Orbit's native infrastructure bypassed the friction completely—we were fully compliant and selling in under three weeks.",
+        title: "Director of Ops, HealthTech Brand — Berlin, Germany",
+        metric: "→ US market entry accelerated by 5 months"
+    },
+    {
+        name: "Elena S.",
+        initials: "ES",
+        quote: "Scaling into North America felt like a gamble until we found Orbit. They didn't just provide a platform; they provided a roadmap. The level of operational detail they handle allowed us to focus entirely on the creative side of the brand.",
+        title: "Founder, Sustainable Decor Brand — Mexico City, Mexico",
+        metric: "→ 3x growth in North American reach, quarter one"
+    }
 ];
 
 const testimonialsData: TestimonialData[] = [];
 for (let i = 0; i < N; i++) {
+    const source = testimonialsSource[i % testimonialsSource.length];
     testimonialsData.push({
-        id: i + 1,
-        quote: baseQuotes[i % baseQuotes.length],
-        name: names[i % names.length],
-        title: roles[i % roles.length],
-        avatar: `https://i.pravatar.cc/100?img=${(i % 50) + 1}`,
-        metric: baseMetrics[i % baseMetrics.length],
+        id: (i % testimonialsSource.length) + 1,
+        quote: source.quote,
+        name: source.name,
+        title: source.title,
+        initials: source.initials,
+        metric: source.metric,
     });
 }
 
@@ -71,16 +107,16 @@ export default function TestimonialGlobe() {
     const quoteRef = useRef<HTMLParagraphElement>(null);
     const nameRef = useRef<HTMLElement>(null);
     const titleRef = useRef<HTMLSpanElement>(null);
-    const avatarRef = useRef<HTMLImageElement>(null);
+    const initialsRef = useRef<HTMLSpanElement>(null);
     const metricRef = useRef<HTMLSpanElement>(null);
 
     const updateCard = useCallback((index: number) => {
         const data = testimonialsData[index];
-        if (indexRef.current) indexRef.current.innerText = `#0${data.id} / ${N}`;
+        if (indexRef.current) indexRef.current.innerText = `#0${data.id} / 08`;
         if (quoteRef.current) quoteRef.current.innerText = data.quote;
         if (nameRef.current) nameRef.current.innerText = data.name;
         if (titleRef.current) titleRef.current.innerText = data.title;
-        if (avatarRef.current) avatarRef.current.src = data.avatar;
+        if (initialsRef.current) initialsRef.current.innerText = data.initials;
         if (metricRef.current) metricRef.current.innerText = data.metric;
     }, []);
 
@@ -221,36 +257,35 @@ export default function TestimonialGlobe() {
                 <div className="tg-content-side">
                     <header className="tg-grid-header">
                         <span className="tg-orbit-label">Global Impact ↗</span>
-                        <h2 className="tg-orbit-heading">The world revolves around Orbit</h2>
+                        <h2 className="tg-orbit-heading">Built around companies that move the world</h2>
                         <p className="tg-orbit-sub">
-                            Grab and spin our interactive globe to see how we've scaled brands across the Americas.
+                            Spin the world. Our clients left something for you.
                         </p>
                     </header>
 
-                    <div className="tg-active-testimonial-card">
+                    <div className="tg-active-testimonial-card shadow-premium">
                         <div className="tg-card-top-row">
-                            <div className="tg-quote-icon">“</div>
-                            <div className="tg-card-meta">
-                                <span className="tg-quote-number" ref={indexRef}>#01 / 80</span>
-                                <span className="tg-pulse-indicator"></span>
+                            <div className="tg-quote-section-group">
+                                <div className="tg-quote-icon-large">“</div>
+                                <div className="tg-card-meta-below">
+                                    <span className="tg-quote-number" ref={indexRef}>#01 / 08</span>
+                                    <span className="tg-pulse-indicator"></span>
+                                </div>
                             </div>
                         </div>
 
                         <p className="tg-main-quote" ref={quoteRef}>
-                            Absolutely stunning turnaround. Orbit has been a game-changer for our international strategy.
+                            The brand was alive. The orders were coming. But the backend was swallowing us whole. Orbit took the weight — literally. 
                         </p>
 
                         <div className="tg-main-client">
-                            <img
-                                src="https://i.pravatar.cc/100?img=11"
-                                alt="Avatar"
-                                className="tg-avatar"
-                                ref={avatarRef}
-                            />
+                            <div className="tg-pulsing-orb">
+                                <span className="tg-orb-initials" ref={initialsRef}>KL</span>
+                            </div>
                             <div className="tg-client-details">
-                                <strong ref={nameRef}>John Williams</strong>
-                                <span ref={titleRef}>CEO @ Bluelofts</span>
-                                <span className="tg-client-metric" ref={metricRef}>→ $82K US revenue, month one</span>
+                                <strong ref={nameRef}>Keshida Layone</strong>
+                                <span ref={titleRef}>Visual Artist & Founder, Fine Art Brand — USA</span>
+                                <span className="tg-client-metric" ref={metricRef}>→ First international collector sales, week three</span>
                             </div>
                         </div>
                     </div>
