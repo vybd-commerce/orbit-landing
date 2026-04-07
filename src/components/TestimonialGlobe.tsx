@@ -1,16 +1,5 @@
-import { useEffect, useRef, useCallback } from "react";
-
-const N = 80;
-const RADIUS = 230;
-
-interface TestimonialData {
-    id: number;
-    quote: string;
-    name: string;
-    title: string;
-    initials: string;
-    metric: string;
-}
+import { useEffect, useState } from "react";
+import { Globe } from "./ui/cobe-globe";
 
 const testimonialsSource = [
     {
@@ -71,184 +60,45 @@ const testimonialsSource = [
     }
 ];
 
-const testimonialsData: TestimonialData[] = [];
-for (let i = 0; i < N; i++) {
-    const source = testimonialsSource[i % testimonialsSource.length];
-    testimonialsData.push({
-        id: (i % testimonialsSource.length) + 1,
-        quote: source.quote,
-        name: source.name,
-        title: source.title,
-        initials: source.initials,
-        metric: source.metric,
-    });
-}
+const globeMarkers = [
+  { id: "sf", location: [37.7595, -122.4367] as [number, number], label: "San Francisco" },
+  { id: "nyc", location: [40.7128, -74.006] as [number, number], label: "New York" },
+  { id: "tokyo", location: [35.6762, 139.6503] as [number, number], label: "Tokyo" },
+  { id: "london", location: [51.5074, -0.1278] as [number, number], label: "London" },
+  { id: "sydney", location: [-33.8688, 151.2093] as [number, number], label: "Sydney" },
+  { id: "capetown", location: [-33.9249, 18.4241] as [number, number], label: "Cape Town" },
+  { id: "dubai", location: [25.2048, 55.2708] as [number, number], label: "Dubai" },
+  { id: "paris", location: [48.8566, 2.3522] as [number, number], label: "Paris" },
+  { id: "saopaulo", location: [-23.5505, -46.6333] as [number, number], label: "São Paulo" },
+];
 
-const phi = Math.PI * (3 - Math.sqrt(5));
-
-interface TileData {
-    el: HTMLDivElement | null;
-    lat: number;
-    lon: number;
-    index: number;
-}
+const globeArcs = [
+  {
+    id: "sf-tokyo",
+    from: [37.7595, -122.4367] as [number, number],
+    to: [35.6762, 139.6503] as [number, number],
+    label: "SF → Tokyo"
+  },
+  {
+    id: "nyc-london",
+    from: [40.7128, -74.006] as [number, number],
+    to: [51.5074, -0.1278] as [number, number],
+    label: "NYC → London"
+  },
+];
 
 export default function TestimonialGlobe() {
-    const sphereRef = useRef<HTMLDivElement>(null);
-    const sceneRef = useRef<HTMLDivElement>(null);
-    const tilesRef = useRef<TileData[]>([]);
-    const activeTileRef = useRef<HTMLDivElement | null>(null);
-    const animFrameRef = useRef<number>(0);
+    const [activeIndex, setActiveIndex] = useState(0);
 
-    const rotRef = useRef({ x: -10, y: 0 });
-    const dragRef = useRef({ isDragging: false, startX: 0, startY: 0, startRotX: -10, startRotY: 0 });
-
-    const indexRef = useRef<HTMLSpanElement>(null);
-    const quoteRef = useRef<HTMLParagraphElement>(null);
-    const nameRef = useRef<HTMLElement>(null);
-    const titleRef = useRef<HTMLSpanElement>(null);
-    const initialsRef = useRef<HTMLSpanElement>(null);
-    const metricRef = useRef<HTMLSpanElement>(null);
-
-    const updateCard = useCallback((index: number) => {
-        const data = testimonialsData[index];
-        if (indexRef.current) indexRef.current.innerText = `#0${data.id} / 08`;
-        if (quoteRef.current) quoteRef.current.innerText = data.quote;
-        if (nameRef.current) nameRef.current.innerText = data.name;
-        if (titleRef.current) titleRef.current.innerText = data.title;
-        if (initialsRef.current) initialsRef.current.innerText = data.initials;
-        if (metricRef.current) metricRef.current.innerText = data.metric;
+    // Auto-scroll testimonials
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveIndex((prev) => (prev + 1) % testimonialsSource.length);
+        }, 5000);
+        return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        const sphere = sphereRef.current;
-        const scene = sceneRef.current;
-        if (!sphere || !scene) return;
-
-        // Clear any existing tiles
-        sphere.innerHTML = "";
-        tilesRef.current = [];
-
-        // Build tiles
-        for (let i = 0; i < N; i++) {
-            const y = 1 - (i / (N - 1)) * 2;
-            Math.sqrt(1 - y * y); // radial distance (used implicitly in lat/lon calc)
-            const theta = phi * i;
-            const lat = Math.asin(y) * (180 / Math.PI);
-            const lon = theta * (180 / Math.PI);
-
-            const rootEl = document.createElement("div");
-            rootEl.className = "tg-globe-tile";
-            rootEl.style.transform = `rotateY(${lon}deg) rotateX(${lat}deg) translateZ(${RADIUS}px)`;
-            rootEl.dataset.lat = String(lat);
-            rootEl.dataset.lon = String(lon);
-
-            const inner = document.createElement("div");
-            inner.className = "tg-tile-inner";
-            rootEl.appendChild(inner);
-
-            sphere.appendChild(rootEl);
-            tilesRef.current.push({ el: rootEl, lat, lon, index: i });
-        }
-
-        // Drag handlers
-        const onMouseDown = (e: MouseEvent) => {
-            dragRef.current.isDragging = true;
-            dragRef.current.startX = e.clientX;
-            dragRef.current.startY = e.clientY;
-            dragRef.current.startRotX = rotRef.current.x;
-            dragRef.current.startRotY = rotRef.current.y;
-        };
-
-        const onMouseMove = (e: MouseEvent) => {
-            if (!dragRef.current.isDragging) return;
-            const deltaX = e.clientX - dragRef.current.startX;
-            const deltaY = e.clientY - dragRef.current.startY;
-            rotRef.current.y = dragRef.current.startRotY + deltaX * 0.4;
-            rotRef.current.x = Math.max(-85, Math.min(85, dragRef.current.startRotX - deltaY * 0.4));
-        };
-
-        const onMouseUp = () => { dragRef.current.isDragging = false; };
-
-        // Touch handlers
-        const onTouchStart = (e: TouchEvent) => {
-            if (e.touches.length !== 1) return;
-            dragRef.current.isDragging = true;
-            dragRef.current.startX = e.touches[0].clientX;
-            dragRef.current.startY = e.touches[0].clientY;
-            dragRef.current.startRotX = rotRef.current.x;
-            dragRef.current.startRotY = rotRef.current.y;
-        };
-
-        const onTouchMove = (e: TouchEvent) => {
-            if (!dragRef.current.isDragging || e.touches.length !== 1) return;
-            const deltaX = e.touches[0].clientX - dragRef.current.startX;
-            const deltaY = e.touches[0].clientY - dragRef.current.startY;
-            rotRef.current.y = dragRef.current.startRotY + deltaX * 0.4;
-            rotRef.current.x = Math.max(-85, Math.min(85, dragRef.current.startRotX - deltaY * 0.4));
-        };
-
-        const onTouchEnd = () => { dragRef.current.isDragging = false; };
-
-        scene.addEventListener("mousedown", onMouseDown);
-        window.addEventListener("mousemove", onMouseMove);
-        window.addEventListener("mouseup", onMouseUp);
-        window.addEventListener("mouseleave", onMouseUp);
-        scene.addEventListener("touchstart", onTouchStart, { passive: true });
-        window.addEventListener("touchmove", onTouchMove, { passive: true });
-        window.addEventListener("touchend", onTouchEnd);
-
-        // Animation loop
-        const tick = () => {
-            if (!dragRef.current.isDragging) {
-                rotRef.current.y -= 0.15;
-            }
-
-            sphere.style.transform = `rotateX(${rotRef.current.x}deg) rotateY(${rotRef.current.y}deg)`;
-
-            let minOffset = Infinity;
-            let winner: TileData | null = null;
-
-            for (let i = 0; i < tilesRef.current.length; i++) {
-                const t = tilesRef.current[i];
-                let visualLon = (t.lon + rotRef.current.y) % 360;
-                if (visualLon > 180) visualLon -= 360;
-                if (visualLon < -180) visualLon += 360;
-
-                let visualLat = (t.lat + rotRef.current.x) % 360;
-                if (visualLat > 180) visualLat -= 360;
-                if (visualLat < -180) visualLat += 360;
-
-                const dist = Math.sqrt(visualLon * visualLon + visualLat * visualLat);
-                if (dist < minOffset) {
-                    minOffset = dist;
-                    winner = t;
-                }
-            }
-
-            if (winner && winner.el && winner.el !== activeTileRef.current) {
-                if (activeTileRef.current) activeTileRef.current.classList.remove("active");
-                winner.el.classList.add("active");
-                activeTileRef.current = winner.el;
-                updateCard(winner.index);
-            }
-
-            animFrameRef.current = requestAnimationFrame(tick);
-        };
-
-        tick();
-
-        return () => {
-            cancelAnimationFrame(animFrameRef.current);
-            scene.removeEventListener("mousedown", onMouseDown);
-            window.removeEventListener("mousemove", onMouseMove);
-            window.removeEventListener("mouseup", onMouseUp);
-            window.removeEventListener("mouseleave", onMouseUp);
-            scene.removeEventListener("touchstart", onTouchStart);
-            window.removeEventListener("touchmove", onTouchMove);
-            window.removeEventListener("touchend", onTouchEnd);
-        };
-    }, [updateCard]);
+    const active = testimonialsSource[activeIndex];
 
     return (
         <section className="tg-globe-section" id="testimonial-globe">
@@ -263,46 +113,49 @@ export default function TestimonialGlobe() {
                         </p>
                     </header>
 
-                    <div className="tg-active-testimonial-card shadow-premium">
+                    <div className="tg-active-testimonial-card shadow-premium" style={{ minHeight: '300px' }}>
                         <div className="tg-card-top-row">
                             <div className="tg-quote-section-group">
                                 <div className="tg-quote-icon-large">“</div>
                                 <div className="tg-card-meta-below">
-                                    <span className="tg-quote-number" ref={indexRef}>#01 / 08</span>
+                                    <span className="tg-quote-number">#{String(activeIndex + 1).padStart(2, '0')} / 08</span>
                                     <span className="tg-pulse-indicator"></span>
                                 </div>
                             </div>
                         </div>
 
-                        <p className="tg-main-quote" ref={quoteRef}>
-                            The brand was alive. The orders were coming. But the backend was swallowing us whole. Orbit took the weight — literally. 
+                        <p className="tg-main-quote">
+                            {active.quote}
                         </p>
 
                         <div className="tg-main-client">
                             <div className="tg-pulsing-orb">
-                                <span className="tg-orb-initials" ref={initialsRef}>KL</span>
+                                <span className="tg-orb-initials">{active.initials}</span>
                             </div>
                             <div className="tg-client-details">
-                                <strong ref={nameRef}>Keshida Layone</strong>
-                                <span ref={titleRef}>Visual Artist & Founder, Fine Art Brand — USA</span>
-                                <span className="tg-client-metric" ref={metricRef}>→ First international collector sales, week three</span>
+                                <strong>{active.name}</strong>
+                                <span>{active.title}</span>
+                                <span className="tg-client-metric">{active.metric}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Right: Interactive 3D Globe */}
-                <div className="tg-globe-side">
-                    <div className="tg-drag-instruction">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M5 12h14M12 5l-7 7 7 7" />
-                        </svg>
-                        Drag to rotate
-                    </div>
-
-                    <div className="tg-scene" ref={sceneRef}>
-                        <div className="tg-sphere" ref={sphereRef}></div>
-                    </div>
+                <div className="tg-globe-side" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Globe 
+                        markers={globeMarkers}
+                        arcs={globeArcs}
+                        className="w-full max-w-lg"
+                        markerColor={[0.3, 0.45, 0.85]}
+                        baseColor={[1, 1, 1]}
+                        arcColor={[0.3, 0.45, 0.85]}
+                        glowColor={[0.94, 0.93, 0.91]}
+                        dark={0}
+                        mapBrightness={10}
+                        markerSize={0.025}
+                        markerElevation={0.01}
+                    />
                 </div>
             </div>
         </section>
