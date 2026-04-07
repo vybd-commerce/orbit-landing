@@ -1,6 +1,6 @@
 "use client"
 
-import { Globe } from "@/components/ui/cobe-globe"
+import { Globe } from "./cobe-globe"
 
 const markers = [
   { id: "sf", location: [37.7595, -122.4367] as [number, number], label: "San Francisco" },
