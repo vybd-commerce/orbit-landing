@@ -250,10 +250,9 @@ export default function LandingPage() {
                     <nav className="lp-nav">
                         <ul>
                             <li><a href="#functions">Solution</a></li>
-                            <li><a href="#why">Platform</a></li>
+                            <li><a href="#process">How It Works</a></li>
                             <li><a href="#pricing">Pricing</a></li>
-                            <li><a href="#proof">Testimonials</a></li>
-                            <li><a href="/product">How It Works</a></li>
+                            <li><a href="#testimonials">Testimonials</a></li>
                         </ul>
                     </nav>
 
@@ -569,7 +568,7 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                <div className="lp-custom-plan-banner" style={{ maxWidth: '1080px' }}>
+                <div className="lp-custom-plan-banner">
                     <div className="lp-custom-banner-left">
                         <div className="lp-custom-banner-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
@@ -583,8 +582,8 @@ export default function LandingPage() {
                     </div>
                     <div className="lp-custom-banner-right">
                         <form className="lp-pricing-email-form" onSubmit={(e) => { e.preventDefault(); const btn = e.currentTarget.querySelector('button') as HTMLButtonElement; if (btn) { btn.textContent = '✓ Received'; btn.style.background = '#158d75'; btn.disabled = true; } }}>
-                            <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-                                <input type="email" placeholder="you@brand.com" required style={{ border: '1px solid var(--lp-outline)', borderRadius: '999px', padding: '0.8rem 1.2rem', fontSize: '0.95rem', minWidth: '220px', background: 'var(--lp-surface-variant)', outline: 'none' }} />
+                            <div className="lp-pricing-form-wrapper">
+                                <input type="email" placeholder="you@brand.com" required className="lp-pricing-form-input" />
                                 <button type="submit" className="lp-btn-purple">Talk To Sales →</button>
                             </div>
                         </form>
@@ -620,12 +619,12 @@ export default function LandingPage() {
                     <h3 className="lp-footer-tagline">Commerce, Coordinated.</h3>
                     <div className="lp-footer-nav">
                         <div className="lp-footer-col">
-                            <a href="#why">Orbit Platform</a>
-                            <a href="#functions">Solutions</a>
+                            <a href="#process">How It Works</a>
+                            <a href="#solutions">Solutions</a>
                             <a href="#changelog">Changelog</a>
                         </div>
                         <div className="lp-footer-col">
-                            <a href="#press">Press</a>
+                            <a href="/case-study">Case Study</a>
                             <a href="#pricing">Pricing</a>
                         </div>
                     </div>
