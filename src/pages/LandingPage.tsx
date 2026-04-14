@@ -223,6 +223,28 @@ export default function LandingPage() {
         return () => obs.disconnect();
     }, []);
 
+    // Handle hash navigation - scroll to element when hash changes
+    useEffect(() => {
+        const scrollToHash = () => {
+            const hash = window.location.hash.slice(1); // Remove '#'
+            if (hash) {
+                setTimeout(() => {
+                    const element = document.getElementById(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 100);
+            }
+        };
+
+        // Scroll on initial load
+        scrollToHash();
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', scrollToHash);
+        return () => window.removeEventListener('hashchange', scrollToHash);
+    }, []);
+
 
 
     return (
@@ -250,9 +272,8 @@ export default function LandingPage() {
                     <nav className="lp-nav">
                         <ul>
                             <li><a href="#functions">Solution</a></li>
-                            <li><a href="#process">How It Works</a></li>
-                            <li><a href="#pricing">Pricing</a></li>
                             <li><a href="#testimonials">Testimonials</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
                         </ul>
                     </nav>
 
@@ -619,13 +640,12 @@ export default function LandingPage() {
                     <h3 className="lp-footer-tagline">Commerce, Coordinated.</h3>
                     <div className="lp-footer-nav">
                         <div className="lp-footer-col">
-                            <a href="#process">How It Works</a>
-                            <a href="#solutions">Solutions</a>
-                            <a href="#changelog">Changelog</a>
+                            <a href="/product">How It Works</a>
+                            <a href="/#functions">Solutions</a>
                         </div>
                         <div className="lp-footer-col">
                             <a href="/case-study">Case Study</a>
-                            <a href="#pricing">Pricing</a>
+                            <a href="/#pricing">Pricing</a>
                         </div>
                     </div>
                 </div>
@@ -643,7 +663,6 @@ export default function LandingPage() {
                 <div className="lp-footer-bottom">
                     <div className="lp-footer-logo-small">Orbit</div>
                     <div className="lp-footer-legal">
-                        <a href="/about">About Orbit</a>
                         <a href="/privacy">Privacy</a>
                         <a href="/terms">Terms</a>
                     </div>

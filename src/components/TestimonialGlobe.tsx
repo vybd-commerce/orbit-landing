@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Globe } from "./ui/cobe-globe";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Sorted by longitude: west to east (US → Europe → Asia)
 const testimonialsSource = [
@@ -115,6 +116,16 @@ export default function TestimonialGlobe() {
         }
     };
 
+    const handlePrevious = () => {
+        setActiveIndex((prev) => (prev - 1 + testimonialsSource.length) % testimonialsSource.length);
+        setAutoAdvance(false);
+    };
+
+    const handleNext = () => {
+        setActiveIndex((prev) => (prev + 1) % testimonialsSource.length);
+        setAutoAdvance(false);
+    };
+
     const active = testimonialsSource[activeIndex];
     const activeMarkerId = `t${activeIndex + 1}`;
     const activeMarkerData = globeMarkers.find(m => m.id === activeMarkerId);
@@ -142,7 +153,7 @@ export default function TestimonialGlobe() {
                         </p>
                     </header>
 
-                    <div className="tg-active-testimonial-card shadow-premium" style={{ minHeight: '300px' }}>
+                    <div className="tg-active-testimonial-card shadow-premium\" style={{ minHeight: '280px' }}>
                         <div className="tg-card-top-row">
                             <div className="tg-quote-section-group">
                                 <div className="tg-quote-icon-large">“</div>
@@ -166,6 +177,24 @@ export default function TestimonialGlobe() {
                                 <span>{active.title}</span>
                                 <span className="tg-client-metric">{active.metric}</span>
                             </div>
+                        </div>
+
+                        {/* Navigation Controls Inside Card */}
+                        <div className="tg-nav-controls">
+                            <button 
+                                className="tg-nav-button" 
+                                onClick={handlePrevious}
+                                aria-label="Previous testimonial"
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+                            <button 
+                                className="tg-nav-button" 
+                                onClick={handleNext}
+                                aria-label="Next testimonial"
+                            >
+                                <ChevronRight size={18} />
+                            </button>
                         </div>
                     </div>
                 </div>

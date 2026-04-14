@@ -4015,7 +4015,7 @@ div[id] {
    Testimonial Globe Section
    ======================================== */
 .tg-globe-section {
-    padding: 8rem 2rem;
+    padding: 0.3rem 2rem 4rem;
     display: flex;
     justify-content: center;
     background: var(--lp-surface-variant);
@@ -4028,18 +4028,18 @@ div[id] {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 4rem;
+    gap: 2.5rem;
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
 }
 
 /* Left Content */
 .tg-content-side {
     flex: 1.2;
-    max-width: 650px;
+    max-width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
+    gap: 1.8rem;
     z-index: 2;
 }
 
@@ -4061,7 +4061,7 @@ div[id] {
 }
 
 .tg-orbit-heading {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.8rem, 4vw, 3rem);
     font-weight: 800;
     color: var(--lp-on-surface);
     margin: 0;
@@ -4070,7 +4070,7 @@ div[id] {
 }
 
 .tg-orbit-sub {
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: var(--lp-on-surface-variant);
     line-height: 1.6;
     margin: 0;
@@ -4082,12 +4082,12 @@ div[id] {
 .tg-active-testimonial-card {
     background: #ffffff;
     border: 1px solid var(--lp-outline-variant);
-    border-radius: 28px;
-    padding: 3.5rem;
+    border-radius: 20px;
+    padding: 1.8rem;
     box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 1.4rem;
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
 }
@@ -4110,7 +4110,7 @@ div[id] {
 }
 
 .tg-quote-icon-large {
-    font-size: 7.5rem;
+    font-size: 4.5rem;
     line-height: 0.6;
     color: rgba(26, 179, 148, 0.2); /* Deeper Translucent Orbit Green */
     font-family: serif;
@@ -4158,8 +4158,8 @@ div[id] {
 }
 
 .tg-main-quote {
-    font-size: 1.4rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    line-height: 1.4;
     font-weight: 400;
     font-style: italic;
     color: var(--lp-on-surface);
@@ -4209,13 +4209,13 @@ div[id] {
 }
 
 .tg-client-details strong {
-    font-size: 1.05rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--lp-on-surface);
 }
 
 .tg-client-details span {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: var(--lp-on-surface-variant);
     font-weight: 500;
     line-height: 1.4;
@@ -4236,7 +4236,7 @@ div[id] {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 700px;
+    min-height: 420px;
     transform: translateX(40px); /* Pushing right */
 }
 
@@ -4260,8 +4260,8 @@ div[id] {
 
 /* 3D Scene */
 .tg-scene {
-    width: 650px;
-    height: 650px;
+    width: 380px;
+    height: 380px;
     perspective: 2000px;
     cursor: grab;
     display: flex;
@@ -4312,11 +4312,49 @@ div[id] {
     border: none;
 }
 
+/* Navigation Controls */
+.tg-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    justify-content: flex-start;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--lp-outline);
+}
+
+.tg-nav-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--lp-outline);
+    background: #f5f7fa;
+    color: var(--lp-on-surface-variant);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+}
+
+.tg-nav-button:hover:not(:disabled) {
+    background: var(--lp-surface-variant);
+    border-color: var(--lp-primary);
+    color: var(--lp-primary);
+    transform: scale(1.08);
+}
+
+.tg-nav-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 /* ── Testimonial Globe Responsive ── */
 @media (max-width: 1100px) {
     .tg-dual-panel {
         flex-direction: column;
-        gap: 3rem;
+        gap: 2rem;
     }
 
     .tg-content-side {
@@ -4326,16 +4364,16 @@ div[id] {
     }
 
     .tg-orbit-heading {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .tg-globe-side {
-        min-height: 450px;
+        min-height: 320px;
     }
 
     .tg-scene {
-        width: 450px;
-        height: 450px;
+        width: 300px;
+        height: 300px;
     }
 }
 
@@ -4353,15 +4391,20 @@ div[id] {
     }
 
     .tg-globe-side {
-        min-height: 350px;
+        min-height: 280px;
     }
 
     .tg-scene {
-        width: 320px;
-        height: 320px;
+        width: 250px;
+        height: 250px;
     }
 
     .tg-drag-instruction {
         display: none;
+    }
+
+    .tg-nav-button {
+        width: 40px;
+        height: 40px;
     }
 }
