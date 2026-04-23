@@ -644,7 +644,7 @@ export default function LandingPage() {
                             <a href="/#functions">Solutions</a>
                         </div>
                         <div className="lp-footer-col">
-                            <a href="/case-study">Case Study</a>
+                            <a href="/case-studies">Case Study</a>
                             <a href="/#pricing">Pricing</a>
                         </div>
                     </div>
