@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import MetricItem from "../components/case-studies/MetricItem";
 import { caseStudies } from "../data/caseStudies";
+import "./LandingPage.css";
 import "./CaseStudies.css";
 
 export default function CaseStudyDetailPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const { slug } = useParams<{ slug: string }>();
   const caseStudy = caseStudies.find((item) => item.slug === slug);
 
@@ -12,72 +16,145 @@ export default function CaseStudyDetailPage() {
   }
 
   return (
-    <main className="case-page-shell">
-      <article className="case-detail-page">
-        <Link to="/case-studies" className="case-back-link">
-          ← Back to case studies
-        </Link>
+    <div className="landing-page">
+      <div className="lp-header-wrapper">
+        <header className="lp-header">
+          <a href="/" className="lp-logo">
+            <span className="lp-logo-text">Orbit</span>
+          </a>
 
-        <header className="case-detail-header">
-          <span className="case-study-category">{caseStudy.category}</span>
-          <h1>{caseStudy.title}</h1>
-          <p>{caseStudy.summary}</p>
+          <input
+            className="lp-menu-toggle"
+            type="checkbox"
+            id="lp-menu-toggle"
+            checked={menuOpen}
+            onChange={() => setMenuOpen(!menuOpen)}
+          />
+          <label className="lp-menu-btn" htmlFor="lp-menu-toggle">
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            <span className="lp-sr-only">Toggle Menu</span>
+          </label>
+
+          <nav className="lp-nav">
+            <ul>
+              <li><a href="/#functions">Solution</a></li>
+              <li><a href="/#testimonials">Testimonials</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+            </ul>
+          </nav>
+
+          <div className="lp-header-cta">
+            <button
+              className="lp-btn lp-btn-primary"
+              onClick={() => (window.location.href = "/auth")}
+            >
+              Get Started
+            </button>
+          </div>
         </header>
+      </div>
 
-        <img
-          src={caseStudy.image}
-          alt={caseStudy.title}
-          className="case-detail-hero"
-        />
+      <main className="case-page-shell">
+        <article className="case-detail-page">
+          <Link to="/case-studies" className="case-back-link">
+            ← Back to case studies
+          </Link>
 
-        <section className="case-detail-metrics">
-          {caseStudy.metrics.map((metric) => (
-            <MetricItem key={`${caseStudy.slug}-detail-${metric.label}`} metric={metric} />
-          ))}
-        </section>
+          <header className="case-detail-header">
+            <span className="case-study-category">{caseStudy.category}</span>
+            <h1>{caseStudy.title}</h1>
+            <p>{caseStudy.summary}</p>
+          </header>
 
-        <section className="case-detail-content">
-          <div className="case-detail-block">
-            <h2>Overview</h2>
-            <p>{caseStudy.details.overview}</p>
-          </div>
+          <img
+            src={caseStudy.image}
+            alt={caseStudy.title}
+            className="case-detail-hero"
+          />
 
-          <div className="case-detail-block">
-            <h2>Role</h2>
-            <p>{caseStudy.details.role}</p>
-          </div>
+          <section className="case-detail-metrics">
+            {caseStudy.metrics.map((metric) => (
+              <MetricItem key={`${caseStudy.slug}-detail-${metric.label}`} metric={metric} />
+            ))}
+          </section>
 
-          <div className="case-detail-block">
-            <h2>Challenges</h2>
-            <ul>
-              {caseStudy.details.challenges.map((challenge) => (
-                <li key={challenge}>{challenge}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="case-detail-block">
-            <h2>Solutions</h2>
-            <ul>
-              {caseStudy.details.solutions.map((solution) => (
-                <li key={solution}>{solution}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="case-detail-block">
-            <h2>Impact</h2>
-            <p>{caseStudy.details.impact}</p>
-          </div>
-
-          {caseStudy.details.ctaTitle && caseStudy.details.ctaText ? (
-            <div className="case-cta-card">
-              <h3>{caseStudy.details.ctaTitle}</h3>
-              <p>{caseStudy.details.ctaText}</p>
+          <section className="case-detail-content">
+            <div className="case-detail-block">
+              <h2>Overview</h2>
+              <p>{caseStudy.details.overview}</p>
             </div>
-          ) : null}
-        </section>
-      </article>
-    </main>
+
+            <div className="case-detail-block">
+              <h2>Role</h2>
+              <p>{caseStudy.details.role}</p>
+            </div>
+
+            <div className="case-detail-block">
+              <h2>Challenges</h2>
+              <ul>
+                {caseStudy.details.challenges.map((challenge) => (
+                  <li key={challenge}>{challenge}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="case-detail-block">
+              <h2>Solutions</h2>
+              <ul>
+                {caseStudy.details.solutions.map((solution) => (
+                  <li key={solution}>{solution}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="case-detail-block">
+              <h2>Impact</h2>
+              <p>{caseStudy.details.impact}</p>
+            </div>
+
+            {caseStudy.details.ctaTitle && caseStudy.details.ctaText ? (
+              <div className="case-cta-card">
+                <h3>{caseStudy.details.ctaTitle}</h3>
+                <p>{caseStudy.details.ctaText}</p>
+              </div>
+            ) : null}
+          </section>
+        </article>
+      </main>
+
+      <footer className="lp-footer" id="footer">
+        <div className="lp-footer-top">
+          <h3 className="lp-footer-tagline">Commerce, Coordinated.</h3>
+          <div className="lp-footer-nav">
+            <div className="lp-footer-col">
+              <a href="/product">How It Works</a>
+              <a href="/#functions">Solutions</a>
+            </div>
+            <div className="lp-footer-col">
+              <a href="/case-studies">Case Study</a>
+              <a href="/#pricing">Pricing</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="lp-footer-brand">
+          <div className="lp-footer-orbit-container">
+            <div className="lp-footer-ellipses lp-footer-ellipses--thin">
+              <div className="lp-footer-ellipses lp-footer-ellipses--planet"></div>
+            </div>
+            <div className="lp-footer-ellipses lp-footer-ellipses--thick"></div>
+            <span>Orbit</span>
+          </div>
+        </div>
+
+        <div className="lp-footer-bottom">
+          <div className="lp-footer-logo-small">Orbit</div>
+          <div className="lp-footer-legal">
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
