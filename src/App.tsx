@@ -4,6 +4,7 @@ import ProductPage from "./pages/ProductPage";
 import MarkdownPage from "./pages/MarkdownPage";
 import CaseStudiesPage from "./pages/CaseStudiesPage";
 import CaseStudyDetailPage from "./pages/CaseStudyDetailPage";
+import OnboardingPage from "./pages/OnboardingPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />
         <Route path="/privacy" element={<MarkdownPage title="Privacy Policy" filePath="/privacy.md" />} />
         <Route path="/terms" element={<MarkdownPage title="Terms of Service" filePath="/terms.md" />} />
+        <Route path="/onboard" element={<OnboardingPage />} />
       </Routes>
     </Router>
   );
