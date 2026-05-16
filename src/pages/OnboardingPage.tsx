@@ -371,11 +371,10 @@ function buildTask(data: FormData): string {
 }
 
 export default function OnboardingPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const [data, setData] = useState<FormData>(INITIAL);
 
   const steps = t("onboarding.steps", { returnObjects: true }) as Array<{ label: string; sublabel: string }>;
@@ -393,7 +392,6 @@ export default function OnboardingPage() {
     }
 
     setSubmitting(true);
-    setSubmitError(null);
 
     const task = buildTask(data);
     await new Promise((r) => setTimeout(r, 400));
@@ -467,7 +465,6 @@ export default function OnboardingPage() {
                 <span />
               )}
               <div className="ob-footer-right">
-                {submitError && <span className="ob-submit-error">{submitError}</span>}
                 <button
                   className="ob-btn ob-btn--primary"
                   onClick={next}
