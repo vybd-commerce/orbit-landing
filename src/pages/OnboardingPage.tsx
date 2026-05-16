@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   ArrowRight, ArrowLeft, Check,
@@ -408,10 +409,26 @@ function canProceed(step: number, data: FormData): boolean {
 
 // ── Main component ─────────────────────────────────────────────────────────
 
+function buildTask(data: FormData): string {
+  const parts: string[] = [];
+  if (data.brandName) parts.push(`Brand: ${data.brandName}`);
+  if (data.industry)  parts.push(`Industry: ${data.industry}`);
+  if (data.categories.length) parts.push(`Products: ${data.categories.join(", ")}`);
+  if (data.monthlyVolume) parts.push(`Monthly volume: ${data.monthlyVolume} units`);
+  if (data.sellingInUS) parts.push(`Currently selling in US: ${data.sellingInUS}`);
+  if (data.hasHsCodes) parts.push(`Has HS codes: ${data.hasHsCodes}`);
+  if (data.targetChannels.length) parts.push(`Target channels: ${data.targetChannels.join(", ")}`);
+  if (data.launchTimeline) parts.push(`Launch timeline: ${data.launchTimeline}`);
+  if (data.challenges.length) parts.push(`Key challenges: ${data.challenges.join(", ")}`);
+
+  const summary = parts.join(". ");
+  return `Help ${data.brandName || "this brand"} enter the US market. ${summary}. Provide a concrete action plan covering compliance, logistics, and go-to-market strategy.`;
+}
+
 export default function OnboardingPage() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [data, setData] = useState<FormData>(INITIAL);
@@ -433,12 +450,13 @@ export default function OnboardingPage() {
     setSubmitting(true);
     setSubmitError(null);
 
-    // In local dev the API route doesn't exist — skip the call so the
-    // wizard still works end-to-end without running `vercel dev`.
+    const task = buildTask(data);
+
+    // In local dev the API route doesn't exist — skip the Airtable call.
     if (import.meta.env.DEV) {
       await new Promise((r) => setTimeout(r, 600));
-      setSubmitted(true);
       setSubmitting(false);
+      navigate("/control", { state: { task } });
       return;
     }
 
@@ -449,7 +467,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({ ...data, language: i18n.language.startsWith("zh") ? "zh" : "en" }),
       });
       if (!res.ok) throw new Error("failed");
-      setSubmitted(true);
+      navigate("/control", { state: { task } });
     } catch {
       setSubmitError(t("onboarding.submitError"));
     } finally {
@@ -473,12 +491,7 @@ export default function OnboardingPage() {
       </header>
 
       <main className="ob-main">
-        {submitted ? (
-          <div className="ob-card ob-card--wide">
-            <StepSuccess data={data} />
-          </div>
-        ) : (
-          <div className="ob-card">
+        <div className="ob-card">
             {/* Progress bar */}
             <div className="ob-progress-wrap">
               <div className="ob-progress-bar" style={{ width: `${progress}%` }} />
@@ -545,7 +558,6 @@ export default function OnboardingPage() {
               </div>
             </div>
           </div>
-        )}
       </main>
     </div>
   );
