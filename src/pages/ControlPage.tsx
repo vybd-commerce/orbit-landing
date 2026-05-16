@@ -335,17 +335,6 @@ function TaskSubmission() {
     setLines((prev) => [...prev, { ...line, id: nextId() }]);
   }
 
-  function updateLastOfType(type: string, update: Partial<LogLine>) {
-    setLines((prev) => {
-      const idx = [...prev].reverse().findIndex((l) => l.id.startsWith(type + ":"));
-      if (idx === -1) return prev;
-      const realIdx = prev.length - 1 - idx;
-      const updated = [...prev];
-      updated[realIdx] = { ...updated[realIdx], ...update };
-      return updated;
-    });
-  }
-
   // Auto-scroll log to bottom as lines arrive
   useEffect(() => {
     if (logRef.current) {
@@ -378,13 +367,13 @@ function TaskSubmission() {
 
     switch (ev.type) {
       case "connecting":
-        addLine({ id: "", status: "running", icon: "spinner", label: "Connecting to orchestrator" });
+        addLine({ status: "running", icon: "spinner", label: "Connecting to orchestrator" });
         break;
       case "classifying":
         setLines((prev) => prev.map((l) =>
           l.status === "running" ? { ...l, status: "done", icon: "check" } : l
         ));
-        addLine({ id: "", status: "running", icon: "spinner", label: "Classifying intent" });
+        addLine({ status: "running", icon: "spinner", label: "Classifying intent" });
         break;
       case "classified":
         setLines((prev) => prev.map((l) =>
@@ -392,7 +381,7 @@ function TaskSubmission() {
         ));
         break;
       case "decomposing":
-        addLine({ id: "", status: "running", icon: "spinner", label: "Decomposing into sub-tasks" });
+        addLine({ status: "running", icon: "spinner", label: "Decomposing into sub-tasks" });
         break;
       case "decomposed":
         setLines((prev) => prev.map((l) =>
@@ -401,11 +390,11 @@ function TaskSubmission() {
             : l
         ));
         ev.subtasks.forEach((s) => {
-          addLine({ id: "", status: "done", icon: "arrow", label: s.subtask, badge: s.capability, indent: true, dim: false });
+          addLine({ status: "done", icon: "arrow", label: s.subtask, badge: s.capability, indent: true, dim: false });
         });
         break;
       case "routing":
-        addLine({ id: "", status: "running", icon: "spinner", label: `Finding best agent for sub-task ${ev.index + 1}` });
+        addLine({ status: "running", icon: "spinner", label: `Finding best agent for sub-task ${ev.index + 1}` });
         break;
       case "routed": {
         const scoreStr = ev.score != null ? ` <span class="ll-score">${ev.score.toFixed(2)}</span>` : "";
@@ -415,12 +404,12 @@ function TaskSubmission() {
             : l
         ));
         if (ev.reasoning) {
-          addLine({ id: "", status: "done", icon: "dot", label: ev.reasoning, indent: true, dim: true });
+          addLine({ status: "done", icon: "dot", label: ev.reasoning, indent: true, dim: true });
         }
         break;
       }
       case "executing":
-        addLine({ id: "", status: "running", icon: "spinner", label: `Calling <strong>${ev.agent_name}</strong>`, badge: ev.mode });
+        addLine({ status: "running", icon: "spinner", label: `Calling <strong>${ev.agent_name}</strong>`, badge: ev.mode });
         break;
       case "response":
         setLines((prev) => prev.map((l) =>
@@ -428,16 +417,16 @@ function TaskSubmission() {
             ? { ...l, status: "done", icon: "check", label: `<strong>${ev.agent_name}</strong> responded`, detail: `${ev.latency_ms}ms` }
             : l
         ));
-        addLine({ id: "", status: "done", icon: "dot", label: ev.response, indent: true, dim: true });
+        addLine({ status: "done", icon: "dot", label: ev.response, indent: true, dim: true });
         break;
       case "aggregating":
-        addLine({ id: "", status: "running", icon: "spinner", label: "Synthesizing final answer" });
+        addLine({ status: "running", icon: "spinner", label: "Synthesizing final answer" });
         break;
       case "complete":
         setLines((prev) => prev.map((l) =>
           l.status === "running" ? { ...l, status: "done", icon: "check", label: "Synthesis complete" } : l
         ));
-        addLine({ id: "", status: "done", icon: "check", label: ev.final_answer, highlight: true });
+        addLine({ status: "done", icon: "check", label: ev.final_answer, highlight: true });
         setStreaming(false);
         setDone(true);
         closeStream();
@@ -446,7 +435,7 @@ function TaskSubmission() {
         setLines((prev) => prev.map((l) =>
           l.status === "running" ? { ...l, status: "error", icon: "cross" } : l
         ));
-        addLine({ id: "", status: "error", icon: "cross", label: ev.message });
+        addLine({ status: "error", icon: "cross", label: ev.message });
         setStreaming(false);
         closeStream();
         break;

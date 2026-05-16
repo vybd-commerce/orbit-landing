@@ -340,61 +340,6 @@ function Step4({ data, set }: { data: FormData; set: (k: keyof FormData, v: stri
   );
 }
 
-// ── Success screen ─────────────────────────────────────────────────────────
-
-function StepSuccess({ data }: { data: FormData }) {
-  const { t } = useTranslation();
-  const channelOpts  = t("onboarding.step3.channelOptions",  { returnObjects: true }) as Option[];
-  const timelineOpts = t("onboarding.step3.timelineOptions", { returnObjects: true }) as Option[];
-  const contactOpts  = t("onboarding.step4.contactOptions",  { returnObjects: true }) as Option[];
-
-  const getLabel = (opts: Option[], val: string) => opts.find((o) => o.value === val)?.label || val;
-
-  const channelLabels  = data.targetChannels.map((v) => getLabel(channelOpts, v)).join("、");
-  const timelineLabel  = getLabel(timelineOpts, data.launchTimeline);
-  const contactLabel   = getLabel(contactOpts, data.preferredContact);
-  const contactDisplay = data.preferredContact === "wechat" && data.wechatId
-    ? `${t("onboarding.success.wechatPrefix")} ${data.wechatId}`
-    : `${contactLabel}: ${data.email}`;
-
-  return (
-    <div className="ob-success">
-      <div className="ob-success-icon">
-        <Check size={32} strokeWidth={3} />
-      </div>
-      <h2 className="ob-success-title">{t("onboarding.success.title")}</h2>
-      <p className="ob-success-subtitle">
-        {t("onboarding.success.subtitle", { name: data.contactName || data.brandName })}
-      </p>
-
-      <div className="ob-success-summary">
-        <div className="ob-success-row">
-          <span className="ob-success-key">{t("onboarding.success.labels.brandName")}</span>
-          <span className="ob-success-val">{data.brandName}</span>
-        </div>
-        {channelLabels && (
-          <div className="ob-success-row">
-            <span className="ob-success-key">{t("onboarding.success.labels.targetChannels")}</span>
-            <span className="ob-success-val">{channelLabels}</span>
-          </div>
-        )}
-        {data.launchTimeline && (
-          <div className="ob-success-row">
-            <span className="ob-success-key">{t("onboarding.success.labels.launchTimeline")}</span>
-            <span className="ob-success-val">{timelineLabel}</span>
-          </div>
-        )}
-        <div className="ob-success-row">
-          <span className="ob-success-key">{t("onboarding.success.labels.contactMethod")}</span>
-          <span className="ob-success-val">{contactDisplay}</span>
-        </div>
-      </div>
-
-      <a href="/" className="ob-back-home">{t("onboarding.success.backHome")}</a>
-    </div>
-  );
-}
-
 // ── Validation ─────────────────────────────────────────────────────────────
 
 function canProceed(step: number, data: FormData): boolean {
