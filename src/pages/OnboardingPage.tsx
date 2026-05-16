@@ -396,28 +396,9 @@ export default function OnboardingPage() {
     setSubmitError(null);
 
     const task = buildTask(data);
-
-    // In local dev the API route doesn't exist — skip the Airtable call.
-    if (import.meta.env.DEV) {
-      await new Promise((r) => setTimeout(r, 600));
-      setSubmitting(false);
-      navigate("/control", { state: { task } });
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, language: i18n.language.startsWith("zh") ? "zh" : "en" }),
-      });
-      if (!res.ok) throw new Error("failed");
-      navigate("/control", { state: { task } });
-    } catch {
-      setSubmitError(t("onboarding.submitError"));
-    } finally {
-      setSubmitting(false);
-    }
+    await new Promise((r) => setTimeout(r, 400));
+    setSubmitting(false);
+    navigate("/control", { state: { task } });
   };
 
   const back = () => setStep((s) => Math.max(0, s - 1));
