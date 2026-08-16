@@ -38,8 +38,6 @@ export default function CaseStudyDetailPage() {
           <nav className="lp-nav">
             <ul>
               <li><a href="/#functions">How it works</a></li>
-              <li><a href="/#testimonials">Results</a></li>
-              <li><a href="/#pricing">Pricing</a></li>
               <li><a href="/lab">Lab</a></li>
             </ul>
           </nav>
@@ -143,7 +141,6 @@ export default function CaseStudyDetailPage() {
             </div>
             <div className="lp-footer-col">
               <a href="/case-studies">Case Study</a>
-              <a href="/#pricing">Pricing</a>
             </div>
             <div className="lp-footer-col">
               <a href="/lab">Lab</a>

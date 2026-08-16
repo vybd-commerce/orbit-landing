@@ -497,283 +497,6 @@ div[id] {
 }
 
 /* ========================================
-   Client Carousel Section (its own section now —
-   the hero's min-height:100dvh was squeezing it)
-   ======================================== */
-.lp-carousel-section {
-    grid-column: fullbleed;
-    padding: 3rem 1.5rem 4rem;
-}
-
-.cg-carousel {
-    width: 100%;
-    max-width: 1320px;
-    margin: 0 auto;
-}
-
-.cg-carousel-viewport {
-    position: relative;
-}
-
-.cg-carousel-track {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.cg-carousel-slide {
-    flex: 0 0 100%;
-    width: 100%;
-    min-width: 0;
-}
-
-/* Each brand gets the whole slide to itself */
-.cg-brand-page {
-    width: 100%;
-}
-
-.cg-brand-header {
-    padding: 0 3.5rem 1.5rem;
-    text-align: left;
-}
-
-.cg-brand-name {
-    font-size: clamp(1.6rem, 2.6vw, 2.2rem);
-    font-weight: 650;
-    letter-spacing: -0.02em;
-    color: var(--lp-on-surface);
-    margin: 0 0 0.4rem;
-}
-
-.cg-brand-caption {
-    font-size: 1.05rem;
-    color: var(--lp-on-surface-variant);
-    line-height: 1.5;
-    margin: 0;
-    max-width: 60ch;
-}
-
-.cg-brand-subline {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 0.85rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    background: rgba(26, 179, 148, 0.1);
-    font-size: 0.88rem;
-    font-weight: 650;
-    color: var(--lp-primary-dark);
-    width: fit-content;
-}
-
-.cg-brand-cta-link {
-    display: block;
-    margin-top: 0.85rem;
-    font-size: 0.92rem;
-    font-weight: 650;
-    color: var(--lp-primary);
-    text-decoration: none;
-}
-
-.cg-brand-cta-link:hover {
-    color: var(--lp-primary-dark);
-}
-
-.cg-media-row-wrap {
-    position: relative;
-}
-
-.cg-media-row {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    padding: 0 3.5rem;
-    scrollbar-width: none;
-}
-
-.cg-media-row::-webkit-scrollbar {
-    display: none;
-}
-
-.cg-media-tile {
-    position: relative;
-    flex: 0 0 auto;
-    width: min(300px, 70vw);
-    aspect-ratio: 3 / 4;
-    border-radius: 16px;
-    overflow: hidden;
-    background: var(--lp-surface-variant);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-    scroll-snap-align: start;
-}
-
-.cg-media-placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(120, 120, 128, 0.12);
-}
-
-/* The mobile tap-to-play poster is a <button>, not a <div> — reset the
-   browser defaults so it matches the plain placeholder look exactly. */
-.cg-media-tap-target {
-    width: 100%;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-}
-
-.cg-placeholder-orb {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(120, 120, 128, 0.35);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-}
-
-.cg-media-video-wrap {
-    position: absolute;
-    inset: 0;
-}
-
-.cg-media-video-wrap video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.cg-sound-toggle {
-    position: absolute;
-    bottom: 0.6rem;
-    right: 0.6rem;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.5);
-    color: #ffffff;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.cg-media-next {
-    position: absolute;
-    top: 50%;
-    right: 1.25rem;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #ffffff;
-    border: 1px solid var(--lp-outline);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--lp-on-surface);
-    z-index: 4;
-}
-
-.cg-media-next:hover {
-    background: var(--lp-primary);
-    color: #ffffff;
-    border-color: var(--lp-primary);
-}
-
-/* Outer carousel — switches between brands */
-.cg-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid var(--lp-outline);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--lp-on-surface);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    transition: background 0.2s ease;
-    z-index: 5;
-}
-
-.cg-arrow:hover {
-    background: #ffffff;
-}
-
-.cg-arrow-prev {
-    left: 0.5rem;
-}
-
-.cg-arrow-next {
-    right: 0.5rem;
-}
-
-.cg-dots {
-    display: flex;
-    gap: 0.4rem;
-    margin-top: 1.75rem;
-    justify-content: center;
-}
-
-.cg-dot {
-    width: 7px;
-    height: 7px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: var(--lp-outline-variant);
-    cursor: pointer;
-    transition: width 0.25s ease, background 0.25s ease;
-}
-
-.cg-dot.active {
-    width: 20px;
-    border-radius: 4px;
-    background: var(--lp-primary);
-}
-
-@media (max-width: 768px) {
-    .cg-brand-header {
-        padding: 0 1.25rem 1.25rem;
-    }
-
-    .cg-media-row {
-        padding: 0 1.25rem;
-    }
-
-    .cg-media-tile {
-        width: min(260px, 68vw);
-    }
-
-    .cg-arrow {
-        width: 34px;
-        height: 34px;
-    }
-
-    .cg-media-next {
-        width: 34px;
-        height: 34px;
-        right: 0.5rem;
-    }
-}
-
-/* ========================================
    Logo Row (breadth signal, below hero)
    ======================================== */
 .lp-logo-row-section {
@@ -980,10 +703,7 @@ div[id] {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--lp-surface);
-    background-color: var(--lp-on-surface);
-    padding: 0.4rem 1rem;
-    border-radius: 999px;
+    color: var(--lp-primary);
     margin-bottom: 0px;
     margin-top: 0;
     display: inline-block;
@@ -3569,6 +3289,277 @@ div[id] {
     .lp-form-row { grid-template-columns: 1fr; }
 }
 
+
+/* ========================================
+   Landing Page — Case Studies
+   ======================================== */
+.lcs-section {
+    grid-column: fullbleed;
+    padding: 4.5rem 1.5rem;
+    background: var(--lp-surface-variant);
+    border-top: 1px solid var(--lp-outline-variant);
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lcs-header {
+    max-width: 1140px;
+    margin: 0 auto 1.75rem;
+}
+
+.lcs-header h2 {
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--lp-on-surface);
+    margin: 0 0 0.6rem;
+}
+
+.lcs-header p {
+    font-size: 1rem;
+    color: var(--lp-on-surface-variant);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 60ch;
+}
+
+.lcs-controls {
+    max-width: 1140px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.lcs-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.lcs-filter-pill {
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    background: var(--lp-surface);
+    border: 1px solid var(--lp-outline-variant);
+    font-size: 0.85rem;
+    font-weight: 550;
+    color: var(--lp-on-surface-variant);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.lcs-filter-pill:hover {
+    border-color: var(--lp-primary);
+    color: var(--lp-on-surface);
+}
+
+.lcs-filter-pill.active {
+    background: var(--lp-primary);
+    border-color: var(--lp-primary);
+    color: #ffffff;
+}
+
+.lcs-arrows {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.lcs-arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--lp-surface);
+    border: 1px solid var(--lp-outline-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--lp-on-surface);
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.lcs-arrow:hover {
+    border-color: var(--lp-primary);
+    color: var(--lp-primary);
+}
+
+.lcs-row {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+}
+
+.lcs-row::-webkit-scrollbar {
+    display: none;
+}
+
+.lcs-card {
+    flex: 0 0 auto;
+    width: min(280px, 78vw);
+    scroll-snap-align: start;
+    background: var(--lp-surface);
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lcs-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.1);
+}
+
+.lcs-card-image-wrap {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+
+.lcs-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.lcs-card-body {
+    padding: 1.1rem 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.lcs-card-category {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    color: var(--lp-primary-dark);
+    background: rgba(26, 179, 148, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
+}
+
+.lcs-card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--lp-on-surface);
+    line-height: 1.3;
+    margin: 0 0 0.5rem;
+}
+
+.lcs-card-body p {
+    font-size: 0.85rem;
+    color: var(--lp-on-surface-variant);
+    line-height: 1.55;
+    margin: 0 0 1rem;
+}
+
+.lcs-card-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--lp-outline-variant);
+}
+
+.lcs-metric {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.lcs-metric-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(26, 179, 148, 0.1);
+    color: var(--lp-primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lcs-metric-value {
+    font-size: 0.85rem;
+    font-weight: 650;
+    color: var(--lp-on-surface);
+    line-height: 1.2;
+}
+
+.lcs-metric-label {
+    font-size: 0.72rem;
+    color: var(--lp-on-surface-variant);
+}
+
+.lcs-dots {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.lcs-dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--lp-outline-variant);
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+}
+
+.lcs-dot.active {
+    width: 18px;
+    border-radius: 4px;
+    background: var(--lp-primary);
+}
+
+.lcs-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--lp-on-surface-variant);
+    opacity: 0.75;
+}
+
+@media (max-width: 700px) {
+    .lcs-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .lcs-filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        width: 100%;
+        scrollbar-width: none;
+    }
+
+    .lcs-filters::-webkit-scrollbar {
+        display: none;
+    }
+}
 
 /* ========================================
    Testimonial Globe Section

@@ -1,0 +1,288 @@
+/* Mock-only styles. Scoped to lp-mock-* so nothing here can reach the live
+   landing page, which shares LandingPage.css. */
+
+/* Headline is two explicit lines (<br/> in the JSX). white-space: nowrap
+   used to be needed when this was one long unbroken line — now it just
+   forces each line to refuse wrapping too, which makes iOS Safari silently
+   shrink the text to fit rather than honor the font-size below. */
+.lp-hero-title.lp-mock-hero-title {
+    color: var(--lp-primary);
+    max-width: none;
+    /* 5vw drops below the floor on any phone-width viewport (5vw of 390px
+       is ~19.5px), so the floor itself has to be big enough to read as a
+       headline next to the 14px eyebrow / 17px CTA link — not just "not
+       tiny." Desktop is untouched: 5vw overtakes this floor well before
+       tablet width and climbs to the 3.75rem ceiling on its own. */
+    font-size: clamp(2.1rem, 5vw, 3.75rem);
+}
+
+/* Eyebrow overrides the accent-colored default: black and heavier. */
+.lp-hero-supporting.lp-mock-hero-eyebrow {
+    color: #000;
+    font-weight: 800;
+    font-size: 0.88rem;
+}
+
+/* The hero's ring effect is a CSS Houdini paint worklet — unsupported on
+   every mobile browser, so it silently renders nothing there. Touch devices
+   (no cursor, so the pointer-follow version wouldn't make sense anyway) get
+   a lightweight ambient dot pulse instead — pure CSS, no JS/canvas cost. */
+@media (hover: none) and (pointer: coarse) {
+    .lp-hero {
+        background-image: radial-gradient(circle, rgba(26, 179, 148, 0.3) 1px, transparent 1px);
+        background-size: 22px 22px;
+        animation: lp-mock-dot-pulse 4s ease-in-out infinite;
+    }
+}
+
+@keyframes lp-mock-dot-pulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+}
+
+.lp-mock-hero-note {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+    color: var(--lp-on-surface-variant);
+}
+
+.lp-mock-hero-note a {
+    color: var(--lp-on-surface);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-mock-hero-note a:hover {
+    border-bottom-color: var(--lp-on-surface);
+}
+
+.lp-mock-modes {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 640px;
+    margin: 4rem auto;
+    text-align: left;
+}
+
+.lp-mock-mode {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 12px;
+    background: var(--lp-surface);
+}
+
+.lp-mock-mode-icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: var(--lp-surface-variant);
+    color: var(--lp-on-surface);
+}
+
+.lp-mock-mode-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--lp-on-surface);
+    margin-bottom: 0.2rem;
+}
+
+.lp-mock-mode-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--lp-on-surface-variant);
+}
+
+.lp-mock-closing {
+    max-width: 640px;
+    margin: 1rem auto 0;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface);
+    font-weight: 500;
+}
+
+.lp-mock-final-body {
+    max-width: 560px;
+    margin: 1rem auto 0;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+    .lp-mock-mode {
+        padding: 0.9rem 1rem;
+    }
+}
+
+.lp-mock-proof-section {
+    grid-column: main;
+    padding-block: 4rem;
+}
+
+.lp-mock-proof-card {
+    background: var(--lp-on-surface);
+    color: var(--lp-surface);
+    border-radius: 2em;
+    padding: 3.5rem;
+}
+
+.lp-mock-proof-eyebrow {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.lp-mock-proof-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem 4rem;
+}
+
+.lp-mock-proof-value {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.lp-mock-proof-label {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 1rem;
+    margin-top: 0.4rem;
+}
+
+.lp-mock-proof-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    margin: 2.5rem 0;
+}
+
+.lp-mock-proof-quote {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    font-weight: 400;
+    line-height: 1.4;
+    color: #ffffff;
+    margin: 0 0 1rem;
+}
+
+.lp-mock-proof-attribution {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+    margin: 0 0 2rem;
+}
+
+.lp-mock-proof-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #ffffff;
+    font-size: 1rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    .lp-mock-proof-card {
+        padding: 2rem;
+    }
+
+    .lp-mock-proof-stats {
+        gap: 1.75rem 2.5rem;
+    }
+}
+
+/* ── Tap-to-expand: doorway steps ──
+   .lp-agent-step* classes are shared with ProductPage's static Agent Model
+   section, so these are scoped to #where-to-start (this page only) to avoid
+   making that page's non-interactive steps look clickable. */
+#where-to-start .lp-agent-step {
+    cursor: pointer;
+}
+
+#where-to-start .lp-agent-step-chevron {
+    color: var(--lp-on-surface-variant);
+    margin-top: 0.2rem;
+    transition: transform 0.2s ease;
+}
+
+#where-to-start .lp-agent-step.is-expanded .lp-agent-step-chevron {
+    transform: rotate(180deg);
+}
+
+#where-to-start .lp-agent-step-card p {
+    display: none;
+}
+
+#where-to-start .lp-agent-step.is-expanded .lp-agent-step-card p {
+    display: block;
+}
+
+/* ── Tap-to-expand: autonomy mode boxes ── */
+.lp-mock-mode {
+    cursor: pointer;
+}
+
+.lp-mock-mode-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.lp-mock-mode .lp-agent-step-chevron {
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+.lp-mock-mode-body {
+    display: none;
+}
+
+.lp-mock-mode.is-expanded .lp-mock-mode-body {
+    display: block;
+    margin-top: 0.3rem;
+}
+
+/* Mobile: icon left of title instead of stacked above it, doorway cards only. */
+@media (max-width: 900px) {
+    #where-to-start .lp-agent-step {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        text-align: left;
+        gap: 0.85rem;
+    }
+
+    #where-to-start .lp-agent-step-icon-wrap {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    #where-to-start .lp-agent-step-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    #where-to-start .lp-agent-step-content h3 {
+        margin-bottom: 0;
+    }
+
+    #where-to-start .lp-agent-step-card {
+        flex-basis: 100%;
+        text-align: left;
+    }
+}

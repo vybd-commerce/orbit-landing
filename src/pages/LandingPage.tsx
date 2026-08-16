@@ -24,11 +24,10 @@ import {
     GitBranch,
     Share2,
     ArrowRight,
-    Calendar,
     Rocket,
     Plus
 } from "lucide-react";
-import FeatureCarousel from "../components/FeatureCarousel";
+import LandingCaseStudies from "../components/LandingCaseStudies";
 import TestimonialGlobe from "../components/TestimonialGlobe";
 import "./LandingPage.css";
 
@@ -272,8 +271,6 @@ export default function LandingPage() {
                     <nav className="lp-nav">
                         <ul>
                             <li><a href="#functions">How it works</a></li>
-                            <li><a href="#testimonials">Results</a></li>
-                            <li><a href="#pricing">Pricing</a></li>
                             <li><a href="/lab">Lab</a></li>
                         </ul>
                     </nav>
@@ -310,22 +307,11 @@ export default function LandingPage() {
                     </p>
 
                     <div className="lp-hero-cta">
-                        <a href="#product" className="lp-btn-link" style={{ fontWeight: 600, color: 'var(--lp-on-surface)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <a href="/product" className="lp-btn-link" style={{ fontWeight: 600, color: 'var(--lp-on-surface)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                             See what we run <ArrowRight size={16} />
                         </a>
-                        <button
-                            className="lp-btn lp-btn-accent"
-                            onClick={() => goTo("/auth")}
-                        >
-                            Book an entry call <Calendar size={16} style={{ marginBottom: '-1px' }} />
-                        </button>
                     </div>
                 </div>
-            </section>
-
-            {/* ── Feature Carousel (real client proof, given room to breathe) ── */}
-            <section className="lp-carousel-section" id="client-carousel">
-                <FeatureCarousel />
             </section>
 
             {/* ── Logo Row ── */}
@@ -432,7 +418,7 @@ export default function LandingPage() {
                         </div>
                     ))}
                 </div>
-                
+
             </section>
 
             {/* ── Where to Start ── */}
@@ -529,6 +515,9 @@ export default function LandingPage() {
 
 
 
+            {/* ── Case Studies ── */}
+            <LandingCaseStudies />
+
             {/* ── Testimonial Globe (Interactive 3D) ── */}
             <TestimonialGlobe />
 
@@ -582,7 +571,6 @@ export default function LandingPage() {
                         </div>
                         <div className="lp-footer-col">
                             <a href="/case-studies">Case Study</a>
-                            <a href="/#pricing">Pricing</a>
                         </div>
                         <div className="lp-footer-col">
                             <a href="/lab">Lab</a>

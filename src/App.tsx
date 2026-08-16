@@ -7,12 +7,15 @@ import CaseStudyDetailPage from "./pages/CaseStudyDetailPage";
 import LabPage from "./pages/LabPage";
 import WorkIndexPage from "./pages/WorkIndexPage";
 import BayangromCaseStudyPage from "./pages/BayangromCaseStudyPage";
+import MockLandingPage from "./pages/MockLandingPage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<MockLandingPage />} />
+        {/* Previous landing page, kept here for reference */}
+        <Route path="/mock" element={<LandingPage />} />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
