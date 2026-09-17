@@ -1,0 +1,89 @@
+/* V2-only styles. Scoped to lp-v2-* so nothing here reaches the other
+   landing pages, which share LandingPage.css. */
+
+/* ── Integration layer (Section 3) ── */
+.lp-v2-integration-section {
+    grid-column: fullbleed;
+    background: var(--lp-surface-variant);
+    border-bottom: 1px solid var(--lp-outline-variant);
+    padding: 6rem 3rem;
+}
+
+.lp-v2-integration-intro {
+    font-size: 1.1rem;
+    font-weight: 350;
+    color: var(--lp-on-surface-variant);
+    max-width: 60ch;
+    line-height: 1.6;
+    margin: 0 0 3rem;
+}
+
+.lp-v2-integration-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 760px;
+}
+
+.lp-v2-integration-list li {
+    padding: 2rem 0;
+    border-top: 1px solid var(--lp-outline-variant);
+}
+
+.lp-v2-integration-list li:last-child {
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-v2-integration-trigger {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--lp-on-surface);
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+}
+
+.lp-v2-integration-detail {
+    font-size: 0.95rem;
+    color: var(--lp-on-surface-variant);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 60ch;
+}
+
+
+/* ── Operating functions: three-slot restructure ── */
+.lp-v2-fn-slot {
+    margin-bottom: 1rem;
+}
+
+.lp-v2-fn-slot:last-child {
+    margin-bottom: 0;
+}
+
+.lp-v2-fn-slot-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lp-on-surface-variant);
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+}
+
+.lp-v2-fn-slot p {
+    margin: 0;
+}
+
+/* ── How it runs ladder ── */
+.lp-v2-ladder-note {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: var(--lp-on-surface-variant);
+}
+
+@media (max-width: 768px) {
+    .lp-v2-integration-section {
+        padding: 3.5rem 1.5rem;
+    }
+}

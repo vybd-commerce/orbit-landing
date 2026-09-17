@@ -1,0 +1,189 @@
+/* OpsComparisonSection: relies on LandingPage.css tokens (--lp-*) and the
+   shared .lp-sr-only utility. Scoped under .ops-cmp so nothing here leaks
+   into the rest of the page. */
+
+.ops-cmp {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.ops-cmp-heading h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--lp-on-surface);
+  line-height: 1.1;
+  margin: 0 0 2.5rem;
+}
+
+/* ── Grid: two panels, stacks below ~620px with no media query ── */
+.ops-cmp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+
+.ops-cmp-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.ops-cmp-panel-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ops-cmp-panel-label--hiring {
+  color: var(--lp-comparison-hiring-text);
+}
+
+.ops-cmp-panel-label--systems {
+  color: var(--lp-comparison-systems-text);
+}
+
+.ops-cmp-panel-stat {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.ops-cmp-panel-stat--hiring {
+  color: var(--lp-comparison-hiring-text);
+}
+
+.ops-cmp-panel-stat--systems {
+  color: var(--lp-comparison-systems-text);
+}
+
+.ops-cmp-panel-sub {
+  font-size: 0.95rem;
+  color: var(--lp-on-surface-variant);
+  margin: 0.35rem 0 1.25rem;
+}
+
+.ops-cmp-svg {
+  width: 100%;
+  height: auto;
+}
+
+.ops-cmp-node {
+  fill: var(--lp-tonal);
+  stroke: var(--lp-outline-variant);
+  stroke-width: 0.5;
+}
+
+/* ── Edge dash flow, ambient, always on unless reduced motion ── */
+.ops-cmp-edge {
+  stroke-dasharray: 3 5;
+  animation-name: ops-cmp-dash-flow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.ops-cmp-edge--hiring {
+  stroke: var(--lp-comparison-hiring);
+  stroke-width: 1.4;
+  opacity: 0.7;
+}
+
+.ops-cmp-edge--systems {
+  stroke: var(--lp-comparison-systems);
+  stroke-width: 0.9;
+  opacity: 0.32;
+}
+
+@keyframes ops-cmp-dash-flow {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+/* ── People dots ── */
+.ops-cmp-dot--hiring {
+  fill: var(--lp-comparison-hiring);
+}
+
+.ops-cmp-dot--systems {
+  fill: var(--lp-comparison-systems);
+}
+
+.ops-cmp-dot.is-static {
+  opacity: 0.95;
+}
+
+.ops-cmp-dot.is-revealed {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ops-cmp-dot-in 380ms cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
+}
+
+@keyframes ops-cmp-dot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ops-cmp-edge {
+    animation: none;
+  }
+  .ops-cmp-dot.is-revealed {
+    animation: none;
+    opacity: 0.95;
+  }
+}
+
+/* ── Footer line ── */
+.ops-cmp-footer {
+  font-size: 0.9rem;
+  color: var(--lp-on-surface-variant);
+  max-width: 60ch;
+  margin: 2rem 0 0;
+}
+
+/* ── Assumptions disclosure ── */
+.ops-cmp-assumptions {
+  margin-top: 1rem;
+}
+
+.ops-cmp-assumptions-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--lp-on-surface-variant);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-family: inherit;
+}
+
+.ops-cmp-assumptions-toggle:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 3px;
+}
+
+.ops-cmp-assumptions-panel p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--lp-on-surface-variant);
+  max-width: 70ch;
+  margin: 1rem 0 0;
+}
+
+/* ── Mobile: keep 9 suppliers legible, dots distinguishable from lines ── */
+@media (max-width: 640px) {
+  .ops-cmp-panel-stat {
+    font-size: 1.85rem;
+  }
+  .ops-cmp-dot {
+    r: 4;
+  }
+}

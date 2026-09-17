@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vybd — the operating stack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0D1014; --line:#232B35; --fg:#E9EBEE; --fg-2:#98A1AD; --fg-3:#5D6773;
+  --sources:#B4B2A9; --context:#5DCAA5; --agent:#61B2E4;
+  --application:#E8D48A; --governance:#AFA9EC; --review:#F0997B;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ink);color:var(--fg);
+  font-family:"Space Grotesk",system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.viz{position:sticky;top:0;height:100vh;width:100%;z-index:0;overflow:hidden}
+.viz canvas{display:block;width:100%;height:100%}
+.viz::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:74px 74px;opacity:.2;
+  -webkit-mask-image:radial-gradient(ellipse 80% 62% at 42% 50%,#000 8%,transparent 94%);
+  mask-image:radial-gradient(ellipse 80% 62% at 42% 50%,#000 8%,transparent 94%)}
+
+.chip,.anno{position:absolute;z-index:2;font-family:"IBM Plex Mono",monospace;
+  white-space:nowrap;pointer-events:none;opacity:0}
+.chip{transform:translate(-50%,-50%);font-size:10.5px;letter-spacing:.04em;color:var(--fg-2);
+  background:rgba(13,16,20,.8);border:1px solid var(--line);border-radius:2px;padding:2px 7px}
+.anno{transform:translateY(-50%);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--fg-2);display:flex;align-items:center;gap:8px}
+.anno::before{content:"";width:26px;height:1px;background:var(--c);flex:none}
+.anno i{font-style:normal;border-bottom:1px solid transparent}
+
+.story{position:relative;z-index:1;margin-top:-100vh}
+.act{height:100vh;display:flex;align-items:center;justify-content:flex-end;padding:0 5vw;pointer-events:none}
+.panel{width:min(440px,45vw);pointer-events:auto;background:rgba(13,16,20,.74);
+  backdrop-filter:blur(16px);border:1px solid var(--line);border-left:2px solid var(--c);
+  padding:28px 30px 30px;opacity:0;transform:translateY(18px);
+  transition:opacity .45s ease,transform .45s ease}
+.act.live .panel{opacity:1;transform:none}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c);margin:0 0 12px}
+h2{font-size:28px;line-height:1.15;letter-spacing:-.02em;font-weight:500;margin:0 0 12px}
+.lede{margin:0 0 16px;color:var(--fg-2);font-size:15.5px}
+.metrics{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.04em;
+  color:var(--fg-3);margin:0 0 20px;padding:9px 0;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+li{position:relative;padding-left:18px;font-size:14.5px;line-height:1.5;color:var(--fg-2)}
+li::before{content:"";position:absolute;left:0;top:10px;width:9px;height:1px;background:var(--c)}
+li b{font-weight:500;color:var(--fg)}
+
+.opener{position:fixed;top:32px;left:38px;z-index:3;pointer-events:none;transition:opacity .5s}
+.opener p{margin:0}
+.mark{font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+.mark span{color:var(--context)}
+.sub{font-size:13px;color:var(--fg-3);margin-top:3px!important}
+.cue{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:3;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--fg-3);transition:opacity .4s;pointer-events:none}
+.rail{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:3;
+  display:flex;flex-direction:column;gap:10px}
+.rail button{width:20px;height:2px;border:0;padding:0;background:var(--line);
+  cursor:pointer;transition:background .3s,width .3s}
+.rail button.on{background:var(--fg);width:32px}
+
+@media (max-width:900px){
+  .act{justify-content:center;align-items:flex-end;padding:0 18px 7vh}
+  .panel{width:100%;padding:20px}
+  h2{font-size:22px}
+  .chip,.anno,.rail{display:none}
+  .opener{left:18px;top:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="opener" id="opener">
+  <p class="mark">Vybd<span>.</span></p>
+  <p class="sub">The operating stack</p>
+</div>
+
+<div class="viz" id="viz"></div>
+
+<div class="story" id="story">
+
+  <section class="act" style="--c:var(--sources)">
+    <div class="panel">
+      <p class="tag">00 — Sources</p>
+      <h2>Your data isn't wrong. It's scattered.</h2>
+      <p class="lede">Six to nine systems, each internally consistent, none agreeing on what's in stock, what shipped, or what it cost to get there.</p>
+      <p class="metrics">6–9 systems · 2 SKU conventions · reconciliation = 1 person</p>
+      <ul>
+        <li><b>ERP says 400 units.</b> The 3PL says 340. Both are right, on different dates.</li>
+        <li><b>The mapping table nobody owns</b> is load-bearing for three teams.</li>
+        <li><b>Your best ops hire</b> spends four hours a week being an integration.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--context)">
+    <div class="panel">
+      <p class="tag">01 — Context layer</p>
+      <h2>One model, built once.</h2>
+      <p class="lede">A read-only projection over every system. Entities resolved a single time, so "how much of this do we have" has one answer instead of six.</p>
+      <p class="metrics">1 schema · read-only · entities resolved once</p>
+      <ul>
+        <li><b>Two-zone projection.</b> Raw mirror on one side, resolved model on the other. Nothing writes here.</li>
+        <li><b>Scoped reads.</b> Each task sees a slice, not the warehouse — less compute, fewer wrong answers.</li>
+        <li><b>No migration.</b> Your systems stay exactly where they are.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--agent)">
+    <div class="panel">
+      <p class="tag">02 — Agent layer</p>
+      <h2>Workers, not a chatbot.</h2>
+      <p class="lede">Each agent owns one job and runs it on a schedule. The model decides what to look at; deterministic compute decides the answer.</p>
+      <p class="metrics">bounded jobs · deterministic math · propose-only</p>
+      <ul>
+        <li><b>One job per agent.</b> Demand signal, deduction matching, markdown candidates — not a general assistant.</li>
+        <li><b>The math isn't the model.</b> An LLM picking which SKUs to examine is reliable; an LLM doing the arithmetic is not.</li>
+        <li><b>Agents propose.</b> None of them can execute. That's the next two layers' job.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--application)">
+    <div class="panel">
+      <p class="tag">03 — Application layer</p>
+      <h2>Where your team actually works.</h2>
+      <p class="lede">Surfaces built on the same projection. Your ops lead sees a ranked queue of decisions, not a dashboard that asks them to go find the problem.</p>
+      <p class="metrics">queue not dashboard · one surface · no new login for the floor</p>
+      <ul>
+        <li><b>Decisions, not charts.</b> A dashboard tells you inventory is off. This tells you which 14 SKUs and what to do.</li>
+        <li><b>Reasoning attached.</b> Every proposal shows the numbers behind it and which systems they came from.</li>
+        <li><b>Nothing new to learn</b> for the people who live in the ERP all day.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--governance)">
+    <div class="panel">
+      <p class="tag">04 — Governance layer</p>
+      <h2>Rules the agents can't cross.</h2>
+      <p class="lede">Not a policy document — enforcement sitting in the path of execution, where an agent without permission simply cannot perform the action.</p>
+      <p class="metrics">scoped permissions · value thresholds · full audit</p>
+      <ul>
+        <li><b>Scoped permissions.</b> An agent that can propose a markdown cannot issue a PO.</li>
+        <li><b>Threshold gate.</b> Above the line routes to review by default. There is no override path.</li>
+        <li><b>Audit log.</b> Every read, proposal and write attributable after the fact.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--review)">
+    <div class="panel">
+      <p class="tag">05 — Review</p>
+      <h2>Nothing writes back unapproved.</h2>
+      <p class="lede">Work arrives decided, not delegated. Your operator sees the proposal, the reasoning and the value at risk, and spends thirty seconds where they used to spend an afternoon.</p>
+      <p class="metrics">named sign-off · ranked by value at risk · ~30s per decision</p>
+      <ul>
+        <li><b>Ranked by exposure,</b> not by arrival time.</li>
+        <li><b>Named approval.</b> Every write traces to a person who approved it.</li>
+        <li><b>Rejection is signal.</b> The next proposal is narrower for it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="act" style="--c:var(--context)">
+    <div class="panel">
+      <p class="tag">06 — The loop</p>
+      <h2>Approved work goes back where it came from.</h2>
+      <p class="lede">The stack reads top-down but closes upward. An approved proposal writes into the same systems it was read from, and the outcome becomes context for the next run.</p>
+      <p class="metrics">no migration · no new source of truth · compounding context</p>
+      <ul>
+        <li><b>The systems stay the systems.</b> Nothing to rip out, nothing new to maintain.</li>
+        <li><b>Month three beats month one</b> because it has seen what you approved.</li>
+        <li><b>Absorbs complexity, not headcount.</b> Same 39-handoff chain, 13 people instead of 34.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<div class="cue" id="cue">Scroll</div>
+<nav class="rail" id="rail" aria-label="Sections"></nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const viz = document.getElementById('viz');
+
+/* ---------- Lenis, driven from GSAP's ticker (optional) ---------- */
+let lenis = null;
+if (window.Lenis && !reduced) {
+  lenis = new Lenis({autoRaf:false, duration:1.1});
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* ---------- scene ---------- */
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x0D1014, 20, 52);
+const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 140);
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+viz.appendChild(renderer.domElement);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.82));
+const key = new THREE.DirectionalLight(0xffffff, 0.6); key.position.set(6,11,7); scene.add(key);
+const rim = new THREE.DirectionalLight(0x7f9dc4, 0.32); rim.position.set(-8,3,-6); scene.add(rim);
+
+const root = new THREE.Group(); scene.add(root);
+const W = 5.4, D = 3.5;
+const COL = {sources:0xB4B2A9, context:0x5DCAA5, agent:0x61B2E4,
+             application:0xE8D48A, governance:0xAFA9EC, review:0xF0997B};
+
+function slab(w, h, d, color, opacity){
+  const g = new THREE.BoxGeometry(w, h, d);
+  const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({color, transparent:true, opacity:0}));
+  const e = new THREE.LineSegments(new THREE.EdgesGeometry(g),
+        new THREE.LineBasicMaterial({color, transparent:true, opacity:0}));
+  m.add(e); m.userData.peak = opacity || 0.9;
+  return m;
+}
+function fade(mesh, t){
+  mesh.material.opacity = t * mesh.userData.peak;
+  if (mesh.children[0] && mesh.children[0].material) mesh.children[0].material.opacity = t * 0.55;
+}
+
+/* 00 sources — nine blocks, chaos to grid */
+const SYS = ['ERP','WMS','3PL','Storefront','Amazon','Retail EDI','Freight','Sheets','Inbox'];
+const systems = SYS.map((name,i) => {
+  const w = 0.82 + (i%3)*0.15;
+  const m = slab(w, 0.15, w*0.7, COL.sources, 0.92);
+  const col = i%3, row = (i/3)|0;
+  m.userData.chaos = new THREE.Vector3((Math.random()-.5)*7.6, 4.3+(Math.random()-.5)*2.8, (Math.random()-.5)*5.2);
+  m.userData.rot = new THREE.Euler((Math.random()-.5)*.9, Math.random()*Math.PI, (Math.random()-.5)*.9);
+  m.userData.order = new THREE.Vector3((col-1)*1.62, 3.9, (row-1)*1.14);
+  m.userData.bob = Math.random()*6.28;
+  root.add(m); return m;
+});
+
+/* 01 context — three bands */
+const ctxBands = [0,1,2].map(b => {
+  const m = slab(W, 0.28, D, new THREE.Color(COL.context).multiplyScalar(1-b*0.24).getHex(), 0.92);
+  m.position.y = 1.9 - b*0.34;
+  root.add(m); return m;
+});
+const nodes = new THREE.Group(); root.add(nodes);
+for (let i=0;i<28;i++){
+  const n = new THREE.Mesh(new THREE.SphereGeometry(0.042,6,6),
+    new THREE.MeshBasicMaterial({color:0xE1F5EE, transparent:true, opacity:0}));
+  n.position.set((Math.random()-.5)*(W-.8), 2.06, (Math.random()-.5)*(D-.6));
+  nodes.add(n);
+}
+
+/* 02 agent — plate with worker cubes */
+const agentPlate = slab(W, 0.16, D, COL.agent, 0.85); agentPlate.position.y = 0.35; root.add(agentPlate);
+const workers = [0,1,2,3,4].map(i => {
+  const m = slab(0.62, 0.34, 0.62, COL.agent, 0.95);
+  m.position.set(-2.0 + i*1.0, 0.61, (i%2 ? 0.5 : -0.5));
+  root.add(m); return m;
+});
+
+/* 03 application — plate with UI rows */
+const appPlate = slab(W, 0.16, D, COL.application, 0.85); appPlate.position.y = -1.3; root.add(appPlate);
+const rows = [];
+for (let i=0;i<10;i++){
+  const m = slab(3.0, 0.03, 0.2, COL.application, 0.8);
+  m.position.set(-0.4, -1.18, -1.15 + i*0.26);
+  root.add(m); rows.push(m);
+}
+
+/* 04 governance — slab + gate plane */
+const gov = slab(W, 0.42, D, COL.governance, 0.9); gov.position.y = -2.9; root.add(gov);
+const gate = new THREE.Mesh(new THREE.PlaneGeometry(W-0.3, D-0.3),
+  new THREE.MeshBasicMaterial({color:COL.governance, transparent:true, opacity:0, side:THREE.DoubleSide}));
+gate.rotation.x = -Math.PI/2; gate.position.y = -2.62; root.add(gate);
+
+/* 05 review — slab + proposal cards */
+const rev = slab(W, 0.42, D, COL.review, 0.9); rev.position.y = -4.6; root.add(rev);
+const cards = [0,1,2].map(i => {
+  const m = slab(1.45, 0.05, 0.92, 0xFAECE7, 0.95);
+  m.position.set(-1.5+i*1.5, -4.2+i*0.08, 0.15-i*0.15);
+  m.rotation.y = (i-1)*0.11;
+  root.add(m); return m;
+});
+
+/* packets */
+const packets = [];
+for (let i=0;i<34;i++){
+  const up = i%4===0;
+  const m = new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8),
+    new THREE.MeshBasicMaterial({color: up?COL.review:COL.context, transparent:true, opacity:0}));
+  m.userData = {up, x:(Math.random()-.5)*(W-1.5), z:(Math.random()-.5)*(D-1.2), t:Math.random(), sp:.13+Math.random()*.12};
+  root.add(m); packets.push(m);
+}
+/* the one rejected packet — governance micro-moment */
+const reject = new THREE.Mesh(new THREE.SphereGeometry(0.085,10,10),
+  new THREE.MeshBasicMaterial({color:COL.context, transparent:true, opacity:0}));
+root.add(reject);
+let rejT = 0;
+/* the approved card — review micro-moment */
+const approved = slab(1.45, 0.05, 0.92, COL.review, 0.95);
+approved.position.set(0, -4.2, 0); root.add(approved);
+let appT = 0;
+
+/* ---------- annotations ---------- */
+const ANNOS = [
+  {k:'ctx',  c:'context',     p:[W/2+0.4, 2.05, 0],   t:'Two-zone projection'},
+  {k:'ctx',  c:'context',     p:[W/2+0.4, 1.62, 0],   t:'Entity resolution'},
+  {k:'ctx',  c:'context',     p:[W/2+0.4, 1.24, 0],   t:'Scoped reads'},
+  {k:'agent',c:'agent',       p:[W/2+0.4, 0.75, 0.5], t:'Demand agent'},
+  {k:'agent',c:'agent',       p:[-W/2-0.4,0.75,-0.5], t:'Deduction agent', left:true},
+  {k:'agent',c:'agent',       p:[W/2+0.4, 0.30, 0],   t:'Bounded jobs only'},
+  {k:'app',  c:'application', p:[W/2+0.4,-1.10, 0],   t:'Exception queue'},
+  {k:'app',  c:'application', p:[-W/2-0.4,-1.30,0],   t:'Reasoning attached', left:true},
+  {k:'gov',  c:'governance',  p:[W/2+0.4,-2.60, 0],   t:'Threshold gate'},
+  {k:'gov',  c:'governance',  p:[W/2+0.4,-3.00, 0],   t:'Audit log'},
+  {k:'rev',  c:'review',      p:[W/2+0.4,-4.15, 0],   t:'Proposal queue'},
+  {k:'rev',  c:'review',      p:[-W/2-0.4,-4.60,0],   t:'Named sign-off', left:true}
+];
+ANNOS.forEach(a => {
+  const el = document.createElement('div');
+  el.className = 'anno';
+  el.style.setProperty('--c', 'var(--' + a.c + ')');
+  el.innerHTML = '<i>' + a.t + '</i>';
+  if (a.left) el.style.flexDirection = 'row-reverse';
+  viz.appendChild(el); a.el = el; a.v = new THREE.Vector3(...a.p);
+});
+const chips = systems.map(s => {
+  const el = document.createElement('div');
+  el.className = 'chip'; el.textContent = SYS[systems.indexOf(s)];
+  viz.appendChild(el); return el;
+});
+
+/* ---------- scroll timeline ---------- */
+const S = {align:0, ctx:0, agent:0, app:0, gov:0, rev:0, loop:0, srcDim:0,
+           th:-0.50, ph:1.02, r:11.5, y:3.6};
+const E = 'power2.inOut';
+const tl = gsap.timeline({
+  scrollTrigger:{trigger:'#story', start:'top top', end:'bottom bottom', scrub: reduced ? true : 1}
+});
+tl.to(S, {align:1, ctx:1, th:-0.80, ph:1.10, r:13.0, y:2.6, ease:E, duration:1})
+  .to(S, {agent:1, th:-0.44, r:14.0, y:1.1, ease:E, duration:1})
+  .to(S, {app:1, th:-0.92, r:15.0, y:-0.5, ease:E, duration:1})
+  .to(S, {gov:1, srcDim:1, th:-0.40, r:16.0, y:-2.1, ease:E, duration:1})
+  .to(S, {rev:1, th:-0.88, r:17.0, y:-3.6, ease:E, duration:1})
+  .to(S, {loop:1, th:-0.60, ph:0.92, r:24.0, y:-1.3, ease:E, duration:1});
+
+const acts = [...document.querySelectorAll('.act')];
+const rail = document.getElementById('rail');
+const dots = acts.map((a,i) => {
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', 'Section ' + i);
+  b.addEventListener('click', () => {
+    const y = i * innerHeight;
+    lenis ? lenis.scrollTo(y) : scrollTo({top:y, behavior:'smooth'});
+  });
+  rail.appendChild(b); return b;
+});
+let shown = -1;
+function marks(){
+  const idx = Math.round(tl.progress() * 6);
+  if (idx === shown) return;
+  shown = idx;
+  acts.forEach((a,i) => a.classList.toggle('live', i === idx));
+  dots.forEach((d,i) => d.classList.toggle('on', i === idx));
+  document.getElementById('cue').style.opacity = idx === 0 ? '1' : '0';
+  document.getElementById('opener').style.opacity = idx === 6 ? '0' : '1';
+}
+
+function resize(){
+  const w = viz.clientWidth, h = viz.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w/h; camera.updateProjectionMatrix();
+}
+addEventListener('resize', () => { resize(); ScrollTrigger.refresh(); });
+resize();
+
+/* ---------- render ---------- */
+const v = new THREE.Vector3();
+let prev = performance.now();
+
+function render(){
+  const now = performance.now();
+  const dt = Math.min((now - prev)/1000, 0.05); prev = now;
+  marks();
+
+  camera.position.set(
+    S.r*Math.sin(S.ph)*Math.sin(S.th),
+    S.r*Math.cos(S.ph) + S.y,
+    S.r*Math.sin(S.ph)*Math.cos(S.th)
+  );
+  camera.lookAt(0, S.y, 0);
+
+  /* sources: chaos -> grid, then dim */
+  systems.forEach(s => {
+    const u = s.userData; u.bob += dt*0.6;
+    s.position.lerpVectors(u.chaos, u.order, S.align);
+    s.position.y += (1-S.align) * Math.sin(u.bob) * 0.13;
+    s.rotation.set(u.rot.x*(1-S.align), u.rot.y*(1-S.align), u.rot.z*(1-S.align));
+    fade(s, 1 - S.srcDim*0.55);
+  });
+
+  ctxBands.forEach((b,i) => {
+    const t = Math.max(0, Math.min(1, S.ctx*1.2 - i*0.12));
+    fade(b, t); b.position.y = (1.9 - i*0.34) - (1-t)*1.4;
+  });
+  nodes.children.forEach((n,i) =>
+    n.material.opacity = S.ctx * (0.3 + 0.5*Math.abs(Math.sin(now*0.001 + i))));
+
+  fade(agentPlate, S.agent); agentPlate.position.y = 0.35 - (1-S.agent)*1.2;
+  workers.forEach((w,i) => {
+    const pulse = 0.55 + 0.45*Math.max(0, Math.sin(now*0.0016 - i*0.9));
+    fade(w, S.agent * pulse);
+    w.position.y = 0.61 - (1-S.agent)*1.2 + S.agent*Math.sin(now*0.0016 - i*0.9)*0.04;
+  });
+
+  fade(appPlate, S.app); appPlate.position.y = -1.3 - (1-S.app)*1.2;
+  rows.forEach((r,i) => {
+    const t = Math.max(0, Math.min(1, S.app*1.6 - i*0.09));
+    fade(r, t*0.8); r.position.y = -1.18 - (1-S.app)*1.2;
+  });
+
+  fade(gov, S.gov); gov.position.y = -2.9 - (1-S.gov)*1.2;
+  fade(rev, S.rev); rev.position.y = -4.6 - (1-S.rev)*1.2;
+  cards.forEach((c,i) => {
+    const t = Math.max(0, Math.min(1, S.rev*1.4 - i*0.14));
+    fade(c, t); c.position.y = (-4.2 + i*0.08) - (1-t)*0.8;
+  });
+
+  /* micro-moment: a packet is rejected at the gate */
+  if (S.gov > 0.55 && !reduced) {
+    rejT += dt * 0.42; if (rejT > 1) rejT = 0;
+    const hit = 0.55;
+    if (rejT < hit) {
+      reject.position.set(0.7, -1.0 - (rejT/hit)*1.55, 0.3);
+      reject.material.color.setHex(COL.context);
+      reject.material.opacity = 0.95;
+      gate.material.opacity = 0.05 * S.gov;
+    } else {
+      reject.position.set(0.7, -2.55, 0.3);
+      reject.material.color.setHex(COL.review);
+      const k = (rejT - hit)/(1 - hit);
+      reject.material.opacity = 0.95 * (1 - k);
+      gate.material.opacity = (0.05 + 0.28*(1-k)) * S.gov;
+    }
+  } else { reject.material.opacity = 0; gate.material.opacity = 0; }
+
+  /* micro-moment: an approved card fires back upward */
+  if (S.rev > 0.6 && !reduced) {
+    appT += dt * 0.3; if (appT > 1) appT = 0;
+    const lift = 0.35;
+    if (appT < lift) {
+      approved.position.set(0, -4.2 + (appT/lift)*0.5, 0);
+      fade(approved, appT/lift);
+    } else {
+      const k = (appT - lift)/(1 - lift);
+      approved.position.set(0, -3.7 + k*8.2, 0);
+      fade(approved, (1-k) * 0.9);
+    }
+  } else { fade(approved, 0); }
+
+  /* packets */
+  const top = 3.7, bot = -4.9;
+  packets.forEach(p => {
+    const gate2 = p.userData.up ? S.loop : S.ctx;
+    if (gate2 < 0.03 || reduced) { p.material.opacity = 0; return; }
+    p.userData.t += dt * p.userData.sp;
+    if (p.userData.t > 1) p.userData.t -= 1;
+    const t = p.userData.t;
+    p.position.set(p.userData.x + (p.userData.up ? 2.3 : 0),
+      p.userData.up ? bot + t*(top-bot) : top - t*(top-bot), p.userData.z);
+    p.material.opacity = gate2 * (0.1 + 0.7*Math.sin(t*Math.PI));
+  });
+
+  /* HTML overlays */
+  const rect = viz.getBoundingClientRect();
+  const wide = innerWidth >= 900;
+  const chipVis = wide ? (1 - Math.min(1, S.agent*1.4)) : 0;
+  systems.forEach((s,i) => {
+    if (chipVis < 0.04) { chips[i].style.opacity = 0; return; }
+    v.copy(s.position); v.y += 0.28; v.project(camera);
+    chips[i].style.left = ((v.x*.5+.5)*rect.width)+'px';
+    chips[i].style.top  = ((-v.y*.5+.5)*rect.height)+'px';
+    chips[i].style.opacity = v.z > 1 ? 0 : chipVis;
+  });
+  ANNOS.forEach(a => {
+    const on = S[a.k], next = {ctx:S.agent, agent:S.app, app:S.gov, gov:S.rev, rev:S.loop}[a.k] || 0;
+    const o = wide ? Math.max(0, on - next*0.9) : 0;
+    if (o < 0.04) { a.el.style.opacity = 0; return; }
+    v.copy(a.v).project(camera);
+    a.el.style.left = ((v.x*.5+.5)*rect.width)+'px';
+    a.el.style.top  = ((-v.y*.5+.5)*rect.height)+'px';
+    a.el.style.transform = a.left ? 'translate(-100%,-50%)' : 'translateY(-50%)';
+    a.el.style.opacity = v.z > 1 ? 0 : o;
+  });
+
+  renderer.render(scene, camera);
+}
+gsap.ticker.add(render);
+</script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+/* The operating stack narrative. Dark, and deliberately its own visual system —
+   every token is scoped to .stack-page so nothing leaks into the light site.
+
+   The narrative type is free-standing: no card, no border, no blur. Each stage
+   is anchored to a corner of the frame chosen against the camera track, so the
+   words sit in the composition rather than on top of it. Contrast comes from a
+   soft radial scrim and a text shadow, never from a filled panel. */
+
+.stack-page {
+  --ink: #0d1014;
+  --line: #232b35;
+  --fg: #e9ebee;
+  --fg-2: #98a1ad;
+  --fg-3: #5d6773;
+
+  position: relative;
+  background: var(--ink);
+  color: var(--fg);
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sticky canvas ── */
+.stack-viz {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 0;
+  overflow: hidden;
+  transition: opacity 0.6s ease;
+}
+
+.stack-viz canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The grid wash, masked to a soft ellipse. Purely decorative. */
+.stack-viz::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 74px 74px;
+  opacity: 0.2;
+  -webkit-mask-image: radial-gradient(ellipse 80% 62% at 42% 50%, #000 8%, transparent 94%);
+  mask-image: radial-gradient(ellipse 80% 62% at 42% 50%, #000 8%, transparent 94%);
+}
+
+/* ── Story: seven full-height acts pulled up over the sticky canvas ── */
+.stack-story {
+  position: relative;
+  z-index: 1;
+  margin-top: -100vh;
+}
+
+.stack-act {
+  height: 100vh;
+  display: flex;
+  padding: 13vh 6vw;
+  pointer-events: none;
+}
+
+/* Placement per stage, from content.ts. */
+.stack-act.x-left {
+  justify-content: flex-start;
+}
+.stack-act.x-center {
+  justify-content: center;
+}
+.stack-act.x-right {
+  justify-content: flex-end;
+}
+.stack-act.y-top {
+  align-items: flex-start;
+}
+.stack-act.y-center {
+  align-items: center;
+}
+.stack-act.y-bottom {
+  align-items: flex-end;
+}
+
+/* ── The type itself ── */
+.stack-copy {
+  position: relative;
+  z-index: 1;
+  width: min(38ch, 42vw);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  text-shadow: 0 1px 20px rgba(13, 16, 20, 0.9), 0 0 3px rgba(13, 16, 20, 0.7);
+}
+
+.stack-act.is-live .stack-copy {
+  opacity: 1;
+  transform: none;
+}
+
+/* The scrim. Sits behind the words and fades out well before any edge, so it
+   reads as depth in the render rather than a shape laid over it. */
+.stack-copy::before {
+  content: "";
+  position: absolute;
+  inset: -14% -20% -16%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 32% 46%,
+    rgba(13, 16, 20, 0.94) 0%,
+    rgba(13, 16, 20, 0.74) 44%,
+    rgba(13, 16, 20, 0) 76%
+  );
+}
+
+.stack-act.x-center .stack-copy {
+  width: min(46ch, 62vw);
+  text-align: center;
+}
+
+.stack-act.x-center .stack-copy::before {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(13, 16, 20, 0.94) 0%,
+    rgba(13, 16, 20, 0.74) 46%,
+    rgba(13, 16, 20, 0) 78%
+  );
+}
+
+/* Stage marker: index, rule, name. Replaces the old tag line. */
+.stack-marker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.stack-act.x-center .stack-marker {
+  justify-content: center;
+}
+
+.stack-marker-index {
+  color: var(--c);
+}
+
+.stack-marker-rule {
+  width: 34px;
+  height: 1px;
+  background: var(--c);
+  opacity: 0.5;
+}
+
+.stack-marker-name {
+  color: var(--fg-3);
+}
+
+.stack-copy h2 {
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  margin: 0 0 14px;
+}
+
+.stack-lede {
+  margin: 0 0 20px;
+  color: var(--fg-2);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.stack-copy ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.stack-copy li {
+  position: relative;
+  padding-left: 17px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
+
+.stack-act.x-center .stack-copy li {
+  padding-left: 0;
+}
+
+.stack-copy li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 9px;
+  height: 1px;
+  background: var(--c);
+}
+
+.stack-act.x-center .stack-copy li::before {
+  display: none;
+}
+
+.stack-copy li b {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+/* A single hairline above the metrics is the only rule left — enough to
+   separate them, not enough to build a box. */
+.stack-metrics {
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--fg-3);
+  margin: 22px 0 0;
+  padding-top: 11px;
+  border-top: 1px solid var(--line);
+}
+
+/* ── Fixed chrome ── */
+.stack-opener {
+  position: fixed;
+  top: 32px;
+  left: 38px;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.stack-opener p {
+  margin: 0;
+}
+
+.stack-mark {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.stack-mark span {
+  color: #5dcaa5;
+}
+
+.stack-sub {
+  font-size: 13px;
+  color: var(--fg-3);
+  margin-top: 3px;
+}
+
+.stack-cue {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* ── Rail: real buttons, labelled, with visible focus ── */
+.stack-rail {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stack-rail button {
+  width: 20px;
+  height: 2px;
+  border: 0;
+  padding: 0;
+  background: var(--line);
+  cursor: pointer;
+  transition: background 0.3s ease, width 0.3s ease;
+}
+
+.stack-rail button.is-on {
+  background: var(--fg);
+  width: 32px;
+}
+
+.stack-rail button:focus-visible {
+  outline: 2px solid #5dcaa5;
+  outline-offset: 6px;
+}
+
+/* The label stays in the accessibility tree and for screen readers, but the
+   rail reads as a row of marks. */
+.stack-rail-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  /* Portrait is a different layout, not a narrower one. The canvas pins to
+     the top at 58vh and the narrative scrolls beneath it in a single column —
+     the brief is explicit that text must not sit on the canvas here. The viz
+     takes the higher z-index and an opaque ground, so copy scrolling up
+     passes behind it rather than colliding with the render. */
+  .stack-viz {
+    height: 58vh;
+    z-index: 2;
+    background: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stack-story {
+    margin-top: 0;
+    z-index: 1;
+  }
+
+  .stack-act {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: calc(58vh + 26px) 18px 0;
+  }
+
+  .stack-act.x-left,
+  .stack-act.x-right,
+  .stack-act.x-center {
+    justify-content: flex-start;
+  }
+
+  .stack-act.y-top,
+  .stack-act.y-center,
+  .stack-act.y-bottom {
+    align-items: flex-start;
+  }
+
+  .stack-copy,
+  .stack-act.x-center .stack-copy {
+    width: 100%;
+    text-align: left;
+  }
+
+  .stack-act.x-center .stack-marker {
+    justify-content: flex-start;
+  }
+
+  .stack-act.x-center .stack-copy li {
+    padding-left: 17px;
+  }
+
+  .stack-act.x-center .stack-copy li::before {
+    display: block;
+  }
+
+  /* No overlay here, so no scrim is needed and the text shadow only muddies. */
+  .stack-copy::before,
+  .stack-act.x-center .stack-copy::before {
+    display: none;
+  }
+
+  .stack-copy {
+    text-shadow: none;
+  }
+
+  .stack-copy h2 {
+    font-size: 24px;
+  }
+
+  .stack-rail {
+    display: none;
+  }
+
+  .stack-opener {
+    left: 18px;
+    top: 18px;
+    /* Clear of the canvas band's own content. */
+    z-index: 3;
+  }
+}
+
+/* ── Static fallback, shown when WebGL is unavailable ── */
+.stack-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  padding: 4vh 0;
+  opacity: 0.9;
+}
+
+/* Reduced motion: no scrub-driven reveal. Every stage is simply present. */
+@media (prefers-reduced-motion: reduce) {
+  .stack-copy {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .stack-viz {
+    transition: none;
+  }
+}

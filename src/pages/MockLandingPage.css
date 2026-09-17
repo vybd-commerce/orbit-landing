@@ -23,15 +23,31 @@
     font-size: 0.88rem;
 }
 
-/* The hero's ring effect is a CSS Houdini paint worklet — unsupported on
-   every mobile browser, so it silently renders nothing there. Touch devices
-   (no cursor, so the pointer-follow version wouldn't make sense anyway) get
-   a lightweight ambient dot pulse instead — pure CSS, no JS/canvas cost. */
-@media (hover: none) and (pointer: coarse) {
-    .lp-hero {
-        background-image: radial-gradient(circle, rgba(26, 179, 148, 0.3) 1px, transparent 1px);
-        background-size: 22px 22px;
-        animation: lp-mock-dot-pulse 4s ease-in-out infinite;
+/* The base hero ring (LandingPage.css) is a CSS Houdini paint worklet —
+   Chromium-only, silently renders nothing in Safari/Firefox. This ambient
+   dot pulse replaces it everywhere on this page: pure CSS, no JS/canvas
+   cost, works in every browser. Used to be gated to touch devices only;
+   now it's just the hero background, full stop.
+   Pulsing lives on a ::before layer, not .lp-hero itself — animating the
+   hero's own opacity would fade the headline and copy along with the
+   dots, which is not the intent. */
+.lp-page-mock .lp-hero {
+    background-image: none;
+}
+
+.lp-page-mock .lp-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26, 179, 148, 0.3) 1px, transparent 1px);
+    background-size: 22px 22px;
+    animation: lp-mock-dot-pulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-page-mock .lp-hero::before {
+        animation: none;
     }
 }
 
@@ -206,25 +222,25 @@
    .lp-agent-step* classes are shared with ProductPage's static Agent Model
    section, so these are scoped to #where-to-start (this page only) to avoid
    making that page's non-interactive steps look clickable. */
-#where-to-start .lp-agent-step {
+.lp-page-mock #where-to-start .lp-agent-step {
     cursor: pointer;
 }
 
-#where-to-start .lp-agent-step-chevron {
+.lp-page-mock #where-to-start .lp-agent-step-chevron {
     color: var(--lp-on-surface-variant);
     margin-top: 0.2rem;
     transition: transform 0.2s ease;
 }
 
-#where-to-start .lp-agent-step.is-expanded .lp-agent-step-chevron {
+.lp-page-mock #where-to-start .lp-agent-step.is-expanded .lp-agent-step-chevron {
     transform: rotate(180deg);
 }
 
-#where-to-start .lp-agent-step-card p {
+.lp-page-mock #where-to-start .lp-agent-step-card p {
     display: none;
 }
 
-#where-to-start .lp-agent-step.is-expanded .lp-agent-step-card p {
+.lp-page-mock #where-to-start .lp-agent-step.is-expanded .lp-agent-step-card p {
     display: block;
 }
 
@@ -256,7 +272,7 @@
 
 /* Mobile: icon left of title instead of stacked above it, doorway cards only. */
 @media (max-width: 900px) {
-    #where-to-start .lp-agent-step {
+    .lp-page-mock #where-to-start .lp-agent-step {
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
@@ -264,12 +280,12 @@
         gap: 0.85rem;
     }
 
-    #where-to-start .lp-agent-step-icon-wrap {
+    .lp-page-mock #where-to-start .lp-agent-step-icon-wrap {
         margin-bottom: 0;
         flex-shrink: 0;
     }
 
-    #where-to-start .lp-agent-step-content {
+    .lp-page-mock #where-to-start .lp-agent-step-content {
         flex: 1;
         display: flex;
         align-items: center;
@@ -277,12 +293,135 @@
         text-align: left;
     }
 
-    #where-to-start .lp-agent-step-content h3 {
+    .lp-page-mock #where-to-start .lp-agent-step-content h3 {
         margin-bottom: 0;
     }
 
-    #where-to-start .lp-agent-step-card {
+    .lp-page-mock #where-to-start .lp-agent-step-card {
         flex-basis: 100%;
         text-align: left;
     }
+}
+
+/* ========================================
+   Hero: promise, then the action
+   ========================================
+   Order is eyebrow, headline, one-sentence subhead, CTA pair, trust line.
+   The trust sentence used to sit above the h1 as its own <h2>, which put
+   throat-clearing in the highest-value block on the page and broke heading
+   order. It is now a single muted line under the CTA, where it reassures
+   without competing with the promise. */
+.lp-hero-subtitle.lp-mock-hero-subtitle {
+    max-width: 46ch;
+    font-size: 1.08rem;
+    margin-bottom: 2rem;
+}
+
+/* One primary action per screen. The anchor stays as a text link so it
+   reads as the secondary path, not a competing button. */
+.lp-page-mock .lp-hero-cta {
+    flex-wrap: wrap;
+    gap: 1.25rem 1.75rem;
+}
+
+.lp-btn.lp-mock-hero-btn {
+    padding: 0.8em 1.7em;
+    font-size: 1.02rem;
+    font-weight: 550;
+}
+
+.lp-btn-link.lp-mock-hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--lp-on-surface);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.lp-btn-link.lp-mock-hero-link:hover {
+    border-bottom-color: var(--lp-on-surface);
+}
+
+.lp-mock-hero-trust {
+    margin: 2.5rem auto 0;
+    max-width: 52ch;
+    font-size: 0.82rem;
+    font-weight: 350;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+@media (max-width: 560px) {
+    .lp-page-mock .lp-hero-cta {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .lp-btn.lp-mock-hero-btn {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    /* The sticky bottom bar carries the same action from 930px down, so the
+       hero gets extra bottom padding and is never partly covered by it. */
+    .lp-page-mock .lp-hero {
+        padding-bottom: 6rem;
+    }
+}
+
+/* ========================================
+   Mid-page CTA
+   ========================================
+   Sits between the proof and the objections. Same action as the hero and
+   the footer form, no new promise, so it reads as a door rather than a
+   second pitch. */
+.lp-mid-cta {
+    grid-column: fullbleed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 4.5rem 1.5rem;
+    text-align: center;
+    background: var(--lp-surface-variant);
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-mid-cta-line {
+    margin: 0;
+    max-width: 40ch;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-weight: 450;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--lp-on-surface);
+}
+
+@media (max-width: 560px) {
+    .lp-mid-cta {
+        padding: 3.5rem 1.25rem;
+    }
+
+    .lp-mid-cta .lp-btn {
+        width: 100%;
+        max-width: 24rem;
+    }
+}
+
+/* The cost curve is the strongest thing on the page and a full-viewport
+   hero pushed it entirely below the fold. Shortening the hero lets the top
+   of the comparison show, which is what earns the first scroll. */
+.lp-page-mock .lp-hero {
+    min-height: 78dvh;
+}
+
+/* The timeframe is the most concrete thing in the trust line, so it carries
+   the weight and the investor sentence trails it. */
+.lp-mock-hero-trust strong {
+    font-weight: 600;
+    color: var(--lp-on-surface);
 }

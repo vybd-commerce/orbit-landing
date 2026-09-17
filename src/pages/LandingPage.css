@@ -20,7 +20,146 @@
     --color-problem-surface: #fff5f4;
     --color-problem-accent: #c0392b;
     --color-problem-border: rgba(192, 57, 43, 0.2);
+
+    /* OpsCostCurve chart. Colors reuse the tokens above (problem-accent for
+       the conventional/bolt-on path, primary-dark for the native path) so
+       the chart doesn't introduce a new hue. Line style (solid vs dashed)
+       carries the distinction in greyscale. */
+    --lp-chart-conventional: var(--color-problem-accent);
+    --lp-chart-native: var(--lp-primary-dark);
+    --lp-chart-native-dash: 0.045 0.03; /* fractional: the polyline has pathLength="1", so dasharray is a fraction of total path length, not pixels */
+    --lp-chart-grid: var(--lp-outline);
+    --lp-chart-axis-text: var(--lp-on-surface-variant);
+    --lp-chart-marker-ring: var(--lp-surface);
+
+    /* OpsComparisonSection accent colors. Sanctioned one-off hex values,
+       per that section's brief: hiring/without-systems in orange, systems
+       in green. Stat text uses a darker shade of the same hue for
+       contrast against white. */
+    --lp-comparison-hiring: #D85A30;
+    --lp-comparison-hiring-text: #B0451F;
+    --lp-comparison-systems: #1D9E75;
+    --lp-comparison-systems-text: #0F6E56;
+
+    /* Surfaces and inks that used to be inline hex. Light values are the
+       originals, so every page that is not themed renders unchanged. */
+    --lp-elevated: #f8f9fb;
+    --lp-elevated-hover: #f0f2f5;
+    --lp-card: #f4f5f8;
+    --lp-card-hover: #eceef3;
+    --lp-ink-strong: #000000;
+    --lp-on-surface-muted: #a0a6b5;
+    --lp-ink-soft: #2f3034;
+    --lp-btn-primary-hover: #2f3034;
+    --lp-btn-invert-hover: #e6eaf0;
+    --lp-scrollbar-thumb: rgba(18, 19, 23, 0.4);
+    --lp-scrollbar-thumb-hover: rgba(18, 19, 23, 0.6);
 }
+
+/* ========================================
+   Dark Theme
+   ----------------------------------------
+   Opt-in: only a page whose root carries .lp-theme-dark flips. Every value
+   below is a re-point of a token above, so section rules stay theme-agnostic.
+   ======================================== */
+.lp-theme-dark {
+    color-scheme: dark;
+
+    --lp-surface: #0a0a0a;
+    --lp-surface-variant: #101010;
+    --lp-on-surface: #f4f5f7;
+    --lp-on-surface-variant: #9ea3ad;
+    --lp-on-surface-muted: #6e7480;
+
+    /* Mint lifts a step on black; the -dark slot is the hover, so in this
+       theme it brightens rather than deepens. */
+    --lp-primary: #1fc8a3;
+    --lp-primary-dark: #4ce0be;
+    --lp-on-primary: #04231c;
+
+    --lp-outline: rgba(255, 255, 255, 0.08);
+    --lp-outline-variant: rgba(255, 255, 255, 0.16);
+    --lp-tonal: #15171b;
+    --lp-secondary-btn: rgba(255, 255, 255, 0.06);
+    --lp-secondary-btn-hover: rgba(255, 255, 255, 0.12);
+    --lp-nav-hover: rgba(255, 255, 255, 0.1);
+
+    --lp-elevated: #101216;
+    --lp-elevated-hover: #171a1f;
+    --lp-card: #1a1a1a;
+    --lp-card-hover: #202020;
+    --lp-ink-strong: #f4f5f7;
+    --lp-ink-soft: #d9dde4;
+    --lp-btn-primary-hover: #d9dde4;
+    --lp-btn-invert-hover: #2a2d33;
+    --lp-scrollbar-thumb: rgba(255, 255, 255, 0.28);
+    --lp-scrollbar-thumb-hover: rgba(255, 255, 255, 0.45);
+
+    /* The problem/alert hue needs to come up off black to stay legible. */
+    --color-problem-surface: #1b0f0e;
+    --color-problem-accent: #ff6f5e;
+    --color-problem-border: rgba(255, 111, 94, 0.28);
+
+    --lp-comparison-hiring: #EF7A4E;
+    --lp-comparison-hiring-text: #FF9B73;
+    --lp-comparison-systems: #29C48F;
+    --lp-comparison-systems-text: #5FE0B4;
+}
+
+/* The page paints its own surface, but overscroll shows the document behind
+   it — so the document has to agree with the theme. */
+html:has(.lp-theme-dark),
+body:has(.lp-theme-dark) {
+    background: #0a0a0a;
+}
+
+/* Two places read the page as light rather than reading a token, so they get
+   an explicit dark counterpart. */
+
+/* The CTA card inverts against a white page. Against a black one an inverted
+   slab is the loudest thing on the screen, so it becomes a raised dark panel
+   and its primary button carries the accent instead. */
+.lp-theme-dark .lp-final-cta-card {
+    background-color: var(--lp-elevated);
+    color: var(--lp-on-surface);
+    border: 1px solid var(--lp-outline-variant);
+}
+
+/* The card's heading pins itself to --lp-surface for the inverted light
+   treatment; on the dark panel that is black on near-black. */
+.lp-theme-dark .lp-final-cta-card h2 {
+    color: var(--lp-on-surface);
+}
+
+.lp-theme-dark .lp-dark .lp-btn-primary {
+    background: var(--lp-primary);
+    color: var(--lp-on-primary);
+}
+
+.lp-theme-dark .lp-dark .lp-btn-primary:hover {
+    background: var(--lp-primary-dark);
+}
+
+.lp-theme-dark .lp-dark .lp-btn-secondary {
+    color: var(--lp-on-surface);
+    border-color: var(--lp-outline-variant);
+}
+
+/* An 8% white hairline disappears on black; the empty logo slots need the
+   heavier outline to still read as slots. */
+.lp-theme-dark .lp-logo-chip-placeholder {
+    border-color: var(--lp-outline-variant);
+    color: var(--lp-on-surface-muted);
+}
+
+/* ── Letting the field through ──
+   Opaque bands would cut the page-wide particle field into stripes, so every
+   full-width surface in this theme keeps some transparency. The blur on the
+   header does the rest of the legibility work. */
+.lp-theme-dark .lp-header-wrapper {
+    background: color-mix(in srgb, var(--lp-surface) 85%, transparent);
+}
+
 
 /* ========================================
    Reset & Base (scoped to .landing-page)
@@ -58,20 +197,20 @@ div[id] {
 }
 
 .landing-page::-webkit-scrollbar-thumb {
-    background: rgba(18, 19, 23, 0.4);
+    background: var(--lp-scrollbar-thumb);
     border-radius: 10px;
     border: 2px solid transparent;
     background-clip: padding-box;
 }
 
 .landing-page::-webkit-scrollbar-thumb:hover {
-    background: rgba(18, 19, 23, 0.6);
+    background: var(--lp-scrollbar-thumb-hover);
     background-clip: padding-box;
 }
 
 /* Firefox scrollbar */
 * {
-    scrollbar-color: rgba(18, 19, 23, 0.4) transparent;
+    scrollbar-color: var(--lp-scrollbar-thumb) transparent;
     scrollbar-width: thin;
 }
 
@@ -103,6 +242,14 @@ div[id] {
 
 .landing-page>* {
     grid-column: fullbleed;
+    position: relative;
+    z-index: 1;
+}
+
+/* The field itself is fixed with an inline z-index of 0, so it stays behind
+   the rule above while still painting over the page background. */
+.lp-particle-field {
+    grid-column: fullbleed;
 }
 
 @media (max-width: 768px) {
@@ -120,7 +267,7 @@ div[id] {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.92);
+    background: color-mix(in srgb, var(--lp-surface) 92%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 100;
@@ -292,7 +439,7 @@ div[id] {
         bottom: 0;
         z-index: 98;
         padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-        background: rgba(255, 255, 255, 0.92);
+        background: color-mix(in srgb, var(--lp-surface) 92%, transparent);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-top: 1px solid var(--lp-outline);
@@ -308,6 +455,66 @@ div[id] {
     /* Leave room so the sticky bar never covers the final CTA/footer content */
     .lp-footer {
         padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+    }
+}
+
+/* ========================================
+   Motion: scroll reveal + the global reduced-motion gate
+   ========================================
+   Dial is set to Low for this page: sections fade and rise once on entry,
+   buttons respond to hover and press, nothing loops, parallaxes, or pins.
+
+   Everything below the gate is a safety net, not a substitute for gating
+   individual effects. Most of this file predates the newer components and
+   had no reduced-motion handling at all, including the hero entrance and
+   the smooth scroll behaviour. */
+.lp-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: calc(var(--reveal-i, 0) * 60ms);
+}
+
+.lp-reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+}
+
+.lp-btn:hover {
+    transform: translateY(-1px);
+}
+
+.lp-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .lp-reveal,
+    .lp-reveal.is-revealed {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    /* Catch-all for the older effects in this file: the hero entrance
+       stagger, the ripple and ring keyframes, and every hover transition.
+       Kept to animation and transition only so layout is untouched. */
+    .landing-page *,
+    .landing-page *::before,
+    .landing-page *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .lp-btn:hover,
+    .lp-btn:active {
+        transform: none;
     }
 }
 
@@ -332,8 +539,12 @@ div[id] {
     line-height: 1.4;
 }
 
-.lp-btn:active {
-    transform: scale(0.98);
+.lp-btn:focus-visible,
+.lp-btn-link:focus-visible,
+.lp-fn-bento-tile:focus-visible,
+.lp-mock-proof-link:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 3px;
 }
 
 .lp-btn-primary {
@@ -342,7 +553,7 @@ div[id] {
 }
 
 .lp-btn-primary:hover {
-    background: #2f3034;
+    background: var(--lp-btn-primary-hover);
 }
 
 .lp-btn-secondary {
@@ -371,7 +582,7 @@ div[id] {
 }
 
 .lp-dark .lp-btn-primary:hover {
-    background: #e6eaf0;
+    background: var(--lp-btn-invert-hover);
 }
 
 .lp-dark .lp-btn-secondary {
@@ -387,89 +598,25 @@ div[id] {
 /* ========================================
    Hero Section
    ======================================== */
-@property --animation-tick {
-    syntax: '<number>';
-    inherits: false;
-    initial-value: 0;
-}
-
-@property --ring-radius {
-    syntax: '<number> | auto';
-    inherits: false;
-    initial-value: auto;
-}
-
-@property --ring-x {
-    syntax: '<number>';
-    inherits: false;
-    initial-value: 50;
-}
-
-@property --ring-y {
-    syntax: '<number>';
-    inherits: false;
-    initial-value: 50;
-}
-
-@property --ring-interactive {
-    syntax: '<number>';
-    inherits: false;
-    initial-value: 0;
-}
-
-@keyframes ripple {
-    0% {
-        --animation-tick: 0;
-    }
-
-    100% {
-        --animation-tick: 1;
-    }
-}
-
-@keyframes ring {
-    0% {
-        --ring-radius: 150;
-    }
-
-    100% {
-        --ring-radius: 250;
-    }
-}
-
 .lp-hero {
     grid-column: fullbleed;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 4rem;
-    padding-top: 10rem;
-    padding-bottom: 2rem;
+    padding-top: 7.75rem;
+    padding-bottom: 5rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     width: 100%;
     margin: 0 auto;
     position: relative;
     text-align: center;
-    min-height: 100dvh;
+    /* Content sets the height: the tiles below should sit a fixed distance
+       under the buttons rather than wherever a viewport-height hero ends. */
+    min-height: auto;
     overflow: hidden;
-    /* Particle System Config */
-    --ring-radius: 100;
-    --ring-thickness: 600;
-
-    --particle-count: 80;
-    --particle-rows: 25;
-    --particle-size: 2;
-    --particle-color: #1ab394;
-    --particle-min-alpha: 0.1;
-    --particle-max-alpha: 1.0;
-
-    --seed: 200;
-
-    background-image: paint(ring-particles);
-    animation: ripple 6s linear infinite, ring 6s ease-in-out infinite alternate;
-    transition: --ring-x 3s ease, --ring-y 3s ease;
 }
 
 .lp-hero>* {
@@ -494,6 +641,30 @@ div[id] {
     gap: 1.5rem;
     justify-content: center;
     align-items: center;
+}
+
+/* ========================================
+   Hero trust line (heading + sentence, sits above the eyebrow)
+   ======================================== */
+.lp-hero-trust {
+    margin-bottom: 2.5rem;
+}
+
+.lp-trust-strip-heading {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--lp-on-surface);
+    margin: 0 0 0.5rem;
+}
+
+.lp-trust-strip-body {
+    font-size: 0.8rem;
+    font-weight: 350;
+    color: var(--lp-on-surface-variant);
+    max-width: 620px;
+    line-height: 1.6;
+    margin: 0 auto;
 }
 
 /* ========================================
@@ -554,7 +725,7 @@ div[id] {
 /* --- Window Chrome (shared: hero carousel wiring removed it from the
    hero, still used by the Lab page's Brand Brain loop diagram) --- */
 .dash-mock {
-    background: #f8f9fc;
+    background: var(--lp-surface-variant);
     border: 1px solid var(--lp-outline);
     border-radius: 20px;
     padding: 1.25rem;
@@ -635,7 +806,8 @@ div[id] {
 .lp-hero-title,
 .lp-hero-subtitle,
 .lp-hero-supporting,
-.lp-hero-cta {
+.lp-hero-cta,
+.lp-mock-hero-trust {
     animation: hero-fade-up 0.6s ease both;
 }
 
@@ -655,6 +827,11 @@ div[id] {
     animation-delay: 0.4s;
 }
 
+/* Trust line lands last, after the action it is there to support. */
+.lp-mock-hero-trust {
+    animation-delay: 0.55s;
+}
+
 @keyframes hero-fade-up {
     from {
         opacity: 0;
@@ -668,9 +845,9 @@ div[id] {
 }
 
 .lp-hero-title {
-    font-size: clamp(3rem, 5.5vw, 4.5rem);
-    font-weight: 400;
-    margin: 1.5rem 0 1rem;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 450;
+    margin: 2.5rem 0 1.5rem;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--lp-on-surface);
@@ -680,7 +857,7 @@ div[id] {
 .lp-hero-title span {
     display: block;
     font-weight: 600;
-    background: linear-gradient(135deg, var(--lp-primary) 0%, #2f3034 100%);
+    background: linear-gradient(135deg, var(--lp-primary) 0%, var(--lp-ink-soft) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -691,7 +868,7 @@ div[id] {
     font-weight: 400;
     max-width: 800px;
     text-align: center;
-    margin: 0 auto 2.5rem;
+    margin: 0 auto 3rem;
     color: var(--lp-on-surface-variant);
     line-height: 1.5;
 }
@@ -708,8 +885,6 @@ div[id] {
     margin-top: 0;
     display: inline-block;
 }
-
-
 
 /* ========================================
    Product Section (Reframed)
@@ -837,7 +1012,7 @@ div[id] {
 }
 
 .lp-text-gradient {
-    background: linear-gradient(to right, var(--lp-primary), #2f3034);
+    background: linear-gradient(to right, var(--lp-primary), var(--lp-ink-soft));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -954,12 +1129,12 @@ div[id] {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: white;
+    background: var(--lp-surface);
     display: grid;
     place-content: center;
     margin-bottom: 2rem;
     position: relative;
-    box-shadow: 0 0 0 8px white;
+    box-shadow: 0 0 0 8px var(--lp-surface);
 }
 
 .lp-agent-step-icon {
@@ -1002,7 +1177,7 @@ div[id] {
 }
 
 .lp-agent-step-card {
-    background: #f8f9fb;
+    background: var(--lp-elevated);
     border-radius: 1rem;
     padding: 1.5rem 2rem;
     width: 100%;
@@ -1010,7 +1185,7 @@ div[id] {
 }
 
 .lp-agent-step:hover .lp-agent-step-card {
-    background: #f0f2f5;
+    background: var(--lp-elevated-hover);
     transform: translateY(-4px);
 }
 
@@ -1346,10 +1521,7 @@ div[id] {
    ======================================== */
 .lp-horizon-section {
     grid-column: fullbleed;
-    border-top: 1px solid var(--lp-outline-variant);
-    border-bottom: 1px solid var(--lp-outline-variant);
-    background: var(--lp-surface-variant);
-    padding: 3.5rem 1.5rem;
+    padding: 5rem 1.5rem;
 }
 
 .lp-horizon-inner {
@@ -1421,13 +1593,6 @@ div[id] {
     align-content: center;
     position: relative;
     overflow: hidden;
-
-    /* Particle System Config Removed (Replaced by FinalCtaParticleCanvas) */
-    /* --ring-radius: 100; ... */
-
-    /* background-image: paint(ring-particles); */
-    /* animation: ripple 6s linear infinite, ring 6s ease-in-out infinite alternate; */
-    /* transition: --ring-x 3s ease, --ring-y 3s ease; */
 }
 
 .lp-final-cta-card>* {
@@ -1516,8 +1681,8 @@ div[id] {
    ======================================== */
 .lp-footer {
     grid-column: fullbleed-start / fullbleed-end;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: transparent;
+    color: var(--lp-ink-strong);
     padding: 2rem 0 1.5rem;
     /* Removed horizontal padding, subgrid handles gutters */
     display: grid;
@@ -1575,7 +1740,7 @@ div[id] {
 }
 
 .lp-footer-col a {
-    color: #000;
+    color: var(--lp-ink-strong);
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 500;
@@ -1641,7 +1806,7 @@ div[id] {
     top: 5rem;
     /* Increased top clearance */
     border-width: 1px;
-    border-color: rgba(0, 0, 0, 0.08);
+    border-color: var(--lp-outline-variant);
     /* Very subtle orbit line */
     animation: lp-ellipsesOrbit 20s linear infinite;
     z-index: 1;
@@ -1654,7 +1819,7 @@ div[id] {
     /* Enlarged */
     top: 6rem;
     left: 1rem;
-    border-color: #000 transparent;
+    border-color: var(--lp-ink-strong) transparent;
     border-width: 2px;
     transform: rotate(-45deg);
     animation: lp-ellipsesRotate 15s ease-in-out infinite alternate;
@@ -1666,7 +1831,7 @@ div[id] {
     width: 1.5rem;
     height: 1.5rem;
     background-color: var(--lp-primary);
-    border: 2px solid #000;
+    border: 2px solid var(--lp-ink-strong);
     top: 10%;
     left: 20%;
     position: absolute;
@@ -1720,7 +1885,7 @@ div[id] {
 .lp-footer-logo-small {
     font-weight: 700;
     font-size: 1.4rem;
-    color: #000;
+    color: var(--lp-ink-strong);
 }
 
 .lp-footer-legal {
@@ -1729,7 +1894,7 @@ div[id] {
 }
 
 .lp-footer-legal a {
-    color: #555;
+    color: var(--lp-on-surface-variant);
     /* Subtle grey like reference */
     text-decoration: none;
 }
@@ -1793,6 +1958,23 @@ div[id] {
 }
 
 /* ========================================
+   Ops Cost Curve section wrapper (shared by any landing page that embeds
+   the OpsCostCurve component)
+   ======================================== */
+.lp-curve-section {
+    grid-column: fullbleed;
+    background: var(--lp-surface-variant);
+    border-bottom: 1px solid var(--lp-outline-variant);
+    padding: 5rem 3rem;
+}
+
+@media (max-width: 768px) {
+    .lp-curve-section {
+        padding: 3.5rem 1.5rem;
+    }
+}
+
+/* ========================================
    Visibility helpers
    ======================================== */
 .lp-sr-only {
@@ -1826,9 +2008,7 @@ div[id] {
    ======================================== */
 .lp-functions-section {
     grid-column: fullbleed;
-    background: var(--lp-surface-variant);
-    border-bottom: 1px solid var(--lp-outline-variant);
-    padding: 3rem 3rem;
+    padding: 5rem 3rem;
 }
 
 .lp-functions-header {
@@ -2243,8 +2423,6 @@ div[id] {
    ======================================== */
 .lp-process-section {
     grid-column: fullbleed;
-    background: var(--lp-surface-variant);
-    border-bottom: 1px solid var(--lp-outline-variant);
     padding: 6rem 3rem;
 }
 
@@ -3026,7 +3204,7 @@ div[id] {
 .lp-custom-banner-texts p {
     font-size: 0.95rem;
     margin: 0;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--lp-on-surface-variant);
 }
 
 .lp-custom-banner-right {
@@ -3047,7 +3225,7 @@ div[id] {
     font-size: 0.95rem;
     max-width: 250px;
     margin: 0;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--lp-on-surface-variant);
 }
 
 .lp-btn-purple {
@@ -3295,10 +3473,7 @@ div[id] {
    ======================================== */
 .lcs-section {
     grid-column: fullbleed;
-    padding: 4.5rem 1.5rem;
-    background: var(--lp-surface-variant);
-    border-top: 1px solid var(--lp-outline-variant);
-    border-bottom: 1px solid var(--lp-outline-variant);
+    padding: 5rem 1.5rem;
 }
 
 .lcs-header {
@@ -3358,7 +3533,7 @@ div[id] {
 .lcs-filter-pill.active {
     background: var(--lp-primary);
     border-color: var(--lp-primary);
-    color: #ffffff;
+    color: var(--lp-on-primary);
 }
 
 .lcs-arrows {
@@ -3630,7 +3805,7 @@ div[id] {
 
 /* Active Testimonial Card */
 .tg-active-testimonial-card {
-    background: #ffffff;
+    background: var(--lp-surface);
     border: 1px solid var(--lp-outline-variant);
     border-radius: 20px;
     padding: 1.8rem;
@@ -3679,7 +3854,7 @@ div[id] {
 .tg-quote-number {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #a0a6b5;
+    color: var(--lp-on-surface-muted);
     letter-spacing: 0.05em;
     font-variant-numeric: tabular-nums;
 }
@@ -3728,7 +3903,7 @@ div[id] {
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    background: #f1f3f7; /* Subtle grey */
+    background: var(--lp-tonal);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3846,7 +4021,7 @@ div[id] {
 .tg-tile-inner {
     width: 100%;
     height: 100%;
-    background-color: #9ca3af; /* Darker grey */
+    background-color: var(--lp-on-surface-muted);
     border-radius: 3px;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0.55; /* Higher opacity */
@@ -3878,7 +4053,7 @@ div[id] {
     height: 40px;
     border-radius: 50%;
     border: 1px solid var(--lp-outline);
-    background: #f5f7fa;
+    background: var(--lp-surface-variant);
     color: var(--lp-on-surface-variant);
     cursor: pointer;
     display: flex;

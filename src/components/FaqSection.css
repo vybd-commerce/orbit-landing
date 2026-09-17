@@ -1,0 +1,90 @@
+/* ========================================
+   FAQ
+   ======================================== */
+.lp-faq-section {
+    grid-column: fullbleed;
+    padding: 6rem 3rem;
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-faq-inner {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.lp-faq-list {
+    border-top: 1px solid var(--lp-outline-variant);
+}
+
+.lp-faq-item {
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.35rem 0;
+    cursor: pointer;
+    list-style: none;
+    font-size: 1.08rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--lp-on-surface);
+}
+
+/* Safari still paints the default disclosure triangle without this. */
+.lp-faq-question::-webkit-details-marker {
+    display: none;
+}
+
+.lp-faq-question:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.lp-faq-chevron {
+    flex: none;
+    color: var(--lp-on-surface-variant);
+    transition: transform 0.2s ease;
+}
+
+.lp-faq-item[open] .lp-faq-chevron {
+    transform: rotate(180deg);
+}
+
+.lp-faq-answer {
+    padding: 0 0 1.6rem;
+    max-width: 62ch;
+}
+
+.lp-faq-answer p {
+    margin: 0 0 0.9rem;
+    font-size: 0.98rem;
+    font-weight: 350;
+    line-height: 1.65;
+    color: var(--lp-on-surface-variant);
+}
+
+.lp-faq-answer p:last-child {
+    margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-faq-chevron {
+        transition: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .lp-faq-section {
+        padding: 4rem 1.5rem;
+    }
+
+    .lp-faq-question {
+        font-size: 1rem;
+        padding: 1.15rem 0;
+    }
+}

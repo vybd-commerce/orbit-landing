@@ -23,7 +23,7 @@ export default function WorkIndexPage() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <div className="landing-page">
+        <div className="landing-page lp-theme-dark">
             {/* ── Header ── */}
             <div className="lp-header-wrapper">
                 <header className="lp-header">
@@ -52,7 +52,7 @@ export default function WorkIndexPage() {
 
                     <div className="lp-header-cta">
                         <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>
-                            Book an entry call
+                            Contact sales
                         </button>
                     </div>
                 </header>
@@ -60,9 +60,7 @@ export default function WorkIndexPage() {
 
             {/* ── Sticky mobile CTA ── */}
             <div className="lp-mobile-sticky-cta">
-                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>
-                    Book an entry call
-                </button>
+                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>Contact sales</button>
             </div>
 
             {/* ── Hero ── */}

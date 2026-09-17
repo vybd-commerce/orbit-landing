@@ -248,15 +248,15 @@ export default function TestimonialGlobe() {
                         arcs={globeArcs.map((arc, idx) => ({
                             ...arc,
                             label: idx === activeIndex ? arc.label : undefined,
-                            color: idx === activeIndex ? ([0.1, 0.1, 0.2] as [number, number, number]) : ([0.85, 0.85, 0.85] as [number, number, number])
+                            color: idx === activeIndex ? ([0.12, 0.78, 0.64] as [number, number, number]) : ([0.35, 0.37, 0.4] as [number, number, number])
                         }))}
                         className="w-full max-w-lg"
-                        markerColor={[0.3, 0.45, 0.85]}
-                        baseColor={[1, 1, 1]}
-                        arcColor={[0.3, 0.45, 0.85]}
-                        glowColor={[0.94, 0.93, 0.91]}
-                        dark={0}
-                        mapBrightness={10}
+                        markerColor={[0.12, 0.78, 0.64]}
+                        baseColor={[0.13, 0.14, 0.16]}
+                        arcColor={[0.12, 0.78, 0.64]}
+                        glowColor={[0.06, 0.07, 0.08]}
+                        dark={1}
+                        mapBrightness={6}
                         markerSize={0.025}
                         markerElevation={0.01}
                         speed={0.005} // Slower rotation: ~20 seconds per full rotation

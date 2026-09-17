@@ -1,0 +1,239 @@
+/* Capability tiles directly under the hero. Layout mirrors the hero's
+   full-bleed column; tokens come from LandingPage.css, so the row follows
+   whatever theme the page root sets. */
+
+.hsg-section {
+    grid-column: fullbleed;
+    padding: 0 1.5rem 5rem;
+}
+
+.hsg-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+}
+
+/* Three narrow, then two wide. Separation is value contrast against the
+   page rather than an outline, which is what keeps the row from reading as
+   a set of boxes. */
+.hsg-tile {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    height: 280px;
+    border-radius: 1rem;
+    background: var(--lp-card);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.hsg-tile.is-wide {
+    grid-column: span 3;
+    height: 320px;
+}
+
+.hsg-tile:hover {
+    background: var(--lp-card-hover);
+    transform: translateY(-3px);
+}
+
+.hsg-tile:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 3px;
+}
+
+.hsg-preview {
+    flex: 1;
+    position: relative;
+    padding: 1.5rem;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
+}
+
+.hsg-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.hsg-label {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--lp-on-surface);
+}
+
+.hsg-explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--lp-on-surface-variant);
+    transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.hsg-tile:hover .hsg-explore {
+    color: var(--lp-primary);
+    gap: 0.55rem;
+}
+
+/* ── Shared preview typography ── */
+.hsg-lines,
+.hsg-ledger,
+.hsg-route ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--lp-on-surface-variant);
+}
+
+/* ── Signal: a bar field over a short read-out ── */
+.hsg-signal {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 100%;
+}
+
+.hsg-signal-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 72px;
+}
+
+.hsg-signal-bars span {
+    flex: 1;
+    height: var(--h);
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(to top, var(--lp-primary), color-mix(in srgb, var(--lp-primary) 25%, transparent));
+    transform-origin: bottom;
+    animation: hsg-bar 2.8s ease-in-out infinite;
+    animation-delay: var(--d);
+}
+
+@keyframes hsg-bar {
+    0%, 100% { transform: scaleY(0.72); opacity: 0.65; }
+    50% { transform: scaleY(1); opacity: 1; }
+}
+
+.hsg-lines li.is-accent {
+    color: var(--lp-primary);
+    font-weight: 500;
+}
+
+/* ── Ledger: rows landing one after another ── */
+.hsg-ledger li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.6rem;
+    background: var(--lp-surface-variant);
+    border: 1px solid var(--lp-outline);
+    opacity: 0;
+    animation: hsg-land 6s ease-in-out infinite;
+    animation-delay: var(--d);
+}
+
+.hsg-ledger-tick {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: 0.35rem;
+    border-radius: 50%;
+    background: var(--lp-primary);
+}
+
+@keyframes hsg-land {
+    0% { opacity: 0; transform: translateY(6px); }
+    8%, 80% { opacity: 1; transform: none; }
+    92%, 100% { opacity: 0; transform: translateY(-4px); }
+}
+
+/* ── Route: a lane with a travelling pulse ── */
+.hsg-route ol {
+    position: relative;
+    gap: 1.1rem;
+    padding-left: 0.35rem;
+}
+
+.hsg-route ol::before {
+    content: "";
+    position: absolute;
+    left: 0.35rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--lp-outline-variant);
+}
+
+.hsg-route li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+}
+
+.hsg-route-dot {
+    width: 9px;
+    height: 9px;
+    margin-left: -0.1rem;
+    border-radius: 50%;
+    background: var(--lp-surface);
+    border: 1px solid var(--lp-primary);
+    animation: hsg-pulse 4s ease-in-out infinite;
+    animation-delay: var(--d);
+}
+
+@keyframes hsg-pulse {
+    0%, 60%, 100% { background: var(--lp-surface); box-shadow: none; }
+    20%, 40% { background: var(--lp-primary); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lp-primary) 18%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hsg-signal-bars span,
+    .hsg-ledger li,
+    .hsg-route-dot {
+        animation: none;
+    }
+    .hsg-ledger li {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hsg-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hsg-tile,
+    .hsg-tile.is-wide {
+        grid-column: span 1;
+        height: 260px;
+    }
+}
+
+@media (max-width: 640px) {
+    .hsg-section {
+        padding-bottom: 3.5rem;
+    }
+    .hsg-grid {
+        grid-template-columns: 1fr;
+    }
+    .hsg-tile,
+    .hsg-tile.is-wide {
+        height: 220px;
+    }
+}

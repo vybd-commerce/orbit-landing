@@ -1,0 +1,327 @@
+/* OpsCostCurve — relies on LandingPage.css tokens (--lp-*, --color-*) and
+   the shared .lp-sr-only utility. Scoped under .occ so nothing here leaks
+   into the rest of the page. */
+
+.occ {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.occ-heading h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--lp-on-surface);
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
+}
+
+.occ-subline {
+  font-size: 1rem;
+  font-weight: 350;
+  color: var(--lp-on-surface-variant);
+  margin: 0 0 2rem;
+}
+
+/* ── Slider (desktop) / stepped buttons (mobile) ── */
+.occ-control {
+  margin-bottom: 1.5rem;
+}
+
+.occ-slider-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--lp-on-surface);
+  margin-bottom: 0.75rem;
+}
+
+.occ-slider-readout {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  color: var(--lp-primary);
+}
+
+.occ-slider {
+  width: 100%;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--lp-outline-variant);
+  outline-offset: 6px;
+}
+
+.occ-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--lp-primary);
+  border: 3px solid var(--lp-surface);
+  box-shadow: 0 0 0 1px var(--lp-outline-variant);
+  cursor: pointer;
+}
+
+.occ-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--lp-primary);
+  border: 3px solid var(--lp-surface);
+  box-shadow: 0 0 0 1px var(--lp-outline-variant);
+  cursor: pointer;
+}
+
+.occ-slider:focus-visible {
+  outline: 2px solid var(--lp-primary);
+}
+
+.occ-steps {
+  display: none;
+  gap: 0.5rem;
+}
+
+.occ-steps button {
+  flex: 1;
+  padding: 0.65em 0.5em;
+  border: 1px solid var(--lp-outline-variant);
+  border-radius: 999px;
+  background: var(--lp-surface);
+  color: var(--lp-on-surface-variant);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.occ-steps button.is-active {
+  background: var(--lp-on-surface);
+  color: var(--lp-on-primary);
+  border-color: var(--lp-on-surface);
+}
+
+.occ-steps button:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 2px;
+}
+
+/* ── Metric tiles ── */
+.occ-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1px;
+  background: var(--lp-outline-variant);
+  border: 1px solid var(--lp-outline-variant);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.occ-tile {
+  background: var(--lp-surface);
+  padding: 1.25rem;
+}
+
+.occ-tile-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--lp-on-surface-variant);
+  margin-bottom: 0.4rem;
+}
+
+.occ-tile-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--lp-on-surface);
+}
+
+/* ── Legend ── */
+.occ-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.occ-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--lp-on-surface-variant);
+}
+
+.occ-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.occ-swatch-conventional {
+  background: var(--lp-chart-conventional);
+}
+
+.occ-swatch-native {
+  background: var(--lp-chart-native);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--lp-chart-native),
+    var(--lp-chart-native) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+}
+
+/* ── Chart ── */
+.occ-chart-wrap {
+  width: 100%;
+  height: 280px;
+}
+
+.occ-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.occ-gridline {
+  stroke: var(--lp-chart-grid);
+  stroke-width: 1;
+}
+
+.occ-axis-text {
+  font-size: 11px;
+  fill: var(--lp-chart-axis-text);
+}
+
+.occ-axis-title {
+  font-size: 11px;
+  fill: var(--lp-chart-axis-text);
+}
+
+.occ-marker-line {
+  stroke: var(--lp-outline-variant);
+  stroke-width: 1;
+}
+
+.occ-marker-ring {
+  fill: var(--lp-chart-marker-ring);
+  stroke: var(--lp-chart-marker-ring);
+  stroke-width: 2;
+}
+
+.occ-marker-conventional {
+  fill: var(--lp-chart-conventional);
+}
+
+.occ-marker-native {
+  fill: var(--lp-chart-native);
+}
+
+.occ-polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.occ-polyline-conventional {
+  stroke: var(--lp-chart-conventional);
+}
+
+.occ-polyline-native {
+  stroke: var(--lp-chart-native);
+  /* pathLength="1" on this element normalizes dasharray units to fractions
+     of the total path length, not pixels — 0.045/0.03 renders as ~evenly
+     spaced dashes regardless of how long the curve actually is. */
+  stroke-dasharray: var(--lp-chart-native-dash);
+  opacity: 0;
+}
+
+.occ-draw .occ-polyline-conventional {
+  stroke-dasharray: 1;
+  animation: occ-draw-line 900ms ease forwards;
+}
+
+.occ-draw .occ-polyline-native {
+  animation: occ-draw-fade 500ms ease 500ms both;
+}
+
+@keyframes occ-draw-line {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Dashed native line can't use the dashoffset draw trick without its dash
+   pattern shifting oddly mid-animation, so it fades in instead, staggered
+   after the conventional line finishes drawing. animation-fill-mode: both
+   keeps it at opacity 0 for the delay instead of snapping to 1 early. */
+@keyframes occ-draw-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .occ-polyline-conventional,
+  .occ-draw .occ-polyline-conventional {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .occ-polyline-native,
+  .occ-draw .occ-polyline-native {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* ── Assumptions disclosure ── */
+.occ-assumptions {
+  margin-top: 1.5rem;
+}
+
+.occ-assumptions summary {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--lp-on-surface-variant);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.occ-assumptions summary:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 3px;
+}
+
+.occ-assumptions p {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--lp-on-surface-variant);
+  max-width: 70ch;
+  margin: 1rem 0 0;
+}
+
+.occ-assumptions-figures {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.78rem !important;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .occ-slider {
+    display: none;
+  }
+  .occ-steps {
+    display: flex;
+  }
+  .occ-chart-wrap {
+    height: 220px;
+  }
+  .occ-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* Ten x-axis labels crowd a 360px-wide chart, drop every other one
+     ($20M/$40M/.../$100M stays, matching brief's revenue step). */
+  .occ-x-tick-minor {
+    display: none;
+  }
+}

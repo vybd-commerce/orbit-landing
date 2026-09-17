@@ -1,0 +1,189 @@
+/* ── Operating functions accordion ── */
+.lp-fn-accordion {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.lp-fn-accordion-item {
+    border-top: 1px solid var(--lp-outline-variant);
+}
+
+.lp-fn-accordion-item:last-child {
+    border-bottom: 1px solid var(--lp-outline-variant);
+}
+
+.lp-fn-accordion-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem 0.25rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.lp-fn-accordion-header:hover .lp-fn-title {
+    color: var(--lp-primary);
+}
+
+.lp-fn-accordion-header:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: -2px;
+    border-radius: 4px;
+}
+
+.lp-fn-accordion-heading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+}
+
+.lp-fn-accordion-heading .lp-fn-title {
+    margin-bottom: 0;
+    transition: color 0.15s ease;
+}
+
+.lp-fn-accordion-chevron {
+    flex-shrink: 0;
+    color: var(--lp-on-surface-variant);
+    transition: transform 0.2s ease;
+}
+
+.lp-fn-accordion-item.is-expanded .lp-fn-accordion-chevron {
+    transform: rotate(180deg);
+}
+
+/* Grid-rows trick: animates height without measuring it in JS. */
+.lp-fn-accordion-panel-outer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+}
+
+.lp-fn-accordion-item.is-expanded .lp-fn-accordion-panel-outer {
+    grid-template-rows: 1fr;
+}
+
+.lp-fn-accordion-panel-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.lp-fn-accordion-panel {
+    padding: 0 0.25rem 1.75rem calc(0.25rem + 10px + 1.25rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-fn-accordion-panel-outer,
+    .lp-fn-accordion-chevron {
+        transition: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .lp-fn-accordion-header {
+        gap: 0.85rem;
+        align-items: flex-start;
+    }
+    .lp-fn-accordion-chevron {
+        margin-top: 0.3rem;
+    }
+    .lp-fn-accordion-panel {
+        padding-left: 0.25rem;
+    }
+}
+
+/* The .lp-fn-accordion primitive above is shared: this component owns it so
+   any page can mount the section without pulling in a page stylesheet. Only
+   the does/reads typography and substrate band below are specific to it. */
+
+/* Tune the shared accordion's transition to the ~200ms this brief asks
+   for (was 300ms, still used as-is by other accordions on the page). */
+.wwb-accordion .lp-fn-accordion-panel-outer {
+  transition: grid-template-rows 0.2s ease;
+}
+
+/* ── Panel content: does, then reads ── */
+.wwb-does {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--lp-on-surface);
+  margin: 0 0 0.75rem;
+}
+
+.wwb-reads {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--lp-on-surface-variant);
+  margin: 0;
+}
+
+.wwb-reads-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lp-on-surface-variant);
+  opacity: 0.7;
+  margin-right: 0.4em;
+}
+
+/* ── Substrate band: a foundation, not a callout ── */
+.wwb-substrate {
+  max-width: 860px;
+  margin: 0 auto;
+  margin-top: 1px; /* sits flush against the accordion's own bottom border */
+  background: transparent;
+  border: 1px solid var(--lp-outline-variant);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 1.5rem 1.75rem;
+  text-align: center;
+}
+
+.wwb-substrate-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lp-on-surface-variant);
+  margin-bottom: 0.6rem;
+}
+
+.wwb-substrate-systems {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--lp-on-surface);
+  margin-bottom: 0.6rem;
+}
+
+.wwb-substrate-caption {
+  font-size: 0.85rem;
+  color: var(--lp-on-surface-variant);
+  max-width: 46ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .wwb-substrate {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .wwb-substrate-systems {
+    font-size: 0.88rem;
+  }
+}
+
+/* Carried over from the deleted "How it runs" section: the three-step block
+   said nothing the six functions do not, but this one line was the point of
+   it and belongs with the pitch. */
+.wwb-handover {
+    font-weight: 600;
+    color: var(--lp-on-surface);
+}

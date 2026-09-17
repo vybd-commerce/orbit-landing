@@ -1,0 +1,460 @@
+/* V3 layout study. Structure follows the pattern we calibrated against the
+   reference — centred hero with a pill, tile row, then a copy/panel split —
+   but the markup, type scale and colour all come from our own tokens. */
+
+.lp-page-v3 .lp-header-wrapper {
+    height: 4rem;
+}
+
+.v3-header-cta {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    .v3-header-cta {
+        display: none;
+    }
+}
+
+/* ── Hero ── */
+.v3-hero {
+    grid-column: fullbleed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* header height plus the gap the reference leaves above the pill */
+    padding: 7.75rem 1.5rem 5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.v3-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.35rem 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--lp-outline-variant);
+    background: color-mix(in srgb, var(--lp-card) 60%, transparent);
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: var(--lp-on-surface);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.v3-pill--static {
+    padding: 0.4rem 0.9rem;
+    cursor: default;
+}
+
+.v3-pill--static .v3-pill-text {
+    color: var(--lp-on-surface);
+}
+
+.v3-pill:not(.v3-pill--static):hover {
+    border-color: color-mix(in srgb, var(--lp-primary) 45%, transparent);
+    background: var(--lp-card);
+}
+
+.v3-pill-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lp-primary) 14%, transparent);
+    color: var(--lp-primary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.v3-pill-text {
+    color: var(--lp-on-surface-variant);
+}
+
+.v3-pill-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lp-on-surface) 8%, transparent);
+    color: var(--lp-on-surface);
+}
+
+.v3-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 450;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    margin: 2rem 0 0;
+    color: var(--lp-on-surface);
+}
+
+/* Wrapper for the rotating word; the rule is drawn by the word itself so the
+   two share one colour and one entrance. */
+.v3-hero-underlined {
+    position: relative;
+    display: inline-block;
+}
+
+.v3-hero-subtitle {
+    max-width: 46rem;
+    margin: 1.5rem auto 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+.v3-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2.25rem;
+}
+
+.v3-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.v3-btn-primary {
+    background: var(--lp-on-surface);
+    color: var(--lp-surface);
+}
+
+.v3-btn-primary:hover {
+    background: var(--lp-btn-primary-hover);
+}
+
+.v3-btn-soft {
+    background: var(--lp-card);
+    color: var(--lp-on-surface);
+}
+
+.v3-btn-soft:hover {
+    background: var(--lp-card-hover);
+}
+
+/* ── Footer nav ── */
+.lp-page-v3 .lp-footer-nav {
+    gap: 0;
+}
+
+.lp-page-v3 .lp-footer-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2.25rem;
+    align-items: center;
+}
+
+/* ── Rotating headline word ── */
+.rw-root {
+    position: relative;
+    display: inline-flex;
+    vertical-align: bottom;
+    /* Clips the swapping word at the sides while the width animates, but
+       leaves room below for the rule — `overflow: hidden` cut it off. */
+    clip-path: inset(-0.25em 0 -0.6em 0);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Lays out the current word to give the container a width to animate to,
+   without ever being visible or read aloud. */
+.rw-sizer {
+    visibility: hidden;
+    white-space: nowrap;
+}
+
+.rw-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    /* Two stacked backgrounds clipped to the glyphs: a white fill, and the
+       same narrow mint band that travels the rule. Only the band moves, and
+       only this word carries it. */
+    background-image:
+        linear-gradient(90deg,
+            transparent 0%,
+            var(--lp-primary) 30%,
+            var(--lp-primary) 70%,
+            transparent 100%),
+        linear-gradient(var(--lp-on-surface), var(--lp-on-surface));
+    background-size: 22% 100%, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+    background-position: -20% 0, 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation:
+        rw-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both,
+        rw-word-sweep 2.4s cubic-bezier(0.4, 0, 0.3, 1) 0.5s both;
+}
+
+/* Runs alongside the rule's sweep, same delay and duration, so one sliver
+   appears to pass through the word and its line together. */
+@keyframes rw-word-sweep {
+    0% { background-position: -20% 0, 0 0; }
+    100% { background-position: 120% 0, 0 0; }
+}
+
+.rw-rule {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 3px;
+    border-radius: 999px;
+    transform-origin: left center;
+    background-color: #ffffff;
+    overflow: hidden;
+    animation: rw-rule-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* A fixed-width mint sliver that travels the white rule end to end. The
+   gradient is sized to a fraction of the line and moved with
+   background-position, so its width never changes as it crosses. */
+.rw-rule::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg,
+        transparent 0%,
+        var(--lp-primary) 30%,
+        var(--lp-primary) 70%,
+        transparent 100%);
+    background-size: 22% 100%;
+    background-repeat: no-repeat;
+    animation: rw-rule-sweep 2.4s cubic-bezier(0.4, 0, 0.3, 1) 0.5s both;
+}
+
+@keyframes rw-in {
+    from {
+        opacity: 0;
+        filter: blur(6px);
+        transform: translateY(0.18em);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: none;
+    }
+}
+
+/* Percentage positions are relative to the travel distance, so -20% starts
+   the sliver just off the left edge and 120% carries it clear of the right. */
+@keyframes rw-rule-sweep {
+    0% { background-position: -20% 0; }
+    100% { background-position: 120% 0; }
+}
+
+@keyframes rw-rule-in {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rw-root {
+        transition: none;
+    }
+    .rw-word,
+    .rw-rule {
+        animation: none;
+    }
+    .rw-word {
+        background-image: none;
+        color: var(--lp-on-surface);
+        -webkit-text-fill-color: var(--lp-on-surface);
+    }
+    .rw-rule {
+        background-color: var(--lp-primary);
+    }
+    .rw-rule::after {
+        animation: none;
+    }
+}
+
+/* the sales action sits hard right, past the nav */
+.lp-page-v3 .v3-header-cta {
+    margin-left: auto;
+}
+
+/* ── Copy + run log split ── */
+.v3-split {
+    grid-column: fullbleed;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 6rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.v3-split-copy h2 {
+    font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+    font-weight: 450;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 1rem 0 1.25rem;
+    color: var(--lp-on-surface);
+}
+
+.v3-split-copy p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface-variant);
+    margin: 0 0 1rem;
+    max-width: 34rem;
+}
+
+.v3-split .v3-hero-actions {
+    justify-content: flex-start;
+    margin-top: 1.75rem;
+}
+
+.v3-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin: 2.5rem 0 0;
+}
+
+.v3-stats dt {
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--lp-on-surface);
+}
+
+.v3-stats dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
+    color: var(--lp-on-surface-muted);
+}
+
+/* ── Run log panel ── */
+.v3-log {
+    border-radius: 1rem;
+    background: var(--lp-card);
+    overflow: hidden;
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+.v3-log-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, var(--lp-on-surface) 4%, transparent);
+}
+
+.v3-log-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--lp-on-surface) 18%, transparent);
+}
+
+.v3-log-title {
+    margin-left: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--lp-on-surface-muted);
+}
+
+.v3-log-body {
+    list-style: none;
+    margin: 0;
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--lp-on-surface-variant);
+}
+
+.v3-log-line {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+}
+
+.v3-log-line.is-cmd .v3-log-text::before,
+.v3-log-line.is-human .v3-log-text::before {
+    content: "› ";
+    color: var(--lp-primary);
+}
+
+.v3-log-line.is-cmd .v3-log-text,
+.v3-log-line.is-human .v3-log-text {
+    color: var(--lp-on-surface);
+}
+
+.v3-log-line.is-think .v3-log-text {
+    color: var(--lp-on-surface-muted);
+    font-style: italic;
+}
+
+.v3-log-line.is-ask .v3-log-text {
+    padding: 0.55rem 0.7rem;
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--lp-primary) 8%, transparent);
+    color: var(--lp-on-surface);
+}
+
+.v3-log-line.is-done .v3-log-text {
+    color: var(--lp-primary);
+}
+
+.v3-log-state {
+    flex-shrink: 0;
+    padding: 0.1rem 0.45rem;
+    border-radius: 0.3rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--lp-on-surface) 8%, transparent);
+    color: var(--lp-on-surface-muted);
+}
+
+.v3-log-state.is-done {
+    background: color-mix(in srgb, var(--lp-primary) 14%, transparent);
+    color: var(--lp-primary);
+}
+
+@media (max-width: 900px) {
+    .v3-split {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 4rem 1.5rem;
+    }
+    .v3-hero {
+        padding: 6.5rem 1.25rem 3.5rem;
+    }
+    .v3-stats {
+        gap: 1.75rem;
+    }
+}

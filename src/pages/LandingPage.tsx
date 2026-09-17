@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import SupplierParticleCanvas from "../components/SupplierParticleCanvas";
-import FinalCtaParticleCanvas from "../components/FinalCtaParticleCanvas";
+import ParticleField from "../components/ParticleField";
+import WhatWeBuildSection from "../components/WhatWeBuildSection";
+import HeroShowcaseGrid from "../components/HeroShowcaseGrid";
 import {
     Zap,
     ShieldCheck,
@@ -54,83 +56,6 @@ const LOGO_ROW_BRANDS = [
 ];
 const LOGO_ROW_PLACEHOLDER_SLOTS = [0, 1, 2];
 
-const bentoModules = [
-  {
-    id: "01",
-    label: "Market Intelligence",
-    problemHook: "You're guessing. Your competitors aren't.",
-    problemBody: "Entering a new market without market intelligence isn’t bold, it’s expensive. Most companies realize their assumptions about customers segments, geographic alignment, competition, and positioning were wrong only after they’ve already spent resources.",
-    solutionDetail: "We continuously analyze customer behavior, regional and competitive signals before, during, and after market entry, enabling data-driven positioning, and efficient resource allocation.",
-    tags: ["Competitor tracking", "Pricing analysis"],
-    status: "Active",
-    category: "Core",
-  },
-  {
-    id: "02",
-    label: "Compliance & Regulatory",
-    problemHook: "One wrong filing and your shipment doesn't move.",
-    problemBody: "Companies discover documentation gaps only after shipments are delayed, fined, or blocked, resulting in financial loss and operational disruption.",
-    solutionDetail: "Auto-classification, document management, and end-to-end customs handling. Nothing was held at the border because someone missed a field.",
-    tags: ["FDA", "Customs", "HS codes"],
-    status: "Active",
-    category: "Core",
-  },
-  {
-    id: "03",
-    label: "Logistics & Fulfillment",
-    problemHook: "You ship, but you're flying blind.",
-    problemBody: "Disconnected carriers and systems create blind spots and brands lack real-time visibility, predictable delivery, and cost control across shipments.",
-    solutionDetail: "We continuously optimize routing, carrier selection, and tracking across the shipment lifecycle, ensuring end-to-end visibility, reliability, and cost efficiency.",
-    tags: ["Door to Warehouse", "Last-mile"],
-    status: "Active",
-    category: "Core",
-    result: "↓22% shipping cost · Bayangrom",
-  },
-  {
-    id: "04",
-    label: "Warehousing & Inventory",
-    problemHook: "Guess wrong and it's cash or sales — you lose either way.",
-    problemBody: "Limited demand visibility leads to overstocking or stockouts lead to tying up capital or losing sales due to reactive, manual planning.",
-    solutionDetail: "We align inventory with demand through intelligent replenishment by understanding geographic and demographic data, ensuring optimal stock levels and efficient capital use.",
-    tags: ["US-based", "No minimums"],
-    status: "Active",
-    category: "Core",
-    result: "↓28% excess inventory · Bayangrom",
-  },
-  {
-    id: "05",
-    label: "E-commerce Setup",
-    problemHook: "Weeks of setup before a single sale.",
-    problemBody: "Fragmented setup across entities, payments, storefronts, and marketplaces slows time-to-market and delays revenue.",
-    solutionDetail: "We handle US entity formation, merchant of record setup, your Shopify store, and marketplace listings. You sell. We make sure the infrastructure lets you.",
-    tags: ["Shopify", "Amazon", "US entity"],
-    status: "Active",
-    category: "Revenue",
-  },
-  {
-    id: "06",
-    label: "Marketing & Growth",
-    problemHook: "Spend without insight burns budget.",
-    problemBody: "Brands invest in marketing without validated insights, resulting in poor targeting, weak messaging, inefficient SEO, and misaligned geographic spend.",
-    solutionDetail: "We continuously use market intelligence to refine targeting, positioning, SEO, and geographic strategy, driving adaptive, data-driven growth with measurable returns.",
-    tags: ["Performance", "Brand", "D2C"],
-    status: "Active",
-    category: "Revenue",
-    result: "$100K+ pre-orders · Emsworth & Karama",
-  },
-];
-
-const bentoClasses: Record<string, string> = {
-    "01": "lp-fn-intelligence",
-    "02": "lp-fn-compliance",
-    "03": "lp-fn-logistics",
-    "04": "lp-fn-warehousing",
-    "05": "lp-fn-ecommerce",
-    "06": "lp-fn-marketing",
-};
-
-
-
 const iconList = [
     Package, Truck, Warehouse, ShieldCheck, ShoppingCart,
     ChartColumn, Globe, Boxes, Settings, Zap,
@@ -143,67 +68,7 @@ export default function LandingPage() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [iconsVisible, setIconsVisible] = useState(false);
     const [supplierHovered, setSupplierHovered] = useState(false);
-    const [expandedTile, setExpandedTile] = useState<string | null>(null);
     const iconsRef = useRef<HTMLDivElement>(null);
-
-    // Paint Worklet Registration
-    useEffect(() => {
-        if ("paintWorklet" in CSS) {
-            // @ts-ignore
-            (CSS as any).paintWorklet.addModule(
-                "https://unpkg.com/css-houdini-ringparticles/dist/ringparticles.js"
-            );
-        }
-    }, []);
-
-    // Mouse Interaction for particle sections
-    useEffect(() => {
-        const sections = [
-            document.getElementById("hero"),
-            document.getElementById("final-cta-card"),
-        ].filter(Boolean) as HTMLElement[];
-
-        if (sections.length === 0) return;
-
-        const stateMap = new Map<HTMLElement, boolean>();
-        sections.forEach((el) => stateMap.set(el, false));
-
-        const handlePointerMove = (el: HTMLElement) => (e: PointerEvent) => {
-            if (!stateMap.get(el)) {
-                el.classList.add("interactive");
-                stateMap.set(el, true);
-            }
-            const rect = el.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width) * 100;
-            const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-            el.style.setProperty("--ring-x", `${x}`);
-            el.style.setProperty("--ring-y", `${y}`);
-            el.style.setProperty("--ring-interactive", "1");
-        };
-
-        const handlePointerLeave = (el: HTMLElement) => () => {
-            el.classList.remove("interactive");
-            stateMap.set(el, false);
-            el.style.setProperty("--ring-x", "50");
-            el.style.setProperty("--ring-y", "50");
-            el.style.setProperty("--ring-interactive", "0");
-        };
-
-        const cleanups: (() => void)[] = [];
-        sections.forEach((el) => {
-            const move = handlePointerMove(el);
-            const leave = handlePointerLeave(el);
-            el.addEventListener("pointermove", move);
-            el.addEventListener("pointerleave", leave);
-            cleanups.push(() => {
-                el.removeEventListener("pointermove", move);
-                el.removeEventListener("pointerleave", leave);
-            });
-        });
-
-        return () => cleanups.forEach((fn) => fn());
-    }, []);
 
     // Intersection observer to slide-in icons
     useEffect(() => {
@@ -247,7 +112,10 @@ export default function LandingPage() {
 
 
     return (
-        <div className="landing-page">
+        <div className="landing-page lp-theme-dark">
+            {/* Sits behind every section, including the header. Dimmer than a
+                per-section field would be, since it now runs the full page. */}
+            <ParticleField mode="page" particleCount={900} opacity={0.35} />
             {/* ── Header ── */}
             <div className="lp-header-wrapper">
                 <header className="lp-header">
@@ -280,7 +148,7 @@ export default function LandingPage() {
                             className="lp-btn lp-btn-primary"
                             onClick={() => goTo("/auth")}
                         >
-                            Book an entry call
+                            Contact sales
                         </button>
                     </div>
                 </header>
@@ -288,9 +156,7 @@ export default function LandingPage() {
 
             {/* ── Sticky mobile CTA (header's CTA is hidden below 930px) ── */}
             <div className="lp-mobile-sticky-cta">
-                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>
-                    Book an entry call
-                </button>
+                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>Contact sales</button>
             </div>
 
             {/* ── Hero ── */}
@@ -313,6 +179,9 @@ export default function LandingPage() {
                     </div>
                 </div>
             </section>
+
+            {/* ── Capability tiles, straight under the hero ── */}
+            <HeroShowcaseGrid />
 
             {/* ── Logo Row ── */}
             <section className="lp-logo-row-section">
@@ -357,69 +226,15 @@ export default function LandingPage() {
 
 
 
-            {/* ── Functions Bento ── */}
-            <section className="lp-functions-section" id="functions">
-                <div style={{ maxWidth: "1140px", margin: "0 auto" }}>
-                    <div className="lp-section-tag">01 / WHAT WE HANDLE</div>
-                </div>
-                <div className="lp-functions-header" style={{ alignItems: "flex-start" }}>
-                    <div>
-                        <h2>Six problems. One contract.</h2>
-                    </div>
-                    <div className="lp-functions-header-right">
-                        <p>Most international brands don't lose the US to a better product. They lose it to the infrastructure gap — wrong compliance, wrong channels, wrong timing, and no single operator holding it together. Vybd closes that gap before it costs you.</p>
-                    </div>
-                </div>
-
-                <div className="lp-fn-bento">
-                    {bentoModules.map((module) => (
-                        <div
-                            key={module.id}
-                            className={`lp-fn-tile lp-fn-bento-tile ${bentoClasses[module.id]} ${expandedTile === module.id ? "is-expanded" : ""}`}
-                            onClick={() => setExpandedTile((prev) => (prev === module.id ? null : module.id))}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter" || e.key === " ") {
-                                    e.preventDefault();
-                                    setExpandedTile((prev) => (prev === module.id ? null : module.id));
-                                }
-                            }}
-                            role="button"
-                            tabIndex={0}
-                            aria-expanded={expandedTile === module.id}
-                        >
-                            <div>
-                                <div className="lp-fn-tile-header">
-                                    <span className="lp-fn-index">{module.id}</span>
-                                    {module.category && <span className="lp-fn-category">{module.category}</span>}
-                                </div>
-                                <div className="lp-fn-title">{module.label}</div>
-
-                                <div className="lp-fn-bento-content-stack">
-                                    <div className="lp-fn-bento-problem-state">
-                                        <div className="lp-fn-tile-problem-hook">{module.problemHook}</div>
-                                        <div className="lp-fn-tile-problem-body">{module.problemBody}</div>
-                                        <div className="lp-fn-mobile-hint">Tap to see how we solve it \u2192</div>
-                                    </div>
-                                    <div className="lp-fn-desc-full lp-fn-bento-solution-state">{module.solutionDetail}</div>
-                                </div>
-                            </div>
-                            <div className="lp-fn-bento-solution-footer">
-                                {module.result && (
-                                    <div className="lp-fn-result-chip">
-                                        <span className="lp-fn-result-label">RESULT</span>
-                                        <span className="lp-fn-result-value">{module.result}</span>
-                                    </div>
-                                )}
-                                <div className="lp-fn-footer mt-auto">
-                                    <span className="lp-fn-footer-label">{module.tags.join(" \u00b7 ")}</span>
-                                    <span className="lp-fn-footer-status">{module.status}</span>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-            </section>
+            {/* ── What We Build ── */}
+            <WhatWeBuildSection
+                sectionNumber="01"
+                intro={[
+                    "Brands stall between $10M and $100M because their data doesn't move. Orders in one portal, inventory in another, a retailer deduction that arrives as a PDF and gets re keyed on Friday afternoon. People become the integration layer, and that's what you're actually paying for when ops headcount triples.",
+                    "We build that layer first: one connected view of orders, inventory, cost, and channel. Then we run agents on top of it across six functions, deployed in your stack, with senior operators accountable for the outcome until the system holds it on its own.",
+                ]}
+                handover={null}
+            />
 
             {/* ── Where to Start ── */}
             <section className="lp-process-section" id="where-to-start">
@@ -507,9 +322,7 @@ export default function LandingPage() {
                     <button
                         className="lp-btn lp-btn-accent"
                         onClick={() => goTo("/auth")}
-                    >
-                        Book an entry call
-                    </button>
+                    >Contact sales</button>
                 </div>
             </section>
 
@@ -538,7 +351,7 @@ export default function LandingPage() {
             {/* ── Final CTA ── */}
             <section className="lp-final-cta" id="final-cta">
                 <div className="lp-final-cta-card lp-dark" id="final-cta-card" style={{ position: 'relative', overflow: 'hidden' }}>
-                    <FinalCtaParticleCanvas />
+                    <ParticleField particleCount={800} opacity={0.8} />
                     <div style={{ position: 'relative', zIndex: 1 }}>
                         <h2>
                             Ready to enter the US?<br />
@@ -549,9 +362,7 @@ export default function LandingPage() {
                             <button
                                 className="lp-btn lp-btn-primary"
                                 onClick={() => goTo("/auth")}
-                            >
-                                Book an entry call
-                            </button>
+                            >Contact sales</button>
                         </div>
                     </div>
                 </div>

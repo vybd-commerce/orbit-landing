@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
     ShieldCheck,
     MessageSquare,
@@ -16,7 +17,7 @@ import "./ArchitectureNodeGraph.css";
 type NodeType = "central" | "peripheral";
 
 interface Attribute {
-    icon?: React.ElementType;
+    icon?: LucideIcon;
     label: string;
 }
 
@@ -24,7 +25,7 @@ interface NodeData {
     id: string;
     type: NodeType;
     title: string;
-    icon: React.ElementType;
+    icon: LucideIcon;
     badge: string;
     attributes: Attribute[];
     color: string; // Hex for the accent color

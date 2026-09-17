@@ -1,0 +1,82 @@
+/* FinalCtaSection: relies on LandingPage.css tokens (--lp-*). Scoped
+   under .lp-final-cta-light so nothing here leaks elsewhere. */
+
+.lp-final-cta-light {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-top: 5rem;
+  text-align: center;
+}
+
+.lp-final-cta-light h2 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--lp-on-surface);
+  line-height: 1.15;
+  margin: 0 0 0.75rem;
+}
+
+.lp-final-cta-subhead {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--lp-on-surface-variant);
+  margin: 0 0 2.5rem;
+}
+
+.lp-final-cta-form {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-outline-variant);
+  border-radius: 999px;
+  padding: 0.4rem 0.4rem 0.4rem 1.25rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.lp-final-cta-form input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--lp-on-surface);
+}
+
+.lp-final-cta-form input::placeholder {
+  color: var(--lp-on-surface-variant);
+}
+
+.lp-final-cta-form input:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.lp-final-cta-form .lp-btn {
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .lp-final-cta-form {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 20px;
+    padding: 0.75rem;
+    gap: 0.6rem;
+  }
+
+  .lp-final-cta-form input {
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+  }
+
+  .lp-final-cta-form .lp-btn {
+    width: 100%;
+  }
+}

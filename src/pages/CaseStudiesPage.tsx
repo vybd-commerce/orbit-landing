@@ -9,7 +9,7 @@ export default function CaseStudiesPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="landing-page">
+    <div className="landing-page lp-theme-dark">
       <div className="lp-header-wrapper">
         <header className="lp-header">
           <a href="/" className="lp-logo">
@@ -39,18 +39,14 @@ export default function CaseStudiesPage() {
             <button
               className="lp-btn lp-btn-primary"
               onClick={() => (window.location.href = "/auth")}
-            >
-              Book an entry call
-            </button>
+            >Contact sales</button>
           </div>
         </header>
       </div>
 
       {/* ── Sticky mobile CTA (header's CTA is hidden below 930px) ── */}
       <div className="lp-mobile-sticky-cta">
-        <button className="lp-btn lp-btn-primary" onClick={() => (window.location.href = "/auth")}>
-          Book an entry call
-        </button>
+        <button className="lp-btn lp-btn-primary" onClick={() => (window.location.href = "/auth")}>Contact sales</button>
       </div>
 
       <main className="case-page-shell">

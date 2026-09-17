@@ -1,7 +1,7 @@
 .case-page-shell {
   min-height: 100dvh;
-  background: #ffffff;
-  color: #111827;
+  background: var(--lp-surface);
+  color: var(--lp-on-surface);
   padding: 5rem 1.25rem 3rem;
 }
 
@@ -20,7 +20,7 @@
   text-transform: uppercase;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
-  color: #6b7280;
+  color: var(--lp-on-surface-muted);
   margin-bottom: 0.75rem;
 }
 
@@ -33,7 +33,7 @@
 
 .case-studies-header p,
 .case-detail-header p {
-  color: #4b5563;
+  color: var(--lp-on-surface-variant);
   max-width: 74ch;
   line-height: 1.65;
 }
@@ -47,8 +47,8 @@
   display: grid;
   grid-template-columns: minmax(170px, 290px) 1fr;
   gap: 0.95rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-outline-variant);
   border-radius: 18px;
   padding: 0.95rem;
   text-decoration: none;
@@ -58,7 +58,7 @@
 
 .case-study-card:hover {
   transform: translateY(-3px);
-  border-color: #d1d5db;
+  border-color: var(--lp-outline);
   box-shadow: 0 16px 28px rgba(17, 24, 39, 0.09);
 }
 
@@ -82,9 +82,9 @@
 .case-study-category {
   align-self: flex-start;
   display: inline-flex;
-  background: #eef2ff;
-  color: #3730a3;
-  border: 1px solid #c7d2fe;
+  background: color-mix(in srgb, var(--lp-primary) 10%, transparent);
+  color: var(--lp-primary);
+  border: 1px solid color-mix(in srgb, var(--lp-primary) 28%, transparent);
   border-radius: 999px;
   padding: 0.3rem 0.65rem;
   font-size: 0.72rem;
@@ -101,7 +101,7 @@
 
 .case-study-card-content p {
   margin: 0 0 0.85rem;
-  color: #4b5563;
+  color: var(--lp-on-surface-variant);
   line-height: 1.55;
 }
 
@@ -113,8 +113,8 @@
 }
 
 .case-metric-item {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--lp-surface-variant);
+  border: 1px solid var(--lp-outline-variant);
   border-radius: 10px;
   padding: 0.55rem 0.65rem;
   display: flex;
@@ -129,13 +129,13 @@
 
 .case-metric-label {
   font-size: 0.76rem;
-  color: #6b7280;
+  color: var(--lp-on-surface-muted);
   line-height: 1.35;
 }
 
 .case-back-link {
   display: inline-block;
-  color: #1f2937;
+  color: var(--lp-on-surface);
   text-decoration: none;
   margin-bottom: 1rem;
 }
@@ -159,8 +159,8 @@
 }
 
 .case-detail-block {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-outline-variant);
   border-radius: 14px;
   padding: 1rem;
 }
@@ -172,22 +172,22 @@
 
 .case-detail-block p {
   margin: 0;
-  color: #4b5563;
+  color: var(--lp-on-surface-variant);
   line-height: 1.65;
 }
 
 .case-detail-block ul {
   margin: 0;
   padding-left: 1.1rem;
-  color: #4b5563;
+  color: var(--lp-on-surface-variant);
   line-height: 1.6;
 }
 
 .case-cta-card {
   border-radius: 14px;
   padding: 1rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
-  border: 1px solid #c7d2fe;
+  background: color-mix(in srgb, var(--lp-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--lp-primary) 28%, transparent);
 }
 
 .case-cta-card h3 {
@@ -196,7 +196,7 @@
 
 .case-cta-card p {
   margin: 0;
-  color: #334155;
+  color: var(--lp-on-surface-variant);
 }
 
 @media (max-width: 780px) {

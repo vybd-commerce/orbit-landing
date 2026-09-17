@@ -40,7 +40,7 @@ export default function ProductPage() {
     }, []);
 
     return (
-        <div className="landing-page">
+        <div className="landing-page lp-theme-dark">
             {/* ── Header ── */}
             <div className="lp-header-wrapper">
                 <header className="lp-header">
@@ -61,7 +61,7 @@ export default function ProductPage() {
                             className="lp-btn lp-btn-primary"
                             onClick={() => goTo("/auth")}
                         >
-                            Book an entry call
+                            Contact sales
                         </button>
                     </div>
                 </header>
@@ -69,9 +69,7 @@ export default function ProductPage() {
 
             {/* ── Sticky mobile CTA (header's CTA is hidden below 930px) ── */}
             <div className="lp-mobile-sticky-cta">
-                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>
-                    Book an entry call
-                </button>
+                <button className="lp-btn lp-btn-primary" onClick={() => goTo("/auth")}>Contact sales</button>
             </div>
 
             {/* ── Hero ── */}

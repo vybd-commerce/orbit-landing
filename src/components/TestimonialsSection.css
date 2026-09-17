@@ -1,0 +1,232 @@
+/* TestimonialsSection: relies on LandingPage.css tokens (--lp-*). Scoped
+   under .lp-testimonials so nothing here leaks elsewhere. */
+
+.lp-testimonials {
+  grid-column: fullbleed;
+  background: var(--lp-surface-variant);
+  border-bottom: 1px solid var(--lp-outline-variant);
+  padding: 6rem 3rem;
+}
+
+.lp-testimonials-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.lp-testimonials-heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--lp-on-surface);
+  line-height: 1.2;
+  margin: 0 0 3rem;
+}
+
+.lp-testimonials-heading em {
+  font-style: italic;
+  color: var(--lp-primary-dark);
+}
+
+.lp-testimonials-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.lp-testimonials-nav {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--lp-outline-variant);
+  background: var(--lp-surface);
+  color: var(--lp-on-surface);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.lp-testimonials-nav:hover {
+  background: var(--lp-tonal);
+}
+
+.lp-testimonials-nav:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 2px;
+}
+
+.lp-testimonials-card-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 680px;
+}
+
+.lp-testimonials-quote-mark {
+  position: absolute;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 6rem;
+  line-height: 1;
+  color: var(--lp-outline-variant);
+  z-index: 0;
+  user-select: none;
+}
+
+.lp-testimonials-quote-mark--open {
+  top: -1.5rem;
+  left: -0.5rem;
+}
+
+.lp-testimonials-quote-mark--close {
+  bottom: -3.5rem;
+  right: -0.5rem;
+}
+
+.lp-testimonials-card {
+  position: relative;
+  z-index: 1;
+  background: var(--lp-surface);
+  border: 1px solid var(--lp-outline-variant);
+  border-radius: 1.5rem;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.06), 0 8px 30px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.lp-testimonials-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--lp-tonal);
+  color: var(--lp-primary-dark);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: -0.01em;
+  text-align: center;
+  padding: 0.25rem;
+  margin: 0 auto 1.5rem;
+}
+
+.lp-testimonials-avatar-img {
+  display: block;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1.5rem;
+}
+
+.lp-testimonials-quote {
+  font-size: 1.05rem;
+  font-weight: 350;
+  line-height: 1.65;
+  color: var(--lp-on-surface);
+  max-width: 62ch;
+  margin: 0 auto 1.5rem;
+}
+
+.lp-testimonials-quote p {
+  margin: 0 0 1rem;
+}
+
+.lp-testimonials-quote p:last-child {
+  margin-bottom: 0;
+}
+
+.lp-testimonials-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--lp-on-surface);
+  text-align: center;
+}
+
+.lp-testimonials-title {
+  font-size: 0.88rem;
+  color: var(--lp-on-surface-variant);
+  margin-top: 0.15rem;
+  text-align: center;
+}
+
+.lp-testimonials-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.lp-testimonials-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  background: var(--lp-outline-variant);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, width 0.15s ease;
+}
+
+.lp-testimonials-dot.is-active {
+  width: 22px;
+  background: var(--lp-primary);
+}
+
+.lp-testimonials-dot:focus-visible {
+  outline: 2px solid var(--lp-primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .lp-testimonials {
+    padding: 3.5rem 1.5rem;
+  }
+
+  .lp-testimonials-row {
+    gap: 0.75rem;
+  }
+
+  .lp-testimonials-nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .lp-testimonials-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .lp-testimonials-quote-mark {
+    font-size: 4rem;
+  }
+}
+
+/* Cross-fade between quotes. Low dial: opacity and a few pixels of rise, no
+   slide, so a long quote never looks like it is sliding off the card. */
+@keyframes lp-testimonial-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.lp-testimonials-card {
+    animation: lp-testimonial-in 0.35s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lp-testimonials-card {
+        animation: none;
+    }
+}
