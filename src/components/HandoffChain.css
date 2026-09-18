@@ -1,0 +1,133 @@
+/* Handoff-chain diagram. Stroke-only on purpose: the argument is "we think in
+   operations", and a filled, glowing node graph is what every AI consultancy
+   page already looks like. */
+
+.hc {
+    width: 100%;
+}
+
+.hc-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+/* ── Links ── */
+.hc-link {
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.25;
+}
+
+/* Drawn in order once the chain scrolls in. Every link carries
+   pathLength="1", so one dasharray works for the horizontal and the stacked
+   layout alike. */
+.hc-link {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+}
+
+.hc .hc-link {
+    stroke-dashoffset: 1;
+}
+
+.hc.is-revealed .hc-link {
+    animation: hc-draw 0.4s ease both;
+}
+
+@keyframes hc-draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* ── Nodes ── */
+.hc-node-box {
+    fill: none;
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.25;
+}
+
+.hc-node.is-leak .hc-node-box {
+    stroke: var(--lp-primary);
+    stroke-width: 1.75;
+}
+
+/* Filled rather than dashed: a dashed outline on a dark ground reads as the
+   same box as an untouched stage, and the whole point of the after-chain is
+   that you can tell at a glance which stages a system took. */
+.hc-node.is-absorbed .hc-node-box {
+    fill: var(--lp-on-surface-muted);
+    fill-opacity: 0.22;
+    stroke: var(--lp-on-surface-muted);
+    stroke-opacity: 0.45;
+}
+
+.hc-node-dot {
+    fill: var(--lp-primary);
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.hc .hc-node-dot {
+    opacity: 0;
+}
+
+.hc.is-revealed .hc-node-dot {
+    animation: hc-pop 0.3s ease both;
+}
+
+@keyframes hc-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.2);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.hc-node-label {
+    fill: var(--lp-on-surface-muted);
+    font-family: var(--lp-font);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+/* The leak points are the only thing on the chain that carries colour. */
+.hc-node.is-leak .hc-node-label {
+    fill: var(--lp-primary);
+    font-weight: 500;
+}
+
+.hc-node.is-absorbed .hc-node-label {
+    fill: var(--lp-on-surface-variant);
+}
+
+/* Stacked chain gets a little more room; the label sits beside the node
+   rather than under it, so it can afford the extra size. */
+.hc--vertical .hc-node-label {
+    font-size: 11px;
+}
+
+/* useReveal already sets is-revealed on first paint under reduced motion, so
+   this only has to make the pre-animation state harmless. */
+@media (prefers-reduced-motion: reduce) {
+    .hc .hc-link,
+    .hc.is-revealed .hc-link {
+        stroke-dashoffset: 0;
+        animation: none;
+    }
+
+    .hc .hc-node-dot,
+    .hc.is-revealed .hc-node-dot {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+}

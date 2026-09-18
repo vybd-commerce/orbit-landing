@@ -1,0 +1,606 @@
+/* /consulting — the consulting motion.
+ *
+ * Deliberately plainer than the product pages: no particle field, no globe,
+ * no 3D. The page argues that the operator is the differentiator, and a page
+ * that looks like every other AI consultancy undercuts that before a word is
+ * read. Type, space, and one stroke diagram.
+ *
+ * Every colour comes from the --lp-* tokens in LandingPage.css so the page
+ * survives the light/dark switch.
+ */
+
+.lp-page-consulting {
+    --cons-max: 1080px;
+    --cons-gutter: 1.5rem;
+}
+
+.lp-page-consulting .lp-header-wrapper {
+    height: 4rem;
+}
+
+.cons-header-cta {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    .cons-header-cta {
+        display: none;
+    }
+}
+
+/* ── Shared section frame ── */
+/* width: 100% is load-bearing. These sections are children of the
+   .landing-page grid, and a grid item with auto margins sizes to fit-content
+   instead of stretching — without it the section collapses to whatever its
+   widest paragraph happens to be. */
+.cons-section {
+    width: 100%;
+    max-width: var(--cons-max);
+    margin: 0 auto;
+    padding: 5rem var(--cons-gutter);
+    border-top: 1px solid var(--lp-outline);
+}
+
+@media (max-width: 768px) {
+    .cons-section {
+        padding: 3.25rem var(--cons-gutter);
+    }
+}
+
+.cons-h2 {
+    font-size: clamp(1.9rem, 4vw, 2.75rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    margin: 0 0 1.25rem;
+    color: var(--lp-on-surface);
+    text-wrap: balance;
+}
+
+.cons-h3 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 3.5rem 0 1.25rem;
+    color: var(--lp-on-surface);
+}
+
+.cons-lede {
+    max-width: 44rem;
+    margin: 0 0 2.5rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--lp-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.cons-text-link:hover {
+    border-bottom-color: var(--lp-primary);
+}
+
+/* The shared focus ring only covers .lp-btn, so the page's plain links carry
+   their own. */
+.cons-text-link:focus-visible,
+.cons-access a:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* ── 1. Hero ── */
+.cons-hero {
+    width: 100%;
+    max-width: var(--cons-max);
+    margin: 0 auto;
+    padding: 7.5rem var(--cons-gutter) 4rem;
+}
+
+@media (max-width: 768px) {
+    .cons-hero {
+        padding: 5.5rem var(--cons-gutter) 2.5rem;
+    }
+}
+
+.cons-hero-copy {
+    max-width: 46rem;
+}
+
+.cons-hero-title {
+    font-size: clamp(2.35rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin: 0.75rem 0 0;
+    color: var(--lp-on-surface);
+    text-wrap: balance;
+}
+
+.cons-hero-subtitle {
+    max-width: 40rem;
+    margin: 1.5rem 0 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2.25rem;
+}
+
+.lp-page-consulting .cons-hero-chain {
+    margin: 4.5rem 0 0;
+}
+
+@media (max-width: 768px) {
+    .lp-page-consulting .cons-hero-chain {
+        margin-top: 3rem;
+    }
+}
+
+.cons-hero-chain figcaption {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--lp-on-surface-muted);
+}
+
+/* ── 2. The diagnosis ── */
+.cons-failure-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: none;
+}
+
+@media (max-width: 860px) {
+    .cons-failure-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cons-failure-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 14px;
+    background: var(--lp-card);
+}
+
+.cons-failure-index {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--lp-primary);
+    letter-spacing: 0.08em;
+}
+
+.cons-failure-card h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin: 0.75rem 0 0.75rem;
+    color: var(--lp-on-surface);
+}
+
+.cons-failure-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+/* Pinned to the bottom of the card so the four diagrams line up across the
+   grid even though the four bodies are different lengths. */
+.cons-failure-chain {
+    margin-top: auto;
+    padding-top: 1.75rem;
+}
+
+/* Three states in one line, so the mini diagrams are readable without a
+   caption on every card. */
+.cons-chain-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--lp-on-surface-muted);
+}
+
+.cons-chain-legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cons-legend-swatch {
+    width: 22px;
+    height: 12px;
+    border-radius: 2px;
+    border: 1px solid var(--lp-outline-variant);
+}
+
+.cons-legend-swatch--absorbed {
+    background: color-mix(in srgb, var(--lp-on-surface-muted) 22%, transparent);
+    border-color: color-mix(in srgb, var(--lp-on-surface-muted) 45%, transparent);
+}
+
+.cons-legend-swatch--leak {
+    border-color: var(--lp-primary);
+    border-width: 1.5px;
+}
+
+.cons-closing {
+    max-width: 44rem;
+    margin: 2.5rem 0 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface);
+}
+
+/* ── 3. The network ── */
+.cons-sector-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 1000px) {
+    .cons-sector-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .cons-sector-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cons-sector {
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 14px;
+    background: var(--lp-surface-variant);
+    color: var(--lp-primary);
+}
+
+.cons-sector h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0.9rem 0 0.35rem;
+    color: var(--lp-on-surface);
+}
+
+.cons-sector-count {
+    display: block;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lp-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cons-sector p {
+    margin: 0.5rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-credibility {
+    max-width: 44rem;
+    margin: 2.5rem 0 0;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--lp-primary);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-credibility strong {
+    color: var(--lp-on-surface);
+    font-weight: 500;
+}
+
+/* ── 4. How we work ── */
+/* Aligned to the same measure and gutter as the cons-* sections; the shared
+   process styles were written for a 1140px page. */
+.cons-how {
+    border-top: 1px solid var(--lp-outline);
+    padding: 5rem 0;
+}
+
+.cons-how .lp-process-inner {
+    max-width: var(--cons-max);
+    padding: 0 var(--cons-gutter);
+}
+
+@media (max-width: 768px) {
+    .cons-how {
+        padding: 3.25rem 0;
+    }
+}
+
+/* Build is the largest block on purpose: the diagnostic has to read as the
+   front of a build, not as the product. */
+.cons-process-track {
+    grid-template-columns: 1fr 1.4fr 1fr;
+}
+
+.cons-process-step--lead {
+    background: var(--lp-card);
+    border-color: var(--lp-outline-variant);
+}
+
+@media (max-width: 860px) {
+    .cons-process-track {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── 5. Proof ── */
+.cons-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 0 0 2.5rem;
+}
+
+@media (max-width: 700px) {
+    .cons-metrics {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+    }
+}
+
+.cons-metrics dt {
+    font-size: clamp(2.5rem, 6vw, 3.75rem);
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--lp-primary);
+}
+
+.cons-metrics dd {
+    margin: 0.6rem 0 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-mechanism {
+    max-width: 44rem;
+    margin: 0 0 3rem;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-chain-compare {
+    display: grid;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.lp-page-consulting .cons-chain-compare figure {
+    margin: 0;
+}
+
+.cons-chain-compare figcaption {
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lp-on-surface-muted);
+}
+
+.cons-quotes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 860px) {
+    .cons-quotes {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cons-quote {
+    margin: 0;
+    padding: 1.75rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 14px;
+    background: var(--lp-card);
+}
+
+.cons-quote p {
+    margin: 0 0 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--lp-on-surface);
+}
+
+.cons-quote footer {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-quote footer strong {
+    color: var(--lp-on-surface);
+    font-weight: 500;
+}
+
+.cons-quote-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: var(--lp-surface);
+}
+
+/* ── 6. The sprint ── */
+.cons-sprint {
+    border-top: 1px solid var(--lp-outline);
+    text-align: left;
+    padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+    .cons-sprint {
+        padding: 3.25rem 0;
+    }
+}
+
+.cons-sprint-inner {
+    max-width: var(--cons-max);
+    margin: 0 auto;
+    padding: 0 var(--cons-gutter);
+}
+
+.cons-sprint-card {
+    max-width: 44rem;
+    background: var(--lp-card);
+}
+
+.cons-sprint-card .lp-pricing-card-top,
+.cons-sprint-card .lp-pricing-card-bottom {
+    background: transparent;
+    padding: 2rem;
+}
+
+.cons-sprint-card .lp-pricing-price {
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.cons-sprint-card .lp-pricing-price span {
+    font-size: 0.95rem;
+    color: var(--lp-on-surface-variant);
+}
+
+/* The $180K figure sits in the same block as the $5,000 on purpose. The
+   asymmetry does the persuading; nothing else has to. */
+.cons-sprint-anchor {
+    margin: 0 0 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-sprint-subhead {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lp-on-surface-muted);
+    margin: 0 0 1rem;
+}
+
+.cons-sprint-card .lp-pricing-list + .cons-sprint-subhead {
+    margin-top: 2rem;
+}
+
+.cons-sprint-after {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+/* ── 7. Access ── */
+.cons-access {
+    max-width: 44rem;
+    margin: 1.25rem 0 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-muted);
+}
+
+.cons-access a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--lp-on-surface-variant);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.cons-access a:hover {
+    color: var(--lp-on-surface);
+}
+
+/* ── 9. Operator door ── */
+.cons-operators {
+    background: var(--lp-surface-variant);
+    border-top: 1px solid var(--lp-outline);
+}
+
+.cons-operators-inner {
+    max-width: var(--cons-max);
+    margin: 0 auto;
+    padding: 3rem var(--cons-gutter);
+}
+
+.cons-operators h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.75rem;
+    color: var(--lp-on-surface);
+}
+
+.cons-operators p {
+    max-width: 44rem;
+    margin: 0 0 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+/* ── Footer ── */
+/* Four short links read as a nav rather than a sitemap column, same as the
+   live landing page. */
+.lp-page-consulting .lp-footer-nav {
+    gap: 0;
+}
+
+.lp-page-consulting .lp-footer-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2.25rem;
+    align-items: center;
+}
