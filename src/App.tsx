@@ -12,6 +12,7 @@ import MockLandingPage from "./pages/MockLandingPage";
 import V2LandingPage from "./pages/V2LandingPage";
 import V3LandingPage from "./pages/V3LandingPage";
 import ConsultingPage from "./pages/ConsultingPage";
+import WaitlistPage from "./pages/WaitlistPage";
 
 /* The stack narrative pulls in three, R3F and drei. Kept out of the main
    bundle — it is one route, and a heavy one. */
@@ -41,6 +42,7 @@ function App() {
         />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/consulting" element={<ConsultingPage />} />
+        <Route path="/waitlist" element={<WaitlistPage />} />
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />

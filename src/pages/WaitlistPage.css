@@ -1,0 +1,241 @@
+/* /waitlist — one screen, nothing to scroll to.
+ *
+ * The orbit wordmark from the other pages' footer, centred, with the email
+ * form under it. Hero takes the free space in a 100dvh column and centres
+ * itself, so the page holds from a phone to a wide monitor without
+ * overflowing. Colours come from the --lp-* tokens.
+ */
+
+/* Satoshi (Indian Type Foundry, ITF Free Font License, self-hosting allowed).
+   One variable file covers every weight on the page. Scoped to /waitlist. */
+@font-face {
+    font-family: "Satoshi";
+    src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.wl-page {
+    --wl-gutter: 1.5rem;
+    --wl-font: "Satoshi", var(--lp-font);
+
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    font-family: var(--wl-font);
+    color: var(--lp-on-surface);
+    background: var(--lp-surface);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.wl-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--wl-gutter);
+    width: 100%;
+}
+
+/* ── Orbit ──
+   The footer's rings, closed into a full circle. LandingPage.css sizes them
+   in fixed rems for a cropped semi-circle; here both hang off one --orbit
+   diameter, capped by viewport width and height so the whole circle always
+   fits. The thick ring keeps the footer's inset (1/80 of the diameter), and
+   the planet's 20%/10% position already sits on the thin ring at any size.
+   The wordmark and form are centred inside the circle. */
+.wl-orbit {
+    --orbit: min(40rem, calc(100vw - 2rem), 76dvh);
+
+    position: relative;
+    flex-shrink: 0;
+    width: var(--orbit);
+    height: var(--orbit);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wl-orbit .lp-footer-ellipses--thin {
+    inset: 0;
+    width: auto;
+    height: auto;
+}
+
+.wl-orbit .lp-footer-ellipses--thick {
+    inset: 1.25%;
+    width: auto;
+    height: auto;
+}
+
+.wl-wordmark {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-size: calc(var(--orbit) * 0.22);
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    /* Full line box so the "y" descender is never clipped. */
+    line-height: 1;
+    user-select: none;
+}
+
+/* ── Form ── */
+.wl-form {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    /* Narrow enough to stay inside the circle's chord at this height. */
+    max-width: min(26rem, calc(var(--orbit) * 0.7));
+    margin-top: calc(var(--orbit) * 0.04);
+    position: relative;
+    z-index: 2;
+    padding: 0.35rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 999px;
+    background: var(--lp-elevated);
+}
+
+.wl-form:focus-within {
+    border-color: var(--lp-primary);
+}
+
+.wl-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 1rem;
+    border: none;
+    background: transparent;
+    color: var(--lp-on-surface);
+    font: inherit;
+    font-size: 1rem;
+    outline: none;
+}
+
+.wl-form input::placeholder {
+    color: var(--lp-on-surface-muted);
+}
+
+.wl-form .lp-btn {
+    flex-shrink: 0;
+    font-family: inherit;
+    padding: 0.75em 1.4em;
+}
+
+.wl-form .lp-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+}
+
+.wl-success {
+    position: relative;
+    z-index: 2;
+    max-width: calc(var(--orbit) * 0.7);
+    margin: calc(var(--orbit) * 0.04) 0 0;
+    padding: 0.9rem 1.4rem;
+    border: 1px solid color-mix(in srgb, var(--lp-primary) 40%, transparent);
+    border-radius: 999px;
+    color: var(--lp-primary-dark);
+    text-align: center;
+}
+
+.wl-message {
+    position: relative;
+    z-index: 2;
+    max-width: calc(var(--orbit) * 0.7);
+    margin: 0.75rem 0 0;
+    min-height: 1.5em;
+    font-size: 0.8rem;
+    color: var(--color-problem-accent);
+    text-align: center;
+}
+
+/* ── Header / footer link rows ──
+   Small uppercase tracked labels, centred, wide gaps: one row pinned to the
+   top, one to the bottom, nothing else in the chrome. */
+.wl-header,
+.wl-footer {
+    padding: 1.5rem var(--wl-gutter);
+}
+
+.wl-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 3rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.wl-nav a {
+    font-size: 0.8rem;
+    font-weight: 450;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lp-on-surface);
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+}
+
+.wl-nav a:hover {
+    opacity: 0.6;
+}
+
+.wl-nav a:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 4px;
+}
+
+/* Below ~560px the pill form can't fit input and button on one line, so the
+   button drops underneath at full width. */
+@media (max-width: 560px) {
+    .wl-page {
+        --wl-gutter: 1rem;
+    }
+
+    .wl-nav ul {
+        column-gap: 2rem;
+    }
+
+    /* The stacked form is twice as tall, so the wordmark gives up some
+       height to keep the pair clear of the ring. */
+    .wl-wordmark {
+        font-size: calc(var(--orbit) * 0.18);
+    }
+
+    .wl-form {
+        flex-direction: column;
+        border: none;
+        background: none;
+        padding: 0;
+    }
+
+    .wl-form input {
+        padding: 0.9rem 1.1rem;
+        border: 1px solid var(--lp-outline-variant);
+        border-radius: 999px;
+        background: var(--lp-elevated);
+    }
+
+    .wl-form input:focus {
+        border-color: var(--lp-primary);
+    }
+
+    .wl-form .lp-btn {
+        width: 100%;
+        padding: 0.9em 1.4em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wl-orbit .lp-footer-ellipses {
+        animation: none;
+    }
+}
