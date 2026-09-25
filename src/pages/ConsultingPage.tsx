@@ -12,6 +12,7 @@ import {
     type LucideIcon,
 } from "lucide-react";
 import HandoffChain from "../components/HandoffChain";
+import OpsOsDiagram from "../components/OpsOsDiagram";
 import FinalCtaSection from "../components/FinalCtaSection";
 import {
     ACCESS,
@@ -34,7 +35,7 @@ import {
     TODO_OPERATOR_COUNTS,
     WORK_STEPS,
 } from "../data/consultingCopy";
-import { CHAIN_NODES, DEFAULT_LEAK_INDICES, TOTAL_HANDOFFS, TOTAL_NODES } from "../data/handoffChainModel";
+import { CHAIN_NODES, DEFAULT_LEAK_INDICES, TOTAL_NODES } from "../data/handoffChainModel";
 import { track } from "../lib/analytics";
 import { CALENDLY_URL } from "../lib/links";
 import "./LandingPage.css";
@@ -164,12 +165,8 @@ export default function ConsultingPage() {
                 </div>
 
                 <figure className="cons-hero-chain">
-                    <HandoffChain
-                        nodes={CHAIN_NODES}
-                        leakIndices={DEFAULT_LEAK_INDICES}
-                        ariaLabel={`An order-to-cash chain of ${TOTAL_NODES} stages and ${TOTAL_HANDOFFS} handoffs, with ${DEFAULT_LEAK_INDICES.length} stages marked as leak points.`}
-                    />
-                    <figcaption>{HERO.chainCaption}</figcaption>
+                    <OpsOsDiagram />
+                    <figcaption>{HERO.diagramCaption}</figcaption>
                 </figure>
             </section>
 

@@ -1,0 +1,142 @@
+/* OpsOsDiagram — layered ops stack for the /consulting hero.
+ *
+ * Stroke-only like HandoffChain: faces take the page surface, everything else
+ * is line work. The one accent is --lp-primary, used for the pulses, the
+ * relation pills and a few glyph details. All colours are --lp-* tokens.
+ */
+
+.ops-os {
+    width: 100%;
+}
+
+.ops-os-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    font-family: var(--lp-font);
+}
+
+/* ── Wires ── */
+.ops-os-wire {
+    fill: none;
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+}
+
+.ops-os-wire-pulse {
+    fill: none;
+    stroke: var(--lp-primary);
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* ── Platforms ── */
+.ops-os-face {
+    fill: var(--lp-surface);
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.25;
+    stroke-linejoin: round;
+}
+
+.ops-os-edge {
+    fill: var(--lp-tonal);
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1;
+}
+
+.ops-os-label {
+    fill: var(--lp-on-surface);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-anchor: middle;
+}
+
+/* ── Glyph line work ── */
+.ops-os-window {
+    fill: var(--lp-surface);
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.25;
+}
+
+.ops-os-ink {
+    fill: none;
+    stroke: var(--lp-on-surface-variant);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ops-os-accent {
+    fill: var(--lp-surface);
+    stroke: var(--lp-primary);
+    stroke-width: 1.5;
+}
+
+.ops-os-accent-fill {
+    fill: color-mix(in srgb, var(--lp-primary) 16%, var(--lp-surface));
+}
+
+.ops-os-dot {
+    fill: var(--lp-on-surface-variant);
+}
+
+.ops-os-pill {
+    fill: var(--lp-surface);
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1;
+}
+
+.ops-os-glyph-text {
+    fill: var(--lp-on-surface-variant);
+    font-size: 8.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-anchor: middle;
+}
+
+.ops-os-glyph-text--accent {
+    fill: var(--lp-primary-dark);
+}
+
+/* ── Ops OS entity graph ── */
+.ops-os-relation {
+    stroke: var(--lp-on-surface-muted);
+    stroke-width: 1.25;
+    stroke-dasharray: 3 4;
+}
+
+.ops-os-relation-pill {
+    fill: color-mix(in srgb, var(--lp-primary) 16%, var(--lp-surface));
+    stroke: color-mix(in srgb, var(--lp-primary) 55%, transparent);
+    stroke-width: 1;
+}
+
+.ops-os-relation-text {
+    fill: var(--lp-primary-dark);
+    font-size: 11px;
+    font-weight: 500;
+    text-anchor: middle;
+}
+
+.ops-os-entity {
+    fill: var(--lp-surface);
+    stroke: var(--lp-on-surface-variant);
+    stroke-width: 1.5;
+}
+
+.ops-os-entity-icon {
+    color: var(--lp-on-surface);
+}
+
+.ops-os-entity-label {
+    fill: var(--lp-on-surface-variant);
+    font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ops-os .ang-connection-pulse {
+        animation: none;
+    }
+}

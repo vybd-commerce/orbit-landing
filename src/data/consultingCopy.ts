@@ -72,7 +72,7 @@ export const HERO = {
         "It fails because it was deployed by people who'd never run the operation. We're supply chain operators who build the agents ourselves — across CPG, food and beverage, fashion, batteries, and manufacturing.",
     primaryCta: "See how we'd map your operation",
     secondaryCta: "How the three-week diagnostic works",
-    chainCaption: "One order-to-cash chain. Three places the money leaves it.",
+    diagramCaption: "Every surface your team works in, running on one operating layer.",
 };
 
 /* ── 2. The diagnosis ────────────────────────────────────────────────────── */
