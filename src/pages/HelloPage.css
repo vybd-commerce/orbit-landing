@@ -60,6 +60,12 @@
     transform: translateY(-1px);
 }
 
+.hello-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .hello-menu {
     height: 44px;
     padding: 0 20px;
@@ -141,6 +147,29 @@
         height: 40px;
         padding: 0 16px;
         font-size: 15px;
+    }
+
+    .hello-actions {
+        gap: 6px;
+    }
+
+    .hello-actions .ls {
+        height: 40px;
+    }
+
+    .hello-actions .ls-select {
+        padding: 0 28px 0 34px;
+        font-size: 14px;
+    }
+
+    .hello-actions .ls-globe {
+        left: 12px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .hello-actions .ls-chevron {
+        right: 10px;
     }
 
     /* Panel already insets 8px; trim the hero gutter so the card and its

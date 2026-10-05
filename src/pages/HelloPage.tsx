@@ -6,14 +6,14 @@ import StatementSection from "../components/StatementSection";
 import TechSection from "../components/TechSection";
 import HelloFooter from "../components/HelloFooter";
 import ContactSection from "../components/ContactSection";
-import { HERO_V2_IMAGE_BASE, HERO_V2_SLIDES } from "../data/heroV2Slides";
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import { HERO_V2_IMAGE_BASE, orderedSlides } from "../data/heroV2Slides";
+import { useLocalePath, useT } from "../i18n/context";
 import "./HelloPage.css";
 
-/* The site root (formerly /hello).
-   Newsreader and the first-slide preload are added to <head> here, so no
-   other route pays for them, and removed again on the way out. */
-const NEWSREADER_HREF =
-    "https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap";
+/* The site root (formerly /hello), in every locale (/zh, /ko, ...).
+   The first-slide preload is added to <head> here, so no other route pays
+   for it, and removed again on the way out. */
 
 /* Orbit mark: the footer's thin and thick rings with the planet, drawn small. */
 function VybdMark() {
@@ -34,39 +34,43 @@ function addHeadLink(attrs: Record<string, string>) {
 }
 
 export default function HelloPage() {
+    const t = useT();
+    const to = useLocalePath();
+    const firstSlide = orderedSlides(t.hero.firstSlide)[0];
+
     useEffect(() => {
         const prevTitle = document.title;
-        document.title = "Hello, World | Vybd";
+        document.title = t.meta.homeTitle;
 
-        const links = [
-            addHeadLink({
-                rel: "preload",
-                as: "image",
-                type: "image/avif",
-                href: `${HERO_V2_IMAGE_BASE}/${HERO_V2_SLIDES[0].id}.avif`,
-                fetchpriority: "high",
-            }),
-            addHeadLink({ rel: "stylesheet", href: NEWSREADER_HREF }),
-        ];
+        const preload = addHeadLink({
+            rel: "preload",
+            as: "image",
+            type: "image/avif",
+            href: `${HERO_V2_IMAGE_BASE}/${firstSlide}.avif`,
+            fetchpriority: "high",
+        });
 
         return () => {
             document.title = prevTitle;
-            links.forEach((l) => l.remove());
+            preload.remove();
         };
-    }, []);
+    }, [t, firstSlide]);
 
     return (
         <main className="hello-page">
             <div className="hello-panel">
                 <header className="hello-header">
-                    <a href="/" className="hello-brand" aria-label="Vybd home">
+                    <a href={to("/")} className="hello-brand" aria-label={t.header.home}>
                         <VybdMark />
                         <span>vybd</span>
                     </a>
-                    {/* TODO(hello): open the site menu. Nothing to show yet. */}
-                    <button type="button" className="hello-menu" aria-haspopup="true">
-                        Menu
-                    </button>
+                    <div className="hello-actions">
+                        <LanguageSwitcher />
+                        {/* TODO(hello): open the site menu. Nothing to show yet. */}
+                        <button type="button" className="hello-menu" aria-haspopup="true">
+                            {t.header.menu}
+                        </button>
+                    </div>
                 </header>
                 <HeroSectionV2 />
             </div>

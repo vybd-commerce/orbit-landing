@@ -150,9 +150,30 @@
     text-align: center;
 }
 
-.bk-status:only-child {
+.bk-status--solo {
     position: static;
     min-height: 480px;
+}
+
+/* Holds the loading/error overlay to the calendar, clear of the fallback. */
+.bk-embed-wrap {
+    position: relative;
+}
+
+/* Email fallback under the scheduler, for anyone Calendly fails for. */
+.bk-fallback {
+    margin: 0;
+    padding: 14px 24px 16px;
+    border-top: 1px solid #eef0f3;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #7d838f;
+    text-align: center;
+}
+
+.bk-fallback a {
+    color: #0f1b33;
+    text-underline-offset: 3px;
 }
 
 .bk-status a {
@@ -234,7 +255,7 @@
         border-radius: 20px;
     }
 
-    .bk-status:only-child {
+    .bk-status--solo {
         min-height: 320px;
     }
 }

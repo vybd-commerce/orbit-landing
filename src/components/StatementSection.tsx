@@ -1,43 +1,45 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import { ArrowRight, Check, Fingerprint, Stamp } from "lucide-react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useLocale, useT } from "../i18n/context";
+import type { Locale } from "../i18n/locales";
 import "./StatementSection.css";
 
 /* ── Country sets (edit here) ────────────────────────────────────────── */
 
 /* Shown three at a time, in this order, looping. The first set is always the
-   one on page load. `code` matches a file in public/images/flags (circle-flags,
-   MIT, bundled locally). */
-const FLAG_SETS: { code: string; name: string }[][] = [
+   one on page load. Each code matches a file in public/images/flags
+   (circle-flags, MIT, bundled locally) and a name in the copy's countries. */
+const FLAG_SETS: (keyof ReturnType<typeof useT>["countries"])[][] = [
     [
-        { code: "in", name: "India" },
-        { code: "kr", name: "South Korea" },
-        { code: "cn", name: "China" },
+        "in",
+        "kr",
+        "cn",
     ],
     [
-        { code: "fr", name: "France" },
-        { code: "bd", name: "Bangladesh" },
-        { code: "jp", name: "Japan" },
+        "fr",
+        "bd",
+        "jp",
     ],
     [
-        { code: "vn", name: "Vietnam" },
-        { code: "it", name: "Italy" },
-        { code: "mx", name: "Mexico" },
+        "vn",
+        "it",
+        "mx",
     ],
     [
-        { code: "th", name: "Thailand" },
-        { code: "de", name: "Germany" },
-        { code: "tr", name: "Turkey" },
+        "th",
+        "de",
+        "tr",
     ],
     [
-        { code: "id", name: "Indonesia" },
-        { code: "es", name: "Spain" },
-        { code: "gb", name: "United Kingdom" },
+        "id",
+        "es",
+        "gb",
     ],
     [
-        { code: "ph", name: "Philippines" },
-        { code: "br", name: "Brazil" },
-        { code: "pk", name: "Pakistan" },
+        "ph",
+        "br",
+        "pk",
     ],
 ];
 
@@ -55,13 +57,14 @@ const HOW_IT_WORKS_ID = "how-it-works";
 /* Each of the three slots swaps on its own, 90ms after the one before:
    it turns sideways and fades (250ms), takes the new country, turns back. */
 function FlagsChip({ active, reducedMotion }: { active: boolean; reducedMotion: boolean }) {
+    const t = useT();
     const [setIndex, setSetIndex] = useState(0);
     const [slots, setSlots] = useState([0, 0, 0]);
     const [out, setOut] = useState([false, false, false]);
     const timers = useRef<number[]>([]);
 
     useEffect(() => {
-        FLAG_SETS.flat().forEach(({ code }) => {
+        FLAG_SETS.flat().forEach((code) => {
             const img = new Image();
             img.src = FLAG_SRC(code);
         });
@@ -102,15 +105,15 @@ function FlagsChip({ active, reducedMotion }: { active: boolean; reducedMotion: 
     }, [active, reducedMotion, advance]);
 
     return (
-        <button type="button" className="st-flags st-w" aria-label="Show more countries" onClick={advance}>
+        <button type="button" className="st-flags st-w" aria-label={t.statement.moreCountries} onClick={advance}>
             {slots.map((s, i) => {
-                const country = FLAG_SETS[s][i];
+                const code = FLAG_SETS[s][i];
                 return (
                     <span key={i} className={`st-flag st-flag--${i + 1}`}>
                         <img
                             className={out[i] ? "is-out" : undefined}
-                            src={FLAG_SRC(country.code)}
-                            alt={country.name}
+                            src={FLAG_SRC(code)}
+                            alt={t.countries[code]}
                             width={64}
                             height={64}
                             draggable={false}
@@ -135,8 +138,24 @@ const REVEAL_SOFTNESS = 2.5; // how many words are mid-fade at once (lower = cri
 const REVEAL_LEAD = 0.25; // starts when the section top is 25% of a screen from the top, just before it pins
 const REVEAL_DONE = 0.8; // finished 80% of the way through the pin; the last 20% holds it complete
 
-function words(text: string) {
-    return text.split(/(\s+)/).map((part, i) =>
+/* Chinese and Japanese are written without spaces, so their words come
+   from Intl.Segmenter (falling back to single characters), with punctuation
+   kept on the word before it so a line never starts with "。" or "、". */
+const UNSPACED: Locale[] = ["zh", "ja"];
+
+function unspacedWords(text: string, locale: Locale) {
+    if (typeof Intl.Segmenter !== "function") return Array.from(text);
+    const out: string[] = [];
+    for (const { segment, isWordLike } of new Intl.Segmenter(locale, { granularity: "word" }).segment(text)) {
+        if (!isWordLike && out.length) out[out.length - 1] += segment;
+        else out.push(segment);
+    }
+    return out;
+}
+
+function words(text: string, locale: Locale) {
+    const parts = UNSPACED.includes(locale) ? unspacedWords(text, locale) : text.split(/(\s+)/);
+    return parts.map((part, i) =>
         /^\s+$/.test(part) || !part ? part : (
             <span key={i} className="st-w">
                 {part}
@@ -152,6 +171,10 @@ function words(text: string) {
    chip never starts or ends a line on its own. All loops are CSS and pause
    off-screen or in a hidden tab; the flag timer stops with them. */
 export default function StatementSection() {
+    const t = useT();
+    const locale = useLocale();
+    /* Between a run of text and the chip group next to it. */
+    const gap = UNSPACED.includes(locale) ? "" : " ";
     const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
     const sectionRef = useRef<HTMLElement>(null);
     const [onScreen, setOnScreen] = useState(false);
@@ -208,7 +231,7 @@ export default function StatementSection() {
             window.removeEventListener("resize", onScroll);
             cancelAnimationFrame(raf);
         };
-    }, [reducedMotion]);
+    }, [reducedMotion, locale]);
 
     const goToHowItWorks = (e: MouseEvent<HTMLAnchorElement>) => {
         const target = document.getElementById(HOW_IT_WORKS_ID) ?? sectionRef.current?.nextElementSibling;
@@ -218,25 +241,30 @@ export default function StatementSection() {
     };
 
     return (
-        <section ref={sectionRef} className={`st-section${active ? "" : " is-paused"}`} aria-label="What Vybd does">
+        <section ref={sectionRef} className={`st-section${active ? "" : " is-paused"}`} aria-label={t.statement.label}>
             <div className="st-stage">
-                <p ref={textRef} className="st-text">
+                {/* Keyed on locale: the reveal effect collects the word spans
+                    once, so a language switch needs a fresh paragraph. */}
+                <p key={locale} ref={textRef} className="st-text">
                     <span className="st-nw">
                         <span className="st-w">Vybd</span>{" "}
                         <a
                             href={`#${HOW_IT_WORKS_ID}`}
                             className="st-chip st-chip--arrow st-w"
-                            aria-label="See how it works"
+                            aria-label={t.statement.seeHow}
                             onClick={goToHowItWorks}
                         >
                             <ArrowRight aria-hidden="true" strokeWidth={2.5} />
                         </a>
                     </span>{" "}
-                    {words("brings your products from")}{" "}
+                    {words(t.statement.lead, locale)}
+                    {gap}
                     <span className="st-nw">
-                        <FlagsChip active={active} reducedMotion={reducedMotion} /> <span className="st-w">anywhere</span>
-                    </span>{" "}
-                    {words("into the US. One partner finds your buyers, clears the")}{" "}
+                        <FlagsChip active={active} reducedMotion={reducedMotion} /> {words(t.statement.anywhere, locale)}
+                    </span>
+                    {gap}
+                    {words(t.statement.mid, locale)}
+                    {gap}
                     <span className="st-nw">
                         <span className="st-chip st-chip--stamp st-w" aria-hidden="true">
                             <span className="st-stamp">
@@ -246,17 +274,20 @@ export default function StatementSection() {
                                 <Check strokeWidth={3.5} />
                             </span>
                         </span>{" "}
-                        {words("red tape")}
-                    </span>{" "}
-                    {words("and runs your operations. No distributor takes your margin, and you keep")}{" "}
+                        {words(t.statement.redTape, locale)}
+                    </span>
+                    {gap}
+                    {words(t.statement.rest, locale)}
+                    {gap}
                     <span className="st-nw">
                         <span className="st-chip st-chip--print st-w" aria-hidden="true">
                             <Fingerprint strokeWidth={1.75} />
                             <span className="st-scan" />
                         </span>{" "}
-                        <span className="st-w">control</span>
-                    </span>{" "}
-                    {words("of your brand.")}
+                        {words(t.statement.control, locale)}
+                    </span>
+                    {gap}
+                    {words(t.statement.end, locale)}
                 </p>
             </div>
         </section>

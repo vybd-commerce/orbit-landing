@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useReveal } from "../hooks/useReveal";
+import { useT } from "../i18n/context";
 import "./TechSection.css";
 
 /* ── Objects ─────────────────────────────────────────────────────────────
@@ -119,10 +120,11 @@ function Prism() {
 }
 
 function Helm() {
+    const t = useT();
     return (
         <svg viewBox="0 0 200 120" aria-hidden="true">
             <text x="100" y="14" textAnchor="middle" className="ts-svg-label">
-                propose · approve
+                {t.tech.helmLabel}
             </text>
             <rect className="ts-line ts-dash" x="16" y="24" width="168" height="88" rx="12" fill="none" />
             <line className="ts-line" x1="128" y1="34" x2="128" y2="102" strokeOpacity="0.6" />
@@ -160,12 +162,13 @@ function Harbor() {
 
 /* ── Tiles (edit here) ─────────────────────────────────────────────────── */
 
-const TILES: { name: string; description: string; Visual: () => ReactNode }[] = [
-    { name: "Scout", description: "Finds and qualifies US retailers and distributors for your products", Visual: Scout },
-    { name: "Muse", description: "Learns your brand's voice and plans US campaigns", Visual: Muse },
-    { name: "Prism", description: "Product photos and video for US channels, without a shoot", Visual: Prism },
-    { name: "Helm", description: "Agents watch inventory, orders and costs, and propose fixes we approve", Visual: Helm },
-    { name: "Harbor", description: "Your US online store, connected to inventory and fulfillment", Visual: Harbor },
+/* Descriptions are per language, in the copy's tech.tiles. */
+const TILES: { name: "Scout" | "Muse" | "Prism" | "Helm" | "Harbor"; Visual: () => ReactNode }[] = [
+    { name: "Scout", Visual: Scout },
+    { name: "Muse", Visual: Muse },
+    { name: "Prism", Visual: Prism },
+    { name: "Helm", Visual: Helm },
+    { name: "Harbor", Visual: Harbor },
 ];
 
 /* ── Section ─────────────────────────────────────────────────────────── */
@@ -174,6 +177,7 @@ const TILES: { name: string; description: string; Visual: () => ReactNode }[] = 
    moving abstract object. Loops pause off-screen; reduced motion shows each
    object in a still, readable pose. */
 export default function TechSection() {
+    const t = useT();
     const { ref: gridRef, revealed } = useReveal<HTMLDivElement>(0.12);
     const bandRef = useRef<HTMLElement>(null);
     const [onScreen, setOnScreen] = useState(false);
@@ -189,23 +193,23 @@ export default function TechSection() {
     return (
         <section ref={bandRef} className={`ts-band${onScreen ? "" : " is-paused"}`} aria-labelledby="ts-title">
             <header className="ts-head">
-                <h2 id="ts-title" className="ts-title">Proprietary technologies</h2>
-                <p className="ts-sub">Agents do the work. Our operators approve every change.</p>
+                <h2 id="ts-title" className="ts-title">{t.tech.title}</h2>
+                <p className="ts-sub">{t.tech.sub}</p>
             </header>
 
             <div ref={gridRef} className={`ts-grid${revealed ? " is-revealed" : ""}`}>
-                {TILES.map(({ Visual, ...t }, i) => (
-                    <article key={t.name} className="ts-tile" style={{ "--i": i } as CSSProperties}>
-                        <h3 className="ts-name">{t.name}</h3>
-                        <p className="ts-desc">{t.description}</p>
-                        <div className={`ts-object ts-object--${t.name.toLowerCase()}`}>
+                {TILES.map(({ name, Visual }, i) => (
+                    <article key={name} className="ts-tile" style={{ "--i": i } as CSSProperties}>
+                        <h3 className="ts-name">{name}</h3>
+                        <p className="ts-desc">{t.tech.tiles[name]}</p>
+                        <div className={`ts-object ts-object--${name.toLowerCase()}`}>
                             <Visual />
                         </div>
                     </article>
                 ))}
             </div>
 
-            <p className="ts-more">And many more</p>
+            <p className="ts-more">{t.tech.more}</p>
         </section>
     );
 }

@@ -1,3 +1,6 @@
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useT } from "../i18n/context";
+import type { Messages } from "../i18n/messages";
 import "./HelloFooter.css";
 
 /* ── Content (edit here) ─────────────────────────────────────────────────
@@ -6,21 +9,23 @@ import "./HelloFooter.css";
 
 type Link = { label: string; href: string };
 
-const EXPLORE: Link[] = [
-    { label: "How It Works", href: "/product" },
-    { label: "Solutions", href: "/#functions" },
-    { label: "Case Studies", href: "/case-studies" },
-    { label: "Lab", href: "/lab" },
+/* Labels are per language (the copy's footer section); brand names in
+   FOLLOW stay as they are. */
+const explore = (f: Messages["footer"]): Link[] => [
+    { label: f.howItWorks, href: "/product" },
+    { label: f.solutions, href: "/#functions" },
+    { label: f.caseStudies, href: "/case-studies" },
+    { label: f.lab, href: "/lab" },
 ];
 
-const COMPANY: Link[] = [
-    { label: "About us", href: "#" }, // TODO(footer): real routes
-    { label: "Careers", href: "#" },
-    { label: "Jobs", href: "#" },
-    { label: "Events", href: "#" },
-    { label: "Compliance", href: "#" },
-    { label: "Support center", href: "#" },
-    { label: "Investors", href: "#" },
+const company = (f: Messages["footer"]): Link[] => [
+    { label: f.about, href: "#" }, // TODO(footer): real routes
+    { label: f.careers, href: "#" },
+    { label: f.jobs, href: "#" },
+    { label: f.events, href: "#" },
+    { label: f.compliance, href: "#" },
+    { label: f.support, href: "#" },
+    { label: f.investors, href: "#" },
 ];
 
 const FOLLOW: Link[] = [
@@ -40,9 +45,9 @@ const MEDIA_KIT_HREF = "#"; // TODO(footer): media kit file
 const OFFICES = ["888 Main St, New York, New York - 10044"];
 const LEGAL_NOTE = "© Vybd [legal entity name] | [Registered address] | [Company registration and tax numbers]";
 
-const LEGAL: Link[] = [
-    { label: "Privacy and cookie policy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
+const legal = (f: Messages["footer"]): Link[] => [
+    { label: f.privacy, href: "/privacy" },
+    { label: f.terms, href: "/terms" },
 ];
 
 /* ── Footer ──────────────────────────────────────────────────────────── */
@@ -51,13 +56,14 @@ const LEGAL: Link[] = [
    Vybd wordmark from the main site's footer in the middle, and the tagline
    with the legal links along the bottom. */
 export default function HelloFooter() {
+    const f = useT().footer;
     return (
         <footer className="hf-band">
-            <nav className="hf-cols" aria-label="Footer">
+            <nav className="hf-cols" aria-label={f.nav}>
                 <div className="hf-col">
-                    <h2 className="hf-head">Explore</h2>
+                    <h2 className="hf-head">{f.explore}</h2>
                     <ul>
-                        {EXPLORE.map((l) => (
+                        {explore(f).map((l) => (
                             <li key={l.label}>
                                 <a href={l.href}>{l.label}</a>
                             </li>
@@ -65,9 +71,9 @@ export default function HelloFooter() {
                     </ul>
                 </div>
                 <div className="hf-col">
-                    <h2 className="hf-head">Company</h2>
+                    <h2 className="hf-head">{f.company}</h2>
                     <ul>
-                        {COMPANY.map((l) => (
+                        {company(f).map((l) => (
                             <li key={l.label}>
                                 <a href={l.href}>{l.label}</a>
                             </li>
@@ -75,7 +81,7 @@ export default function HelloFooter() {
                     </ul>
                 </div>
                 <div className="hf-col">
-                    <h2 className="hf-head">Follow us</h2>
+                    <h2 className="hf-head">{f.follow}</h2>
                     <ul>
                         {FOLLOW.map((l) => (
                             <li key={l.label}>
@@ -85,24 +91,24 @@ export default function HelloFooter() {
                     </ul>
                 </div>
                 <div className="hf-col">
-                    <h2 className="hf-head">Partnership inquiries</h2>
+                    <h2 className="hf-head">{f.partnership}</h2>
                     <ul>
                         <li>
                             <a href={`mailto:${PARTNERSHIP_EMAIL}`}>{PARTNERSHIP_EMAIL}</a>
                         </li>
                     </ul>
-                    <h2 className="hf-head hf-head--gap">Press inquiries</h2>
+                    <h2 className="hf-head hf-head--gap">{f.press}</h2>
                     <ul>
                         <li>
                             <a href={`mailto:${PRESS_EMAIL}`}>{PRESS_EMAIL}</a>
                         </li>
                         <li>
-                            <a href={MEDIA_KIT_HREF}>Download media kit</a>
+                            <a href={MEDIA_KIT_HREF}>{f.mediaKit}</a>
                         </li>
                     </ul>
                 </div>
                 <div className="hf-col hf-col--wide">
-                    <h2 className="hf-head">Offices</h2>
+                    <h2 className="hf-head">{f.offices}</h2>
                     <ul>
                         {OFFICES.map((o) => (
                             <li key={o} className="hf-text">
@@ -126,18 +132,19 @@ export default function HelloFooter() {
 
             <div className="hf-bottom">
                 <div className="hf-tagline">
-                    <p className="hf-tagline-main">Commerce, Coordinated.</p>
-                    <p className="hf-tagline-sub">enabling commerce, disabling borders</p>
+                    <p className="hf-tagline-main">{f.tagline}</p>
+                    <p className="hf-tagline-sub">{f.taglineSub}</p>
                 </div>
                 <div className="hf-legal">
-                    {LEGAL.map((l) => (
+                    <LanguageSwitcher />
+                    {legal(f).map((l) => (
                         <a key={l.label} href={l.href}>
                             {l.label}
                         </a>
                     ))}
                     {/* TODO(footer): open the cookie consent panel once one exists. */}
                     <button type="button" className="hf-legal-btn">
-                        Your cookie preferences
+                        {f.cookies}
                     </button>
                 </div>
             </div>

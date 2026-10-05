@@ -1,9 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.vybd.ai/</loc>
-    <lastmod>2026-08-28</lastmod>
+    <lastmod>2026-10-05</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/zh</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/ko</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/ja</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/fr</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/es</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/zh/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/ko/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/ja/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/fr/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
+  </url>
+  <url>
+    <loc>https://www.vybd.ai/es/book</loc>
+    <lastmod>2026-10-05</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.vybd.ai/book" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://www.vybd.ai/zh/book" />
+    <xhtml:link rel="alternate" hreflang="ko" href="https://www.vybd.ai/ko/book" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://www.vybd.ai/ja/book" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.vybd.ai/fr/book" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.vybd.ai/es/book" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.vybd.ai/book" />
   </url>
   <url>
     <loc>https://www.vybd.ai/work</loc>

@@ -16,6 +16,8 @@ import WaitlistPage from "./pages/WaitlistPage";
 import HelloPage from "./pages/HelloPage";
 import BookPage from "./pages/BookPage";
 import BookThanksPage from "./pages/BookThanksPage";
+import LocaleScope from "./i18n/LocaleScope";
+import { LOCALES, localePath } from "./i18n/locales";
 
 /* The stack narrative pulls in three, R3F and drei. Kept out of the main
    bundle — it is one route, and a heavy one. */
@@ -25,7 +27,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HelloPage />} />
+        {/* The root and booking pages, in every language: / and /book in
+            English, /zh, /zh/book and so on for the rest (see src/i18n). */}
+        {LOCALES.flatMap((locale) => [
+          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<LocaleScope locale={locale}><HelloPage /></LocaleScope>} />,
+          <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
+          <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
+        ])}
         {/* The root's address while it was in review */}
         <Route path="/hello" element={<Navigate to="/" replace />} />
         {/* Previous root, back at its own address */}
@@ -57,8 +65,6 @@ function App() {
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />
-        <Route path="/book" element={<BookPage />} />
-        <Route path="/book/thanks" element={<BookThanksPage />} />
         <Route path="/lab" element={<LabPage />} />
         <Route path="/work" element={<WorkIndexPage />} />
         <Route path="/work/bayangrom" element={<BayangromCaseStudyPage />} />

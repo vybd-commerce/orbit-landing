@@ -1,41 +1,35 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
+import { useT } from "../i18n/context";
 import "./ComplexitySection.css";
 
 /* ── Content (edit here) ─────────────────────────────────────────────── */
 
 type Group = "Decide" | "Land" | "Run";
 
-const TASKS: { label: string; group: Group }[] = [
-    { label: "Channel strategy", group: "Decide" },
-    { label: "US pricing", group: "Decide" },
-    { label: "Marketing", group: "Decide" },
-    { label: "Retail buyers", group: "Decide" },
-    { label: "Entity setup", group: "Land" },
-    { label: "Sales tax", group: "Land" },
-    { label: "FDA / FCC rules", group: "Land" },
-    { label: "Labeling", group: "Land" },
-    { label: "Customs broker", group: "Land" },
-    { label: "Importer of record", group: "Land" },
-    { label: "Tariffs and duties", group: "Land" },
-    { label: "Freight", group: "Land" },
-    { label: "Cargo insurance", group: "Land" },
-    { label: "Finding financing", group: "Land" },
-    { label: "3PL warehouse", group: "Run" },
-    { label: "Returns", group: "Run" },
-    { label: "Retailer chargebacks", group: "Run" },
-    { label: "Amazon account", group: "Run" },
-    { label: "Customer service", group: "Run" },
+/* Each task's step, in the order of complexity.tasks in the copy (which
+   holds the labels, per language). */
+const TASKS: { group: Group }[] = [
+    { group: "Decide" },
+    { group: "Decide" },
+    { group: "Decide" },
+    { group: "Decide" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Land" },
+    { group: "Run" },
+    { group: "Run" },
+    { group: "Run" },
+    { group: "Run" },
+    { group: "Run" },
 ];
-
-const CAPTIONS = [
-    "Selling in the US means managing all of this.",
-    "Or one relationship instead of nineteen.",
-    "You make great products. We handle the rest.",
-];
-
-const STAGE_LABEL =
-    "Nineteen tasks for selling in the US, from customs and freight to returns and financing, handled by Vybd under three steps: Decide, Land and Run.";
 
 const GROUPS: Group[] = ["Decide", "Land", "Run"];
 
@@ -275,6 +269,8 @@ function crossingPairs(n: number, count: number) {
    narrower screens play them once when the section is 40% in view. All
    per-frame work writes straight to the DOM: opacity, transforms, path d. */
 export default function ComplexitySection() {
+    const t = useT();
+    const { tasks: labels, groups: groupLabels, captions, stageLabel, you: youLabel } = t.complexity;
     const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
     const wide = useMediaQuery("(min-width: 1024px)");
     const pinned = wide && !reducedMotion;
@@ -499,7 +495,8 @@ export default function ComplexitySection() {
             alive = false;
             ro.disconnect();
         };
-    }, [layout, wide, paint]);
+        // labels: a language switch changes every pill width.
+    }, [layout, wide, paint, labels]);
 
     const pct = (v: number, of: number) => `${(v / of) * 100}%`;
     const { w, h, you, hub } = layout;
@@ -512,7 +509,7 @@ export default function ComplexitySection() {
         >
             <div className="cx-sticky">
                 <h2 id="cx-caption" className="cx-caption" aria-live="polite">
-                    {CAPTIONS.map((c, i) => (
+                    {captions.map((c, i) => (
                         <span
                             key={i}
                             ref={(el) => {
@@ -530,7 +527,7 @@ export default function ComplexitySection() {
                     ref={stageRef}
                     className="cx-stage"
                     role="img"
-                    aria-label={STAGE_LABEL}
+                    aria-label={stageLabel}
                     style={{ aspectRatio: `${w} / ${h}`, "--cx-ar": w / h, "--cx-hub": pct(hub.y, h) } as CSSProperties}
                 >
                     <svg className="cx-lines" viewBox={`0 0 ${w} ${h}`} aria-hidden="true">
@@ -569,7 +566,7 @@ export default function ComplexitySection() {
 
                     {layout.pills.map((p, i) => (
                         <span
-                            key={TASKS[p.task].label}
+                            key={p.task}
                             ref={(el) => {
                                 pillRefs.current[i] = el;
                             }}
@@ -602,13 +599,13 @@ export default function ComplexitySection() {
                                         <path d="M4.2 7.2l1.9 1.9 3.7-3.8" />
                                     </svg>
                                 </span>
-                                {TASKS[p.task].label}
+                                {labels[p.task]}
                             </span>
                         </span>
                     ))}
 
                     <span className="cx-you" style={{ left: pct(you.x, w), top: pct(you.y, h) }} aria-hidden="true">
-                        You
+                        {youLabel}
                     </span>
 
                     <div ref={cardRef} className="cx-card" aria-hidden="true">
@@ -621,16 +618,16 @@ export default function ComplexitySection() {
                                 }}
                                 className="cx-card-head"
                             >
-                                {g}
+                                {groupLabels[g]}
                             </span>
                         ))}
                     </div>
                 </div>
 
                 <ul className="cx-sr">
-                    {TASKS.map((t) => (
-                        <li key={t.label}>
-                            {t.label} ({t.group})
+                    {TASKS.map((task, i) => (
+                        <li key={i}>
+                            {labels[i]} ({groupLabels[task.group]})
                         </li>
                     ))}
                 </ul>

@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import { Check, Ship } from "lucide-react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useReveal } from "../hooks/useReveal";
+import { useT } from "../i18n/context";
+import type { Messages } from "../i18n/messages";
 import "./ProofCollage.css";
 
 /* ── Data (edit numbers here) ────────────────────────────────────────── */
@@ -39,91 +41,98 @@ const noBreakHyphens = (text: string) => text.replace(/(\w)-(\w)/g, "$1\u2011$2"
 
 const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
-const PROOF_CARDS: ProofCard[] = [
-    {
-        id: "bayangrom",
-        name: "Bayangrom",
-        country: "India",
-        category: "Art and apparel",
-        size: "large",
-        label: "Inventory and shipping",
-        headline: "$180K/yr recovered",
-        visual: {
-            kind: "bars",
-            rows: [
-                { label: "Excess inventory", before: 100, after: 72, delta: "−28%" },
-                { label: "Shipping cost", before: 100, after: 78, delta: "−22%" },
-            ],
+/* Card copy comes from the current locale; ids, sizes and numbers live here. */
+function proofCards(t: Messages): ProofCard[] {
+    const c = t.proof.cards;
+    return [
+        {
+            id: "bayangrom",
+            name: "Bayangrom",
+            country: t.countries.in,
+            category: c.bayangrom.category,
+            size: "large",
+            label: c.bayangrom.label,
+            headline: c.bayangrom.headline,
+            visual: {
+                kind: "bars",
+                rows: [
+                    { label: c.bayangrom.excess, before: 100, after: 72, delta: "−28%" },
+                    { label: c.bayangrom.shipping, before: 100, after: 78, delta: "−22%" },
+                ],
+            },
+            detail: c.bayangrom.detail,
         },
-        detail: "−28% excess inventory, −22% shipping cost",
-    },
-    {
-        id: "emsworth",
-        name: "Emsworth",
-        country: "India",
-        category: "Luxury terry cotton products",
-        size: "large",
-        label: "Wholesale pre-orders",
-        headline: "$30,000 in B2B pre-orders",
-        visual: {
-            kind: "steps",
-            steps: [
-                { label: "Wholesale launch", state: "done" },
-                { label: "Direct-to-consumer store", state: "active" },
-            ],
+        {
+            id: "emsworth",
+            name: "Emsworth",
+            country: t.countries.in,
+            category: c.emsworth.category,
+            size: "large",
+            label: c.emsworth.label,
+            headline: c.emsworth.headline,
+            visual: {
+                kind: "steps",
+                steps: [
+                    { label: c.emsworth.wholesale, state: "done" },
+                    { label: c.emsworth.dtc, state: "active" },
+                ],
+            },
+            detail: c.emsworth.detail,
         },
-        detail: "Now building their direct-to-consumer store",
-    },
-    {
-        id: "sugat",
-        name: "Sugat Traders",
-        country: "India",
-        category: "Herbal powders and sustainable food packaging",
-        size: "medium",
-        label: "B2B revenue",
-        headline: "$25,000 in B2B revenue",
-        visual: { kind: "route", from: "India", to: "United States" },
-    },
-    {
-        id: "ollobot",
-        name: "Ollobot",
-        country: "China",
-        category: "Companion robots",
-        size: "medium",
-        label: "Kickstarter, live now",
-        headline: OLLOBOT_PLEDGED === null ? "$— pledged" : `${usd(OLLOBOT_PLEDGED)} pledged`,
-        visual: { kind: "kickstarter", pledged: OLLOBOT_PLEDGED, goal: OLLOBOT_GOAL, asOf: OLLOBOT_AS_OF_DATE },
-        detail: "Goal: $100,000 in pre-orders",
-    },
-    {
-        id: "karama",
-        name: "Karama",
-        country: "USA",
-        category: "Premium underwear",
-        size: "medium",
-        label: "Pre-launch",
-        headline: "$10,000 in pre-orders before launch",
-        visual: { kind: "counter", amount: 10_000 },
-    },
-    {
-        id: "ouwr",
-        name: "Ouwr",
-        country: "South Korea",
-        category: "K-fashion, womenswear",
-        size: "small",
-        label: "Now in the US",
-        visual: { kind: "image" }, // TODO(proof): add src (and alt) for an Ouwr image
-    },
-    {
-        id: "cellre",
-        name: "Cellre",
-        country: "South Korea",
-        category: "K-beauty",
-        size: "small",
-        label: "Now in the US",
-        visual: { kind: "image" }, // TODO(proof): add src (and alt) for a Cellre image
-    },
-];
+        {
+            id: "sugat",
+            name: "Sugat Traders",
+            country: t.countries.in,
+            category: c.sugat.category,
+            size: "medium",
+            label: c.sugat.label,
+            headline: c.sugat.headline,
+            visual: { kind: "route", from: t.countries.in, to: t.countries.us },
+        },
+        {
+            id: "ollobot",
+            name: "Ollobot",
+            country: t.countries.cn,
+            category: c.ollobot.category,
+            size: "medium",
+            label: c.ollobot.label,
+            headline: t.proof.pledged(OLLOBOT_PLEDGED === null ? "$—" : usd(OLLOBOT_PLEDGED)),
+            visual: { kind: "kickstarter", pledged: OLLOBOT_PLEDGED, goal: OLLOBOT_GOAL, asOf: OLLOBOT_AS_OF_DATE },
+            detail: c.ollobot.detail,
+        },
+        {
+            id: "karama",
+            name: "Karama",
+            country: t.countries.usa,
+            category: c.karama.category,
+            size: "medium",
+            label: c.karama.label,
+            headline: c.karama.headline,
+            visual: { kind: "counter", amount: 10_000 },
+        },
+        {
+            id: "ouwr",
+            name: "Ouwr",
+            country: t.countries.kr,
+            category: c.ouwr.category,
+            size: "small",
+            label: c.ouwr.label,
+            visual: { kind: "image" }, // TODO(proof): add src (and alt) for an Ouwr image
+        },
+        {
+            id: "cellre",
+            name: "Cellre",
+            country: t.countries.kr,
+            category: c.cellre.category,
+            size: "small",
+            label: c.cellre.label,
+            visual: { kind: "image" }, // TODO(proof): add src (and alt) for a Cellre image
+        },
+    ];
+}
+
+/* Ids only, for the reduced-motion "already seen" set. */
+const CARD_IDS = ["bayangrom", "emsworth", "sugat", "ollobot", "karama", "ouwr", "cellre"];
 
 /* ── Motion settings ─────────────────────────────────────────────────── */
 
@@ -193,6 +202,7 @@ function CountUpText({ text, run, instant }: { text: string; run: boolean; insta
 type Run = { run: boolean; instant: boolean };
 
 function Bars({ rows }: Extract<Visual, { kind: "bars" }>) {
+    const t = useT();
     return (
         <div className="pc-bars">
             {rows.map((r) => (
@@ -202,13 +212,13 @@ function Bars({ rows }: Extract<Visual, { kind: "bars" }>) {
                         <span className="pc-delta">{r.delta}</span>
                     </div>
                     <div className="pc-bar-row">
-                        <span className="pc-bar-tag">Before</span>
+                        <span className="pc-bar-tag">{t.proof.before}</span>
                         <span className="pc-bar-track">
                             <span className="pc-bar pc-bar--before" style={{ width: `${r.before}%` }} />
                         </span>
                     </div>
                     <div className="pc-bar-row">
-                        <span className="pc-bar-tag">After</span>
+                        <span className="pc-bar-tag">{t.proof.after}</span>
                         <span className="pc-bar-track">
                             {/* Drawn at its real width; starts scaled up to the
                                 "before" length and shrinks into place. */}
@@ -225,6 +235,7 @@ function Bars({ rows }: Extract<Visual, { kind: "bars" }>) {
 }
 
 function Steps({ steps }: Extract<Visual, { kind: "steps" }>) {
+    const t = useT();
     return (
         <ol className="pc-steps">
             {steps.map((s) => (
@@ -234,7 +245,7 @@ function Steps({ steps }: Extract<Visual, { kind: "steps" }>) {
                     </span>
                     <span className="pc-step-text">
                         <span className="pc-step-label">{s.label}</span>
-                        <span className="pc-step-state">{s.state === "done" ? "Done" : "In progress"}</span>
+                        <span className="pc-step-state">{s.state === "done" ? t.proof.done : t.proof.inProgress}</span>
                     </span>
                 </li>
             ))}
@@ -267,27 +278,28 @@ function Route({ from, to }: Extract<Visual, { kind: "route" }>) {
 }
 
 function Kickstarter({ pledged, goal, asOf }: Extract<Visual, { kind: "kickstarter" }>) {
+    const t = useT();
     const pct = pledged === null ? 0 : Math.min(100, (pledged / goal) * 100);
     return (
         <div className="pc-ks">
             <span className="pc-live">
                 <span className="pc-live-dot" aria-hidden="true" />
-                Live
+                {t.proof.live}
             </span>
             <div
                 className="pc-ks-track"
                 role="progressbar"
-                aria-label="Pledged toward goal"
+                aria-label={t.proof.pledgedLabel}
                 aria-valuemin={0}
                 aria-valuemax={goal}
                 aria-valuenow={pledged ?? undefined}
-                aria-valuetext={pledged === null ? "Not yet filled in" : `${usd(pledged)} of ${usd(goal)}`}
+                aria-valuetext={pledged === null ? t.proof.notFilled : t.proof.ofGoal(usd(pledged), usd(goal))}
             >
                 <span className="pc-ks-fill" style={{ width: `${pct}%` }} />
             </div>
             <div className="pc-ks-meta">
-                <span>As of {asOf ?? "—"}</span>
-                <span>{usd(goal)} goal</span>
+                <span>{t.proof.asOf(asOf ?? "—")}</span>
+                <span>{t.proof.goal(usd(goal))}</span>
             </div>
         </div>
     );
@@ -296,13 +308,14 @@ function Kickstarter({ pledged, goal, asOf }: Extract<Visual, { kind: "kickstart
 /* Odometer: the tiles are fixed to the final amount's digits, so counting
    up only changes characters (leading zeros), never the number of tiles. */
 function Counter({ amount, run, instant }: Extract<Visual, { kind: "counter" }> & Run) {
+    const t = useT();
     const value = useCountUp(amount, run, instant);
     const template = usd(amount);
     const digitCount = template.replace(/\D/g, "").length;
     const digits = String(value).padStart(digitCount, "0").split("");
     let d = 0;
     return (
-        <div className="pc-counter" role="img" aria-label={`${template} in pre-orders`}>
+        <div className="pc-counter" role="img" aria-label={t.proof.inPreorders(template)}>
             {template.split("").map((ch, i) =>
                 /\d/.test(ch) ? (
                     <span key={i} className="pc-digit" aria-hidden="true">
@@ -360,6 +373,8 @@ function renderVisual(card: ProofCard, motion: Run): ReactNode {
      passive scroll listener through rAF;
    - loops pause while the section is off-screen. */
 export default function ProofCollage() {
+    const t = useT();
+    const cards = useMemo(() => proofCards(t), [t]);
     const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
     const mobile = useMediaQuery("(max-width: 639px)");
     const { ref: gridRef, revealed } = useReveal<HTMLDivElement>(0.1);
@@ -370,7 +385,7 @@ export default function ProofCollage() {
     const [onScreen, setOnScreen] = useState(false);
     /* Reduced motion: everything starts "seen", so final values show at once. */
     const [seen, setSeen] = useState<Set<string>>(() =>
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches ? new Set(PROOF_CARDS.map((c) => c.id)) : new Set()
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ? new Set(CARD_IDS) : new Set()
     );
 
     /* Section visibility: pauses the loops off-screen. */
@@ -448,11 +463,11 @@ export default function ProofCollage() {
             className={`pc-section${onScreen ? "" : " is-paused"}`}
             aria-labelledby="pc-title"
         >
-            <h2 id="pc-title" className="pc-title">Already in the US.</h2>
-            <p className="pc-sub">Brands from India, South Korea and China, now selling in America.</p>
+            <h2 id="pc-title" className="pc-title">{t.proof.title}</h2>
+            <p className="pc-sub">{t.proof.sub}</p>
 
             <div ref={gridRef} className={`pc-grid${revealed ? " is-revealed" : ""}`}>
-                {PROOF_CARDS.map((card, i) => {
+                {cards.map((card, i) => {
                     const hasDetail = Boolean(card.detail);
                     const open = openId === card.id;
                     const isSeen = seen.has(card.id);

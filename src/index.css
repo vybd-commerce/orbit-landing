@@ -20,3 +20,34 @@ body {
 #root {
   min-height: 100dvh;
 }
+/* Localized pages (src/i18n). The Latin fonts carry no CJK glyphs, so those
+   characters fall back to the system font for the page's lang (PingFang /
+   Hiragino / Apple SD Gothic Neo on Apple, YaHei / Yu Gothic / Malgun Gothic
+   on Windows). Korean breaks lines between words, not inside them; Chinese
+   and Japanese keep closing punctuation off the start of a line. */
+:lang(ko) {
+  word-break: keep-all;
+}
+
+:lang(zh),
+:lang(ja) {
+  line-break: strict;
+}
+
+/* Japanese: break at phrase boundaries where supported (Chrome 119+). */
+:lang(ja) {
+  word-break: auto-phrase;
+}
+
+/* The hero greeting is short enough to only ever break at its comma. */
+:lang(zh) .h2-title,
+:lang(ja) .h2-title {
+  word-break: keep-all;
+}
+
+/* Tight Latin tracking squeezes CJK glyphs; give them their natural width. */
+:lang(zh) :is(h1, h2, h3, p),
+:lang(ja) :is(h1, h2, h3, p),
+:lang(ko) :is(h1, h2, h3, p) {
+  letter-spacing: 0;
+}

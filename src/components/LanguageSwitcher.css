@@ -1,0 +1,73 @@
+.ls {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--ls-line);
+    color: var(--ls-ink);
+    transition: border-color 160ms ease;
+}
+
+.ls {
+    --ls-ink: #0f1b33;
+    --ls-line: rgba(15, 27, 51, 0.2);
+    --ls-line-hover: rgba(15, 27, 51, 0.45);
+}
+
+.ls:hover {
+    border-color: var(--ls-line-hover);
+}
+
+.ls:focus-within {
+    outline: 3px solid var(--ls-ink);
+    outline-offset: 3px;
+}
+
+.ls-select {
+    appearance: none;
+    height: 100%;
+    padding: 0 38px 0 40px;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ls-select:focus {
+    outline: none;
+}
+
+.ls-globe,
+.ls-chevron {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.ls-globe {
+    left: 15px;
+    width: 18px;
+    height: 18px;
+}
+
+.ls-chevron {
+    right: 14px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+.ls-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}

@@ -1,17 +1,25 @@
 import { ArrowRight } from "lucide-react";
 import { track } from "../lib/analytics";
+import { useLocale, useLocalePath, useT } from "../i18n/context";
 import "./ContactSection.css";
 
-/* /hello's last section: one ask, one button to /book. */
+/* The root's last section: one ask, one button to /book. */
 export default function ContactSection() {
+    const t = useT();
+    const locale = useLocale();
+    const to = useLocalePath();
     return (
         <section className="ct-panel" aria-labelledby="ct-title">
             <h2 id="ct-title" className="ct-title">
-                Ready to bring your products to the US?
+                {t.contact.title}
             </h2>
-            <p className="ct-sub">30 minutes with an operator, not a salesperson. Pick a time in your own time zone.</p>
-            <a className="ct-btn" href="/book" onClick={() => track("book_call_clicked", { location: "hello_contact" })}>
-                Book a call
+            <p className="ct-sub">{t.contact.sub}</p>
+            <a
+                className="ct-btn"
+                href={to("/book")}
+                onClick={() => track("book_call_clicked", { location: "hello_contact", lang: locale })}
+            >
+                {t.contact.cta}
                 <ArrowRight aria-hidden="true" strokeWidth={2.25} />
             </a>
         </section>
