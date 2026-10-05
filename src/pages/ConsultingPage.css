@@ -1,9 +1,8 @@
 /* /consulting — the consulting motion.
  *
  * Deliberately plainer than the product pages: no particle field, no globe,
- * no 3D. The page argues that the operator is the differentiator, and a page
- * that looks like every other AI consultancy undercuts that before a word is
- * read. Type, space, and one stroke diagram.
+ * no 3D. Hero, three outcomes, proof, how it starts, then managed ops as a
+ * second offer. Type, space, and one line diagram that recurs.
  *
  * Every colour comes from the --lp-* tokens in LandingPage.css so the page
  * survives the light/dark switch.
@@ -12,6 +11,11 @@
 .lp-page-consulting {
     --cons-max: 1080px;
     --cons-gutter: 1.5rem;
+    /* .landing-page sets overflow-x: hidden + overflow-y: scroll, which makes
+       it a scroll container and silently disables position: sticky for the
+       pinned story. clip still stops sideways overflow without that. */
+    overflow: visible;
+    overflow-x: clip;
 }
 
 .lp-page-consulting .lp-header-wrapper {
@@ -93,276 +97,194 @@
 /* The shared focus ring only covers .lp-btn, so the page's plain links carry
    their own. */
 .cons-text-link:focus-visible,
-.cons-access a:focus-visible {
+.cons-access a:focus-visible,
+.lp-page-consulting .lp-footer-col a:focus-visible {
     outline: 2px solid var(--lp-primary);
     outline-offset: 3px;
     border-radius: 3px;
 }
 
-/* ── 1. Hero ── */
-.cons-hero {
-    width: 100%;
-    max-width: var(--cons-max);
-    margin: 0 auto;
-    padding: 7.5rem var(--cons-gutter) 4rem;
-}
-
-@media (max-width: 768px) {
-    .cons-hero {
-        padding: 5.5rem var(--cons-gutter) 2.5rem;
-    }
-}
-
-.cons-hero-copy {
-    max-width: 46rem;
-}
-
-.cons-hero-title {
-    font-size: clamp(2.35rem, 6vw, 4rem);
-    font-weight: 400;
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    margin: 0.75rem 0 0;
-    color: var(--lp-on-surface);
+/* ── 1. Hero ── base styles shared with /, in components/LandingHero.css */
+.cons-hero .v3-hero-title {
     text-wrap: balance;
 }
 
-.cons-hero-subtitle {
-    max-width: 40rem;
-    margin: 1.5rem 0 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--lp-on-surface-variant);
+/* The Veo loop. The frame is cropped to 16:7 and all four edges fade into
+   the page, so the clip reads as part of the hero rather than a boxed video. */
+.cons-hero-video {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 2.5rem auto 0;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    -webkit-mask-image:
+        linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent),
+        linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent),
+        linear-gradient(180deg, transparent, #000 14%, #000 82%, transparent);
+    mask-composite: intersect;
 }
 
-.cons-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.25rem;
-    margin-top: 2.25rem;
+.cons-hero-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.lp-page-consulting .cons-hero-chain {
-    margin: 4.5rem 0 0;
-}
-
-@media (max-width: 768px) {
-    .lp-page-consulting .cons-hero-chain {
-        margin-top: 3rem;
+/* Phones get a taller box so the crop keeps the port in frame. */
+@media (max-width: 640px) {
+    .cons-hero-video {
+        aspect-ratio: 4 / 3;
+        margin-top: 1.5rem;
+        -webkit-mask-image:
+            linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+            linear-gradient(180deg, transparent, #000 10%, #000 86%, transparent);
+        mask-image:
+            linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+            linear-gradient(180deg, transparent, #000 10%, #000 86%, transparent);
     }
 }
 
-.cons-hero-chain figcaption {
-    margin-top: 1.25rem;
-    font-size: 0.85rem;
-    color: var(--lp-on-surface-muted);
+/* ── 2–4. Outcomes ── */
+.cons-outcomes-intro {
+    padding-bottom: 0;
 }
 
-/* ── 2. The diagnosis ── */
-.cons-failure-grid {
+.cons-outcomes-intro .cons-h2 {
+    margin-bottom: 0;
+}
+
+/* Text left, visual right on desktop; stacked on phones. The rule between
+   outcomes is dropped because the intro already opens the run. */
+.cons-outcome {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 3rem;
+    align-items: center;
+}
+
+.cons-outcomes-intro + .cons-outcome {
+    border-top: none;
+}
+
+@media (max-width: 900px) {
+    .cons-outcome {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2rem;
+    }
+}
+
+.cons-outcome > * {
+    min-width: 0;
+}
+
+/* The ten-stage chain needs the full measure to stay legible, so the audit
+   stacks text over diagram at every width. */
+.cons-outcome--wide {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.cons-outcome--wide .cons-outcome-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: end;
+}
+
+.cons-outcome--wide .cons-outcome-text > .lp-section-tag,
+.cons-outcome--wide .cons-outcome-text > .cons-h2 {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+    .cons-outcome--wide .cons-outcome-text {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.cons-outcome .cons-lede {
+    margin-bottom: 1.5rem;
+}
+
+.lp-page-consulting .cons-outcome-figure {
+    margin: 0;
+    min-width: 0;
+}
+
+.cons-points {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cons-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--lp-on-surface);
+}
+
+.cons-points svg {
+    flex: none;
+    margin-top: 0.2rem;
+    color: var(--lp-primary);
+}
+
+/* Role cards: the person on top, their agent underneath in the accent. */
+.cons-roles {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    list-style: none;
-    padding: 0;
+    gap: 0.75rem;
     margin: 0;
-    counter-reset: none;
-}
-
-@media (max-width: 860px) {
-    .cons-failure-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.cons-failure-card {
-    display: flex;
-    flex-direction: column;
-    padding: 1.75rem;
-    border: 1px solid var(--lp-outline-variant);
-    border-radius: 14px;
-    background: var(--lp-card);
-}
-
-.cons-failure-index {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--lp-primary);
-    letter-spacing: 0.08em;
-}
-
-.cons-failure-card h3 {
-    font-size: 1.1rem;
-    font-weight: 500;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-    margin: 0.75rem 0 0.75rem;
-    color: var(--lp-on-surface);
-}
-
-.cons-failure-card p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--lp-on-surface-variant);
-}
-
-/* Pinned to the bottom of the card so the four diagrams line up across the
-   grid even though the four bodies are different lengths. */
-.cons-failure-chain {
-    margin-top: auto;
-    padding-top: 1.75rem;
-}
-
-/* Three states in one line, so the mini diagrams are readable without a
-   caption on every card. */
-.cons-chain-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    margin: 1.5rem 0 0;
     padding: 0;
     list-style: none;
-    font-size: 0.8rem;
-    color: var(--lp-on-surface-muted);
-}
-
-.cons-chain-legend li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.cons-legend-swatch {
-    width: 22px;
-    height: 12px;
-    border-radius: 2px;
-    border: 1px solid var(--lp-outline-variant);
-}
-
-.cons-legend-swatch--absorbed {
-    background: color-mix(in srgb, var(--lp-on-surface-muted) 22%, transparent);
-    border-color: color-mix(in srgb, var(--lp-on-surface-muted) 45%, transparent);
-}
-
-.cons-legend-swatch--leak {
-    border-color: var(--lp-primary);
-    border-width: 1.5px;
-}
-
-.cons-closing {
-    max-width: 44rem;
-    margin: 2.5rem 0 0;
-    font-size: 1.05rem;
-    line-height: 1.65;
-    color: var(--lp-on-surface);
-}
-
-/* ── 3. The network ── */
-.cons-sector-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-@media (max-width: 1000px) {
-    .cons-sector-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 @media (max-width: 560px) {
-    .cons-sector-grid {
+    .cons-roles {
         grid-template-columns: 1fr;
     }
 }
 
-.cons-sector {
-    padding: 1.5rem 1.25rem;
+.cons-role {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.25rem;
     border: 1px solid var(--lp-outline-variant);
     border-radius: 14px;
-    background: var(--lp-surface-variant);
-    color: var(--lp-primary);
-}
-
-.cons-sector h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0.9rem 0 0.35rem;
-    color: var(--lp-on-surface);
-}
-
-.cons-sector-count {
-    display: block;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--lp-primary);
-    margin-bottom: 0.5rem;
-}
-
-.cons-sector p {
-    margin: 0.5rem 0 0;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--lp-on-surface-variant);
-}
-
-.cons-credibility {
-    max-width: 44rem;
-    margin: 2.5rem 0 0;
-    padding-left: 1.25rem;
-    border-left: 2px solid var(--lp-primary);
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--lp-on-surface-variant);
-}
-
-.cons-credibility strong {
-    color: var(--lp-on-surface);
-    font-weight: 500;
-}
-
-/* ── 4. How we work ── */
-/* Aligned to the same measure and gutter as the cons-* sections; the shared
-   process styles were written for a 1140px page. */
-.cons-how {
-    border-top: 1px solid var(--lp-outline);
-    padding: 5rem 0;
-}
-
-.cons-how .lp-process-inner {
-    max-width: var(--cons-max);
-    padding: 0 var(--cons-gutter);
-}
-
-@media (max-width: 768px) {
-    .cons-how {
-        padding: 3.25rem 0;
-    }
-}
-
-/* Build is the largest block on purpose: the diagnostic has to read as the
-   front of a build, not as the product. */
-.cons-process-track {
-    grid-template-columns: 1fr 1.4fr 1fr;
-}
-
-.cons-process-step--lead {
     background: var(--lp-card);
-    border-color: var(--lp-outline-variant);
 }
 
-@media (max-width: 860px) {
-    .cons-process-track {
-        grid-template-columns: 1fr;
-    }
+.cons-role-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--lp-on-surface);
+}
+
+.cons-role-agent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed var(--lp-outline-variant);
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--lp-on-surface-variant);
+}
+
+.cons-role-agent svg {
+    flex: none;
+    margin-top: 0.1rem;
+    color: var(--lp-primary);
 }
 
 /* ── 5. Proof ── */
@@ -395,34 +317,8 @@
     color: var(--lp-on-surface-variant);
 }
 
-.cons-mechanism {
-    max-width: 44rem;
-    margin: 0 0 3rem;
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--lp-on-surface-variant);
-}
-
-.cons-chain-compare {
-    display: grid;
-    gap: 2.5rem;
-    margin-bottom: 2rem;
-}
-
-.lp-page-consulting .cons-chain-compare figure {
-    margin: 0;
-}
-
-.cons-chain-compare figcaption {
-    margin-bottom: 1rem;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--lp-on-surface-muted);
-}
-
 .cons-quotes {
+    margin-top: 3rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -470,81 +366,60 @@
     background: var(--lp-surface);
 }
 
-/* ── 6. The sprint ── */
-.cons-sprint {
-    border-top: 1px solid var(--lp-outline);
-    text-align: left;
-    padding: 5rem 0;
+/* ── 6. How it starts ── */
+.cons-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    list-style: none;
 }
 
-@media (max-width: 768px) {
-    .cons-sprint {
-        padding: 3.25rem 0;
+@media (max-width: 860px) {
+    .cons-steps {
+        grid-template-columns: 1fr;
     }
 }
 
-.cons-sprint-inner {
-    max-width: var(--cons-max);
-    margin: 0 auto;
-    padding: 0 var(--cons-gutter);
+.cons-step {
+    padding: 1.5rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 14px;
 }
 
-.cons-sprint-card {
-    max-width: 44rem;
-    background: var(--lp-card);
-}
-
-.cons-sprint-card .lp-pricing-card-top,
-.cons-sprint-card .lp-pricing-card-bottom {
-    background: transparent;
-    padding: 2rem;
-}
-
-.cons-sprint-card .lp-pricing-price {
-    font-size: clamp(1.6rem, 4vw, 2.1rem);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-}
-
-.cons-sprint-card .lp-pricing-price span {
-    font-size: 0.95rem;
-    color: var(--lp-on-surface-variant);
-}
-
-/* The $180K figure sits in the same block as the $5,000 on purpose. The
-   asymmetry does the persuading; nothing else has to. */
-.cons-sprint-anchor {
-    margin: 0 0 1.5rem;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--lp-on-surface-variant);
-}
-
-.cons-sprint-subhead {
+.cons-step-num {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--lp-on-surface-muted);
-    margin: 0 0 1rem;
+    letter-spacing: 0.08em;
+    color: var(--lp-primary);
 }
 
-.cons-sprint-card .lp-pricing-list + .cons-sprint-subhead {
-    margin-top: 2rem;
+.cons-step h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0.6rem 0 0.5rem;
+    color: var(--lp-on-surface);
 }
 
-.cons-sprint-after {
+.cons-step p {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     color: var(--lp-on-surface-variant);
+}
+
+.cons-start-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* ── 7. Access ── */
 .cons-access {
     max-width: 44rem;
-    margin: 1.25rem 0 0;
+    margin: 2rem 0 0;
     font-size: 0.85rem;
     line-height: 1.6;
     color: var(--lp-on-surface-muted);
@@ -563,32 +438,91 @@
     color: var(--lp-on-surface);
 }
 
-/* ── 9. Operator door ── */
-.cons-operators {
+/* ── 8. Managed ops ──
+   Full-bleed and inverted against the page so it reads as a second offer,
+   not a sixth outcome. */
+.cons-managed {
+    width: 100%;
     background: var(--lp-surface-variant);
     border-top: 1px solid var(--lp-outline);
 }
 
-.cons-operators-inner {
+.cons-managed-inner {
     max-width: var(--cons-max);
     margin: 0 auto;
-    padding: 3rem var(--cons-gutter);
+    padding: 6rem var(--cons-gutter);
 }
 
-.cons-operators h2 {
-    font-size: 1rem;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    margin: 0 0 0.75rem;
+@media (max-width: 768px) {
+    .cons-managed-inner {
+        padding: 4rem var(--cons-gutter);
+    }
+}
+
+.cons-managed-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+}
+
+.cons-managed-roles li {
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--lp-outline-variant);
+    border-radius: 999px;
+    font-size: 0.9rem;
     color: var(--lp-on-surface);
 }
 
-.cons-operators p {
-    max-width: 44rem;
-    margin: 0 0 1.25rem;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--lp-on-surface-variant);
+/* ── Scroll reveals ──
+   Direct children fade up in order; the role cards and steps stagger inside
+   their grids. Everything is visible without JS under reduced motion, since
+   useReveal starts revealed there. */
+.cons-reveal > *,
+.cons-reveal .cons-role,
+.cons-reveal .cons-step {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.cons-reveal > :nth-child(2) { --i: 1; }
+.cons-reveal > :nth-child(3) { --i: 2; }
+.cons-reveal > :nth-child(4) { --i: 3; }
+.cons-reveal > :nth-child(5) { --i: 4; }
+.cons-reveal > :nth-child(6) { --i: 5; }
+
+.cons-reveal .cons-role:nth-child(1),
+.cons-reveal .cons-step:nth-child(1) { --i: 2; }
+.cons-reveal .cons-role:nth-child(2),
+.cons-reveal .cons-step:nth-child(2) { --i: 3; }
+.cons-reveal .cons-role:nth-child(3),
+.cons-reveal .cons-step:nth-child(3) { --i: 4; }
+.cons-reveal .cons-role:nth-child(4) { --i: 5; }
+
+.cons-reveal.is-revealed > *,
+.cons-reveal.is-revealed .cons-role,
+.cons-reveal.is-revealed .cons-step {
+    opacity: 1;
+    transform: none;
+}
+
+/* The metrics count up, so their width must not jitter as digits change. */
+.cons-metrics dt {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cons-reveal > *,
+    .cons-reveal .cons-role,
+    .cons-reveal .cons-step {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
 
 /* ── Footer ── */

@@ -1,0 +1,108 @@
+/* OrbitStory — captions and tagline around the waitlist orbit.
+ *
+ * Only opacity and transform animate. Durations come in as custom
+ * properties from the constants at the top of OrbitStory.tsx.
+ */
+
+/* ── Captions (shared by the pinned captions and the narrow slot) ── */
+.orbit-caption {
+    grid-area: 1 / 1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+        opacity var(--orbit-caption-out) ease-in,
+        transform var(--orbit-caption-out) ease-in;
+}
+
+.orbit-caption.is-active {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity var(--orbit-caption-in) ease-out,
+        transform var(--orbit-caption-in) ease-out;
+}
+
+.orbit-caption strong {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--lp-on-surface);
+}
+
+.orbit-caption span {
+    text-wrap: balance;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--lp-on-surface-variant);
+}
+
+/* ── Pinned captions: just outside the ring at their clock positions ──
+   Position, anchor and alignment are set inline from each step's angle. */
+.orbit-pin {
+    display: none;
+    position: absolute;
+    width: 220px;
+    z-index: 2;
+}
+
+.orbit-pin .orbit-caption {
+    align-items: inherit;
+}
+
+@media (min-width: 1024px) {
+    .orbit-pin {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* ── Narrow slot: one caption under the tagline ── */
+.orbit-slot {
+    display: grid;
+    width: 100%;
+    max-width: 22rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.orbit-slot .orbit-caption {
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .orbit-slot {
+        display: none;
+    }
+}
+
+/* ── Tagline ── */
+.orbit-tagline {
+    margin: 1.25rem 0 0;
+    max-width: 34rem;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.45;
+    color: var(--lp-on-surface-variant);
+    text-align: center;
+    text-wrap: balance;
+}
+
+/* ── Reduced motion: all four steps, stacked ── */
+.orbit-static {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--lp-on-surface-variant);
+}
+
+.orbit-static strong {
+    color: var(--lp-on-surface);
+    font-weight: 600;
+}

@@ -1,0 +1,240 @@
+/* /book and /book/thanks: the /hello panel look, two columns on desktop
+ * (details 40%, scheduler 60%), stacked on mobile with details first. */
+
+.bk-page {
+    min-height: 100dvh;
+    padding: clamp(16px, 2.2vw, 40px);
+    background: #fff;
+    color: #0f1b33;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.bk-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+    align-content: start;
+    min-height: calc(100dvh - 2 * clamp(16px, 2.2vw, 40px));
+    padding: clamp(32px, 4vw, 64px);
+    border-radius: clamp(40px, 3.6vw, 72px);
+    background:
+        radial-gradient(120% 70% at 50% 100%, rgba(255, 255, 255, 0.9), transparent 60%),
+        linear-gradient(180deg, #eceef1 0%, #f3f4f6 55%, #f7f7f8 100%);
+}
+
+/* ── Details column ─────────────────────────────────── */
+
+.bk-info {
+    padding-top: 8px;
+}
+
+.bk-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #5b6270;
+    text-decoration: none;
+}
+
+.bk-back svg {
+    width: 16px;
+    height: 16px;
+}
+
+.bk-back:hover {
+    color: #0f1b33;
+}
+
+.bk-back:focus-visible,
+.bk-status a:focus-visible {
+    outline: 2px solid #0f1b33;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.bk-title {
+    margin: clamp(28px, 4vw, 56px) 0 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(36px, 3.4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+}
+
+.bk-points {
+    display: grid;
+    gap: 16px;
+    margin: 32px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bk-points li {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 12px;
+    font-size: 17px;
+    line-height: 1.45;
+    color: #2b3445;
+}
+
+.bk-points svg {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: #0f1b33;
+}
+
+.bk-proof {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 40px;
+}
+
+.bk-flags {
+    display: flex;
+    flex: none;
+}
+
+/* Overlapped circle flags, each with a white ring. */
+.bk-flags img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #f3f4f6;
+}
+
+.bk-flags img + img {
+    margin-left: -8px;
+}
+
+.bk-proof p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #5b6270;
+}
+
+/* ── Scheduler column ───────────────────────────────── */
+
+.bk-scheduler {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow:
+        0 1px 2px rgba(15, 27, 51, 0.04),
+        0 16px 40px -16px rgba(15, 27, 51, 0.16);
+}
+
+/* Tall enough for the calendar and the day's time slots side by side,
+   so the iframe never needs its own scrollbar on desktop. */
+.bk-embed {
+    height: 720px;
+}
+
+.bk-status {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 24px;
+    font-size: 15px;
+    color: #7d838f;
+    text-align: center;
+}
+
+.bk-status:only-child {
+    position: static;
+    min-height: 480px;
+}
+
+.bk-status a {
+    color: #0f1b33;
+}
+
+/* ── Thanks ─────────────────────────────────────────── */
+
+.bk-panel--thanks {
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bk-panel--thanks .bk-title {
+    margin: 0;
+}
+
+.bk-thanks {
+    max-width: 46ch;
+    margin: 20px 0 0;
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.5;
+    color: #5b6270;
+}
+
+.bk-back--center {
+    margin-top: 32px;
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+
+@media (max-width: 899px) {
+    .bk-panel {
+        grid-template-columns: 1fr;
+    }
+
+    /* Calendly stacks calendar and times when narrow. */
+    .bk-embed {
+        height: 1000px;
+    }
+}
+
+@media (max-width: 639px) {
+    .bk-page {
+        padding: 8px;
+    }
+
+    .bk-panel {
+        gap: 32px;
+        padding: 24px 12px 12px;
+        border-radius: 28px;
+    }
+
+    .bk-info {
+        padding: 0 8px;
+    }
+
+    .bk-title {
+        margin-top: 24px;
+    }
+
+    .bk-points {
+        margin-top: 24px;
+    }
+
+    .bk-points li {
+        font-size: 16px;
+    }
+
+    .bk-proof {
+        margin-top: 28px;
+    }
+
+    .bk-scheduler {
+        border-radius: 20px;
+    }
+
+    .bk-status:only-child {
+        min-height: 320px;
+    }
+}

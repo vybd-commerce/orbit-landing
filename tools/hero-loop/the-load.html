@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>The Load</title>
+    <style>
+@font-face {
+            font-family: 'Plex Mono';
+            src: url(data:font/woff2;base64,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) format('woff2');
+            font-weight: 500;
+            font-style: normal;
+            font-display: block;
+        }
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <script>
+        'use strict';
+
+        /* ------------------------------------------------------------------
+         * The Load — 9s seamless hero loop for /consulting.
+         *
+         * The same chain, the same headcount, several times the throughput.
+         * Work arrives from the left; three constrictions back it up into
+         * amber columns while everything downstream starves; the context
+         * layer engages; the constrictions open; the backlog drains; the
+         * channel carries several times the volume AT THE SAME WIDTH. Then
+         * more work arrives and it strains again, landing on frame 0.
+         *
+         * Deterministic by construction: every frame is a pure function of t.
+         * No requestAnimationFrame, no CSS animation, no accumulated state,
+         * no per-frame RNG. __renderFrame(t) may be called in any order.
+         *
+         * The accumulation physics are NOT a free-running queue simulation —
+         * one would never land back on frame 0 to 1e-9. See "Counters".
+         * ------------------------------------------------------------------ */
+
+        /* ── Palette ──────────────────────────────────────────────────────
+         * Live site tokens from src/pages/LandingPage.css (.lp-theme-dark),
+         * resolved exactly as one-order.html resolves them: the outline
+         * tokens are alpha values authored for small borders beside brighter
+         * content, so they are pre-composited and lifted to the luminance a
+         * frame of flat hairlines needs.
+         */
+        const C = {
+            ground: '#0a0a0a',   // --lp-surface
+            line: '#2e2e2e',   // --lp-outline,         lifted
+            lineHi: '#5c5c5c',   // --lp-outline-variant, lifted
+            muted: '#6e7480',   // --lp-on-surface-muted
+            flow: '#1fc8a3',   // --lp-primary            — work that is moving
+            held: '#ef7a4e',   // --lp-comparison-hiring  — work that has stopped
+            human: '#ef7a4e',   // the same amber: a decision that stays human
+        };
+
+        /* ── Master geometry ──────────────────────────────────────────────
+         * Authored in a 2560x1440 space and multiplied by S. Each output size
+         * renders natively at this scale rather than being downscaled, so
+         * hairlines stay crisp.
+         */
+        const MW = 2560, MH = 1440;
+
+        const DURATION = 9.0;
+        const FPS = 60;
+
+        /* The integration grid. Every travel time below is an exact integer
+         * multiple of DT, which is what lets the counters be shifted by whole
+         * array indices instead of interpolated — the difference between a
+         * loop that closes to 1e-9 and one that nearly does. */
+        const DT = 1 / 600;
+        const K = Math.round(DURATION / DT);          // 5400 cells
+
+        /* ── The chain ────────────────────────────────────────────────────
+         * A channel — two parallel hairlines defining a lane — not a line.
+         * Five segments. The lane height is constant at every x and every t;
+         * the whole concept dies if the fix looks like a bigger pipe.
+         */
+        const X0 = 120, X1 = 2440;
+        const SPAN = X1 - X0, SEG = SPAN / 5;         // 464
+        const LANE = 118;                              // the brief's 48 was authored for a
+        const YC = 1080;                              // smaller canvas; see README
+        const LANE_T = YC - LANE / 2, LANE_B = YC + LANE / 2;
+
+        const SEGMENTS = ['SOURCING', 'MANUFACTURING', 'WAREHOUSING', 'DISTRIBUTION', 'TRANSPORT'];
+
+        /* Constrictions sit at Sourcing/Manufacturing, Warehousing/Distribution
+         * and Distribution/Transport. */
+        const GATE_AT = [1, 3, 4];
+        const GATEX = GATE_AT.map(i => X0 + i * SEG);
+
+        /* Work units travel at a constant rate, everywhere, always: freight
+         * moves mechanically. T_SEG is authored rather than V so that every
+         * travel time lands on the integration grid. */
+        const T_SEG = 0.6;
+        const V = SEG / T_SEG;                        // px per second
+
+        /* The four spans a unit crosses, each between two stops. */
+        const SPANS = [
+            { x: X0, len: SEG },                   // entry -> gate 1
+            { x: GATEX[0], len: SEG * 2 },               // gate 1 -> gate 2
+            { x: GATEX[1], len: SEG },                   // gate 2 -> gate 3
+            { x: GATEX[2], len: X1 - GATEX[2] },         // gate 3 -> exit
+        ];
+        const SPAN_T = SPANS.map(s => s.len / V);      // 0.6, 1.2, 0.6, 0.6
+
+        /* Four tracks inside the lane. A unit keeps its track for the whole
+         * chain, so the channel reads as lanes of freight rather than as a
+         * cloud of particles. M must be divisible by TRACKS or the track a
+         * unit sits in would change across the wrap — asserted below.
+         *
+         * The track count is not a styling choice. Units move V/FPS per frame
+         * and sit 3*V/rate apart within a lane, so the per-frame step as a
+         * fraction of the lane spacing is rate / (TRACKS * FPS) — independent
+         * of V. Past 0.5 a uniform stream is ambiguous and can read as
+         * drifting backwards, which for a piece whose entire subject is
+         * throughput would be fatal. Four tracks hold the payoff beat at 0.40
+         * and the drain surge under 0.5. */
+        const TRACKS = 4;
+        const TRACK_PITCH = 26;
+        const UW = 18, UH = 10;                       // one unit of work
+
+        /* ── The context layer ────────────────────────────────────────────── */
+        const Y_LAYER = 520;
+        const TICK_DORMANT = 110;                      // descent while quiet
+        const TICK_LANDED = LANE_T - 26 - Y_LAYER;    // descent when engaged
+        const RING_R = 11;
+
+        /* ── Easing ───────────────────────────────────────────────────────
+         * smoother() is the quintic: zero first AND second derivative at both
+         * ends. Used for everything that has to meet itself at the wrap.
+         */
+        const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+        const smoother = t => { t = clamp01(t); return t * t * t * (t * (t * 6 - 15) + 10); };
+        const easeOut = t => 1 - Math.pow(1 - clamp01(t), 3);
+        const lerp = (a, b, t) => a + (b - a) * t;
+
+        /* ── Arrival rate ─────────────────────────────────────────────────
+         * Units per second entering Sourcing. Steady through the load build —
+         * the backlog is not caused by a spike, it is caused by the chain not
+         * keeping up — then climbing as the opened chain takes more.
+         *
+         * It has to come back to A_LO by t=9: frame 0 shows work arriving at
+         * base rate, and the brief's own requirement that 9.000 converge on
+         * frame 0 outranks its "arrival rate continues climbing". Both value
+         * and slope match at the wrap, so the entry is not seen to change gear.
+         */
+        const A_LO = 34, A_HI = 96;
+        const UP0 = 4.2, UP1 = 5.4, DOWN0 = 7.8;
+
+        function arrivalRate(t) {
+            if (t <= UP0) return A_LO;
+            if (t < UP1) return lerp(A_LO, A_HI, smoother((t - UP0) / (UP1 - UP0)));
+            if (t <= DOWN0) return A_HI;
+            return lerp(A_HI, A_LO, smoother((t - DOWN0) / (DURATION - DOWN0)));
+        }
+
+        /* ── Queues ───────────────────────────────────────────────────────
+         * Q_k(t) is AUTHORED, and the gate's throughput is derived from it —
+         * not the other way round. Authoring the capacity and integrating a
+         * min(capacity, available) would put a kink in the counters and cost
+         * the exact loop closure for nothing.
+         *
+         * Every shape below returns Q to q0 at t=9 with the same slope it
+         * leaves t=0 carrying, so the queue closes in value AND in rate. That
+         * slope is deliberately not zero: a queue standing still at frame 0
+         * means every gate is passing everything it receives, and the poster
+         * would show a chain that is dense end to end instead of one that is
+         * already starving its far end. Growth and rebuild are therefore
+         * Hermite cubics with matched end slopes, not smootherstep.
+         *
+         * The heights fall left to right on purpose. A gate can only pile up
+         * what the gate above it lets through, so a tall column at Sourcing
+         * forces short ones downstream — which is the same fact as Transport
+         * running dry, seen from the other end.
+         */
+        const GATES = [
+            { qmax: 48, open: 4.40, drain: 1.6, rebuild: 7.80, wrap: 2.0 },
+            { qmax: 34, open: 4.60, drain: 1.6, rebuild: 7.95, wrap: 1.1 },
+            { qmax: 26, open: 4.80, drain: 1.6, rebuild: 8.10, wrap: 0.6 },
+        ];
+        for (const g of GATES) g.q0 = 0.4 * g.qmax;   // frame 0: already struggling
+
+        /* g.wrap is the slope the queue carries through the wrap, as a multiple
+         * of the growth phase average. It is what makes frame 0 a chain that is
+         * already starving its far end rather than one standing still: every
+         * gate is holding work back at t=0, so less reaches each segment than
+         * the one before it. The three values fall left to right because the
+         * throttles compound — a gate can only hold back what reached it, and
+         * asking all three for the same bite drives the third one negative,
+         * which __assert() catches as a counter running backwards.
+         */
+
+        function queueAt(g, t) {
+            if (t < g.open) {
+                // Hermite: value 0 -> 1, slope g.wrap -> 0.
+                const u = t / g.open;
+                const grow = (u * u * u - 2 * u * u + u) * g.wrap + (-2 * u * u * u + 3 * u * u);
+                return g.q0 + (g.qmax - g.q0) * grow;
+            }
+            if (t < g.open + g.drain) return g.qmax * (1 - smoother((t - g.open) / g.drain));
+            if (t < g.rebuild) return 0;
+            // Hermite: value 0 -> 1, slope 0 -> whatever meets the growth phase.
+            const tail = DURATION - g.rebuild;
+            const u = (t - g.rebuild) / tail;
+            const m = (g.qmax - g.q0) * g.wrap * tail / (g.open * g.q0);
+            return g.q0 * ((-2 * u * u * u + 3 * u * u) + (u * u * u - u * u) * m);
+        }
+
+        /* ── Counters ─────────────────────────────────────────────────────
+         * The mechanism the whole loop rests on.
+         *
+         * N_j(t) is the cumulative count of units that have passed the start
+         * of span j by time t. Each one satisfies N_j(t + 9) = N_j(t) + M for
+         * one integer M, as arithmetic rather than as a modulo:
+         *
+         *   N_0 = A                                  (arrivals)
+         *   N_1 = A(t - 0.6)   - Q_1(t) + Q_1(0)     (past gate 1)
+         *   N_2 = N_1(t - 1.2) - Q_2(t) + Q_2(0)
+         *   N_3 = N_2(t - 0.6) - Q_3(t) + Q_3(0)
+         *
+         * A shift is a whole number of grid cells and Q is periodic, so every
+         * N gains exactly M across the period, to the float.
+         *
+         * Unit n leaves the start of span j at tau_j(n) = N_j^-1(n), and
+         * tau_j(n + M) = tau_j(n) + 9 by construction. So unit n at time t is
+         * at exactly the position unit n+M occupies at t+9. The renderer
+         * draws positions, not identities — which is why frame 0 and frame 9
+         * are pixel-identical rather than nearly identical.
+         */
+        const cum = (rateFn) => {
+            // Trapezoid. The array IS the definition of the counter, so the
+            // quadrature error is not an error — everything downstream reads
+            // the same table.
+            const a = new Float64Array(K + 1);
+            let prev = rateFn(0);
+            for (let i = 1; i <= K; i++) {
+                const cur = rateFn(i * DT);
+                a[i] = a[i - 1] + (prev + cur) * 0.5 * DT;
+                prev = cur;
+            }
+            return a;
+        };
+
+        const ARRIVALS_RAW = cum(arrivalRate);
+        /* M must be a whole number of units, and divisible by TRACKS so a unit
+         * lands in the same track on the other side of the wrap. */
+        const M = TRACKS * Math.round(ARRIVALS_RAW[K] / TRACKS);
+        const A_SCALE = M / ARRIVALS_RAW[K];
+
+        const N = [];
+        {
+            const a = new Float64Array(K + 1);
+            for (let i = 0; i <= K; i++) a[i] = ARRIVALS_RAW[i] * A_SCALE;
+            N.push(a);
+        }
+
+        /* Shift a counter back by whole grid cells, carrying the period. */
+        function shift(arr, cells) {
+            const out = new Float64Array(K + 1);
+            for (let i = 0; i <= K; i++) {
+                const j = i - cells;
+                out[i] = j >= 0 ? arr[j] : arr[j + K] - M;
+            }
+            return out;
+        }
+
+        for (let k = 0; k < 3; k++) {
+            const inflow = shift(N[k], Math.round(SPAN_T[k] / DT));
+            const g = GATES[k];
+            const q0 = queueAt(g, 0);
+            const out = new Float64Array(K + 1);
+            for (let i = 0; i <= K; i++) out[i] = inflow[i] - queueAt(g, i * DT) + q0;
+            N.push(out);
+        }
+
+        /* Sample a counter at any t in [0, 9] — linear inside the cell it
+         * was integrated over. */
+        function counterAt(j, t) {
+            const x = t / DT;
+            const i = Math.min(K - 1, Math.max(0, Math.floor(x)));
+            const arr = N[j];
+            return arr[i] + (arr[i + 1] - arr[i]) * (x - i);
+        }
+
+        /* tau tables: one period each, extended by tau(n + M) = tau(n) + 9. */
+        const BASE = N.map(arr => Math.ceil(arr[0]));
+        const TAU = N.map((arr, j) => {
+            const tab = new Float64Array(M);
+            let i = 0;
+            for (let m = 0; m < M; m++) {
+                const target = BASE[j] + m;
+                while (i < K - 1 && arr[i + 1] < target) i++;
+                const d = arr[i + 1] - arr[i];
+                tab[m] = (i + (d > 0 ? (target - arr[i]) / d : 0)) * DT;
+            }
+            return tab;
+        });
+
+        /* ── Beats ────────────────────────────────────────────────────────
+         * The constriction opens 0.5s ease-out, staggered left to right, then
+         * pinches again under the new volume. Value and slope are flat at both
+         * ends of the period.
+         */
+        const PINCH_MIN = 0.30;                       // pinched lane gap, as a fraction
+        function pinchAt(k, t) {
+            const g = GATES[k];
+            if (t < g.open) return 1;
+            if (t < g.open + 0.5) return 1 - easeOut((t - g.open) / 0.5);
+            if (t < g.rebuild) return 0;
+            return smoother((t - g.rebuild) / 0.8);
+        }
+
+        /* The layer engages as a plain colour state change over 0.25s — no
+         * flash, no burst, no expansion. It stands down with the re-pinch,
+         * which is what lets the piece loop at all. */
+        const ENGAGE = 3.40, STANDDOWN = 7.80;
+        function layerAt(t) {
+            if (t < ENGAGE) return 0;
+            if (t < ENGAGE + 0.25) return smoother((t - ENGAGE) / 0.25);
+            if (t < STANDDOWN) return 1;
+            if (t < STANDDOWN + 0.25) return 1 - smoother((t - STANDDOWN) / 0.25);
+            return 0;
+        }
+
+        /* Each tick completes its descent 0.3s after the one to its left. */
+        function tickAt(k, t) {
+            const down = ENGAGE + 0.3 * k;
+            if (t < down) return 0;
+            if (t < down + 0.35) return easeOut((t - down) / 0.35);
+            const up = STANDDOWN + 0.15 * k;
+            if (t < up) return 1;
+            if (t < up + 0.3) return 1 - smoother((t - up) / 0.3);
+            return 0;
+        }
+
+        /* How far the three tracks converge at x. A pinched gate passes a
+         * narrower stream, so the freight threads it rather than driving
+         * through the jaws — the same volume, through a smaller hole. */
+        const FUNNEL = 130;
+        function funnelAt(x, pinch) {
+            let f = 1;
+            for (let k = 0; k < GATEX.length; k++) {
+                const d = Math.abs(x - GATEX[k]);
+                if (d >= FUNNEL) continue;
+                const gap = PINCH_MIN + (1 - PINCH_MIN) * (1 - pinch[k]);
+                f = Math.min(f, lerp(1, gap, smoother(1 - d / FUNNEL)));
+            }
+            return f;
+        }
+
+        /* ── State ────────────────────────────────────────────────────────
+         * A complete frame as plain data. __renderFrame draws this and
+         * nothing else, so comparing two states compares two frames.
+         */
+        function computeState(t) {
+            const pinch = GATES.map((_, k) => pinchAt(k, t));
+            const units = [];
+            for (let j = 0; j < SPANS.length; j++) {
+                const s = SPANS[j], tab = TAU[j], base = BASE[j];
+                const top = Math.floor(counterAt(j, t));
+                for (let n = top; ; n--) {
+                    const k = Math.floor((n - base) / M);
+                    // Subtract the period from t rather than adding it to tau:
+                    // (t - 9k) - tau is exactly the value the previous period
+                    // computed, so positions repeat to the bit.
+                    const dx = V * ((t - DURATION * k) - tab[n - base - k * M]);
+                    if (dx > s.len) break;
+                    if (dx >= 0) {
+                        const x = s.x + dx;
+                        units.push({ x, track: ((n % TRACKS) + TRACKS) % TRACKS, funnel: funnelAt(x, pinch) });
+                    }
+                }
+            }
+            return {
+                t,
+                units,
+                q: GATES.map(g => queueAt(g, t)),
+                pinch,
+                tick: GATES.map((_, k) => tickAt(k, t)),
+                layer: layerAt(t),
+            };
+        }
+
+        /* ── Canvas ───────────────────────────────────────────────────────── */
+        const cv = document.getElementById('c');
+        const ctx = cv.getContext('2d', { alpha: false });
+        let S = 1;
+
+        function setSize(w, h) {
+            cv.width = w; cv.height = h;
+            cv.style.width = w + 'px'; cv.style.height = h + 'px';
+            S = w / MW;
+        }
+
+        const px = v => v * S;
+        const hx = v => Math.round(v * S) + 0.5;      // orthographic: snap to a crisp hairline
+
+        function stroke(color, width) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width || 1;
+            ctx.stroke();
+        }
+
+        function line(x1, y1, x2, y2, color, w) {
+            ctx.beginPath();
+            if (Math.abs(x1 - x2) < 0.01 || Math.abs(y1 - y2) < 0.01) {
+                ctx.moveTo(hx(x1), hx(y1)); ctx.lineTo(hx(x2), hx(y2));
+            } else {
+                ctx.moveTo(px(x1), px(y1)); ctx.lineTo(px(x2), px(y2));
+            }
+            stroke(color, w);
+        }
+
+        function fillRect(x, y, w, h, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(Math.round(x * S), Math.round(y * S), Math.max(1, Math.round(w * S)), Math.max(1, Math.round(h * S)));
+        }
+
+        function mix(a, b, t) {
+            const pa = [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16)];
+            const pb = [parseInt(b.slice(1, 3), 16), parseInt(b.slice(3, 5), 16), parseInt(b.slice(5, 7), 16)];
+            const c = pa.map((v, i) => Math.round(lerp(v, pb[i], clamp01(t))));
+            return `rgb(${c[0]},${c[1]},${c[2]})`;
+        }
+
+        /* The lane walls. A function of x and t that ignores both — deliberately,
+         * so __assert() can prove it. */
+        function laneWalls(_x, _t) { return [LANE_T, LANE_B]; }
+
+        const trackY = (i, f) => YC + (i - (TRACKS - 1) / 2) * TRACK_PITCH * f - UH / 2;
+
+        /* ── Queue column ─────────────────────────────────────────────────
+         * Two units wide, stacked above the channel just upstream of the gate
+         * so the layer's tick has a clear run down to the constriction. The
+         * top cell carries the fractional part as alpha — a column that grew
+         * in whole units would stair-step.
+         */
+        const COL_COLS = 2, COL_GAP = 7, COL_PITCH = UH + 5;
+        const COL_W = COL_COLS * UW + (COL_COLS - 1) * COL_GAP;
+
+        function drawColumn(gx, q) {
+            const x0 = gx - 22 - COL_W;
+            const whole = Math.floor(q), frac = q - whole;
+            for (let i = 0; i < whole + (frac > 0.01 ? 1 : 0); i++) {
+                const row = Math.floor(i / COL_COLS), col = i % COL_COLS;
+                if (i === whole) ctx.globalAlpha = frac;
+                fillRect(x0 + col * (UW + COL_GAP), LANE_T - 6 - row * COL_PITCH - UH, UW, UH, C.held);
+                ctx.globalAlpha = 1;
+            }
+        }
+
+        /* ── The constriction ─────────────────────────────────────────────
+         * Jaws that protrude INTO the lane. The walls themselves never move:
+         * same width, more through it.
+         */
+        const JAW_W = 60;
+        function drawJaws(gx, p, color) {
+            const gap = LANE * (PINCH_MIN + (1 - PINCH_MIN) * (1 - p));
+            const d = (LANE - gap) / 2;
+            if (d < 0.5) return;
+            for (const sign of [1, -1]) {
+                const base = sign > 0 ? LANE_T : LANE_B;
+                ctx.beginPath();
+                ctx.moveTo(px(gx - JAW_W), px(base));
+                ctx.lineTo(px(gx), px(base + sign * d));
+                ctx.lineTo(px(gx + JAW_W), px(base));
+                stroke(color, 1);
+            }
+        }
+
+        const LABEL_SIZE = 24;
+
+        function renderFrame(t) {
+            const st = computeState(t);
+
+            ctx.fillStyle = C.ground;
+            ctx.fillRect(0, 0, cv.width, cv.height);
+            ctx.lineCap = 'butt';
+            ctx.lineJoin = 'miter';
+
+            const hot = mix(C.line, C.lineHi, st.layer);
+
+            // The context layer: one hairline, three ticks. Present from frame
+            // 0 so it is never seen to appear from nowhere.
+            line(X0, Y_LAYER, X1, Y_LAYER, hot, 1);
+            for (let k = 0; k < GATEX.length; k++) {
+                const end = Y_LAYER + lerp(TICK_DORMANT, TICK_LANDED, st.tick[k]);
+                line(GATEX[k], Y_LAYER, GATEX[k], end, hot, 1);
+            }
+
+            // The channel. Two walls, constant at every x and every t.
+            const [wt, wb] = laneWalls(X0, t);
+            line(X0, wt, X1, wt, C.line, 1);
+            line(X0, wb, X1, wb, C.line, 1);
+            line(X0, wt, X0, wb, C.line, 1);
+            line(X1, wt, X1, wb, C.line, 1);
+            for (let i = 1; i < 5; i++) {
+                const x = X0 + i * SEG;
+                line(x, wt, x, wt + 14, C.line, 1);
+                line(x, wb - 14, x, wb, C.line, 1);
+            }
+
+            for (let k = 0; k < GATEX.length; k++) drawJaws(GATEX[k], st.pinch[k], C.line);
+
+            // Work in the channel. Constant rate, shared by everything moving.
+            for (const u of st.units) fillRect(u.x - UW / 2, trackY(u.track, u.funnel), UW, UH, C.flow);
+
+            // Work that has stopped.
+            for (let k = 0; k < GATEX.length; k++) drawColumn(GATEX[k], st.q[k]);
+
+            // The decisions that stayed human. Present in every frame, dormant
+            // and lit alike — they never change state.
+            for (const gx of GATEX) {
+                ctx.beginPath();
+                ctx.arc(px(gx), px(Y_LAYER - 24), px(RING_R), 0, Math.PI * 2);
+                stroke(C.human, 2);
+            }
+
+            ctx.font = `500 ${px(LABEL_SIZE)}px "Plex Mono", monospace`;
+            ctx.letterSpacing = `${px(LABEL_SIZE * 0.12)}px`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillStyle = C.muted;
+            for (let i = 0; i < SEGMENTS.length; i++) {
+                ctx.fillText(SEGMENTS[i], px(X0 + (i + 0.5) * SEG), px(LANE_B + 30));
+            }
+        }
+
+        /* ── Self-assertions ──────────────────────────────────────────────
+         * The checks the brief asks for that render.mjs's generic gates
+         * cannot express. render.mjs runs this as a gate and prints info.
+         */
+        function assertAll() {
+            const fail = [], info = [];
+
+            if (M % TRACKS !== 0) fail.push(`M=${M} is not divisible by TRACKS=${TRACKS} — a unit would change track across the wrap`);
+
+            // The channel must never widen. Not a formality: it is the whole
+            // argument, and it fails loudly the day the walls become a
+            // function of anything.
+            let wallBad = 0;
+            for (let t = 0; t <= DURATION; t += 0.05) {
+                for (let x = X0; x <= X1; x += 20) {
+                    const [a, b] = laneWalls(x, t);
+                    if (a !== LANE_T || b !== LANE_B) wallBad++;
+                }
+            }
+            if (wallBad) fail.push(`the lane changes height at ${wallBad} sampled (x, t) — the channel must never widen`);
+
+            for (let k = 0; k < GATES.length; k++) {
+                const g = GATES[k];
+                // Queue closure and non-negativity.
+                if (queueAt(g, 0) !== queueAt(g, DURATION)) fail.push(`gate ${k + 1}: Q(0)=${queueAt(g, 0)} but Q(9)=${queueAt(g, DURATION)}`);
+                let qmin = Infinity;
+                for (let t = 0; t <= DURATION; t += 0.002) qmin = Math.min(qmin, queueAt(g, t));
+                if (qmin < -1e-9) fail.push(`gate ${k + 1}: queue goes negative (${qmin.toFixed(3)})`);
+            }
+
+            // Every counter must gain exactly M and never run backwards — a
+            // counter that decreases is a gate passing negative work.
+            for (let j = 0; j < N.length; j++) {
+                const arr = N[j];
+                const gain = arr[K] - arr[0];
+                if (Math.abs(gain - M) > 1e-9) fail.push(`counter ${j} gains ${gain} across the period, not ${M}`);
+                let worst = 0, at = 0;
+                for (let i = 1; i <= K; i++) { const d = arr[i] - arr[i - 1]; if (d < worst) { worst = d; at = i * DT; } }
+                if (worst < -1e-12) fail.push(`counter ${j} runs backwards at t=${at.toFixed(3)} (${(worst / DT).toFixed(2)} units/s)`);
+            }
+
+            // The payoff. If the density difference does not read, nothing else
+            // in the piece matters.
+            const loaded = computeState(3.2), resolved = computeState(6.8);
+            const ratio = resolved.units.length / loaded.units.length;
+            info.push(`units in the channel — ${loaded.units.length} at t=3.2, ${resolved.units.length} at t=6.8 (${ratio.toFixed(1)}x)`);
+            info.push(`held at t=3.2 — ${loaded.q.map(q => Math.round(q)).join(' / ')}   at t=6.8 — ${resolved.q.map(q => Math.round(q)).join(' / ')}`);
+            info.push(`M=${M} units per loop, peak ${Math.max(...[5.8, 6.2, 6.8, 7.2, 7.8].map(t => computeState(t).units.length))} in the channel`);
+            if (!(ratio >= 3.5)) fail.push(`the channel carries only ${ratio.toFixed(2)}x more at t=6.8 than at t=3.2 — the payoff will not read`);
+
+            return { fail, info };
+        }
+
+        /* ── Exposed surface ──────────────────────────────────────────────── */
+        setSize(MW, MH);
+
+        window.__DURATION = DURATION;
+        window.__FPS = FPS;
+        window.__setSize = setSize;
+        window.__renderFrame = renderFrame;
+        window.__computeState = computeState;
+        window.__assert = assertAll;
+        window.__exportWebp = (q) => cv.toDataURL('image/webp', q === undefined ? 0.92 : q);
+        window.__ready = document.fonts.load(`500 20px "Plex Mono"`).then(() => document.fonts.ready);
+
+        renderFrame(0);
+    </script>
+</body>
+
+</html>

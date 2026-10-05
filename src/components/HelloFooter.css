@@ -1,0 +1,268 @@
+/* HelloFooter: /hello's dark footer band.
+ *
+ * White, no box: it sits straight on the page like the sections above.
+ * Columns → orbiting wordmark → tagline and legal row. The orbit is the main
+ * site footer's (thin ring with a planet, thick half-ring rocking), rebuilt
+ * here on one size variable (--o, the ring diameter) so it scales with the
+ * band instead of the fixed 80rem the landing page uses.
+ * Contrast on #fff: navy ≈ 17:1, #5b6270 ≈ 6.2:1, #6b7280 ≈ 4.8:1.
+ */
+
+.hf-band {
+    --hf-ink: #0f1b33;
+    --hf-muted: #5b6270;
+    --hf-dim: #6b7280;
+    --hf-ring: rgba(15, 27, 51, 0.14);
+    --hf-planet: #1ab394;
+    --o: min(1120px, 82vw);
+
+    margin: clamp(40px, 5vw, 80px) 0 0;
+    padding: 0 clamp(4px, 2.5vw, 32px);
+    background: #fff;
+    color: var(--hf-ink);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* ── Columns ────────────────────────────────────────── */
+
+.hf-cols {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.6fr);
+    gap: 40px 32px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.hf-head {
+    margin: 0 0 18px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--hf-dim);
+}
+
+.hf-head--gap {
+    margin-top: 40px;
+}
+
+.hf-col ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.hf-col a,
+.hf-text {
+    font-size: 16px;
+    line-height: 1.35;
+    color: var(--hf-ink);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.hf-col a:hover,
+.hf-legal a:hover,
+.hf-legal-btn:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.hf-note {
+    margin: 20px 0 0;
+    max-width: 52ch;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--hf-dim);
+}
+
+/* ── Orbit wordmark ─────────────────────────────────── */
+
+.hf-brand {
+    display: flex;
+    justify-content: center;
+    /* The ring's top sits inside the orbit box; pull it up so the arc
+       starts just under the columns. */
+    margin-top: calc(var(--o) * -0.03);
+}
+
+.hf-orbit {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: var(--o);
+    height: calc(var(--o) * 0.5625);
+    overflow: hidden;
+}
+
+.hf-ring {
+    position: absolute;
+    border-style: solid;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.hf-ring--thin {
+    top: calc(var(--o) * 0.0625);
+    left: 0;
+    width: var(--o);
+    height: var(--o);
+    border-width: 1px;
+    border-color: var(--hf-ring);
+    animation: hf-orbit 20s linear infinite;
+}
+
+.hf-ring--thick {
+    top: calc(var(--o) * 0.075);
+    left: calc(var(--o) * 0.0125);
+    width: calc(var(--o) * 0.975);
+    height: calc(var(--o) * 0.975);
+    border-width: 2px;
+    border-color: var(--hf-ink) transparent;
+    opacity: 0.25;
+    transform: rotate(-45deg);
+    animation: hf-rock 15s ease-in-out infinite alternate;
+}
+
+.hf-planet {
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--hf-ink);
+    border-radius: 50%;
+    background: var(--hf-planet);
+    transform: translate(-50%, -50%);
+}
+
+.hf-word {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.18em; /* room for the descender of "y" */
+    font-size: calc(var(--o) * 0.27);
+    font-weight: 700;
+    line-height: 0.7;
+    letter-spacing: -0.07em;
+    color: var(--hf-ink);
+    user-select: none;
+}
+
+@keyframes hf-orbit {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes hf-rock {
+    from { transform: rotate(-45deg); }
+    to   { transform: rotate(-135deg); }
+}
+
+/* ── Bottom row ─────────────────────────────────────── */
+
+.hf-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 40px;
+    flex-wrap: wrap;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(15, 27, 51, 0.08);
+}
+
+.hf-tagline p {
+    margin: 0;
+}
+
+.hf-tagline-main {
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.hf-tagline-sub {
+    margin-top: 8px !important;
+    font-size: 14px;
+    color: var(--hf-muted);
+}
+
+.hf-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+}
+
+.hf-legal a,
+.hf-legal-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    color: var(--hf-muted);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hf-band a:focus-visible,
+.hf-legal-btn:focus-visible {
+    outline: 2px solid var(--hf-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+    .hf-cols {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hf-col--wide {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 639px) {
+    .hf-band {
+        --o: calc(100vw - 48px);
+    }
+
+    .hf-brand {
+        margin-top: 16px;
+        margin-top: 40px;
+        padding: 0 8px 16px;
+    }
+
+    .hf-cols {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 36px 20px;
+    }
+
+    .hf-col--wide {
+        grid-column: 1 / -1;
+    }
+
+    .hf-col a,
+    .hf-text {
+        font-size: 15px;
+    }
+
+    .hf-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hf-ring {
+        animation: none;
+    }
+}

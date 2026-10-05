@@ -1,0 +1,152 @@
+/* /hello page shell: the hero sits inside one large rounded panel with the
+ * Vybd mark on the left and a Menu pill on the right. */
+
+/* Same Satoshi file as /waitlist, used here for the wordmark only. */
+@font-face {
+    font-family: "Satoshi";
+    src: url("/fonts/Satoshi-Variable.woff2") format("woff2");
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+.hello-page {
+    min-height: 100dvh;
+    padding: clamp(16px, 2.2vw, 40px);
+    /* clip, not hidden: hidden would make this a scroll container and break
+       the statement section's sticky pin. */
+    overflow-x: clip;
+    background: #fff;
+}
+
+.hello-panel {
+    position: relative;
+    min-height: calc(100dvh - 2 * clamp(16px, 2.2vw, 40px));
+    margin: 0 auto;
+    border-radius: clamp(40px, 3.6vw, 72px);
+    background:
+        radial-gradient(120% 70% at 50% 100%, rgba(255, 255, 255, 0.9), transparent 60%),
+        linear-gradient(180deg, #eceef1 0%, #f3f4f6 55%, #f7f7f8 100%);
+    overflow: hidden;
+}
+
+.hello-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: clamp(28px, 2.8vw, 48px) clamp(32px, 3.4vw, 64px) 0;
+}
+
+.hello-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #0f1b33;
+    text-decoration: none;
+}
+
+.hello-brand svg {
+    width: 34px;
+    height: 34px;
+}
+
+.hello-brand span {
+    font-family: "Satoshi", "Inter", system-ui, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    /* Optical nudge: the wordmark's x-height sits low beside the mark. */
+    transform: translateY(-1px);
+}
+
+.hello-menu {
+    height: 44px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 999px;
+    background: #0f1b33;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.hello-menu:hover {
+    background: #1b2c4f;
+}
+
+.hello-menu:focus-visible {
+    outline: 3px solid #0f1b33;
+    outline-offset: 3px;
+}
+
+/* The hero's own top padding was sized for a bare page; inside the panel
+   the header already provides the breathing room. */
+.hello-panel .h2-hero {
+    padding-top: clamp(40px, 5vw, 72px);
+}
+
+/* Tablet and up: the header floats over the panel's top band and the hero
+   fills the panel with equal padding above and below, so the headline,
+   card and controls sit centred on the screen. */
+@media (min-width: 640px) {
+    .hello-panel {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hello-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+    }
+
+    .hello-panel .h2-hero {
+        flex: 1;
+        justify-content: center;
+        padding-top: clamp(112px, 9vw, 140px);
+        padding-bottom: clamp(112px, 9vw, 140px);
+    }
+}
+
+@media (max-width: 639px) {
+    .hello-page {
+        padding: 8px;
+    }
+
+    .hello-panel {
+        min-height: calc(100dvh - 16px);
+        border-radius: 28px;
+    }
+
+    .hello-header {
+        padding: 20px 16px 0 20px;
+    }
+
+    .hello-brand svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .hello-brand span {
+        font-size: 22px;
+    }
+
+    .hello-menu {
+        height: 40px;
+        padding: 0 16px;
+        font-size: 15px;
+    }
+
+    /* Panel already insets 8px; trim the hero gutter so the card and its
+       two-line prompts keep their width. */
+    .hello-panel .h2-hero {
+        --h2-gutter: 10px;
+        padding-top: 40px;
+    }
+}

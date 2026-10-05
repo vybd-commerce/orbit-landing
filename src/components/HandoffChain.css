@@ -115,6 +115,83 @@
     font-size: 11px;
 }
 
+/* ── Scan mode (stacked chain on phones) ──
+   The chain reads as an audit in progress: stages light up as the scan head
+   passes them, leaks switch to the accent only once they have been reached. */
+.hc-scan-link {
+    stroke: var(--lp-primary);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+}
+
+.hc-scan-head {
+    fill: var(--lp-primary);
+    filter: drop-shadow(0 0 4px var(--lp-primary));
+}
+
+.hc--scan .hc-node-box,
+.hc--scan .hc-node-label {
+    transition: stroke 0.3s ease, fill 0.3s ease, opacity 0.3s ease;
+}
+
+.hc--scan .hc-node:not(.is-scanned) .hc-node-box {
+    stroke: var(--lp-outline-variant);
+    stroke-opacity: 0.5;
+    stroke-width: 1.25;
+}
+
+.hc--scan .hc-node:not(.is-scanned) .hc-node-label {
+    fill: var(--lp-on-surface-muted);
+    font-weight: 400;
+    opacity: 0.45;
+}
+
+.hc--scan .hc-node.is-scanned:not(.is-leak) .hc-node-box {
+    stroke: var(--lp-on-surface-muted);
+}
+
+/* The one-shot reveal is replaced by the scan, so the dot follows the node's
+   scanned state instead of the whole chain's reveal. */
+.hc--scan .hc-node-dot,
+.hc--scan.is-revealed .hc-node-dot {
+    animation: none;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hc--scan .hc-node.is-scanned .hc-node-dot {
+    opacity: 1;
+    transform: none;
+}
+
+.hc--scan .hc-node.is-leak.is-scanned .hc-node-box {
+    animation: hc-flash 0.6s ease;
+}
+
+@keyframes hc-flash {
+    0% {
+        fill: var(--lp-primary);
+        fill-opacity: 0.25;
+    }
+    100% {
+        fill-opacity: 0;
+    }
+}
+
+.hc-node-tag {
+    fill: var(--lp-primary);
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+.hc-node.is-scanned .hc-node-tag {
+    opacity: 1;
+}
+
 /* useReveal already sets is-revealed on first paint under reduced motion, so
    this only has to make the pre-animation state harmless. */
 @media (prefers-reduced-motion: reduce) {
@@ -128,6 +205,14 @@
     .hc.is-revealed .hc-node-dot {
         opacity: 1;
         transform: none;
+        animation: none;
+    }
+
+    .hc--scan .hc-node-box,
+    .hc--scan .hc-node-label,
+    .hc--scan .hc-node-dot,
+    .hc-node-tag {
+        transition: none;
         animation: none;
     }
 }

@@ -1,0 +1,763 @@
+/* ProofCollage: "Already in the US." section on /hello.
+ *
+ * Six-column grid. The two large cards hold the centre (2 cols × 2 rows),
+ * the small image cards flank them and bleed a little past the container,
+ * the three medium cards run underneath. A per-card --dy offset breaks the
+ * grid so it reads as scattered; the entrance rise and hover lift are added
+ * on top of it through --rise and --lift, all in one transform.
+ *
+ * Motion layers, all transform/opacity, none of them touch layout:
+ *   .pc-cell   transform: translateY(--drift)   scroll drift, set from JS
+ *   .pc-card   transform: --dy + --rise + --lift  offset, entrance, hover
+ *   .pc-card   translate (animated)              idle float
+ * `translate` is its own property, so the float composes with the card's
+ * transform instead of overwriting it.
+ */
+
+.pc-section {
+    --pc-navy: #0f1b33;
+    --pc-grey: #5b6270;
+    --pc-muted: #8a909b;
+    --pc-line: #e7e9ed;
+    --pc-green: #1f8f4e;
+    --pc-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    padding: clamp(80px, 9vw, 160px) 32px clamp(96px, 10vw, 176px);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--pc-navy);
+    text-align: center;
+}
+
+.pc-title {
+    margin: 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    font-optical-sizing: auto;
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--pc-navy);
+}
+
+.pc-sub {
+    margin: 16px auto 0;
+    max-width: 52ch;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--pc-grey);
+    text-wrap: balance;
+}
+
+/* ── Grid ───────────────────────────────────────────── */
+
+.pc-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-areas:
+        "ouwr  bay   bay   ems   ems   cellre"
+        "ouwr  bay   bay   ems   ems   cellre"
+        "sugat sugat ollo  ollo  karama karama";
+    gap: 20px;
+    max-width: 1280px;
+    margin: clamp(48px, 6vw, 80px) auto 0;
+    text-align: left;
+}
+
+.pc-cell--bayangrom { grid-area: bay; --dy: 0px; }
+.pc-cell--emsworth  { grid-area: ems; --dy: 28px; }
+.pc-cell--ouwr      { grid-area: ouwr; align-self: center; margin-left: -40px; --dy: -36px; }
+.pc-cell--cellre    { grid-area: cellre; align-self: center; margin-right: -40px; --dy: 44px; }
+.pc-cell--sugat     { grid-area: sugat; align-self: start; --dy: 8px; }
+.pc-cell--ollobot   { grid-area: ollo; align-self: start; --dy: 48px; }
+.pc-cell--karama    { grid-area: karama; align-self: start; --dy: 20px; }
+
+.pc-cell {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    transform: translateY(var(--drift, 0px));
+}
+
+.pc-cell > .pc-card {
+    flex: 1;
+}
+
+/* ── Card ───────────────────────────────────────────── */
+
+.pc-card {
+    --rise: 24px;
+    --lift: 0px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 22px;
+    border-radius: 24px;
+    background: #fff;
+    box-shadow:
+        0 1px 2px rgba(15, 27, 51, 0.04),
+        0 18px 48px -16px rgba(15, 27, 51, 0.14);
+    opacity: 0;
+    transform: translateY(calc(var(--dy, 0px) + var(--rise) + var(--lift)));
+    transition:
+        opacity 600ms var(--pc-ease) calc(var(--i, 0) * 70ms),
+        transform 600ms var(--pc-ease) calc(var(--i, 0) * 70ms),
+        box-shadow 250ms ease;
+    outline: none;
+}
+
+.pc-grid.is-revealed .pc-card {
+    --rise: 0px;
+    opacity: 1;
+    animation: pc-float var(--float-dur, 8s) ease-in-out var(--float-delay, 0s) infinite alternate;
+}
+
+@keyframes pc-float {
+    from { translate: 0 0; }
+    to   { translate: 0 calc(-1 * var(--float-amp, 5px)); }
+}
+
+/* Hold still while someone is reading it. */
+.pc-card:hover,
+.pc-card:focus-visible,
+.pc-card.is-open {
+    animation-play-state: paused !important;
+}
+
+/* Off-screen: freeze every loop in the section. */
+.pc-section.is-paused *,
+.pc-section.is-paused *::before,
+.pc-section.is-paused *::after {
+    animation-play-state: paused !important;
+}
+
+/* After the entrance, hover/focus should answer at once, not after the
+   stagger delay. */
+.pc-grid.is-revealed .pc-card:hover,
+.pc-grid.is-revealed .pc-card:focus-visible,
+.pc-grid.is-revealed .pc-card.is-open {
+    --lift: -6px;
+    transition-delay: 0ms;
+    transition-duration: 600ms, 250ms, 250ms;
+    box-shadow:
+        0 2px 4px rgba(15, 27, 51, 0.05),
+        0 28px 64px -18px rgba(15, 27, 51, 0.22);
+}
+
+.pc-card.has-detail {
+    cursor: pointer;
+}
+
+.pc-card:focus-visible {
+    box-shadow:
+        0 0 0 2px #fff,
+        0 0 0 4px var(--pc-navy),
+        0 28px 64px -18px rgba(15, 27, 51, 0.22);
+}
+
+.pc-label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--pc-muted);
+}
+
+.pc-headline {
+    margin: -4px 0 0;
+    font-size: clamp(20px, 1.8vw, 26px);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+.pc-card--large .pc-headline {
+    font-size: clamp(24px, 2.4vw, 34px);
+}
+
+/* ── Count-up: the final number reserves the width ─── */
+
+.pc-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.pc-count {
+    display: inline-grid;
+    justify-items: end;
+    font-variant-numeric: tabular-nums;
+}
+
+.pc-count > * {
+    grid-area: 1 / 1;
+}
+
+.pc-count-ghost {
+    visibility: hidden;
+}
+
+.pc-visual {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    padding: 8px 0;
+}
+
+/* Reserved row: the detail rises into empty space, so it never covers the
+   number, the visual, or the name. */
+.pc-detail-slot {
+    overflow: hidden;
+    min-height: 40px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.pc-detail {
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: #f1f3f6;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: var(--pc-navy);
+    opacity: 0;
+    transform: translateY(110%);
+    transition:
+        opacity 250ms ease,
+        transform 250ms var(--pc-ease);
+}
+
+.pc-card:hover .pc-detail,
+.pc-card:focus-visible .pc-detail,
+.pc-card.is-open .pc-detail {
+    opacity: 1;
+    transform: none;
+}
+
+.pc-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 12px;
+    border-top: 1px solid var(--pc-line);
+}
+
+.pc-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.pc-meta {
+    font-size: 13px;
+    color: var(--pc-muted);
+}
+
+/* ── Visual: before/after bars ──────────────────────── */
+
+.pc-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pc-bar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pc-bar-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.pc-delta {
+    color: var(--pc-green);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    opacity: 0;
+    transition: opacity 400ms ease 1050ms;
+}
+
+.is-seen .pc-delta {
+    opacity: 1;
+}
+
+.pc-bar-row {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.pc-bar-tag {
+    font-size: 12px;
+    color: var(--pc-muted);
+}
+
+.pc-bar-track {
+    display: block;
+    height: 12px;
+}
+
+.pc-bar {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+}
+
+.pc-bar--before {
+    background: #d6dae1;
+}
+
+/* Starts at the "before" length (scaleX(before/after)) and settles to its
+   real width. */
+.pc-bar--after {
+    background: var(--pc-navy);
+    transform-origin: left center;
+    transform: scaleX(var(--from, 1));
+    transition: transform 1000ms var(--pc-ease) 150ms;
+}
+
+.is-seen .pc-bar--after {
+    transform: none;
+}
+
+/* ── Visual: two-step tracker ───────────────────────── */
+
+.pc-steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Connector between the two dots. */
+.pc-steps::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 32px;
+    bottom: 32px;
+    width: 2px;
+    background: linear-gradient(var(--pc-navy) 50%, #d6dae1 50%);
+}
+
+.pc-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.pc-step-dot {
+    position: relative;
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.pc-step--done .pc-step-dot {
+    background: var(--pc-navy);
+    color: #fff;
+}
+
+.pc-step--done .pc-step-dot svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Checkmark draws itself (path is ~23 units long). */
+.pc-step--done .pc-step-dot path {
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 600ms ease-out 250ms;
+}
+
+.is-seen .pc-step--done .pc-step-dot path {
+    stroke-dashoffset: 0;
+}
+
+.pc-step--active .pc-step-dot {
+    background: #fff;
+    border: 2px dashed var(--pc-navy);
+}
+
+.pc-step-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* In-progress step: a faint light sweep, once every 3s, after the check
+   has drawn. */
+.pc-step--active .pc-step-text::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.75) 50%, transparent 70%);
+    transform: translateX(-100%);
+    pointer-events: none;
+}
+
+.is-seen .pc-step--active .pc-step-text::after {
+    animation: pc-shimmer 3s ease-in-out 900ms infinite;
+}
+
+@keyframes pc-shimmer {
+    0%   { transform: translateX(-100%); }
+    60%, 100% { transform: translateX(100%); }
+}
+
+.pc-step-label {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.pc-step-state {
+    font-size: 13px;
+    color: var(--pc-muted);
+}
+
+/* ── Visual: route line ─────────────────────────────── */
+
+.pc-route {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pc-route-line {
+    display: flex;
+    align-items: center;
+}
+
+.pc-route-end {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--pc-navy);
+    background: #fff;
+}
+
+.pc-route-end--to {
+    background: var(--pc-navy);
+}
+
+.pc-route-track {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, var(--pc-navy) 0 6px, transparent 6px 11px);
+}
+
+.pc-route-runner {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.is-seen .pc-route-runner {
+    animation: pc-sail 8s linear infinite;
+}
+
+@keyframes pc-sail {
+    0%   { transform: translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    88%  { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+}
+
+.pc-route-ship {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 1px var(--pc-line);
+}
+
+.pc-route-ship svg {
+    width: 18px;
+    height: 18px;
+}
+
+.pc-route-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--pc-grey);
+}
+
+/* ── Visual: Kickstarter progress ───────────────────── */
+
+.pc-ks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pc-live {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #e3f4ea;
+    color: var(--pc-green);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pc-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pc-pulse 2s ease-in-out infinite;
+}
+
+@keyframes pc-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.6); opacity: 0.45; }
+}
+
+.pc-ks-track {
+    height: 10px;
+    border-radius: 999px;
+    background: #e7e9ed;
+    overflow: hidden;
+}
+
+.pc-ks-fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--pc-green);
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 1200ms var(--pc-ease) 100ms;
+}
+
+.is-seen .pc-ks-fill {
+    transform: none;
+}
+
+.pc-ks-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pc-muted);
+}
+
+/* ── Visual: pre-order counter ──────────────────────── */
+
+.pc-counter {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pc-digit,
+.pc-sep {
+    font-size: clamp(22px, 2vw, 30px);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.pc-digit {
+    display: grid;
+    place-items: center;
+    min-width: 1.15em;
+    padding: 6px 2px;
+    border-radius: 8px;
+    background: #f1f3f6;
+    box-shadow: inset 0 -1px 0 rgba(15, 27, 51, 0.06);
+}
+
+.pc-sep {
+    color: var(--pc-muted);
+}
+
+/* ── Visual: image slot ─────────────────────────────── */
+
+.pc-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border-radius: 14px;
+    object-fit: cover;
+}
+
+.pc-image--fallback {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #ece7e1, #ddd6ce);
+    color: #5a5047;
+    font-family: "Newsreader", Georgia, serif;
+    font-size: clamp(28px, 2.6vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+/* ── Reduced motion: no entrance, no lift ───────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .pc-cell {
+        transform: none;
+    }
+
+    .pc-grid.is-revealed .pc-card,
+    .pc-live-dot,
+    .is-seen .pc-route-runner,
+    .is-seen .pc-step--active .pc-step-text::after {
+        animation: none;
+    }
+
+    /* Final states, no transitions. */
+    .pc-bar--after,
+    .pc-ks-fill,
+    .pc-delta,
+    .pc-step--done .pc-step-dot path {
+        transition: none;
+    }
+
+    /* Ship rests mid-route instead of sailing. */
+    .pc-route-runner {
+        opacity: 1;
+        transform: translateX(50%);
+    }
+
+    .pc-card,
+    .pc-grid.is-revealed .pc-card:hover,
+    .pc-grid.is-revealed .pc-card:focus-visible,
+    .pc-grid.is-revealed .pc-card.is-open {
+        --rise: 0px;
+        --lift: 0px;
+        opacity: 1;
+        transition: box-shadow 250ms ease;
+    }
+
+    .pc-detail {
+        transition: opacity 150ms linear;
+        transform: none;
+    }
+}
+
+/* ── Tablet: keep the shape, lose the bleed ─────────── */
+
+@media (max-width: 1100px) {
+    .pc-cell--ouwr { margin-left: 0; }
+    .pc-cell--cellre { margin-right: 0; }
+
+    .pc-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-areas:
+            "bay   bay   ems   ems"
+            "bay   bay   ems   ems"
+            "ouwr  sugat sugat cellre"
+            "ollo  ollo  karama karama";
+    }
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+
+@media (max-width: 639px) {
+    .pc-section {
+        padding: 72px 16px 88px;
+    }
+
+    .pc-title {
+        font-size: 40px;
+    }
+
+    .pc-sub {
+        font-size: 18px;
+    }
+
+    .pc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "bay    bay"
+            "ems    ems"
+            "sugat  ollo"
+            "karama ouwr"
+            "cellre ."
+            ;
+        gap: 12px;
+        margin-top: 40px;
+    }
+
+    .pc-cell {
+        --dy: 0px;
+        align-self: stretch;
+    }
+
+    .pc-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .pc-headline,
+    .pc-card--large .pc-headline {
+        font-size: 18px;
+    }
+
+    .pc-card--large .pc-headline {
+        font-size: 24px;
+    }
+
+    .pc-meta {
+        font-size: 12px;
+    }
+
+    .pc-digit,
+    .pc-sep {
+        font-size: 18px;
+    }
+
+    .pc-digit {
+        border-radius: 6px;
+    }
+
+    .pc-route-ship {
+        width: 28px;
+        height: 28px;
+    }
+
+    .pc-route-labels {
+        font-size: 12px;
+    }
+}

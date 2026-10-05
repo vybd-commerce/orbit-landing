@@ -1,66 +1,105 @@
-import { useEffect, useState } from "react";
-import {
-    ArrowRight,
-    BatteryCharging,
-    Check,
-    Factory,
-    Menu,
-    Package,
-    Shirt,
-    Snowflake,
-    X,
-    type LucideIcon,
-} from "lucide-react";
+import { Suspense, lazy, useEffect, useState, type ReactNode } from "react";
+import { ArrowRight, Bot, Check, Menu, X } from "lucide-react";
 import HandoffChain from "../components/HandoffChain";
 import OpsOsDiagram from "../components/OpsOsDiagram";
+import ConsultingHeroVisual from "../components/ConsultingHeroVisual";
+import ScaleStory from "../components/ScaleStory";
+
+/* Story variants under review on /consulting/journey and /consulting/flow. */
+const JourneyStory = lazy(() => import("../components/journey/JourneyStory"));
+const FlowStory = lazy(() => import("../components/flow/FlowStory"));
 import FinalCtaSection from "../components/FinalCtaSection";
 import {
     ACCESS,
-    DIAGNOSIS,
-    FAILURE_MODES,
+    AUDIT,
+    DATA_LAYER,
     FINAL_CTA,
     HERO,
-    HOW_WE_WORK,
-    NETWORK,
-    OPERATOR_DOOR,
+    HOW_IT_STARTS,
+    MANAGED_OPS,
+    OPERATOR_LINK,
+    OUTCOMES_INTRO,
     PROOF,
-    SECTORS,
     SEO,
-    SPRINT,
+    START_STEPS,
+    TEAM,
+    TEAM_ROLES,
     TESTIMONIALS_SHORT,
-    TODO_BAYANGROM_CONTEXT,
-    TODO_BAYANGROM_MECHANISM,
-    TODO_CREDIBILITY_FIGURES,
     TODO_NGO_APPLY_HREF,
-    TODO_OPERATOR_COUNTS,
-    WORK_STEPS,
+    TODO_OPERATOR_HREF,
 } from "../data/consultingCopy";
-import { CHAIN_NODES, DEFAULT_LEAK_INDICES, TOTAL_NODES } from "../data/handoffChainModel";
+import { CHAIN_NODES, DEFAULT_LEAK_INDICES } from "../data/handoffChainModel";
+import { useReveal } from "../hooks/useReveal";
 import { track } from "../lib/analytics";
 import { CALENDLY_URL } from "../lib/links";
 import "./LandingPage.css";
+import "../components/LandingHero.css";
 import "./ConsultingPage.css";
 
-/* The mini chains inside the failure cards are a five-stage slice of the same
-   chain the hero draws, so the two read as the same operation at two zoom
-   levels rather than as two different diagrams. */
-const MINI_CHAIN = CHAIN_NODES.slice(2, 7);
-
-const SECTOR_ICONS: Record<string, LucideIcon> = {
-    cpg: Package,
-    food: Snowflake,
-    fashion: Shirt,
-    batteries: BatteryCharging,
-    manufacturing: Factory,
-};
-
-function operatorCountLabel(key: keyof typeof TODO_OPERATOR_COUNTS): string | null {
-    const count = TODO_OPERATOR_COUNTS[key];
-    if (count === null) return null;
-    return `${count} ${count === 1 ? "operator" : "operators"}`;
+/* A section that fades its children up, staggered, the first time it scrolls
+   in. Styles in ConsultingPage.css (.cons-reveal); useReveal handles reduced
+   motion by starting revealed. */
+function RevealSection({ className, id, children }: { className: string; id?: string; children: ReactNode }) {
+    const { ref, revealed } = useReveal<HTMLElement>();
+    return (
+        <section ref={ref} id={id} className={`${className} cons-reveal${revealed ? " is-revealed" : ""}`}>
+            {children}
+        </section>
+    );
 }
 
-export default function ConsultingPage() {
+/* Counts the number inside a metric string ("−28%", "$180K/yr") up from zero
+   once `run` flips true, keeping the prefix and suffix as written. */
+function CountUp({ value, run }: { value: string; run: boolean }) {
+    const match = value.match(/^(\D*)([\d.]+)(.*)$/);
+    const target = match ? parseFloat(match[2]) : 0;
+    const [shown, setShown] = useState(run ? target : 0);
+
+    useEffect(() => {
+        if (!run || !match) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setShown(target);
+            return;
+        }
+        const start = performance.now();
+        const duration = 1100;
+        let frame = requestAnimationFrame(function tick(now) {
+            const t = Math.min(1, (now - start) / duration);
+            setShown(target * (1 - Math.pow(1 - t, 3)));
+            if (t < 1) frame = requestAnimationFrame(tick);
+        });
+        return () => cancelAnimationFrame(frame);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [run, target]);
+
+    if (!match) return <>{value}</>;
+    return (
+        <>
+            {match[1]}
+            {Math.round(shown)}
+            {match[3]}
+        </>
+    );
+}
+
+function ProofMetrics() {
+    const { ref, revealed } = useReveal<HTMLDListElement>(0.4);
+    return (
+        <dl ref={ref} className="cons-metrics" aria-label={PROOF.caseName}>
+            {PROOF.metrics.map((metric) => (
+                <div key={metric.label}>
+                    {/* The final figure for screen readers; the count is visual only. */}
+                    <dt aria-label={metric.value}>
+                        <span aria-hidden="true"><CountUp value={metric.value} run={revealed} /></span>
+                    </dt>
+                    <dd>{metric.label}</dd>
+                </div>
+            ))}
+        </dl>
+    );
+}
+
+export default function ConsultingPage({ story = "scale" }: { story?: "scale" | "journey" | "flow" }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     /* Same pattern as the other pages: index.html carries the crawler-visible
@@ -90,7 +129,17 @@ export default function ConsultingPage() {
         const prevTwitterDesc = twitterDesc?.getAttribute("content") ?? null;
         twitterDesc?.setAttribute("content", SEO.description);
 
+        // The story variants are for review, not for search.
+        let robots: HTMLMetaElement | null = null;
+        if (story !== "scale") {
+            robots = document.createElement("meta");
+            robots.name = "robots";
+            robots.content = "noindex";
+            document.head.appendChild(robots);
+        }
+
         return () => {
+            robots?.remove();
             document.title = prevTitle;
             if (metaDesc && prevDesc !== null) metaDesc.setAttribute("content", prevDesc);
             if (ogTitle && prevOgTitle !== null) ogTitle.setAttribute("content", prevOgTitle);
@@ -98,9 +147,10 @@ export default function ConsultingPage() {
             if (twitterTitle && prevTwitterTitle !== null) twitterTitle.setAttribute("content", prevTwitterTitle);
             if (twitterDesc && prevTwitterDesc !== null) twitterDesc.setAttribute("content", prevTwitterDesc);
         };
-    }, []);
+    }, [story]);
 
     const ngoHref = TODO_NGO_APPLY_HREF ?? CALENDLY_URL;
+    const operatorHref = TODO_OPERATOR_HREF ?? CALENDLY_URL;
 
     return (
         <div className="landing-page lp-theme-dark lp-page-consulting">
@@ -128,7 +178,7 @@ export default function ConsultingPage() {
                             <li><a href="/product">Product</a></li>
                             <li><a href="/work">Work</a></li>
                             <li><a href="/consulting" aria-current="page">Consulting</a></li>
-                            <li><a href="/lab">Lab</a></li>
+                            <li><a href="#managed-ops">Managed ops</a></li>
                         </ul>
                     </nav>
 
@@ -137,167 +187,123 @@ export default function ConsultingPage() {
                         href={CALENDLY_URL}
                         onClick={() => track("cta_click", { location: "consulting_header" })}
                     >
-                        Book a call
+                        {HERO.cta}
                     </a>
                 </header>
             </div>
 
             {/* ── 1. Hero ── */}
-            <section className="cons-hero" id="hero">
-                <div className="cons-hero-copy">
-                    <div className="lp-section-tag">{HERO.eyebrow}</div>
-                    <h1 className="cons-hero-title">{HERO.headline}</h1>
-                    <p className="cons-hero-subtitle">{HERO.subhead}</p>
+            <section className="v3-hero cons-hero" id="hero">
+                <span className="v3-pill v3-pill--static">
+                    <span className="v3-pill-text">{HERO.pill}</span>
+                </span>
 
-                    <div className="cons-hero-actions">
-                        <a
-                            className="lp-btn lp-btn-primary"
-                            href={CALENDLY_URL}
-                            onClick={() => track("cta_click", { location: "consulting_hero" })}
-                        >
-                            {HERO.primaryCta}
-                            <ArrowRight size={16} />
-                        </a>
-                        <a className="cons-text-link" href="#sprint">
-                            {HERO.secondaryCta} ↓
-                        </a>
-                    </div>
+                <h1 className="v3-hero-title">{HERO.title}</h1>
+                <p className="v3-hero-subtitle">{HERO.subtitle}</p>
+
+                <div className="v3-hero-actions">
+                    <a
+                        className="v3-btn v3-btn-primary"
+                        href={CALENDLY_URL}
+                        onClick={() => track("cta_click", { location: "consulting_hero" })}
+                    >
+                        {HERO.cta}
+                        <ArrowRight size={16} />
+                    </a>
+                    <a className="v3-btn v3-btn-soft" href="#outcomes">
+                        {HERO.secondary}
+                    </a>
                 </div>
 
-                <figure className="cons-hero-chain">
-                    <OpsOsDiagram />
-                    <figcaption>{HERO.diagramCaption}</figcaption>
-                </figure>
+                <ConsultingHeroVisual />
             </section>
 
-            {/* ── 2. The diagnosis ── */}
-            <section className="cons-section cons-diagnosis" id="diagnosis">
-                <div className="lp-section-tag">{DIAGNOSIS.tag}</div>
-                <h2 className="cons-h2">{DIAGNOSIS.heading}</h2>
-                <p className="cons-lede">{DIAGNOSIS.intro}</p>
+            {/* ── 1b. The short version ── pinned 3D scrub */}
+            {story === "journey" ? (
+                <Suspense fallback={<div className="scale journey" />}>
+                    <JourneyStory />
+                </Suspense>
+            ) : story === "flow" ? (
+                <Suspense fallback={<div className="scale flow" />}>
+                    <FlowStory />
+                </Suspense>
+            ) : (
+                <ScaleStory />
+            )}
 
-                <ol className="cons-failure-grid">
-                    {FAILURE_MODES.map((mode, i) => (
-                        <li className="cons-failure-card" key={mode.id}>
-                            <span className="cons-failure-index">{i + 1}</span>
-                            <h3>{mode.title}</h3>
-                            <p>{mode.body}</p>
-                            <HandoffChain
-                                className="cons-failure-chain"
-                                nodes={MINI_CHAIN}
-                                leakIndices={mode.leakIndices}
-                                absorbedIndices={mode.absorbedIndices}
-                                ariaLabel={mode.chainAria}
-                                showLabels={false}
-                                allowStack={false}
-                            />
+            {/* ── 2–4. Outcomes ── */}
+            <RevealSection className="cons-section cons-outcomes-intro" id="outcomes">
+                <div className="lp-section-tag">{OUTCOMES_INTRO.tag}</div>
+                <h2 className="cons-h2">{OUTCOMES_INTRO.heading}</h2>
+            </RevealSection>
+
+            <RevealSection className="cons-section cons-outcome cons-outcome--wide" id="audit">
+                <div className="cons-outcome-text">
+                    <div className="lp-section-tag">{AUDIT.tag}</div>
+                    <h2 className="cons-h2">{AUDIT.heading}</h2>
+                    <p className="cons-lede">{AUDIT.body}</p>
+                    <ul className="cons-points">
+                        {AUDIT.points.map((point) => (
+                            <li key={point}><Check size={16} />{point}</li>
+                        ))}
+                    </ul>
+                </div>
+                <figure className="cons-outcome-figure">
+                    <HandoffChain
+                        nodes={CHAIN_NODES}
+                        leakIndices={DEFAULT_LEAK_INDICES}
+                        ariaLabel={AUDIT.chainAria}
+                        scanOnScroll
+                    />
+                </figure>
+            </RevealSection>
+
+            <RevealSection className="cons-section cons-outcome" id="data-layer">
+                <div className="cons-outcome-text">
+                    <div className="lp-section-tag">{DATA_LAYER.tag}</div>
+                    <h2 className="cons-h2">{DATA_LAYER.heading}</h2>
+                    <p className="cons-lede">{DATA_LAYER.body}</p>
+                    <ul className="cons-points">
+                        {DATA_LAYER.points.map((point) => (
+                            <li key={point}><Check size={16} />{point}</li>
+                        ))}
+                    </ul>
+                </div>
+                <figure className="cons-outcome-figure">
+                    <OpsOsDiagram />
+                </figure>
+            </RevealSection>
+
+            <RevealSection className="cons-section cons-outcome" id="team">
+                <div className="cons-outcome-text">
+                    <div className="lp-section-tag">{TEAM.tag}</div>
+                    <h2 className="cons-h2">{TEAM.heading}</h2>
+                    <p className="cons-lede">{TEAM.body}</p>
+                </div>
+                <ul className="cons-roles">
+                    {TEAM_ROLES.map((item) => (
+                        <li className="cons-role" key={item.role}>
+                            <span className="cons-role-name">{item.role}</span>
+                            <span className="cons-role-agent">
+                                <Bot size={15} strokeWidth={1.75} aria-hidden="true" />
+                                {item.agent}
+                            </span>
                         </li>
                     ))}
-                </ol>
-
-                <ul className="cons-chain-legend" aria-hidden="true">
-                    <li><span className="cons-legend-swatch" /> untouched</li>
-                    <li><span className="cons-legend-swatch cons-legend-swatch--absorbed" /> automated</li>
-                    <li><span className="cons-legend-swatch cons-legend-swatch--leak" /> where the money leaks</li>
                 </ul>
-
-                <p className="cons-closing">{DIAGNOSIS.closing}</p>
-            </section>
-
-            {/* ── 3. The network ── */}
-            <section className="cons-section cons-network" id="network">
-                <div className="lp-section-tag">{NETWORK.tag}</div>
-                <h2 className="cons-h2">{NETWORK.heading}</h2>
-                <p className="cons-lede">{NETWORK.body}</p>
-
-                <ul className="cons-sector-grid">
-                    {SECTORS.map((sector) => {
-                        const Icon = SECTOR_ICONS[sector.key];
-                        const count = operatorCountLabel(sector.key);
-                        return (
-                            <li className="cons-sector" key={sector.key}>
-                                <Icon size={20} strokeWidth={1.5} />
-                                <h3>{sector.name}</h3>
-                                {count && <span className="cons-sector-count">{count}</span>}
-                                <p>{sector.depth}</p>
-                            </li>
-                        );
-                    })}
-                </ul>
-
-                <p className="cons-credibility">
-                    {NETWORK.credibilityLead} {TODO_CREDIBILITY_FIGURES.first},{" "}
-                    {TODO_CREDIBILITY_FIGURES.second}, and {TODO_CREDIBILITY_FIGURES.third}.{" "}
-                    <strong>{NETWORK.credibilityTail}</strong>
-                </p>
-            </section>
-
-            {/* ── 4. How we work ── */}
-            <section className="lp-process-section cons-how" id="how-we-work">
-                <div className="lp-process-inner">
-                    <div className="lp-section-tag">{HOW_WE_WORK.tag}</div>
-                    <h2 className="lp-process-h2">{HOW_WE_WORK.heading}</h2>
-
-                    <div className="lp-process-track cons-process-track">
-                        {WORK_STEPS.map((step) => (
-                            <div
-                                className={`lp-process-step${step.emphasis ? " cons-process-step--lead" : ""}`}
-                                key={step.num}
-                            >
-                                <div className="lp-step-num-display">{step.num}</div>
-                                <div className="lp-process-step-tag">{step.tag}</div>
-                                <h4>{step.title}</h4>
-                                <p>{step.body}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            </RevealSection>
 
             {/* ── 5. Proof ── */}
-            <section className="cons-section cons-proof" id="proof">
+            <RevealSection className="cons-section cons-proof" id="proof">
                 <div className="lp-section-tag">{PROOF.tag}</div>
                 <h2 className="cons-h2">{PROOF.heading}</h2>
 
-                <p className="cons-lede">
-                    <strong>{PROOF.caseName}.</strong> {TODO_BAYANGROM_CONTEXT}
-                </p>
-
-                <dl className="cons-metrics">
-                    {PROOF.metrics.map((metric) => (
-                        <div key={metric.label}>
-                            <dt>{metric.value}</dt>
-                            <dd>{metric.label}</dd>
-                        </div>
-                    ))}
-                </dl>
-
-                <p className="cons-mechanism">{TODO_BAYANGROM_MECHANISM}</p>
-
-                <div className="cons-chain-compare">
-                    <figure>
-                        <figcaption>{PROOF.beforeLabel}</figcaption>
-                        <HandoffChain
-                            nodes={CHAIN_NODES}
-                            leakIndices={DEFAULT_LEAK_INDICES}
-                            ariaLabel={`Bayangrom's chain before the build: ${DEFAULT_LEAK_INDICES.length} of ${TOTAL_NODES} stages leaking.`}
-                        />
-                    </figure>
-                    <figure>
-                        <figcaption>{PROOF.afterLabel}</figcaption>
-                        <HandoffChain
-                            nodes={CHAIN_NODES}
-                            absorbedIndices={DEFAULT_LEAK_INDICES}
-                            ariaLabel={`Bayangrom's chain after the build: the same ${DEFAULT_LEAK_INDICES.length} stages absorbed by agents.`}
-                        />
-                    </figure>
-                </div>
+                <ProofMetrics />
 
                 <a className="cons-text-link" href={PROOF.caseHref}>
                     {PROOF.caseLink} <ArrowRight size={14} />
                 </a>
 
-                <h3 className="cons-h3">{PROOF.testimonialHeading}</h3>
                 <div className="cons-quotes">
                     {TESTIMONIALS_SHORT.map((item) => (
                         <blockquote className="cons-quote" key={item.name}>
@@ -315,78 +321,70 @@ export default function ConsultingPage() {
                         </blockquote>
                     ))}
                 </div>
-            </section>
+            </RevealSection>
 
-            {/* ── 6. The sprint + 7. Access ── */}
-            <section className="lp-pricing-section cons-sprint" id="sprint">
-                <div className="cons-sprint-inner">
-                    <div className="lp-section-tag">{SPRINT.tag}</div>
-                    <h2 className="cons-h2">{SPRINT.heading}</h2>
+            {/* ── 6. How it starts + 7. Access ── */}
+            <RevealSection className="cons-section cons-start" id="how-it-starts">
+                <div className="lp-section-tag">{HOW_IT_STARTS.tag}</div>
+                <h2 className="cons-h2">{HOW_IT_STARTS.heading}</h2>
 
-                    {/* One offer, one card. Inventing tiers around it would cost
-                        the clarity that makes the price work. */}
-                    <div className="lp-pricing-card cons-sprint-card">
-                        <div className="lp-pricing-card-top">
-                            <div className="lp-pricing-price">
-                                {SPRINT.price} <span>{SPRINT.priceMeta}</span>
-                            </div>
-                            <p className="cons-sprint-anchor">{SPRINT.anchor}</p>
-                            <a
-                                className="lp-btn lp-btn-accent"
-                                href={CALENDLY_URL}
-                                onClick={() => track("cta_click", { location: "consulting_sprint" })}
-                            >
-                                {SPRINT.cta}
-                                <ArrowRight size={16} />
-                            </a>
-                        </div>
+                <ol className="cons-steps">
+                    {START_STEPS.map((step) => (
+                        <li className="cons-step" key={step.num}>
+                            <span className="cons-step-num">{step.num}</span>
+                            <h3>{step.title}</h3>
+                            <p>{step.body}</p>
+                        </li>
+                    ))}
+                </ol>
 
-                        <div className="lp-pricing-card-bottom">
-                            <h3 className="cons-sprint-subhead">{SPRINT.deliverablesHeading}</h3>
-                            <ul className="lp-pricing-list">
-                                {SPRINT.deliverables.map((item) => (
-                                    <li key={item}>
-                                        <Check size={16} className="lp-check-icon" />
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
+                <a
+                    className="lp-btn lp-btn-accent cons-start-cta"
+                    href={CALENDLY_URL}
+                    onClick={() => track("cta_click", { location: "consulting_start" })}
+                >
+                    {HOW_IT_STARTS.cta}
+                    <ArrowRight size={16} />
+                </a>
 
-                            <h3 className="cons-sprint-subhead">{SPRINT.afterHeading}</h3>
-                            <p className="cons-sprint-after">{SPRINT.after}</p>
-                        </div>
-                    </div>
+                {/* Access. Small on purpose: it is a door, not a section. */}
+                <p className="cons-access">
+                    {ACCESS.body}{" "}
+                    <a href={ngoHref}>
+                        {ACCESS.cta} <ArrowRight size={13} />
+                    </a>
+                </p>
+            </RevealSection>
 
-                    {/* Access. Two lines at smaller type, deliberately not its own
-                        section: an ungated free offer presented prominently
-                        undercuts the price directly above it. */}
-                    <p className="cons-access">
-                        {ACCESS.body}{" "}
-                        <a href={ngoHref}>
-                            {ACCESS.cta} <ArrowRight size={13} />
-                        </a>
-                    </p>
+            {/* ── 8. Managed ops ── a separate offer, so a separate band. Type
+                only: the roster is the visual. */}
+            <RevealSection className="cons-managed" id="managed-ops">
+                <div className="cons-managed-inner">
+                    <div className="lp-section-tag">{MANAGED_OPS.tag}</div>
+                    <h2 className="cons-h2">{MANAGED_OPS.heading}</h2>
+                    <p className="cons-lede">{MANAGED_OPS.body}</p>
+                    <ul className="cons-managed-roles">
+                        {MANAGED_OPS.roles.map((role) => (
+                            <li key={role}>{role}</li>
+                        ))}
+                    </ul>
+                    <a
+                        className="cons-text-link"
+                        href={CALENDLY_URL}
+                        onClick={() => track("cta_click", { location: "consulting_managed" })}
+                    >
+                        {MANAGED_OPS.cta} <ArrowRight size={14} />
+                    </a>
                 </div>
-            </section>
+            </RevealSection>
 
-            {/* ── 8. CTA ── */}
+            {/* ── 9. CTA ── */}
             <FinalCtaSection
                 heading={FINAL_CTA.heading}
                 subhead={FINAL_CTA.subhead}
                 buttonLabel={FINAL_CTA.button}
                 location="consulting_final"
             />
-
-            {/* ── 9. Operator door ── */}
-            <section className="cons-operators" id="operators">
-                <div className="cons-operators-inner">
-                    <h2>{OPERATOR_DOOR.heading}</h2>
-                    <p>{OPERATOR_DOOR.body}</p>
-                    <a className="cons-text-link" href={CALENDLY_URL}>
-                        {OPERATOR_DOOR.cta} <ArrowRight size={14} />
-                    </a>
-                </div>
-            </section>
 
             <footer className="lp-footer" id="footer">
                 <div className="lp-footer-top">
@@ -399,6 +397,7 @@ export default function ConsultingPage() {
                             <a href="/consulting">Consulting</a>
                             <a href="/case-studies">Case Studies</a>
                             <a href="/lab">Lab</a>
+                            <a href={operatorHref}>{OPERATOR_LINK}</a>
                         </div>
                     </div>
                 </div>

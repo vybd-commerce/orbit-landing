@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from "react";
+import OrbitStory from "../components/OrbitStory";
 import { FORM, NAV_BOTTOM, NAV_TOP, SEO } from "../data/waitlistCopy";
 import { track } from "../lib/analytics";
 import { WAITLIST_ENDPOINT } from "../lib/links";
@@ -81,14 +82,9 @@ export default function WaitlistPage() {
 
             <main className="wl-hero">
                 {/* The footer's orbit rings, closed into a full circle, with the
-                    wordmark and form sitting inside it. Ring classes come from
-                    LandingPage.css; WaitlistPage.css only resizes them. */}
-                <div className="wl-orbit">
-                    <div className="lp-footer-ellipses lp-footer-ellipses--thin">
-                        <div className="lp-footer-ellipses lp-footer-ellipses--planet"></div>
-                    </div>
-                    <div className="lp-footer-ellipses lp-footer-ellipses--thick"></div>
-
+                    wordmark and form inside. OrbitStory drives the dot and
+                    tells the four-step story around it. */}
+                <OrbitStory>
                     <h1 className="wl-wordmark">vybd</h1>
 
                     {status === "done" ? (
@@ -115,7 +111,7 @@ export default function WaitlistPage() {
                     <p className="wl-message" role="alert">
                         {status === "error" ? FORM.error : ""}
                     </p>
-                </div>
+                </OrbitStory>
             </main>
 
             <footer className="wl-footer">

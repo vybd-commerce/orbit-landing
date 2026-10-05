@@ -1,0 +1,311 @@
+/* ComplexitySection: "why it's hard" on /hello.
+ *
+ * One stage in a fixed design space (aspect-ratio from the layout). Pills
+ * and You are HTML placed by percentage; every line is one SVG in the same
+ * viewBox, so the two always register. In beat 3 a light card fades in at
+ * the hub and the pills move into its columns. JS writes per-frame opacity /
+ * transform / path d and two custom properties per pill (--cx-k drift
+ * strength, --cx-sx check room); this file holds the static look, the drift
+ * loop and the pinning.
+ */
+
+.cx-section {
+    --cx-navy: #0f1b33;
+    --cx-pill-bg: #f3f4f6;
+    --cx-pill-line: #e1e4e9;
+    --cx-line: #b9bfc9;
+    --cx-cross: #d7dbe1;
+
+    position: relative;
+    padding: clamp(36px, 4.5vw, 70px) 16px;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--cx-navy);
+}
+
+/* Wide + motion: tall wrapper, stage pinned for 1.5 screens of scroll. */
+.cx-section.is-pinned {
+    height: 250vh;
+    padding: 0 32px;
+}
+
+.cx-section.is-pinned .cx-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(14px, 2.4vh, 28px);
+}
+
+/* ── Caption ────────────────────────────────────────── */
+
+.cx-caption {
+    display: grid;
+    margin: 0 auto;
+    max-width: 1240px;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    /* Matches the statement section. */
+    font-size: clamp(32px, 4vw, 60px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.cx-caption-line {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+.cx-caption-line.is-active {
+    opacity: 1;
+}
+
+/* ── Stage ──────────────────────────────────────────── */
+
+.cx-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 24px auto 0;
+    overflow: hidden;
+    border-radius: 28px;
+}
+
+/* Pinned: the stage also has to fit the screen height under the caption. */
+.cx-section.is-pinned .cx-stage {
+    width: min(100%, 1100px, calc((100dvh - 150px) * var(--cx-ar, 1.3)));
+    margin-top: 0;
+}
+
+.cx-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.cx-lines path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+}
+
+.cx-link {
+    stroke: var(--cx-line);
+    stroke-width: 1;
+    opacity: 0;
+}
+
+.cx-cross {
+    stroke: var(--cx-cross);
+    stroke-width: 1;
+    opacity: 0;
+}
+
+.cx-trunk {
+    stroke: var(--cx-navy);
+    stroke-linecap: round;
+    opacity: 0;
+}
+
+.cx-you {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--cx-navy);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    transform: translate(-50%, -50%);
+}
+
+.cx-pill {
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    white-space: nowrap;
+}
+
+/* The fill and hairline live on ::before so a landed pill can grow left
+   (scaleX from the right edge) to make room for its check. The horizontal
+   radius is divided by the same factor, so the ends stay round. */
+.cx-pill-inner {
+    position: relative;
+    isolation: isolate;
+    display: block;
+    padding: 7px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #2b3445;
+    animation: cx-drift var(--drift-dur, 8s) ease-in-out var(--drift-delay, 0s) infinite alternate;
+}
+
+.cx-pill-inner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid var(--cx-pill-line);
+    border-radius: calc(999px / var(--cx-sx, 1)) / 999px;
+    background: var(--cx-pill-bg);
+    transform: scaleX(var(--cx-sx, 1));
+    transform-origin: right center;
+}
+
+/* 2–3px, long and slow; each pill has its own cycle and phase. --cx-k
+   takes it to zero as the pill moves into the card. */
+@keyframes cx-drift {
+    from { translate: 0 0; }
+    to   { translate: calc(var(--drift-x, 2px) * var(--cx-k, 1)) calc(-2.5px * var(--cx-k, 1)); }
+}
+
+/* Teal check in the room the pill grows on its left. */
+.cx-check {
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+}
+
+.cx-check svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.cx-check circle {
+    fill: #1d9e75;
+}
+
+.cx-check path {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cx-section.is-paused .cx-pill-inner {
+    animation-play-state: paused;
+}
+
+/* ── Card ───────────────────────────────────────────── */
+
+/* Light card whose top edge is the hub, so the thread plugs straight into
+   its top centre. Sits above the lines, under the pills. */
+.cx-card {
+    position: absolute;
+    z-index: 1;
+    top: var(--cx-hub);
+    left: 1.5%;
+    right: 1.5%;
+    bottom: 1%;
+    border: 1px solid #e3e6eb;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 27, 51, 0.03);
+    opacity: 0;
+}
+
+.cx-card-brand {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--cx-navy);
+}
+
+/* Positioned by JS (left/top), once per measure. */
+.cx-card-head {
+    position: absolute;
+    top: 46px;
+    transform: translateX(-50%);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #14161b;
+    white-space: nowrap;
+}
+
+.cx-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Compact (< 1024px) ─────────────────────────────── */
+
+@media (max-width: 1023px) {
+    .cx-stage {
+        max-width: 560px;
+        border-radius: 22px;
+    }
+
+    .cx-you {
+        width: 48px;
+        height: 48px;
+        font-size: 14px;
+    }
+
+    .cx-pill-inner {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .cx-card {
+        border-radius: 22px;
+    }
+
+    .cx-card-head {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 639px) {
+    .cx-caption {
+        font-size: 32px;
+    }
+
+    .cx-stage {
+        margin-top: 24px;
+    }
+}
+
+/* ── Reduced motion: final state, still ─────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .cx-pill-inner {
+        animation: none;
+    }
+
+    .cx-caption-line {
+        transition: none;
+    }
+}

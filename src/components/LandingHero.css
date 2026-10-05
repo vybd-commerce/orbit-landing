@@ -1,0 +1,276 @@
+/* LandingHero — the / hero (pill, headline with rotating word, subtitle,
+   two CTAs), shared with /consulting. Moved here from V3LandingPage.css;
+   .v3-btn and .v3-hero-actions are also used further down the V3 page,
+   which gets them through this component's import. */
+
+/* ── Hero ── */
+.v3-hero {
+    grid-column: fullbleed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* header height plus the gap the reference leaves above the pill */
+    padding: 7.75rem 1.5rem 5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.v3-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.35rem 0.35rem 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--lp-outline-variant);
+    background: color-mix(in srgb, var(--lp-card) 60%, transparent);
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: var(--lp-on-surface);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.v3-pill--static {
+    padding: 0.4rem 0.9rem;
+    cursor: default;
+}
+
+.v3-pill--static .v3-pill-text {
+    color: var(--lp-on-surface);
+}
+
+.v3-pill:not(.v3-pill--static):hover {
+    border-color: color-mix(in srgb, var(--lp-primary) 45%, transparent);
+    background: var(--lp-card);
+}
+
+.v3-pill-badge {
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lp-primary) 14%, transparent);
+    color: var(--lp-primary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.v3-pill-text {
+    color: var(--lp-on-surface-variant);
+}
+
+.v3-pill-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--lp-on-surface) 8%, transparent);
+    color: var(--lp-on-surface);
+}
+
+.v3-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 450;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    margin: 2rem 0 0;
+    color: var(--lp-on-surface);
+}
+
+/* Wrapper for the rotating word; the rule is drawn by the word itself so the
+   two share one colour and one entrance. */
+.v3-hero-underlined {
+    position: relative;
+    display: inline-block;
+}
+
+.v3-hero-subtitle {
+    max-width: 46rem;
+    margin: 1.5rem auto 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+.v3-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2.25rem;
+}
+
+.v3-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.v3-btn-primary {
+    background: var(--lp-on-surface);
+    color: var(--lp-surface);
+}
+
+.v3-btn-primary:hover {
+    background: var(--lp-btn-primary-hover);
+}
+
+.v3-btn-soft {
+    background: var(--lp-card);
+    color: var(--lp-on-surface);
+}
+
+.v3-btn-soft:hover {
+    background: var(--lp-card-hover);
+}
+
+/* ── Rotating headline word ── */
+.rw-root {
+    position: relative;
+    display: inline-flex;
+    vertical-align: bottom;
+    /* Clips the swapping word at the sides while the width animates, but
+       leaves room below for the rule — `overflow: hidden` cut it off. */
+    clip-path: inset(-0.25em 0 -0.6em 0);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Lays out the current word to give the container a width to animate to,
+   without ever being visible or read aloud. */
+.rw-sizer {
+    visibility: hidden;
+    white-space: nowrap;
+}
+
+.rw-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    /* Two stacked backgrounds clipped to the glyphs: a white fill, and the
+       same narrow mint band that travels the rule. Only the band moves, and
+       only this word carries it. */
+    background-image:
+        linear-gradient(90deg,
+            transparent 0%,
+            var(--lp-primary) 30%,
+            var(--lp-primary) 70%,
+            transparent 100%),
+        linear-gradient(var(--lp-on-surface), var(--lp-on-surface));
+    background-size: 22% 100%, 100% 100%;
+    background-repeat: no-repeat, no-repeat;
+    background-position: -20% 0, 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation:
+        rw-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both,
+        rw-word-sweep 2.4s cubic-bezier(0.4, 0, 0.3, 1) 0.5s both;
+}
+
+/* Runs alongside the rule's sweep, same delay and duration, so one sliver
+   appears to pass through the word and its line together. */
+@keyframes rw-word-sweep {
+    0% { background-position: -20% 0, 0 0; }
+    100% { background-position: 120% 0, 0 0; }
+}
+
+.rw-rule {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 3px;
+    border-radius: 999px;
+    transform-origin: left center;
+    background-color: #ffffff;
+    overflow: hidden;
+    animation: rw-rule-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* A fixed-width mint sliver that travels the white rule end to end. The
+   gradient is sized to a fraction of the line and moved with
+   background-position, so its width never changes as it crosses. */
+.rw-rule::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg,
+        transparent 0%,
+        var(--lp-primary) 30%,
+        var(--lp-primary) 70%,
+        transparent 100%);
+    background-size: 22% 100%;
+    background-repeat: no-repeat;
+    animation: rw-rule-sweep 2.4s cubic-bezier(0.4, 0, 0.3, 1) 0.5s both;
+}
+
+@keyframes rw-in {
+    from {
+        opacity: 0;
+        filter: blur(6px);
+        transform: translateY(0.18em);
+    }
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: none;
+    }
+}
+
+/* Percentage positions are relative to the travel distance, so -20% starts
+   the sliver just off the left edge and 120% carries it clear of the right. */
+@keyframes rw-rule-sweep {
+    0% { background-position: -20% 0; }
+    100% { background-position: 120% 0; }
+}
+
+@keyframes rw-rule-in {
+    from {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    to {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rw-root {
+        transition: none;
+    }
+    .rw-word,
+    .rw-rule {
+        animation: none;
+    }
+    .rw-word {
+        background-image: none;
+        color: var(--lp-on-surface);
+        -webkit-text-fill-color: var(--lp-on-surface);
+    }
+    .rw-rule {
+        background-color: var(--lp-primary);
+    }
+    .rw-rule::after {
+        animation: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .v3-hero {
+        padding: 6.5rem 1.25rem 3.5rem;
+    }
+}

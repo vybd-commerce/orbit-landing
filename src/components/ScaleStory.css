@@ -1,0 +1,264 @@
+/* "The short version" on /consulting: a pinned stage that scrubs one 3D scene
+   through four chapters. Tokens only (--lp-*), so it follows the page theme.
+
+   Enterprise, not showreel: native scroll, no snapping, one caption at a
+   time, mono indices, a thin rail. The scene does the talking. */
+
+.scale {
+    position: relative;
+    width: 100%;
+    height: 380vh;
+    height: 380svh;
+    border-top: 1px solid var(--lp-outline);
+}
+
+@media (max-width: 640px) {
+    .scale {
+        height: 300vh;
+        height: 300svh;
+    }
+}
+
+.scale-stage {
+    --enter: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+}
+
+/* Entry: the scene rises out of the dark as the hero scrolls away. */
+.scale-canvas {
+    position: absolute;
+    inset: 0;
+    opacity: var(--enter);
+    transform: scale(calc(0.94 + 0.06 * var(--enter)));
+    transform-origin: 50% 60%;
+    will-change: opacity, transform;
+}
+
+.scale-scene,
+.scale-scene canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Scrims keep the captions and tag legible over any frame. */
+.scale-stage::before,
+.scale-stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.scale-stage::before {
+    top: 0;
+    height: 22%;
+    background: linear-gradient(180deg, var(--lp-surface) 20%, transparent);
+}
+
+.scale-stage::after {
+    bottom: 0;
+    height: 42%;
+    background: linear-gradient(0deg, var(--lp-surface) 12%, transparent);
+}
+
+.scale-top,
+.scale-captions,
+.scale-rail {
+    position: absolute;
+    z-index: 2;
+}
+
+.scale-top {
+    top: 5.5rem;
+    left: 0;
+    right: 0;
+    max-width: var(--cons-max, 1080px);
+    margin: 0 auto;
+    padding: 0 var(--cons-gutter, 1.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.scale-top .lp-section-tag {
+    margin: 0;
+}
+
+.scale-skip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--lp-on-surface-muted);
+    text-decoration: none;
+}
+
+.scale-skip:hover {
+    color: var(--lp-on-surface);
+}
+
+/* ── Captions: one at a time, bottom-left ── */
+.scale-captions {
+    left: 0;
+    right: 0;
+    bottom: clamp(2.5rem, 8vh, 5rem);
+    max-width: var(--cons-max, 1080px);
+    margin: 0 auto;
+    padding: 0 var(--cons-gutter, 1.5rem);
+    list-style: none;
+    display: grid;
+}
+
+.scale-captions li {
+    grid-area: 1 / 1;
+    max-width: 34rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+}
+
+.scale-captions li.is-active {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.08s;
+}
+
+.scale-index {
+    display: block;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--lp-primary);
+    margin-bottom: 0.75rem;
+}
+
+.scale h3 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    color: var(--lp-on-surface);
+}
+
+.scale p {
+    margin: 0;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--lp-on-surface-variant);
+}
+
+/* ── Rail: one tick per chapter on the right edge ── */
+.scale-rail {
+    right: clamp(0.75rem, 3vw, 2.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.scale-rail button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--lp-on-surface-muted);
+    opacity: 0.6;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.scale-rail button::after {
+    content: "";
+    width: 18px;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.scale-rail button.is-active,
+.scale-rail button:hover {
+    opacity: 1;
+    color: var(--lp-primary);
+}
+
+.scale-rail button.is-active::after {
+    width: 32px;
+}
+
+.scale-rail button:focus-visible,
+.scale-skip:focus-visible {
+    outline: 2px solid var(--lp-primary);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+@media (max-width: 640px) {
+    .scale-rail span {
+        display: none;
+    }
+
+    .scale-captions {
+        padding-right: 3.5rem;
+    }
+
+    .scale-top {
+        top: 5rem;
+    }
+}
+
+/* ── Reduced motion: stacked, static ── */
+.scale--static {
+    height: auto;
+}
+
+.scale-static-inner {
+    max-width: var(--cons-max, 1080px);
+    margin: 0 auto;
+    padding: 5rem var(--cons-gutter, 1.5rem);
+}
+
+.scale-static-list {
+    display: grid;
+    gap: 3rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.scale-static-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+}
+
+/* Renders the stills once, off the page. Fixed size so every still frames
+   the same way. */
+.scale-offscreen {
+    position: fixed;
+    left: -10000px;
+    top: 0;
+    width: 1280px;
+    height: 720px;
+    pointer-events: none;
+}

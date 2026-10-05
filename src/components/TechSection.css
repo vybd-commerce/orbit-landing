@@ -1,0 +1,329 @@
+/* TechSection: "Proprietary technologies", the page's one dark band.
+ *
+ * Band → header → grid of tiles, each with an inline 200×120 SVG object.
+ * Object motion is CSS only (transform / opacity / stroke-dashoffset). SVG
+ * groups rotate and float about their own boxes via transform-box: fill-box.
+ * Contrast: #A8A8A2 on #050608 ≈ 8.5:1, white ≈ 20:1.
+ */
+
+.ts-band {
+    --ts-band: #0d0f14;
+    --ts-tile: #050608;
+    --ts-line: rgba(255, 255, 255, 0.32);
+    --ts-accent: #85b7eb;
+    --ts-muted: #a8a8a2;
+    --ts-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    margin: clamp(40px, 6vw, 96px) 0 0;
+    padding: clamp(40px, 5.5vw, 88px) clamp(20px, 4.5vw, 72px) clamp(40px, 5vw, 72px);
+    border-radius: 48px;
+    background: var(--ts-band);
+    color: #fff;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+
+.ts-head {
+    max-width: 1280px;
+    margin: 0 auto clamp(32px, 4vw, 56px);
+}
+
+.ts-title {
+    margin: 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(32px, 3.4vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+}
+
+.ts-sub {
+    margin: 12px 0 0;
+    font-size: clamp(16px, 1.3vw, 18px);
+    line-height: 1.45;
+    color: var(--ts-muted);
+}
+
+/* ── Grid & tiles ───────────────────────────────────── */
+
+.ts-grid {
+    display: grid;
+    /* Two across at every width above mobile; more tiles add rows. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.ts-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    aspect-ratio: 5 / 4;
+    min-width: 0;
+    padding: clamp(24px, 2.6vw, 36px) clamp(20px, 2.2vw, 32px) clamp(16px, 2vw, 28px);
+    border-radius: 20px;
+    background: var(--ts-tile);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+        opacity 500ms var(--ts-ease) calc(var(--i, 0) * 80ms),
+        transform 500ms var(--ts-ease) calc(var(--i, 0) * 80ms);
+}
+
+.ts-grid.is-revealed .ts-tile {
+    opacity: 1;
+    transform: none;
+}
+
+.ts-name {
+    margin: 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: 32px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+.ts-desc {
+    display: -webkit-box;
+    max-width: 32ch;
+    margin: 10px 0 0;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ts-muted);
+}
+
+.ts-object {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 0;
+    margin-top: 12px;
+}
+
+.ts-object svg {
+    display: block;
+    width: 100%;
+    max-width: 460px;
+    max-height: 100%;
+    overflow: visible;
+}
+
+/* ── Shared SVG strokes ─────────────────────────────── */
+
+.ts-line {
+    stroke: var(--ts-line);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+/* Shapes without their own fill attribute stay hollow. */
+.ts-line:not([fill]) {
+    fill: none;
+}
+
+.ts-dash {
+    stroke-dasharray: 3 3;
+}
+
+.ts-accent-line {
+    stroke: var(--ts-accent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.ts-accent-fill {
+    fill: var(--ts-accent);
+}
+
+.ts-svg-label {
+    fill: var(--ts-muted);
+    font-family: "Inter", system-ui, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.02em;
+}
+
+/* ── Scout: sweep and blips ─────────────────────────── */
+
+.ts-sweep {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ts-spin 6s linear infinite;
+}
+
+@keyframes ts-spin {
+    to { transform: rotate(360deg); }
+}
+
+.ts-blip {
+    fill: var(--ts-accent);
+    opacity: 0.15;
+    animation: ts-blip 6s ease-out infinite;
+}
+
+/* Bright the moment the sweep passes (0%), fading over the next ~third. */
+@keyframes ts-blip {
+    0%   { opacity: 1; }
+    40%  { opacity: 0.15; }
+    100% { opacity: 0.15; }
+}
+
+/* ── Muse: floating discs ───────────────────────────── */
+
+.ts-float {
+    animation: ts-float-up 5s ease-in-out infinite;
+}
+
+@keyframes ts-float-up {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-5px); }
+}
+
+/* ── Prism: flowing dashes ──────────────────────────── */
+
+.ts-flow {
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    vector-effect: non-scaling-stroke;
+    animation: ts-flow 2.5s linear infinite;
+}
+
+/* A whole number of 6-unit dash cycles, so the loop is seamless. */
+@keyframes ts-flow {
+    to { stroke-dashoffset: -24; }
+}
+
+/* ── Helm: proposals and approval ───────────────────── */
+
+.ts-card {
+    opacity: 0;
+    animation: ts-card 4.5s var(--ts-ease) infinite;
+}
+
+/* Fade in, slide 62 units to the divider, hold, fade out. */
+@keyframes ts-card {
+    0%   { transform: translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    44%  { transform: translateX(62px); opacity: 1; }
+    76%  { transform: translateX(62px); opacity: 1; }
+    90%, 100% { transform: translateX(62px); opacity: 0; }
+}
+
+/* Brightens as card one (≈44%) and card two (1.5s later, ≈77%) arrive. */
+.ts-check {
+    opacity: 0.15;
+    animation: ts-check 4.5s ease-in-out infinite;
+}
+
+@keyframes ts-check {
+    0%, 38%   { opacity: 0.15; }
+    45%       { opacity: 1; }
+    60%, 70%  { opacity: 0.35; }
+    78%       { opacity: 1; }
+    92%, 100% { opacity: 0.15; }
+}
+
+/* ── Harbor: cube and planes drift apart and back ───── */
+
+.ts-cube {
+    animation: ts-float-up 6s ease-in-out infinite;
+}
+
+.ts-planes {
+    animation: ts-float-down 6s ease-in-out 0.6s infinite;
+}
+
+@keyframes ts-float-down {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(5px); }
+}
+
+/* ── And many more ──────────────────────────────────── */
+
+.ts-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: clamp(32px, 4vw, 56px) 0 0;
+    font-size: 16px;
+    color: var(--ts-muted);
+}
+
+.ts-more::before,
+.ts-more::after {
+    content: "";
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── Off-screen: freeze every loop ──────────────────── */
+
+.ts-band.is-paused *,
+.ts-band.is-paused *::before,
+.ts-band.is-paused *::after {
+    animation-play-state: paused !important;
+}
+
+/* ── Reduced motion: still, readable poses ──────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .ts-tile {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .ts-band * {
+        animation: none !important;
+    }
+
+    .ts-sweep {
+        transform: rotate(-40deg);
+    }
+
+    .ts-blip,
+    .ts-check {
+        opacity: 1;
+    }
+
+    /* Both proposals parked at the divider. */
+    .ts-card {
+        opacity: 1;
+        transform: translateX(62px);
+    }
+}
+
+/* ── Tablet / mobile ────────────────────────────────── */
+
+@media (max-width: 639px) {
+    .ts-band {
+        border-radius: 28px;
+        padding: 36px 16px 32px;
+    }
+
+    .ts-title {
+        font-size: 32px;
+    }
+
+    .ts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ts-tile {
+        aspect-ratio: auto;
+        min-height: 360px;
+    }
+}

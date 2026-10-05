@@ -1,0 +1,308 @@
+/* StatementSection: one large serif paragraph with four inline icon chips.
+ *
+ * Chips are em-sized so they scale with the type. They are taller than the
+ * line-height, so a small negative block margin keeps them from pushing the
+ * lines apart. All motion is transform/opacity; the flags chip reserves the
+ * width of its most fanned-out state so nothing in the text ever moves.
+ */
+
+.st-section {
+    --st-navy: #0f1b33;
+    --st-chip-bg: #eceef1;
+    --st-terracotta: #b8532e;
+    --st-pink: #e58aa6;
+    --st-green: #1f8f4e;
+    --st-page: #fff;
+    /* Total scroll length. The stage pins for (this − one screen). With
+       REVEAL_LEAD 0.25 and REVEAL_DONE 0.8 in the TSX, 194vh makes the reveal
+       take exactly one screen of scrolling (0.25 + 0.8 × 0.94), then holds
+       the finished sentence for ~0.2 screen. */
+    --st-pin: 194vh;
+
+    position: relative;
+    height: var(--st-pin);
+}
+
+/* Full-screen, pinned while the section scrolls by: the statement is the
+   only thing on screen, the hero above and the collage below stay out. */
+.st-stage {
+    position: sticky;
+    top: 0;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0 32px;
+}
+
+.st-text {
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(32px, 4.4vw, 62px);
+    line-height: 1.32;
+    letter-spacing: -0.025em;
+    color: var(--st-navy);
+    text-align: center;
+    text-wrap: pretty;
+}
+
+.st-nw {
+    white-space: nowrap;
+}
+
+/* Scroll reveal: JS sets each word's opacity; this is the before-state so
+   nothing flashes in at full strength before the first scroll update. */
+.st-w {
+    opacity: 0.12;
+}
+
+/* ── Chip base ──────────────────────────────────────── */
+
+.st-chip {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 1.25em;
+    height: 1.25em;
+    margin: -0.12em 0;
+    border-radius: 50%;
+    background: var(--st-chip-bg);
+    vertical-align: middle;
+    transform: translateY(-0.05em);
+}
+
+.st-chip svg {
+    width: 0.6em;
+    height: 0.6em;
+}
+
+/* ── Arrow ──────────────────────────────────────────── */
+
+.st-chip--arrow {
+    overflow: hidden;
+    background: var(--st-navy);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.st-chip--arrow:hover {
+    background: #1b2c4f;
+}
+
+.st-chip--arrow:focus-visible {
+    outline: 3px solid var(--st-navy);
+    outline-offset: 3px;
+}
+
+.st-chip--arrow svg {
+    animation: st-arrow 3s ease-in-out infinite;
+}
+
+@keyframes st-arrow {
+    0%, 45%   { transform: translateX(0); opacity: 1; }
+    62%       { transform: translateX(130%); opacity: 0; }
+    63%       { transform: translateX(-130%); opacity: 0; }
+    82%, 100% { transform: translateX(0); opacity: 1; }
+}
+
+/* ── Flags ──────────────────────────────────────────── */
+
+/* Flags overlap by 40% at rest (step 0.75em) and fan to 15% (step
+   1.0625em). The button is as wide as the fanned state (1.25 + 2 × 1.0625).
+   The fan opens from the middle flag, outer flags moving out by 0.3125em
+   each, so the spare width at rest is split evenly on both sides instead of
+   leaving one wide gap before the next word. */
+.st-flags {
+    position: relative;
+    display: inline-block;
+    width: 3.375em;
+    height: 1.25em;
+    margin: -0.12em 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    vertical-align: middle;
+    transform: translateY(-0.05em);
+    cursor: pointer;
+    border-radius: 999px;
+}
+
+.st-flags:focus-visible {
+    outline: 3px solid var(--st-navy);
+    outline-offset: 4px;
+}
+
+.st-flag {
+    position: absolute;
+    top: 0;
+    width: 1.25em;
+    height: 1.25em;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--st-page);
+    background: var(--st-page);
+    perspective: 4em;
+}
+
+.st-flag--1 { left: 0.3125em; z-index: 3; animation: st-fan-1 4s ease-in-out infinite; }
+.st-flag--2 { left: 1.0625em; z-index: 2; }
+.st-flag--3 { left: 1.8125em; z-index: 1; animation: st-fan-3 4s ease-in-out 0.35s infinite; }
+
+@keyframes st-fan-1 {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(-0.3125em); }
+}
+
+@keyframes st-fan-3 {
+    0%, 100% { transform: translateX(0); }
+    50%      { transform: translateX(0.3125em); }
+}
+
+.st-flag img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition:
+        transform 250ms ease,
+        opacity 250ms ease;
+}
+
+.st-flag img.is-out {
+    transform: scale(0.55) rotateY(90deg);
+    opacity: 0;
+}
+
+/* ── Stamp ──────────────────────────────────────────── */
+
+.st-stamp {
+    display: grid;
+    place-items: center;
+    color: var(--st-terracotta);
+    transform-origin: 50% 90%;
+    animation: st-stamp 3.5s ease-in-out infinite;
+}
+
+@keyframes st-stamp {
+    0%, 25%   { transform: translateY(-14%) rotate(-14deg); }
+    40%       { transform: translateY(6%) rotate(0deg) scale(1.08, 0.88); }
+    48%       { transform: translateY(0) rotate(0deg) scale(1); }
+    62%       { transform: translateY(0) rotate(0deg); }
+    80%, 100% { transform: translateY(-14%) rotate(-14deg); }
+}
+
+.st-check {
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.06em;
+    display: grid;
+    place-items: center;
+    width: 0.46em;
+    height: 0.46em;
+    border-radius: 50%;
+    background: var(--st-green);
+    color: #fff;
+    box-shadow: 0 0 0 2px var(--st-page);
+    transform: scale(0);
+    animation: st-check 3.5s ease-out infinite;
+}
+
+.st-chip .st-check svg {
+    width: 0.3em;
+    height: 0.3em;
+}
+
+@keyframes st-check {
+    0%, 38% { transform: scale(0); }
+    45%     { transform: scale(1.2); }
+    52%     { transform: scale(1); }
+    84%     { transform: scale(1); }
+    94%, 100% { transform: scale(0); }
+}
+
+/* ── Fingerprint ────────────────────────────────────── */
+
+.st-chip--print {
+    overflow: hidden;
+    color: var(--st-pink);
+}
+
+/* Full-chip layer with the line on its top edge; translating it by its own
+   height sweeps the line from top to bottom. */
+.st-scan {
+    position: absolute;
+    inset: 0;
+    border-top: 0.045em solid var(--st-pink);
+    opacity: 0;
+    animation: st-scan 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes st-scan {
+    0%   { transform: translateY(8%); opacity: 0; }
+    15%  { opacity: 0.9; }
+    75%  { opacity: 0.9; }
+    90%, 100% { transform: translateY(92%); opacity: 0; }
+}
+
+/* ── Pause off-screen / hidden tab ──────────────────── */
+
+.st-section.is-paused *,
+.st-section.is-paused *::before,
+.st-section.is-paused *::after {
+    animation-play-state: paused !important;
+}
+
+/* ── Reduced motion ─────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .st-chip--arrow svg,
+    .st-flag--1,
+    .st-flag--3,
+    .st-stamp,
+    .st-check,
+    .st-scan {
+        animation: none;
+    }
+
+    .st-flag img {
+        transition: none;
+    }
+
+    .st-w {
+        opacity: 1;
+    }
+
+    /* Nothing to scroll through: one plain full-screen section. */
+    .st-section {
+        height: auto;
+    }
+
+    .st-stage {
+        position: static;
+        min-height: 100dvh;
+        height: auto;
+        padding-block: 96px;
+    }
+
+    /* Stamp rests upright with its check showing. */
+    .st-check {
+        transform: none;
+    }
+}
+
+/* ── Mobile ─────────────────────────────────────────── */
+
+@media (max-width: 639px) {
+    .st-stage {
+        padding: 0 16px;
+    }
+
+    .st-text {
+        font-size: 32px;
+    }
+}

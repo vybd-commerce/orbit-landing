@@ -13,6 +13,9 @@ import V2LandingPage from "./pages/V2LandingPage";
 import V3LandingPage from "./pages/V3LandingPage";
 import ConsultingPage from "./pages/ConsultingPage";
 import WaitlistPage from "./pages/WaitlistPage";
+import HelloPage from "./pages/HelloPage";
+import BookPage from "./pages/BookPage";
+import BookThanksPage from "./pages/BookThanksPage";
 
 /* The stack narrative pulls in three, R3F and drei. Kept out of the main
    bundle — it is one route, and a heavy one. */
@@ -22,12 +25,17 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<V3LandingPage />} />
-        {/* Previous root, kept reachable while the new one settles */}
+        <Route path="/" element={<HelloPage />} />
+        {/* The root's address while it was in review */}
+        <Route path="/hello" element={<Navigate to="/" replace />} />
+        {/* Previous root, back at its own address */}
+        <Route path="/waitlist" element={<WaitlistPage />} />
+        {/* Previous root, kept reachable at its own address */}
+        <Route path="/v4" element={<V3LandingPage />} />
+        {/* Earlier roots, kept reachable while the new one settles */}
         <Route path="/old" element={<MockLandingPage />} />
-        {/* The root's own former address; anything already pointing here lands
-            on the same page rather than a dead route. */}
-        <Route path="/v3" element={<Navigate to="/" replace />} />
+        {/* The V3 page's original address, now served at /v4 */}
+        <Route path="/v3" element={<Navigate to="/v4" replace />} />
         {/* Earlier landing page, kept here for reference */}
         <Route path="/mock" element={<LandingPage />} />
         {/* Ops cost curve rebuild, see docs/edits.md */}
@@ -42,10 +50,15 @@ function App() {
         />
         <Route path="/product" element={<ProductPage />} />
         <Route path="/consulting" element={<ConsultingPage />} />
-        <Route path="/waitlist" element={<WaitlistPage />} />
+        {/* Journey story variant, under review. */}
+        <Route path="/consulting/journey" element={<ConsultingPage story="journey" />} />
+        {/* Simplified line-art story variant, under review. */}
+        <Route path="/consulting/flow" element={<ConsultingPage story="flow" />} />
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />
+        <Route path="/book" element={<BookPage />} />
+        <Route path="/book/thanks" element={<BookThanksPage />} />
         <Route path="/lab" element={<LabPage />} />
         <Route path="/work" element={<WorkIndexPage />} />
         <Route path="/work/bayangrom" element={<BayangromCaseStudyPage />} />

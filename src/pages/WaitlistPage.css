@@ -49,7 +49,9 @@
    the planet's 20%/10% position already sits on the thin ring at any size.
    The wordmark and form are centred inside the circle. */
 .wl-orbit {
-    --orbit: min(40rem, calc(100vw - 2rem), 76dvh);
+    /* Height cap leaves room for the header, footer and the tagline under
+       the circle. */
+    --orbit: min(40rem, calc(100vw - 2rem), calc(100dvh - 13rem));
 
     position: relative;
     flex-shrink: 0;
@@ -61,10 +63,27 @@
     justify-content: center;
 }
 
+/* Pinned captions need ~250px beside the circle and ~4rem above and below
+   it (12:00 and 6:00 sit outside the top and bottom of the ring). */
+@media (min-width: 1024px) {
+    .wl-orbit {
+        --orbit: min(40rem, calc(100vw - 34rem), calc(100dvh - 21rem));
+        margin: 4rem 0;
+    }
+}
+
+/* OrbitStory rotates this ring from JS (stop-and-go), so its CSS spin is
+   off here. The planet sits at 9 o'clock at 0°. */
 .wl-orbit .lp-footer-ellipses--thin {
+    animation: none;
     inset: 0;
     width: auto;
     height: auto;
+}
+
+.wl-orbit .lp-footer-ellipses--planet {
+    top: 50%;
+    left: 0;
 }
 
 .wl-orbit .lp-footer-ellipses--thick {
@@ -92,7 +111,7 @@
     width: 100%;
     /* Narrow enough to stay inside the circle's chord at this height. */
     max-width: min(26rem, calc(var(--orbit) * 0.7));
-    margin-top: calc(var(--orbit) * 0.04);
+    margin-top: calc(var(--orbit) * 0.09);
     position: relative;
     z-index: 2;
     padding: 0.35rem;
@@ -137,7 +156,7 @@
     position: relative;
     z-index: 2;
     max-width: calc(var(--orbit) * 0.7);
-    margin: calc(var(--orbit) * 0.04) 0 0;
+    margin: calc(var(--orbit) * 0.09) 0 0;
     padding: 0.9rem 1.4rem;
     border: 1px solid color-mix(in srgb, var(--lp-primary) 40%, transparent);
     border-radius: 999px;
@@ -237,5 +256,31 @@
 @media (prefers-reduced-motion: reduce) {
     .wl-orbit .lp-footer-ellipses {
         animation: none;
+    }
+}
+
+/* With side captions on, the circle is smaller, so the form takes a wider
+   chord to keep its placeholder whole. */
+@media (min-width: 1024px) {
+    .wl-form {
+        max-width: min(26rem, calc(var(--orbit) * 0.92));
+    }
+}
+
+/* Reduced motion lists all four steps under the tagline instead, so the
+   circle gives up height rather than width. */
+@media (prefers-reduced-motion: reduce) {
+    .wl-orbit {
+        --orbit: min(40rem, calc(100vw - 2rem), calc(100dvh - 20rem));
+        margin: 0;
+    }
+}
+
+/* Short phones: tighten the chrome so the caption slot still fits. */
+@media (max-height: 600px) {
+    .wl-header,
+    .wl-footer {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
     }
 }

@@ -1,0 +1,353 @@
+/* /consulting/flow: line-art panorama. Builds on ScaleStory.css for the
+   stage, captions, rail and scrims. Strokes are non-scaling, so lines stay
+   ~1.5px on a phone and on a 27" screen alike. */
+
+.flow.scale {
+    height: 600vh;
+    height: 600svh;
+}
+
+@media (max-width: 640px) {
+    .flow.scale {
+        height: 520vh;
+        height: 520svh;
+    }
+}
+
+.fl-canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 12vh;
+}
+
+.fl-svg {
+    width: 100%;
+    height: 100%;
+    max-height: 78vh;
+    overflow: visible;
+}
+
+.fl-svg * {
+    vector-effect: non-scaling-stroke;
+}
+
+/* ── Line styles ── */
+.fl-l {
+    fill: none;
+    stroke: var(--lp-on-surface-muted);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.fl-lo {
+    stroke: var(--lp-outline-variant);
+}
+
+.fl-acc {
+    fill: none;
+    stroke: var(--lp-primary);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.fl-dash {
+    stroke-dasharray: 3 5;
+    stroke: var(--lp-outline-variant);
+}
+
+.fl-ground {
+    fill: none;
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.5;
+}
+
+.fl-wave {
+    fill: none;
+    stroke: var(--lp-outline);
+    stroke-width: 1.2;
+    animation: fl-wave 3s linear infinite;
+}
+
+.fl-wave--2 {
+    animation-duration: 4.5s;
+    opacity: 0.6;
+}
+
+@keyframes fl-wave {
+    to {
+        transform: translateX(-40px);
+    }
+}
+
+/* The route: a faint dashed preview of the whole trip, and the travelled
+   part drawn solid in the accent (revealed by a clip that follows the
+   parcel). */
+.fl-route-ghost {
+    fill: none;
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.2;
+    stroke-dasharray: 2 6;
+}
+
+.fl-route {
+    fill: none;
+    stroke: var(--lp-primary);
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.fl-parcel {
+    fill: var(--lp-primary);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--lp-primary) 70%, transparent));
+}
+
+/* ── Scenes: faint until the parcel arrives, then drawn and moving ── */
+.fl-scene,
+.fl-ship {
+    opacity: 0.22;
+    transition: opacity 0.6s ease;
+}
+
+.fl-scene.is-on,
+.fl-ship.is-on {
+    opacity: 1;
+}
+
+.fl-scene *,
+.fl-ship * {
+    animation-play-state: paused;
+}
+
+.fl-scene.is-on *,
+.fl-ship.is-on * {
+    animation-play-state: running;
+}
+
+.fl-label {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    fill: var(--lp-on-surface-muted);
+    opacity: 0.35;
+    transition: opacity 0.4s ease, fill 0.4s ease;
+}
+
+.fl-label.is-on {
+    opacity: 1;
+    fill: var(--lp-primary);
+}
+
+/* Factory: smoke, and products riding the belt into the carton. */
+.fl-smoke {
+    fill: none;
+    stroke: var(--lp-outline-variant);
+    stroke-width: 1.2;
+    animation: fl-smoke 3.3s ease-out infinite;
+}
+
+@keyframes fl-smoke {
+    from {
+        transform: translate(0, 0);
+        opacity: 0.9;
+    }
+    to {
+        transform: translate(16px, -46px);
+        opacity: 0;
+    }
+}
+
+.fl-belt {
+    animation: fl-belt 6s linear infinite;
+}
+
+@keyframes fl-belt {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+    8% {
+        opacity: 1;
+    }
+    88% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(236px);
+        opacity: 0;
+    }
+}
+
+/* Port: the crane picks a container off the quay and sets it on the ship. */
+.fl-trolley {
+    animation: fl-trolley 6s ease-in-out infinite;
+}
+
+.fl-hook {
+    animation: fl-hook 6s ease-in-out infinite;
+}
+
+.fl-cable {
+    fill: var(--lp-on-surface-muted);
+    transform-box: fill-box;
+    transform-origin: top;
+    animation: fl-cable 6s ease-in-out infinite;
+}
+
+.fl-box {
+    animation: fl-box 6s linear infinite;
+}
+
+@keyframes fl-trolley {
+    0%, 35% { transform: translateX(0); }
+    60%, 90% { transform: translateX(128px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes fl-hook {
+    0%, 10% { transform: translateY(112px); }
+    35%, 60% { transform: translateY(20px); }
+    72%, 78% { transform: translateY(124px); }
+    90% { transform: translateY(20px); }
+    100% { transform: translateY(112px); }
+}
+
+@keyframes fl-cable {
+    0%, 10% { transform: scaleY(112); }
+    35%, 60% { transform: scaleY(20); }
+    72%, 78% { transform: scaleY(124); }
+    90% { transform: scaleY(20); }
+    100% { transform: scaleY(112); }
+}
+
+@keyframes fl-box {
+    0%, 74% { opacity: 1; }
+    77%, 99% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Ocean: a second vessel crossing the other way. */
+.fl-far-ship {
+    animation: fl-far-ship 14s linear infinite;
+}
+
+@keyframes fl-far-ship {
+    from { transform: translate(1830px, 292px); }
+    to { transform: translate(1060px, 292px); }
+}
+
+/* Customs: the scanner sweeps; once cleared, a check and the barrier lifts. */
+.fl-beam {
+    fill: var(--lp-primary);
+    opacity: 0.7;
+    animation: fl-beam 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes fl-beam {
+    from { transform: translateY(0); }
+    to { transform: translateY(88px); }
+}
+
+.fl-barrier {
+    transform-box: fill-box;
+    transform-origin: left center;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-cleared .fl-barrier {
+    transform: rotate(-70deg);
+}
+
+.fl-check {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.is-cleared .fl-check {
+    opacity: 1;
+    transform: none;
+}
+
+/* Store: the shelves fill once the parcel is in. */
+.fl-stock {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.fl-scene.is-on .fl-stock {
+    opacity: 1;
+}
+
+/* Customer: arms reach, then the three products rise with their cities. */
+.fl-arm {
+    transform-box: fill-box;
+    animation: fl-reach 2.6s ease-in-out infinite alternate;
+}
+
+.fl-arm--r {
+    transform-origin: left top;
+}
+
+.fl-arm--l {
+    transform-origin: right top;
+}
+
+@keyframes fl-reach {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-8deg); }
+}
+
+.fl-arm--l {
+    animation-name: fl-reach-l;
+}
+
+@keyframes fl-reach-l {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(8deg); }
+}
+
+.fl-rise {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-done .fl-rise {
+    opacity: 1;
+    transform: none;
+}
+
+.fl-rise .fl-l {
+    stroke: var(--lp-primary);
+}
+
+.fl-city {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    fill: var(--lp-on-surface-variant);
+}
+
+/* Reduced motion: stills, fully drawn, nothing moves. */
+.fl-svg--static {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin-bottom: 1.25rem;
+}
+
+.fl-svg--static .fl-scene,
+.fl-svg--static .fl-ship {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fl-svg * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
