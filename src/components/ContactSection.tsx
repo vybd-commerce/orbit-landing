@@ -9,7 +9,7 @@ export default function ContactSection() {
     const locale = useLocale();
     const to = useLocalePath();
     return (
-        <section className="ct-panel" aria-labelledby="ct-title">
+        <section id="contact" className="ct-panel" aria-labelledby="ct-title">
             <h2 id="ct-title" className="ct-title">
                 {t.contact.title}
             </h2>

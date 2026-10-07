@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
-import { HERO_V2_IMAGE_BASE, HERO_V2_SLIDES, orderedSlides } from "../data/heroV2Slides";
+import { HERO_V2_IMAGE_BASE, HERO_V2_IMAGES, HERO_V2_SLIDES, orderedSlides } from "../data/heroV2Slides";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useT } from "../i18n/context";
 import "./HeroSectionV2.css";
@@ -17,7 +17,7 @@ const MOBILE = "(max-width: 639px)";
 export default function HeroSectionV2() {
     const t = useT();
     const slides = useMemo(
-        () => orderedSlides(t.hero.firstSlide).map((id) => ({ id, ...t.hero.slides[id] })),
+        () => orderedSlides(t.hero.firstSlide).map((id) => ({ id, image: HERO_V2_IMAGES[id], ...t.hero.slides[id] })),
         [t]
     );
     const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
@@ -84,11 +84,11 @@ export default function HeroSectionV2() {
                             <>
                                 {/* Phones show the card portrait (4:5), so they get the
                                     centre crop at the same sharpness, about half the bytes. */}
-                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}-portrait.avif`} type="image/avif" />
-                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}-portrait.webp`} type="image/webp" />
-                                <source srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}.avif`} type="image/avif" />
+                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.image}-portrait.avif`} type="image/avif" />
+                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.image}-portrait.webp`} type="image/webp" />
+                                <source srcSet={`${HERO_V2_IMAGE_BASE}/${slide.image}.avif`} type="image/avif" />
                                 <img
-                                    src={`${HERO_V2_IMAGE_BASE}/${slide.id}.webp`}
+                                    src={`${HERO_V2_IMAGE_BASE}/${slide.image}.webp`}
                                     alt={slide.alt}
                                     width={1264}
                                     height={848}

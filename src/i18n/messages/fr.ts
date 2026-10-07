@@ -17,6 +17,17 @@ export const fr: Messages = {
         language: "Langue",
     },
 
+    menu: {
+        label: "Menu du site",
+        close: "Fermer le menu",
+        home: "Accueil",
+        howItWorks: "Comment ça marche",
+        caseStudies: "Études de cas",
+        about: "À propos",
+        contact: "Nous contacter",
+        privacy: "Confidentialité",
+    },
+
     hero: {
         title: "Bonjour, le monde",
         sub: "Tout ce qu'il vous faut pour entrer sur le marché américain commence ici.",
@@ -30,35 +41,35 @@ export const fr: Messages = {
         firstSlide: "french-brand",
         slides: {
             "spices-india": {
-                alt: "Grains de poivre noir versés sur une balance, à côté de sacs d'épices, dans une unité de transformation du Kerala",
+                alt: "Mains alignant des produits de supermarché sur une table blanche, entre tickets de caisse et post-it",
                 prompt: "Essayez «\u00a0Nous produisons des épices en Inde. Comment entrer dans les supermarchés américains\u00a0?\u00a0»",
             },
             "skincare-korea": {
-                alt: "Petits flacons de sérum remplis à la main sur un établi en bois, dans un atelier de soins ensoleillé à Séoul",
+                alt: "Designer, tasse à la main, comparant des maquettes d'emballage épinglées dans un atelier en briques",
                 prompt: "Essayez «\u00a0Notre marque de soins cartonne en Corée. Par où commencer aux États-Unis\u00a0?\u00a0»",
             },
             "battery-china": {
-                alt: "Inspection d'une cellule de batterie dans une usine de Shenzhen",
+                alt: "Mains gantées posant une étiquette vierge sur un carton dans un centre logistique",
                 prompt: "Essayez «\u00a0Nous fabriquons des batteries en Chine. Que faut-il pour les expédier aux États-Unis\u00a0?\u00a0»",
             },
             "plates-bangladesh": {
-                alt: "Contrôle d'une pile d'assiettes compostables en fibres végétales dans une usine de vaisselle près de Dacca",
+                alt: "Mains soulevant un pot d'échantillon près d'un colis ouvert sur une table de réunion",
                 prompt: "Essayez «\u00a0Nous fabriquons des assiettes compostables au Bangladesh. Qui va les acheter aux États-Unis\u00a0?\u00a0»",
             },
             "french-brand": {
-                alt: "Homme fermant un carton d'expédition au ruban adhésif dans une salle d'emballage aux murs de pierre, à Lyon",
+                alt: "Préparateur sur une nacelle attrapant un carton dans une haute allée d'entrepôt",
                 prompt: "Essayez «\u00a0Notre marque française vend sur Amazon US, mais les ventes stagnent. Et maintenant\u00a0?\u00a0»",
             },
             "retailer-order": {
-                alt: "Magasinier guidant un chariot élévateur qui charge une palette de cartons dans un conteneur",
+                alt: "Magasinier vérifiant sur une tablette une rangée de palettes filmées sur un quai de chargement",
                 prompt: "Essayez «\u00a0Un détaillant américain veut notre produit. Pouvons-nous honorer la commande\u00a0?\u00a0»",
             },
             "port-dawn": {
-                alt: "Agent portuaire avec une tablette sur le quai d'un port à conteneurs à l'aube, grues et navire à quai en arrière-plan",
+                alt: "Agent portuaire sur le quai d'un port à conteneurs à l'aube, grues et navire à quai au loin",
                 prompt: "Essayez «\u00a0Combien coûte vraiment l'arrivée de notre produit aux États-Unis\u00a0?\u00a0»",
             },
             "robots-china": {
-                alt: "Réglage d'un bras robotique blanc sur un banc d'essai, dans un atelier de robotique à Shenzhen",
+                alt: "Carton d'expédition posé sur la marche d'un porche de banlieue à l'heure dorée",
                 prompt: "Essayez «\u00a0Nous fabriquons des robots en Chine. Comment les vendre et assurer le support aux États-Unis\u00a0?\u00a0»",
             },
         },
@@ -193,7 +204,6 @@ export const fr: Messages = {
 
     tech: {
         title: "Technologies propriétaires",
-        sub: "Des agents font le travail. Nos opérateurs valident chaque changement.",
         more: "Et bien d'autres",
         helmLabel: "proposer · valider",
         tiles: {

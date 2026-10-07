@@ -17,6 +17,17 @@ export const es: Messages = {
         language: "Idioma",
     },
 
+    menu: {
+        label: "Menú del sitio",
+        close: "Cerrar menú",
+        home: "Inicio",
+        howItWorks: "Cómo funciona",
+        caseStudies: "Casos de éxito",
+        about: "Sobre nosotros",
+        contact: "Contáctanos",
+        privacy: "Privacidad",
+    },
+
     hero: {
         title: "Hola, mundo",
         sub: "Todo lo que necesita para entrar en el mercado estadounidense empieza aquí.",
@@ -30,35 +41,35 @@ export const es: Messages = {
         firstSlide: "retailer-order",
         slides: {
             "spices-india": {
-                alt: "Granos de pimienta negra vertidos en una báscula junto a sacos de especias, en una planta de procesamiento de Kerala",
+                alt: "Manos ordenando productos de supermercado en una mesa blanca, entre tickets y notas adhesivas",
                 prompt: "Pruebe «Producimos especias en India. ¿Cómo entramos en los supermercados de EE.\u00a0UU.?»",
             },
             "skincare-korea": {
-                alt: "Pequeños frascos de sérum llenados a mano sobre una mesa de madera, en un estudio de cosmética soleado de Seúl",
+                alt: "Diseñador con una taza comparando bocetos de empaque clavados en un tablero en un estudio de ladrillo",
                 prompt: "Pruebe «Nuestra marca de cosmética triunfa en Corea. ¿Por dónde empezamos en EE.\u00a0UU.?»",
             },
             "battery-china": {
-                alt: "Inspección de una celda de batería en una fábrica de Shenzhen",
+                alt: "Manos con guantes pegando una etiqueta en blanco en una caja en un centro logístico",
                 prompt: "Pruebe «Fabricamos baterías en China. ¿Qué necesitamos para enviarlas a EE.\u00a0UU.?»",
             },
             "plates-bangladesh": {
-                alt: "Revisión de una pila de platos compostables de fibra vegetal en una fábrica de vajilla cerca de Daca",
+                alt: "Manos levantando un frasco de muestra junto a una caja abierta en una mesa de reuniones",
                 prompt: "Pruebe «Fabricamos platos compostables en Bangladés. ¿Quién los comprará en EE.\u00a0UU.?»",
             },
             "french-brand": {
-                alt: "Hombre cerrando con cinta una caja de envío en una sala de embalaje con paredes de piedra, en Lyon",
+                alt: "Operario en una plataforma elevadora alcanzando una caja en un alto pasillo de almacén",
                 prompt: "Pruebe «Nuestra marca francesa vende en Amazon US, pero las ventas no crecen. ¿Y ahora qué?»",
             },
             "retailer-order": {
-                alt: "Operario de almacén guiando una carretilla elevadora que carga un palé de cajas en un contenedor",
+                alt: "Operario revisando con una tableta una fila de palets embalados en un muelle de carga",
                 prompt: "Pruebe «Un minorista de EE.\u00a0UU. quiere nuestro producto. ¿Podemos cumplir con el pedido?»",
             },
             "port-dawn": {
-                alt: "Trabajador portuario con una tableta en el muelle de un puerto de contenedores al amanecer, con grúas y un barco atracado al fondo",
+                alt: "Trabajador portuario en el muelle de un puerto de contenedores al amanecer, con grúas y un barco atracado",
                 prompt: "Pruebe «¿Cuánto cuesta realmente llevar nuestro producto a EE.\u00a0UU.?»",
             },
             "robots-china": {
-                alt: "Ajuste de un brazo robótico blanco en un banco de pruebas, en un taller de robótica de Shenzhen",
+                alt: "Caja de envío en el escalón de un porche de las afueras al atardecer",
                 prompt: "Pruebe «Fabricamos robots en China. ¿Cómo los vendemos y damos soporte en EE.\u00a0UU.?»",
             },
         },
@@ -193,7 +204,6 @@ export const es: Messages = {
 
     tech: {
         title: "Tecnología propia",
-        sub: "Los agentes hacen el trabajo. Nuestros operadores aprueban cada cambio.",
         more: "Y muchas más",
         helmLabel: "proponer · aprobar",
         tiles: {

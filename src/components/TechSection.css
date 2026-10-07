@@ -41,13 +41,6 @@
     letter-spacing: -0.025em;
 }
 
-.ts-sub {
-    margin: 12px 0 0;
-    font-size: clamp(16px, 1.3vw, 18px);
-    line-height: 1.45;
-    color: var(--ts-muted);
-}
-
 /* ── Curved wall ────────────────────────────────────── */
 
 .ts-arc {

@@ -1,13 +1,15 @@
 import { useEffect } from "react";
 import HeroSectionV2 from "../components/HeroSectionV2";
 import ComplexitySection from "../components/ComplexitySection";
+import ComplexityRing from "../components/ComplexityRing";
 import ProofCollage from "../components/ProofCollage";
 import StatementSection from "../components/StatementSection";
 import TechSection from "../components/TechSection";
 import HelloFooter from "../components/HelloFooter";
 import ContactSection from "../components/ContactSection";
 import LanguageSwitcher from "../components/LanguageSwitcher";
-import { HERO_V2_IMAGE_BASE, orderedSlides } from "../data/heroV2Slides";
+import SiteMenu from "../components/SiteMenu";
+import { HERO_V2_IMAGE_BASE, HERO_V2_IMAGES, orderedSlides } from "../data/heroV2Slides";
 import { useLocalePath, useT } from "../i18n/context";
 import "./HelloPage.css";
 
@@ -33,10 +35,12 @@ function addHeadLink(attrs: Record<string, string>) {
     return link;
 }
 
-export default function HelloPage() {
+/* complexity: "ring" swaps in the 360° variant of the "why it's hard"
+   section, for review on /ring. */
+export default function HelloPage({ complexity = "web" }: { complexity?: "web" | "ring" }) {
     const t = useT();
     const to = useLocalePath();
-    const firstSlide = orderedSlides(t.hero.firstSlide)[0];
+    const firstSlide = HERO_V2_IMAGES[orderedSlides(t.hero.firstSlide)[0]];
 
     useEffect(() => {
         const prevTitle = document.title;
@@ -74,10 +78,7 @@ export default function HelloPage() {
                     </a>
                     <div className="hello-actions">
                         <LanguageSwitcher />
-                        {/* TODO(hello): open the site menu. Nothing to show yet. */}
-                        <button type="button" className="hello-menu" aria-haspopup="true">
-                            {t.header.menu}
-                        </button>
+                        <SiteMenu />
                     </div>
                 </header>
                 <HeroSectionV2 />
@@ -85,7 +86,7 @@ export default function HelloPage() {
             {/* Below the hero the page sits on plain white. */}
             <StatementSection />
             <ProofCollage />
-            <ComplexitySection />
+            {complexity === "ring" ? <ComplexityRing /> : <ComplexitySection />}
             <TechSection />
             <ContactSection />
             <HelloFooter />

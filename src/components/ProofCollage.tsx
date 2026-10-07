@@ -36,6 +36,10 @@ type ProofCard = {
     detail?: string;
 };
 
+/* Placeholder logos from tools/logos/generate_logos.py, trimmed and tinted
+   navy. TODO(proof): swap in each brand's real logo. */
+const LOGO_BASE = "/images/proof-logos";
+
 /* "pre-orders" should never split across lines; swap in U+2011 at render. */
 const noBreakHyphens = (text: string) => text.replace(/(\w)-(\w)/g, "$1\u2011$2");
 
@@ -361,11 +365,12 @@ function renderVisual(card: ProofCard, motion: Run): ReactNode {
 /* ── Section ─────────────────────────────────────────────────────────── */
 
 /* Proof section for /hello: scattered white cards, large ones in the middle.
-   Headline numbers and visuals are always visible; the optional detail line
-   slides up on hover, keyboard focus, or tap.
+   Each card shows the brand's logo first; hover, keyboard focus or a tap
+   lifts the logo away to show the numbers and visuals, and the optional
+   detail line slides up with them.
 
    Motion, all transform/opacity:
-   - each card's inner animation runs once, the first time it is in view
+   - each card's inner animation runs once, the first time it is revealed
      (`seen`), driven by CSS classes plus a rAF count-up for numbers;
    - idle float is a CSS animation on the card's `translate` property, so it
      stacks on the card's own `transform` (offset, entrance, hover lift);
@@ -397,24 +402,9 @@ export default function ProofCollage() {
         return () => io.disconnect();
     }, []);
 
-    /* Per-card first sighting: starts that card's inner animation once. */
-    useEffect(() => {
-        const io = new IntersectionObserver(
-            (entries) => {
-                const ids = entries.filter((e) => e.isIntersecting).map((e) => (e.target as HTMLElement).dataset.id!);
-                if (!ids.length) return;
-                ids.forEach((id) => io.unobserve(cellRefs.current.get(id)!));
-                setSeen((prev) => new Set([...prev, ...ids]));
-            },
-            { threshold: 0.2 }
-        );
-        cellRefs.current.forEach((el, id) => {
-            if (!seen.has(id)) io.observe(el);
-        });
-        return () => io.disconnect();
-        // Observers are set up once; `seen` only grows and seen cells unobserve themselves.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    /* First reveal (hover, focus or tap): starts that card's inner
+       animation once, so the numbers count up as the logo gives way. */
+    const markSeen = (id: string) => setSeen((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
 
     /* Scroll drift: one passive listener, one rAF per frame at most. The
        section's offset from the viewport centre, in viewport heights, scales
@@ -449,7 +439,10 @@ export default function ProofCollage() {
         };
     }, [reducedMotion, mobile]);
 
-    const toggle = (id: string) => setOpenId((cur) => (cur === id ? null : id));
+    const toggle = (id: string) => {
+        markSeen(id);
+        setOpenId((cur) => (cur === id ? null : id));
+    };
     const onKey = (e: KeyboardEvent, id: string) => {
         if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
@@ -484,7 +477,7 @@ export default function ProofCollage() {
                             className={`pc-cell pc-cell--${card.id}`}
                         >
                             <article
-                                className={`pc-card pc-card--${card.size} pc-card--${card.id}${hasDetail ? " has-detail" : ""}${open ? " is-open" : ""}${isSeen ? " is-seen" : ""}`}
+                                className={`pc-card pc-card--${card.size} pc-card--${card.id}${open ? " is-open" : ""}${isSeen ? " is-seen" : ""}`}
                                 style={
                                     {
                                         "--i": i,
@@ -494,13 +487,26 @@ export default function ProofCollage() {
                                     } as CSSProperties
                                 }
                                 aria-labelledby={`pc-${card.id}-name`}
-                                {...(hasDetail && {
-                                    tabIndex: 0,
-                                    "aria-describedby": `pc-${card.id}-detail`,
-                                    onClick: () => toggle(card.id),
-                                    onKeyDown: (e: KeyboardEvent) => onKey(e, card.id),
-                                })}
+                                aria-describedby={hasDetail ? `pc-${card.id}-detail` : undefined}
+                                tabIndex={0}
+                                onClick={() => toggle(card.id)}
+                                onKeyDown={(e: KeyboardEvent) => onKey(e, card.id)}
+                                onMouseEnter={() => markSeen(card.id)}
+                                onFocus={() => markSeen(card.id)}
                             >
+                                {/* Logo face: covers the card until hover, focus or
+                                    tap. Screen readers skip it and get the numbers. */}
+                                <div className="pc-face" aria-hidden="true">
+                                    <img
+                                        className="pc-logo"
+                                        src={`${LOGO_BASE}/${card.id}.webp`}
+                                        alt=""
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                    <span className="pc-face-meta">{card.country}</span>
+                                </div>
+
                                 <p className="pc-label">{card.label}</p>
                                 {card.headline && (
                                     <p className="pc-headline">

@@ -1,0 +1,122 @@
+/* Site menu: the page blurs behind a white card pinned top-right (full width
+ * on phones), with the links large and centred. */
+
+.sm-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: clamp(12px, 2vw, 24px);
+    background: rgba(240, 241, 243, 0.45);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    animation: sm-fade 180ms ease-out;
+}
+
+.sm-panel {
+    position: relative;
+    width: min(436px, 100%);
+    max-height: calc(100dvh - 2 * clamp(12px, 2vw, 24px));
+    overflow-y: auto;
+    padding: 104px 32px 64px;
+    border-radius: 32px;
+    background: #fff;
+    box-shadow: 0 24px 64px rgba(15, 27, 51, 0.16), 0 2px 8px rgba(15, 27, 51, 0.06);
+    animation: sm-rise 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sm-close {
+    position: absolute;
+    top: 36px;
+    right: 44px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1.5px solid #0f1b33;
+    border-radius: 999px;
+    background: #fff;
+    color: #0f1b33;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.sm-close:hover {
+    background: #f1f2f4;
+}
+
+.sm-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.sm-close:focus-visible,
+.sm-links a:focus-visible {
+    outline: 3px solid #0f1b33;
+    outline-offset: 3px;
+}
+
+.sm-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.sm-links a {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 8px;
+    color: #0f1b33;
+    font-size: clamp(28px, 3vw, 34px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+    text-decoration: none;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+}
+
+.sm-links a:hover,
+.sm-links a[aria-current="page"] {
+    text-decoration-line: underline;
+}
+
+@keyframes sm-fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes sm-rise {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+}
+
+@media (max-width: 639px) {
+    .sm-panel {
+        padding: 96px 24px 48px;
+        border-radius: 28px;
+    }
+
+    .sm-close {
+        top: 28px;
+        right: 28px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sm-backdrop,
+    .sm-panel {
+        animation: none;
+    }
+}

@@ -18,6 +18,18 @@ export const en = {
         language: "Language",
     },
 
+    /* The Menu button's panel. */
+    menu: {
+        label: "Site menu",
+        close: "Close menu",
+        home: "Home",
+        howItWorks: "How it works",
+        caseStudies: "Case studies",
+        about: "About",
+        contact: "Contact us",
+        privacy: "Privacy",
+    },
+
     hero: {
         title: "Hello, World",
         sub: "Whatever you need to enter the US market, start here.",
@@ -32,35 +44,35 @@ export const en = {
         firstSlide: "spices-india",
         slides: {
             "spices-india": {
-                alt: "Worker scooping black peppercorns onto a scale beside sacks of spices in a Kerala processing unit",
+                alt: "Hands arranging supermarket products in rows on a white worktable, with receipts and sticky notes",
                 prompt: "Try 'We make spices in India. How do we get into US grocery stores?'",
             },
             "skincare-korea": {
-                alt: "Founder filling small serum bottles at a wooden worktable in a sunlit Seoul skincare studio",
+                alt: "Designer with a coffee mug comparing packaging printouts pinned to a corkboard in a brick-walled studio",
                 prompt: "Try 'Our skincare brand is big in Korea. Where should we start in the US?'",
             },
             "battery-china": {
-                alt: "Worker inspecting a battery cell in a Shenzhen factory",
+                alt: "Gloved hands pressing a blank label onto a box at a fulfillment center workbench",
                 prompt: "Try 'We build batteries in China. What do we need to ship them to the US?'",
             },
             "plates-bangladesh": {
-                alt: "Worker checking a stack of compostable plant-fiber plates in a tableware factory near Dhaka",
+                alt: "Hands lifting a sample jar beside an opened sample box on a conference room table",
                 prompt: "Try 'We make compostable plates in Bangladesh. Who in the US will buy them?'",
             },
             "french-brand": {
-                alt: "Man taping a shipping box shut in a stone-walled packing room in Lyon",
+                alt: "Worker on an order-picker lift reaching for a carton in a tall warehouse aisle",
                 prompt: "Try 'Our French brand sells on Amazon US, but sales are flat. What next?'",
             },
             "retailer-order": {
-                alt: "Warehouse worker guiding a forklift loading a pallet of cartons into a shipping container",
+                alt: "Worker with a tablet checking a row of shrink-wrapped pallets at a warehouse loading dock",
                 prompt: "Try 'A US retailer wants our product. Can we handle the order?'",
             },
             "port-dawn": {
-                alt: "Port worker with a tablet on the quay of a container port at dawn, cranes and a docked ship beyond",
+                alt: "Port worker on the quay of a container port at dawn, cranes and a docked ship beyond",
                 prompt: "Try 'What will it really cost to land our product in the US?'",
             },
             "robots-china": {
-                alt: "Engineer adjusting a white robot arm on a test bench in a Shenzhen robotics workshop",
+                alt: "Plain shipping box on the top step of a suburban porch at golden hour",
                 prompt: "Try 'We build robots in China. How do we sell and support them in the US?'",
             },
         },
@@ -200,7 +212,6 @@ export const en = {
 
     tech: {
         title: "Proprietary technologies",
-        sub: "Agents do the work. Our operators approve every change.",
         more: "And many more",
         helmLabel: "propose · approve",
         tiles: {

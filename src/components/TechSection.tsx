@@ -407,7 +407,6 @@ export default function TechSection() {
                 <h2 id="ts-title" className="ts-title">
                     {t.tech.title}
                 </h2>
-                <p className="ts-sub">{t.tech.sub}</p>
             </header>
 
             <TechArc paused={!onScreen} />

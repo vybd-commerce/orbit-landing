@@ -37,6 +37,22 @@ CONTEXT = (
     "no watermarks, no recognizable real products or real people."
 )
 
+# Context for the "us-" set (a product's journey through the United States); replaces CONTEXT for those prompts.
+US_CONTEXT = (
+    "These sit inside a rounded card on a website, and a white search box overlays the TOP ~20% of the image. "
+    "Keep that top band simple and uncluttered (wall, ceiling, sky, soft background) with nothing important in "
+    "it. The main subject sits in the lower two-thirds, slightly right of center.\n"
+    "The set tells one story: a product's journey through the United States. Every scene must be clearly "
+    "American in its architecture, stores, warehouses, light and details.\n"
+    "Style: warm, natural documentary photography in the spirit of america.gov's photos. Real work in progress, "
+    "never posed, nobody looking at the camera. Hands and objects lead the frame; any people are incidental, "
+    "partly out of frame or seen from behind or the side, never the focus. Soft daylight, 35mm lens, medium "
+    "depth of field, subtle film-like color, slightly muted. Must look like a real photograph, not an "
+    "illustration or 3D render.\n"
+    "Hard rules: no readable text anywhere (packaging, labels, signs, screens and papers are blank, abstract or "
+    "out of focus), no logos, no brand names, no watermarks, no recognizable real products, stores or people."
+)
+
 PROMPTS = {
     "battery-china": (
         "A documentary photograph inside a clean, modern lithium battery cell assembly facility in Shenzhen, "
@@ -121,6 +137,80 @@ PROMPTS = {
     ),
 }
 
+US_PROMPTS = {
+    "us-research": (
+        "Overhead-angled documentary photograph of a long white worktable in a bright American office. Hands "
+        "arrange a dozen competitor products bought from a US supermarket into neat rows: plain jars, pouches, "
+        "small boxes and bottles in varied colors, all with blank or unreadable labels. Around them: crumpled "
+        "store receipts, a handful of pastel sticky notes, a ballpoint pen, a paper shopping bag. One hand is "
+        "placing a sticky note beside a jar. Soft window light from the left; the top of the frame is the plain "
+        "edge of the table and a white wall. The mood is curious and methodical, a team studying the market."
+    ),
+    "us-voice": (
+        "Documentary photograph inside a sunlit creative studio in Brooklyn: exposed brick, big industrial "
+        "windows, a long corkboard wall. On the wall, two versions of the same product packaging are pinned side "
+        "by side as large printouts with mood photos and color swatches around them; one version is circled with "
+        "a loose red marker line. In the lower right, a designer seen from behind and slightly to the side, "
+        "coffee mug in hand, steps back to compare them. All packaging text is blank or abstract shapes. The top "
+        "of the frame is plain brick wall and window light. The mood is thoughtful: translating a brand for "
+        "American shoppers."
+    ),
+    "us-buyer": (
+        "Documentary photograph in a bright conference room at a US retail company headquarters. On a pale "
+        "wooden table, a cardboard sample box has just been opened: crinkle paper spills out and four or five "
+        "unbranded product samples (jars, a pouch, a small bottle) stand in a row in front of it, with a printed "
+        "one-page sheet (unreadable) and a pen. In the lower right, two pairs of hands at the edge of the frame, "
+        "one lifting a jar to look at it. Behind, soft-focus glass walls and a view of an American suburban "
+        "office park. The top of the frame is a plain white ceiling and glass. The mood is the quiet tension of "
+        "a buyer meeting."
+    ),
+    "us-order": (
+        "Documentary photograph at the loading dock of a modern American distribution warehouse in early "
+        "morning. A long row of tall, neatly shrink-wrapped pallets of plain brown cartons recedes in a line "
+        "toward an open dock door, where a plain white unbranded trailer is backed in. In the lower right, a "
+        "worker in a high-visibility vest, seen from the side, checks the pallets off on a tablet. Low golden "
+        "light spills through the dock door across the concrete floor. The top of the frame is plain warehouse "
+        "roof structure and soft light. No logos or markings on pallets, cartons or trailer. The mood: a big "
+        "first order, real and on its way."
+    ),
+    "us-label": (
+        "Close-up documentary photograph at a clean workbench in an American fulfillment center. Two gloved "
+        "hands press a small white blank label onto the side of a plain product box, smoothing it with a thumb. "
+        "Beside them: a roll of blank white labels on a dispenser, a small stack of identical boxes, a handheld "
+        "barcode scanner, and a clipboard with an out-of-focus checklist. Soft overhead light; the background is "
+        "a softly blurred warehouse with shelving. The top of the frame is plain, out-of-focus warehouse "
+        "ceiling. All labels and papers are blank or unreadable. The mood is precise and careful: done right, "
+        "by the rules."
+    ),
+    "us-port": (
+        "Documentary photograph of a large American container port on the East Coast at dawn. Stacks of plain, "
+        "unbranded shipping containers in muted reds, blues and greys fill the lower two-thirds of the frame, "
+        "with tall ship-to-shore cranes rising on the right and a container ship docked beyond them. Small in "
+        "the lower right, a port worker in a hard hat and high-visibility vest stands on the quay with a tablet, "
+        "seen from behind, looking toward the ship. Soft pink and gold dawn light, a little haze over the water; "
+        "the top of the frame is a calm, clear gradient sky. Containers and ship have no logos, names, numbers "
+        "or readable markings. The mood is arrival."
+    ),
+    "us-warehouse": (
+        "Documentary photograph looking down a tall, clean aisle of a modern American 3PL warehouse. Steel "
+        "racking rises on both sides, neatly stocked with plain brown cartons and shrink-wrapped pallets. In the "
+        "lower right, high up on an order-picker lift, a worker in a high-visibility vest, seen from behind, "
+        "reaches for a carton. Morning light streams in from high clerestory windows at the far end, catching "
+        "dust in the air. Polished concrete floor with yellow lane lines. The top of the frame is plain "
+        "warehouse ceiling and soft light. No logos, signage or readable labels. The mood: calm, organized, "
+        "large-scale."
+    ),
+    "us-doorstep": (
+        "Documentary photograph of the front porch of a classic American house in a leafy suburb in early "
+        "evening: painted wooden steps, a white porch railing, a potted plant, a doormat. A single plain kraft "
+        "shipping box with no labels or markings sits on the top step, just delivered. Warm golden-hour light "
+        "rakes across the porch, with soft long shadows; a hint of a tree-lined street in soft focus behind. No "
+        "people. The top of the frame is the plain underside of the porch roof and soft sky. The mood is quiet "
+        "satisfaction: it arrived."
+    ),
+}
+PROMPTS.update(US_PROMPTS)
+
 
 def crop_to_3_2(img: Image.Image) -> Image.Image:
     w, h = img.size
@@ -136,7 +226,8 @@ def crop_to_3_2(img: Image.Image) -> Image.Image:
 
 
 def generate(client: genai.Client, name: str, variants: int) -> list[Path]:
-    prompt = f"{PROMPTS[name]}\n\nCONTEXT:\n{CONTEXT}"
+    context = US_CONTEXT if name in US_PROMPTS else CONTEXT
+    prompt = f"{PROMPTS[name]}\n\nCONTEXT:\n{context}"
     OUT_DIR.mkdir(exist_ok=True)
     saved = []
     for n in range(1, variants + 1):

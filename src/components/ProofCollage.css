@@ -146,8 +146,72 @@
         0 28px 64px -18px rgba(15, 27, 51, 0.22);
 }
 
-.pc-card.has-detail {
+.pc-card {
+    position: relative;
     cursor: pointer;
+}
+
+/* ── Logo face ──────────────────────────────────────── */
+
+/* Covers the card until it is revealed, so the card keeps the size of its
+   numbers and nothing reflows when the logo lifts away. */
+.pc-face {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px;
+    border-radius: inherit;
+    background: #fff;
+    transition:
+        opacity 280ms ease,
+        transform 380ms var(--pc-ease),
+        visibility 0s linear 0s;
+}
+
+.pc-logo {
+    display: block;
+    width: 78%;
+    height: 88px;
+    object-fit: contain;
+}
+
+.pc-card--small .pc-logo {
+    width: 86%;
+    height: 64px;
+}
+
+.pc-face-meta {
+    font-size: 13px;
+    color: var(--pc-muted);
+}
+
+.pc-card:focus-visible .pc-face,
+.pc-card.is-open .pc-face {
+    opacity: 0;
+    transform: scale(0.96);
+    visibility: hidden;
+    transition:
+        opacity 220ms ease,
+        transform 320ms var(--pc-ease),
+        visibility 0s linear 320ms;
+}
+
+/* Hover reveals only where hover is real; on touch, a tap toggles is-open. */
+@media (hover: hover) {
+    .pc-card:hover .pc-face {
+        opacity: 0;
+        transform: scale(0.96);
+        visibility: hidden;
+        transition:
+            opacity 220ms ease,
+            transform 320ms var(--pc-ease),
+            visibility 0s linear 320ms;
+    }
 }
 
 .pc-card:focus-visible {
@@ -239,11 +303,17 @@
         transform 250ms var(--pc-ease);
 }
 
-.pc-card:hover .pc-detail,
 .pc-card:focus-visible .pc-detail,
 .pc-card.is-open .pc-detail {
     opacity: 1;
     transform: none;
+}
+
+@media (hover: hover) {
+    .pc-card:hover .pc-detail {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .pc-foot {
@@ -674,6 +744,14 @@
         transition: opacity 150ms linear;
         transform: none;
     }
+
+    .pc-face,
+    .pc-card:hover .pc-face,
+    .pc-card:focus-visible .pc-face,
+    .pc-card.is-open .pc-face {
+        transform: none;
+        transition: opacity 150ms linear, visibility 0s linear 150ms;
+    }
 }
 
 /* ── Tablet: keep the shape, lose the bleed ─────────── */
@@ -728,6 +806,15 @@
     .pc-card {
         padding: 16px;
         border-radius: 20px;
+    }
+
+    .pc-face {
+        padding: 16px;
+    }
+
+    .pc-logo {
+        width: 86%;
+        height: 64px;
     }
 
     .pc-headline,

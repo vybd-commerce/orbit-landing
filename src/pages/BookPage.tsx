@@ -8,12 +8,11 @@ import { useLocale, useLocalePath, useT } from "../i18n/context";
 import "./BookPage.css";
 
 /* ── Booking config (edit here) ──────────────────────────────────────────
-   TODO(booking): the Calendly event link for the US entry call, e.g.
-   "https://calendly.com/hello-vybd/us-entry-call". Set up the event with the
-   questions in docs/booking-questions.md first. While empty, /book shows a
-   placeholder instead of the scheduler. (The site's old CALENDLY_URL,
-   hello-vybd/introductory-call, no longer exists on Calendly.) */
-const BOOKING_URL: string = "";
+   The Calendly event for the US entry call. Its booking form should carry
+   the questions in docs/booking-questions.md, in that order, for the
+   prefill keys below to line up. While empty, /book shows a placeholder
+   instead of the scheduler. */
+const BOOKING_URL: string = "https://calendly.com/ashwindhanasamy-inym/30min";
 
 /* Brand colours passed to the embed (hex without #). */
 const EMBED_COLORS = { primary_color: "0f1b33", text_color: "0f1b33", background_color: "ffffff" };
