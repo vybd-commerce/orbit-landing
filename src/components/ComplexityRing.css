@@ -1,0 +1,274 @@
+/* ComplexityRing: the 360° variant of "why it's hard", on /ring.
+ *
+ * One stage measured in px. Pills, You, the Vybd tag and the arc labels are
+ * HTML placed by JS; the lines and the ring are one SVG whose viewBox is the
+ * stage size, so the two always register. JS writes per-frame opacity,
+ * transforms, path d and the ring's dash offset; this file holds the static
+ * look and the drift loop. Same palette as ComplexitySection.
+ */
+
+.cr-section {
+    --cr-navy: #0f1b33;
+    --cr-pill-bg: #f3f4f6;
+    --cr-pill-line: #e1e4e9;
+    --cr-line: #b9bfc9;
+    --cr-bg: #fff;
+
+    position: relative;
+    padding: clamp(36px, 4.5vw, 70px) 16px;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--cr-navy);
+}
+
+/* ── Caption ────────────────────────────────────────── */
+
+.cr-caption {
+    display: grid;
+    margin: 0 auto;
+    max-width: 1240px;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(32px, 4vw, 60px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.cr-caption-line {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.cr-caption-line.is-active {
+    opacity: 1;
+}
+
+/* ── Stage ──────────────────────────────────────────── */
+
+.cr-stage {
+    position: relative;
+    width: min(100%, 1000px);
+    height: clamp(560px, 78vh, 780px);
+    margin: clamp(16px, 2.5vw, 32px) auto 0;
+}
+
+.cr-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.cr-lines path {
+    fill: none;
+}
+
+.cr-line {
+    stroke: var(--cr-line);
+    stroke-width: 1;
+    opacity: 0;
+}
+
+.cr-ring {
+    stroke: var(--cr-navy);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+}
+
+.cr-you {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--cr-navy);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 8px var(--cr-bg);
+}
+
+/* Small label sitting on the ring at 12 o'clock; the ring draws from it. */
+.cr-tag {
+    position: absolute;
+    z-index: 2;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--cr-navy);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.cr-group {
+    position: absolute;
+    z-index: 1;
+    padding: 0 6px;
+    background: var(--cr-bg);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: 30px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #14161b;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+/* Narrow stages: the label is a small tag on the ring, opening its arc. */
+.cr-group.is-on-ring {
+    z-index: 2;
+    padding: 3px 9px;
+    border: 1px solid var(--cr-navy);
+    border-radius: 999px;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cr-navy);
+}
+
+/* Positioned by transform alone (JS); scale is the ring's fit. */
+.cr-pill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    opacity: 0;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+.cr-pill-inner {
+    position: relative;
+    display: block;
+    padding: 7px 14px;
+    border: 1px solid var(--cr-pill-line);
+    border-radius: 999px;
+    background: var(--cr-pill-bg);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #2b3445;
+    animation: cr-drift var(--drift-dur, 8s) ease-in-out var(--drift-delay, 0s) infinite alternate;
+}
+
+/* 2–3px, long and slow; --cr-k takes it to zero as the pill lands. */
+@keyframes cr-drift {
+    from { translate: 0 0; }
+    to   { translate: calc(var(--drift-x, 2px) * var(--cr-k, 1)) calc(-2.5px * var(--cr-k, 1)); }
+}
+
+/* Teal check badge on the pill's top-left corner. */
+.cr-check {
+    position: absolute;
+    top: -5px;
+    left: -4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--cr-bg);
+    padding: 1px;
+    opacity: 0;
+    transform: scale(0);
+}
+
+.cr-check svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.cr-check circle {
+    fill: #1d9e75;
+}
+
+.cr-check path {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cr-section.is-paused .cr-pill-inner {
+    animation-play-state: paused;
+}
+
+.cr-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── Compact (< 1024px): tall ring ──────────────────── */
+
+@media (max-width: 1023px) {
+    .cr-stage {
+        width: min(100%, 560px);
+        height: auto;
+        aspect-ratio: 400 / 780;
+    }
+
+    .cr-you {
+        width: 52px;
+        height: 52px;
+        font-size: 14px;
+        box-shadow: 0 0 0 6px var(--cr-bg);
+    }
+
+    .cr-tag {
+        font-size: 11px;
+        padding: 3px 10px;
+    }
+
+    .cr-group {
+        font-size: 21px;
+    }
+
+    .cr-pill-inner {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 639px) {
+    .cr-caption {
+        font-size: 32px;
+    }
+}
+
+/* ── Reduced motion: final state, still ─────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .cr-pill-inner {
+        animation: none;
+    }
+
+    .cr-caption-line {
+        transition: none;
+    }
+}

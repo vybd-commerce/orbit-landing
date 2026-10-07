@@ -34,6 +34,8 @@ function App() {
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
+        {/* Root with the 360° ring variant of the "why it's hard" section, under review. */}
+        <Route path="/ring" element={<LocaleScope locale="en"><HelloPage complexity="ring" /></LocaleScope>} />
         {/* The root's address while it was in review */}
         <Route path="/hello" element={<Navigate to="/" replace />} />
         {/* Previous root, back at its own address */}

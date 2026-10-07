@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { useT } from "../i18n/context";
+import { clamp01, easeInOut, lerp, linkShapes, pathFrom, seeded, type Pt } from "./complexityShared";
 import "./ComplexitySection.css";
 
 /* ── Content (edit here) ─────────────────────────────────────────────── */
@@ -55,19 +56,10 @@ const CHECK_ROOM = 20;
 
 /* ── Geometry ────────────────────────────────────────────────────────── */
 
-type Pt = { x: number; y: number };
 type Layout = { w: number; h: number; you: Pt; hub: Pt; pills: (Pt & { task: number })[] };
 
 /* Deterministic shuffle, so the scatter is the same on every load and
    groups end up mixed across rows rather than sorted. */
-function seeded(seed: number) {
-    let s = seed;
-    return () => {
-        s = (s * 1664525 + 1013904223) % 4294967296;
-        return s / 4294967296;
-    };
-}
-
 function scatterOrder(n: number) {
     const rand = seeded(7);
     const order = Array.from({ length: n }, (_, i) => i);
@@ -205,45 +197,7 @@ function compactTargets(m: Measured, layout: Layout) {
     return result;
 }
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const window01 = (p: number, [a, b]: [number, number]) => clamp01((p - a) / (b - a));
-
-/* Every You→pill line is two cubic segments meeting at a midpoint. In
-   beat 1 the midpoint sits halfway along a soft S-curve; in beat 2 it is the
-   hub, with vertical tangents there so all lines pass through it together.
-   Same structure in both shapes, so the morph is a plain point lerp. */
-function linkShapes(you: Pt, hub: Pt, p: Pt) {
-    const dx = p.x - you.x;
-    const dy = p.y - you.y;
-    const mid = { x: you.x + dx / 2, y: you.y + dy / 2 };
-    const loose = [
-        you,
-        { x: you.x, y: you.y + dy * 0.3 },
-        { x: mid.x - dx * 0.2, y: mid.y - dy * 0.12 },
-        mid,
-        { x: mid.x + dx * 0.2, y: mid.y + dy * 0.12 },
-        { x: p.x, y: p.y - dy * 0.3 },
-        p,
-    ];
-    const below = p.y - hub.y;
-    const tight = [
-        you,
-        { x: you.x, y: you.y + (hub.y - you.y) * 0.4 },
-        { x: hub.x, y: hub.y - (hub.y - you.y) * 0.35 },
-        hub,
-        { x: hub.x, y: hub.y + below * 0.45 },
-        { x: p.x, y: p.y - below * 0.45 },
-        p,
-    ];
-    return { loose, tight };
-}
-
-function pathFrom(pts: Pt[]) {
-    const f = (q: Pt) => `${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
-    return `M${f(pts[0])}C${f(pts[1])} ${f(pts[2])} ${f(pts[3])}C${f(pts[4])} ${f(pts[5])} ${f(pts[6])}`;
-}
 
 function crossingPairs(n: number, count: number) {
     const rand = seeded(42);
