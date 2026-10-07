@@ -133,7 +133,7 @@ function FlagsChip({ active, reducedMotion }: { active: boolean; reducedMotion: 
    wave brings them from faint to full, Vybd first and brand last.
    Scroll-linked, so it reverses too. Section height lives in the CSS
    (--st-pin); these tune how the reveal maps onto it. */
-const REVEAL_FLOOR = 0.1; // opacity of a word before its turn
+const REVEAL_FLOOR = 0.25; // opacity of a word before its turn: faint, but clearly text
 const REVEAL_SOFTNESS = 2.5; // how many words are mid-fade at once (lower = crisper edge)
 const REVEAL_LEAD = 0.25; // starts when the section top is 25% of a screen from the top, just before it pins
 const REVEAL_DONE = 0.8; // finished 80% of the way through the pin; the last 20% holds it complete

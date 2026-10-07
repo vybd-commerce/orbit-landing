@@ -42,17 +42,25 @@ export default function HelloPage() {
         const prevTitle = document.title;
         document.title = t.meta.homeTitle;
 
-        const preload = addHeadLink({
-            rel: "preload",
-            as: "image",
-            type: "image/avif",
-            href: `${HERO_V2_IMAGE_BASE}/${firstSlide}.avif`,
-            fetchpriority: "high",
-        });
+        /* One per breakpoint, matching the hero's <picture> sources, so a
+           phone never fetches the wide photo it won't show. */
+        const preloads = [
+            { media: "(max-width: 639px)", file: `${firstSlide}-portrait.avif` },
+            { media: "(min-width: 640px)", file: `${firstSlide}.avif` },
+        ].map(({ media, file }) =>
+            addHeadLink({
+                rel: "preload",
+                as: "image",
+                type: "image/avif",
+                media,
+                href: `${HERO_V2_IMAGE_BASE}/${file}`,
+                fetchpriority: "high",
+            })
+        );
 
         return () => {
             document.title = prevTitle;
-            preload.remove();
+            preloads.forEach((l) => l.remove());
         };
     }, [t, firstSlide]);
 

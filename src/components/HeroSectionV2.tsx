@@ -7,6 +7,8 @@ import "./HeroSectionV2.css";
 
 const AUTOPLAY_MS = 4000;
 const COUNT = HERO_V2_SLIDES.length;
+/* Matches the mobile breakpoint in HeroSectionV2.css. */
+const MOBILE = "(max-width: 639px)";
 
 /* /hello hero: headline, then a photo card whose search box cycles through
    example prompts in step with the photo. Autoplay holds while the card is
@@ -28,17 +30,23 @@ export default function HeroSectionV2() {
     const [userTyped, setUserTyped] = useState(false);
     /* Only manual moves are announced; autoplay stays quiet. */
     const [announcement, setAnnouncement] = useState("");
+    /* Slides whose photo has arrived. Autoplay waits for the next one, so a
+       slow connection never fades into an empty card. */
+    const [loaded, setLoaded] = useState<ReadonlySet<number>>(() => new Set());
+    const markLoaded = (i: number) => setLoaded((s) => (s.has(i) ? s : new Set(s).add(i)));
+    const nextIndex = (index + 1) % COUNT;
 
     /* Reduced motion overrides the toggle: no autoplay at all. */
     const isPlaying = playing && !reducedMotion && !userTyped;
     const advancing = isPlaying && !hovered && !inputFocused;
 
     /* Keyed on index, so a manual prev/next restarts the full interval. */
+    const nextReady = loaded.has(nextIndex);
     useEffect(() => {
-        if (!advancing) return;
+        if (!advancing || !nextReady) return;
         const timer = window.setTimeout(() => setIndex((i) => (i + 1) % COUNT), AUTOPLAY_MS);
         return () => window.clearTimeout(timer);
-    }, [advancing, index]);
+    }, [advancing, index, nextReady]);
 
     const go = (delta: number) => {
         const next = (index + delta + COUNT) % COUNT;
@@ -66,22 +74,37 @@ export default function HeroSectionV2() {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
             >
+                {/* Slides stack inside the visible card, so loading="lazy"
+                    would fetch all of them at once. Instead only the current
+                    and next photos are requested; the rest render empty until
+                    their turn, keeping a slow connection on one photo at a time. */}
                 {slides.map((slide, i) => (
                     <picture key={slide.id} className={`h2-slide${i === index ? " is-active" : ""}`} aria-hidden={i !== index}>
-                        <source srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}.avif`} type="image/avif" />
-                        <img
-                            src={`${HERO_V2_IMAGE_BASE}/${slide.id}.webp`}
-                            alt={slide.alt}
-                            width={1264}
-                            height={848}
-                            loading={i === 0 ? "eager" : "lazy"}
-                            fetchPriority={i === 0 ? "high" : "auto"}
-                            decoding="async"
-                        />
+                        {(i === index || i === nextIndex || loaded.has(i)) && (
+                            <>
+                                {/* Phones show the card portrait (4:5), so they get the
+                                    centre crop at the same sharpness, about half the bytes. */}
+                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}-portrait.avif`} type="image/avif" />
+                                <source media={MOBILE} srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}-portrait.webp`} type="image/webp" />
+                                <source srcSet={`${HERO_V2_IMAGE_BASE}/${slide.id}.avif`} type="image/avif" />
+                                <img
+                                    src={`${HERO_V2_IMAGE_BASE}/${slide.id}.webp`}
+                                    alt={slide.alt}
+                                    width={1264}
+                                    height={848}
+                                    fetchPriority={i === index ? "high" : "low"}
+                                    decoding="async"
+                                    onLoad={() => markLoaded(i)}
+                                />
+                            </>
+                        )}
                     </picture>
                 ))}
 
-                <form className="h2-search" onSubmit={handleSubmit} role="search">
+                {/* Display only until submit is wired to the intake flow: inert
+                    takes the box out of clicks, focus and typing, while the
+                    example prompts keep cycling. */}
+                <form className="h2-search" onSubmit={handleSubmit} role="search" inert>
                     <div className="h2-field">
                         {slides.map((slide, i) => (
                             <span

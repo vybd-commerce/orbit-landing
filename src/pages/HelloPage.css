@@ -120,6 +120,21 @@
     }
 }
 
+/* Tall portrait screens at tablet width (iPads held upright, phones in
+   "Desktop site" mode): a full-height panel would leave wide empty bands
+   above and below the centred hero, so the panel hugs its content instead. */
+@media (min-width: 640px) and (max-aspect-ratio: 4/5) {
+    .hello-panel {
+        min-height: 0;
+    }
+
+    .hello-panel .h2-hero {
+        flex: none;
+        padding-top: 120px;
+        padding-bottom: 72px;
+    }
+}
+
 @media (max-width: 639px) {
     .hello-page {
         padding: 8px;

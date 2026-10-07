@@ -1,6 +1,7 @@
 /* TechSection: "Proprietary technologies", the page's one dark band.
  *
- * Band → header → grid of tiles, each with an inline 200×120 SVG object.
+ * Band → header → curved wall of cards (TechArc), each with an inline
+ * 200×120 SVG object. TechArc writes each card's 3D transform per frame.
  * Object motion is CSS only (transform / opacity / stroke-dashoffset). SVG
  * groups rotate and float about their own boxes via transform-box: fill-box.
  * Contrast: #A8A8A2 on #050608 ≈ 8.5:1, white ≈ 20:1.
@@ -26,7 +27,8 @@
 
 .ts-head {
     max-width: 1280px;
-    margin: 0 auto clamp(32px, 4vw, 56px);
+    margin: 0 auto clamp(8px, 1.5vw, 24px);
+    text-align: center;
 }
 
 .ts-title {
@@ -46,37 +48,61 @@
     color: var(--ts-muted);
 }
 
-/* ── Grid & tiles ───────────────────────────────────── */
+/* ── Curved wall ────────────────────────────────────── */
 
-.ts-grid {
-    display: grid;
-    /* Two across at every width above mobile; more tiles add rows. */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-    max-width: 1280px;
-    margin: 0 auto;
+.ts-arc {
+    /* Card size; TechArc reads the rendered width for its geometry. */
+    --ts-card-w: 240px;
+    --ts-card-h: 280px;
+
+    position: relative;
+    /* Wide enough for the five tools in full, no wider, so none shows twice;
+       the partial cards beyond them fade into the band. */
+    max-width: 1240px;
+    margin-inline: auto;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    height: calc(var(--ts-card-h) * 1.3);
+    overflow: hidden;
+    /* perspective is set inline from the stage width */
+    perspective-origin: 50% 50%;
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.ts-arc:active {
+    cursor: grabbing;
+}
+
+.ts-ring {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
 }
 
 .ts-tile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    aspect-ratio: 5 / 4;
-    min-width: 0;
-    padding: clamp(24px, 2.6vw, 36px) clamp(20px, 2.2vw, 32px) clamp(16px, 2vw, 28px);
-    border-radius: 20px;
-    background: var(--ts-tile);
+    width: var(--ts-card-w);
+    height: var(--ts-card-h);
+    margin: calc(var(--ts-card-h) / -2) 0 0 calc(var(--ts-card-w) / -2);
+    padding: 22px 18px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    background:
+        radial-gradient(120% 70% at 50% 0%, color-mix(in srgb, var(--ts-tint) 28%, transparent), transparent 70%),
+        radial-gradient(90% 60% at 50% 100%, color-mix(in srgb, var(--ts-tint) 12%, transparent), transparent 70%),
+        var(--ts-tile);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8);
     text-align: center;
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-        opacity 500ms var(--ts-ease) calc(var(--i, 0) * 80ms),
-        transform 500ms var(--ts-ease) calc(var(--i, 0) * 80ms);
-}
-
-.ts-grid.is-revealed .ts-tile {
-    opacity: 1;
-    transform: none;
+    backface-visibility: hidden;
+    will-change: transform, opacity;
 }
 
 .ts-name {
@@ -84,22 +110,10 @@
     font-family: "Newsreader", Georgia, "Times New Roman", serif;
     font-weight: 500;
     font-optical-sizing: auto;
-    font-size: 32px;
+    font-size: 28px;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: #fff;
-}
-
-.ts-desc {
-    display: -webkit-box;
-    max-width: 32ch;
-    margin: 10px 0 0;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    font-size: 14px;
-    line-height: 1.45;
-    color: var(--ts-muted);
 }
 
 .ts-object {
@@ -109,13 +123,51 @@
     justify-content: center;
     width: 100%;
     min-height: 0;
-    margin-top: 12px;
+    margin: 8px 0;
+}
+
+/* Description of the card nearest the centre: every caption shares one grid
+   cell, so swapping them crossfades without the line height jumping. */
+.ts-caption {
+    display: grid;
+    max-width: 52ch;
+    margin: 4px auto 0;
+    font-size: 15px;
+    line-height: 1.45;
+    text-align: center;
+    color: var(--ts-muted);
+}
+
+.ts-caption > span {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 300ms ease, transform 300ms var(--ts-ease);
+}
+
+.ts-caption > span.is-active {
+    opacity: 1;
+    transform: none;
+}
+
+.ts-caption strong {
+    margin-right: 6px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.ts-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
 .ts-object svg {
     display: block;
     width: 100%;
-    max-width: 460px;
     max-height: 100%;
     overflow: visible;
 }
@@ -256,7 +308,7 @@
     align-items: center;
     justify-content: center;
     gap: 14px;
-    margin: clamp(32px, 4vw, 56px) 0 0;
+    margin: clamp(8px, 1.5vw, 20px) 0 0;
     font-size: 16px;
     color: var(--ts-muted);
 }
@@ -280,9 +332,7 @@
 /* ── Reduced motion: still, readable poses ──────────── */
 
 @media (prefers-reduced-motion: reduce) {
-    .ts-tile {
-        opacity: 1;
-        transform: none;
+    .ts-caption > span {
         transition: none;
     }
 
@@ -306,24 +356,36 @@
     }
 }
 
-/* ── Tablet / mobile ────────────────────────────────── */
+/* ── Mobile ─────────────────────────────────────────── */
 
 @media (max-width: 639px) {
     .ts-band {
         border-radius: 28px;
-        padding: 36px 16px 32px;
+        padding: 36px 16px 28px;
     }
 
     .ts-title {
         font-size: 32px;
     }
 
-    .ts-grid {
-        grid-template-columns: 1fr;
+    .ts-arc {
+        --ts-card-w: 150px;
+        --ts-card-h: 184px;
+        max-width: none;
+        margin: 0 -16px; /* run to the band's edges */
     }
 
     .ts-tile {
-        aspect-ratio: auto;
-        min-height: 360px;
+        padding: 16px 12px 14px;
+        border-radius: 18px;
+    }
+
+    .ts-name {
+        font-size: 22px;
+    }
+
+    .ts-caption {
+        padding: 0 8px;
+        font-size: 14px;
     }
 }
