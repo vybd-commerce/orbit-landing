@@ -12,7 +12,7 @@ import "./BookPage.css";
    the questions in docs/booking-questions.md, in that order, for the
    prefill keys below to line up. While empty, /book shows a placeholder
    instead of the scheduler. */
-const BOOKING_URL: string = "https://calendly.com/ashwindhanasamy-inym/30min";
+const BOOKING_URL: string = "https://calendly.com/hello-vybd/vybd-discovery-call";
 
 /* Brand colours passed to the embed (hex without #). */
 const EMBED_COLORS = { primary_color: "0f1b33", text_color: "0f1b33", background_color: "ffffff" };
@@ -24,9 +24,8 @@ const EMBED_COLORS = { primary_color: "0f1b33", text_color: "0f1b33", background
 const PREFILL_KEYS = ["name", "email", "a1", "a2", "a3", "a4", "a5", "a6"] as const;
 
 /* Shown under the scheduler for anyone it fails for: Calendly is slow or
-   blocked in some countries, mainland China among them.
-   TODO(booking): confirm this inbox exists (same one as the footer's). */
-const BOOKING_EMAIL = "partnerships@vybd.ai";
+   blocked in some countries, mainland China among them. */
+const BOOKING_EMAIL = "hello@vybd.ai";
 
 const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
 

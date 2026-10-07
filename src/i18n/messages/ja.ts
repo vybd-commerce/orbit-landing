@@ -257,6 +257,7 @@ export const ja: Messages = {
         about: "私たちについて",
         careers: "キャリア",
         events: "イベント",
+        rainmaker: "パートナー募集",
         follow: "フォロー",
         partnership: "提携のお問い合わせ",
         press: "報道関係のお問い合わせ",

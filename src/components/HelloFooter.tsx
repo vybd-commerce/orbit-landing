@@ -1,5 +1,6 @@
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useT } from "../i18n/context";
+import { useLocale, useT } from "../i18n/context";
+import type { Locale } from "../i18n/locales";
 import type { Messages } from "../i18n/messages";
 import "./HelloFooter.css";
 
@@ -18,10 +19,15 @@ const explore = (f: Messages["footer"]): Link[] => [
     { label: f.lab, href: "/lab" },
 ];
 
-const company = (f: Messages["footer"]): Link[] => [
+/* /rainmaker exists in English, Chinese and Korean; other languages get the
+   English page. */
+const rainmakerPath = (locale: Locale) => (locale === "zh" || locale === "ko" ? `/${locale}/rainmaker` : "/rainmaker");
+
+const company = (f: Messages["footer"], locale: Locale): Link[] => [
     { label: f.about, href: "#" }, // TODO(footer): real routes
     { label: f.careers, href: "#" },
     { label: f.events, href: "#" },
+    { label: f.rainmaker, href: rainmakerPath(locale) },
 ];
 
 const FOLLOW: Link[] = [
@@ -30,9 +36,9 @@ const FOLLOW: Link[] = [
     { label: "X", href: "#" },
 ];
 
-/* TODO(footer): confirm these inboxes exist before launch. */
-const PARTNERSHIP_EMAIL = "partnerships@vybd.ai";
-const PRESS_EMAIL = "press@vybd.ai";
+/* One inbox for partnership and press alike. */
+const PARTNERSHIP_EMAIL = "hello@vybd.ai";
+const PRESS_EMAIL = "hello@vybd.ai";
 const MEDIA_KIT_HREF = "#"; // TODO(footer): media kit file
 
 const OFFICES = ["888 Main St, New York, New York - 10044"];
@@ -50,6 +56,7 @@ const legal = (f: Messages["footer"]): Link[] => [
    with the legal links along the bottom. */
 export default function HelloFooter() {
     const f = useT().footer;
+    const locale = useLocale();
     return (
         <footer className="hf-band">
             <nav className="hf-cols" aria-label={f.nav}>
@@ -66,7 +73,7 @@ export default function HelloFooter() {
                 <div className="hf-col">
                     <h2 className="hf-head">{f.company}</h2>
                     <ul>
-                        {company(f).map((l) => (
+                        {company(f, locale).map((l) => (
                             <li key={l.label}>
                                 <a href={l.href}>{l.label}</a>
                             </li>

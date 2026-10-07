@@ -1,0 +1,353 @@
+/* /rainmaker: the /book panel look. Pitch on the left, the application in a
+ * white card on the right; stacked on phones with the pitch first. */
+
+.rm-page {
+    --rm-navy: #0f1b33;
+    --rm-grey: #5b6270;
+    --rm-muted: #8a909b;
+    --rm-line: #e7e9ed;
+
+    min-height: 100dvh;
+    padding: clamp(16px, 2.2vw, 40px);
+    background: #fff;
+    color: var(--rm-navy);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+.rm-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: start;
+    min-height: calc(100dvh - 2 * clamp(16px, 2.2vw, 40px));
+    padding: clamp(32px, 4vw, 64px);
+    border-radius: clamp(40px, 3.6vw, 72px);
+    background:
+        radial-gradient(120% 70% at 50% 100%, rgba(255, 255, 255, 0.9), transparent 60%),
+        linear-gradient(180deg, #eceef1 0%, #f3f4f6 55%, #f7f7f8 100%);
+}
+
+/* ── Pitch ──────────────────────────────────────────── */
+
+.rm-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.rm-langs {
+    display: flex;
+    gap: 4px;
+}
+
+.rm-langs a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--rm-grey);
+    text-decoration: none;
+}
+
+.rm-langs a:hover {
+    color: var(--rm-navy);
+}
+
+.rm-langs a[aria-current="page"] {
+    background: #fff;
+    color: var(--rm-navy);
+    box-shadow: 0 1px 2px rgba(15, 27, 51, 0.08);
+}
+
+.rm-langs a:focus-visible {
+    outline: 2px solid var(--rm-navy);
+    outline-offset: 2px;
+}
+
+.rm-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--rm-grey);
+    text-decoration: none;
+}
+
+.rm-back svg {
+    width: 16px;
+    height: 16px;
+}
+
+.rm-back:hover {
+    color: var(--rm-navy);
+}
+
+.rm-label {
+    margin: clamp(28px, 4vw, 56px) 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rm-muted);
+}
+
+.rm-title {
+    max-width: 18ch;
+    margin: 12px 0 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: clamp(36px, 4vw, 60px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.rm-sub {
+    max-width: 52ch;
+    margin: 20px 0 0;
+    font-size: clamp(17px, 1.3vw, 19px);
+    line-height: 1.5;
+    color: var(--rm-grey);
+}
+
+.rm-flags {
+    display: flex;
+    margin-top: 20px;
+}
+
+.rm-flags img {
+    width: 32px;
+    height: 32px;
+    margin-right: -6px;
+    border: 2px solid #f1f2f4;
+    border-radius: 50%;
+}
+
+.rm-head {
+    margin: clamp(36px, 4vw, 52px) 0 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rm-muted);
+}
+
+.rm-role {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 17px;
+    line-height: 1.45;
+}
+
+.rm-role li {
+    display: flex;
+    gap: 12px;
+}
+
+.rm-role svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+}
+
+.rm-earn {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 18px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.rm-earn li {
+    padding: 20px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 27, 51, 0.04), 0 12px 32px -16px rgba(15, 27, 51, 0.14);
+}
+
+.rm-earn svg {
+    width: 24px;
+    height: 24px;
+    color: #1f8f4e;
+}
+
+.rm-earn h3 {
+    margin: 14px 0 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.rm-earn p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--rm-grey);
+}
+
+.rm-note {
+    margin: 16px 0 0;
+    font-size: 14px;
+    color: var(--rm-grey);
+}
+
+/* ── Application ────────────────────────────────────── */
+
+.rm-apply {
+    padding: clamp(28px, 3vw, 40px);
+    border-radius: 32px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(15, 27, 51, 0.04), 0 24px 64px -24px rgba(15, 27, 51, 0.18);
+}
+
+.rm-apply-title {
+    margin: 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    font-size: clamp(28px, 2.4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.rm-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.rm-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.rm-form em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--rm-muted);
+}
+
+.rm-form input,
+.rm-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    border: 1px solid #d9dce2;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--rm-navy);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    resize: vertical;
+}
+
+.rm-form input::placeholder,
+.rm-form textarea::placeholder {
+    color: #a3a8b1;
+}
+
+.rm-form input:focus-visible,
+.rm-form textarea:focus-visible {
+    outline: 2px solid var(--rm-navy);
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+.rm-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 56px;
+    margin-top: 8px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--rm-navy);
+    color: #fff;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.rm-submit svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 200ms ease;
+}
+
+.rm-submit:hover {
+    background: #1b2c4f;
+}
+
+.rm-submit:hover svg {
+    transform: translateX(3px);
+}
+
+.rm-submit:focus-visible,
+.rm-back:focus-visible,
+.rm-apply a:focus-visible {
+    outline: 3px solid var(--rm-navy);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.rm-fine,
+.rm-sent {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--rm-grey);
+}
+
+.rm-sent {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.rm-apply a {
+    color: var(--rm-navy);
+}
+
+@media (max-width: 1000px) {
+    .rm-panel {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .rm-panel {
+        padding: 28px 16px 16px;
+        border-radius: 28px;
+    }
+
+    .rm-earn {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .rm-apply {
+        padding: 24px 20px;
+        border-radius: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rm-submit,
+    .rm-submit svg {
+        transition: none;
+    }
+}

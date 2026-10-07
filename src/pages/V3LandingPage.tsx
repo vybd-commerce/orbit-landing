@@ -11,7 +11,7 @@ import FinalCtaSection from "../components/FinalCtaSection";
 import "./LandingPage.css";
 import "./V3LandingPage.css";
 
-const CALENDLY_URL = "https://calendly.com/hello-vybd/introductory-call";
+const CALENDLY_URL = "https://calendly.com/hello-vybd/vybd-discovery-call";
 
 /* The run log stands in for a product screenshot: it is what an operator
    actually sees when a function is running, rather than a picture of an app

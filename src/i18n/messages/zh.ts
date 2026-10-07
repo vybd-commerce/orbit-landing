@@ -257,6 +257,7 @@ export const zh: Messages = {
         about: "关于我们",
         careers: "职业发展",
         events: "活动",
+        rainmaker: "成为合作伙伴",
         follow: "关注我们",
         partnership: "合作咨询",
         press: "媒体咨询",

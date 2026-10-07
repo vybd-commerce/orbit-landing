@@ -257,6 +257,7 @@ export const ko: Messages = {
         about: "회사 소개",
         careers: "커리어",
         events: "이벤트",
+        rainmaker: "파트너 되기",
         follow: "팔로우",
         partnership: "제휴 문의",
         press: "언론 문의",

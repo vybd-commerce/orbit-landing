@@ -11,7 +11,7 @@ import "./MockLandingPage.css";
 import "./V2LandingPage.css";
 
 // Every CTA on this page books a working session.
-const CALENDLY_URL = "https://calendly.com/hello-vybd/introductory-call";
+const CALENDLY_URL = "https://calendly.com/hello-vybd/vybd-discovery-call";
 const goTo = () => {
     window.location.href = CALENDLY_URL;
 };

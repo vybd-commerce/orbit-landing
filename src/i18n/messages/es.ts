@@ -259,6 +259,7 @@ export const es: Messages = {
         about: "Sobre nosotros",
         careers: "Carreras",
         events: "Eventos",
+        rainmaker: "Programa de socios",
         follow: "Síganos",
         partnership: "Alianzas",
         press: "Prensa",

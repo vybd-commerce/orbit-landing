@@ -268,6 +268,7 @@ export const en = {
         about: "About us",
         careers: "Careers",
         events: "Events",
+        rainmaker: "Become a partner",
         follow: "Follow us",
         partnership: "Partnership inquiries",
         press: "Press inquiries",

@@ -13,6 +13,7 @@ import V2LandingPage from "./pages/V2LandingPage";
 import V3LandingPage from "./pages/V3LandingPage";
 import ConsultingPage from "./pages/ConsultingPage";
 import WaitlistPage from "./pages/WaitlistPage";
+import RainmakerPage from "./pages/RainmakerPage";
 import HelloPage from "./pages/HelloPage";
 import BookPage from "./pages/BookPage";
 import BookThanksPage from "./pages/BookThanksPage";
@@ -40,6 +41,10 @@ function App() {
         <Route path="/hello" element={<Navigate to="/" replace />} />
         {/* Previous root, back at its own address */}
         <Route path="/waitlist" element={<WaitlistPage />} />
+        {/* Sign-up for local representatives outside the US */}
+        <Route path="/rainmaker" element={<RainmakerPage />} />
+        <Route path="/zh/rainmaker" element={<RainmakerPage locale="zh" />} />
+        <Route path="/ko/rainmaker" element={<RainmakerPage locale="ko" />} />
         {/* Previous root, kept reachable at its own address */}
         <Route path="/v4" element={<V3LandingPage />} />
         {/* Earlier roots, kept reachable while the new one settles */}
