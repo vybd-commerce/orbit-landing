@@ -124,7 +124,7 @@ export const zh: Messages = {
                 shipping: "运费",
                 detail: "过剩库存 −28%，运费 −22%",
             },
-            emsworth: {
+            mib: {
                 category: "高端毛巾布棉制品",
                 label: "批发预订",
                 headline: "$30,000 B2B 预订单",
@@ -262,11 +262,9 @@ export const zh: Messages = {
         partnership: "合作咨询",
         press: "媒体咨询",
         mediaKit: "下载媒体资料包",
-        offices: "办公地点",
         tagline: "Commerce, Coordinated.",
         privacy: "隐私与 Cookie 政策",
         terms: "条款",
-        cookies: "Cookie 偏好设置",
     },
 
     book: {

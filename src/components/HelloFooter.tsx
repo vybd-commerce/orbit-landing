@@ -41,8 +41,8 @@ const PARTNERSHIP_EMAIL = "hello@vybd.ai";
 const PRESS_EMAIL = "hello@vybd.ai";
 const MEDIA_KIT_HREF = "#"; // TODO(footer): media kit file
 
-const OFFICES = ["888 Main St, New York, New York - 10044"];
-const LEGAL_NOTE = "© Vybd [legal entity name] | [Registered address] | [Company registration and tax numbers]";
+/* TODO(footer): swap in the exact registered entity name (e.g. "Vybd, Inc."). */
+const COPYRIGHT = `© ${new Date().getFullYear()} Vybd`;
 
 const legal = (f: Messages["footer"]): Link[] => [
     { label: f.privacy, href: "/privacy" },
@@ -107,17 +107,6 @@ export default function HelloFooter() {
                         </li>
                     </ul>
                 </div>
-                <div className="hf-col hf-col--wide">
-                    <h2 className="hf-head">{f.offices}</h2>
-                    <ul>
-                        {OFFICES.map((o) => (
-                            <li key={o} className="hf-text">
-                                {o}
-                            </li>
-                        ))}
-                    </ul>
-                    <p className="hf-note">{LEGAL_NOTE}</p>
-                </div>
             </nav>
 
             <div className="hf-brand" aria-hidden="true">
@@ -133,18 +122,17 @@ export default function HelloFooter() {
             <div className="hf-bottom">
                 <div className="hf-tagline">
                     <p className="hf-tagline-main">{f.tagline}</p>
+                    <p className="hf-copy">{COPYRIGHT}</p>
                 </div>
                 <div className="hf-legal">
                     <LanguageSwitcher />
-                    {legal(f).map((l) => (
-                        <a key={l.label} href={l.href}>
-                            {l.label}
-                        </a>
-                    ))}
-                    {/* TODO(footer): open the cookie consent panel once one exists. */}
-                    <button type="button" className="hf-legal-btn">
-                        {f.cookies}
-                    </button>
+                    <div className="hf-legal-links">
+                        {legal(f).map((l) => (
+                            <a key={l.label} href={l.href}>
+                                {l.label}
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </div>
         </footer>

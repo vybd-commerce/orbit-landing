@@ -59,21 +59,21 @@ function proofCards(t: Messages): ProofCard[] {
             detail: c.bayangrom.detail,
         },
         {
-            id: "emsworth",
-            name: "Emsworth",
+            id: "mib",
+            name: "MIB Industries",
             country: t.countries.in,
-            category: c.emsworth.category,
+            category: c.mib.category,
             size: "large",
-            label: c.emsworth.label,
-            headline: c.emsworth.headline,
+            label: c.mib.label,
+            headline: c.mib.headline,
             visual: {
                 kind: "steps",
                 steps: [
-                    { label: c.emsworth.wholesale, state: "done" },
-                    { label: c.emsworth.dtc, state: "active" },
+                    { label: c.mib.wholesale, state: "done" },
+                    { label: c.mib.dtc, state: "active" },
                 ],
             },
-            detail: c.emsworth.detail,
+            detail: c.mib.detail,
         },
         {
             id: "sugat",
@@ -130,7 +130,7 @@ function proofCards(t: Messages): ProofCard[] {
 }
 
 /* Ids only, for the reduced-motion "already seen" set. */
-const CARD_IDS = ["bayangrom", "emsworth", "sugat", "ollobot", "karama", "ouwr", "cellre"];
+const CARD_IDS = ["bayangrom", "mib", "sugat", "ollobot", "karama", "ouwr", "cellre"];
 
 /* ── Motion settings ─────────────────────────────────────────────────── */
 
@@ -141,7 +141,7 @@ const COUNT_MS = 1200;
    nothing moves in step. */
 const MOTION: Record<string, { drift: number; amp: number; dur: number; delay: number }> = {
     bayangrom: { drift: -14, amp: 5, dur: 7.4, delay: -1.2 },
-    emsworth: { drift: 18, amp: 4, dur: 8.6, delay: -4.1 },
+    mib: { drift: 18, amp: 4, dur: 8.6, delay: -4.1 },
     ouwr: { drift: 24, amp: 6, dur: 6.3, delay: -2.6 },
     cellre: { drift: -24, amp: 5, dur: 8.1, delay: -0.4 },
     sugat: { drift: -20, amp: 4, dur: 6.8, delay: -3.3 },

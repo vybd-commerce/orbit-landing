@@ -34,7 +34,7 @@ STYLE = (
 
 BRANDS = {
     "bayangrom": ("Bayangrom", "an art and apparel brand from India"),
-    "emsworth": ("Emsworth", "a luxury terry cotton towels and bathrobes brand from India"),
+    "mib": ("MIB Industries", "an Indian maker of luxury terry cotton towels and bathrobes"),
     "sugat": ("Sugat Traders", "an Indian company making herbal powders and sustainable food packaging"),
     "ollobot": ("Ollobot", "a friendly companion robot company from China"),
     "karama": ("Karama", "a premium underwear brand from the USA"),

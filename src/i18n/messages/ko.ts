@@ -124,7 +124,7 @@ export const ko: Messages = {
                 shipping: "배송비",
                 detail: "과잉 재고 −28%, 배송비 −22%",
             },
-            emsworth: {
+            mib: {
                 category: "럭셔리 테리 코튼 제품",
                 label: "도매 사전 주문",
                 headline: "B2B 사전 주문 $30,000",
@@ -262,11 +262,9 @@ export const ko: Messages = {
         partnership: "제휴 문의",
         press: "언론 문의",
         mediaKit: "미디어 키트 다운로드",
-        offices: "오피스",
         tagline: "Commerce, Coordinated.",
         privacy: "개인정보 및 쿠키 정책",
         terms: "이용약관",
-        cookies: "쿠키 설정",
     },
 
     book: {

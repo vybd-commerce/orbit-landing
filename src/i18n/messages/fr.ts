@@ -126,7 +126,7 @@ export const fr: Messages = {
                 shipping: "Coût d'expédition",
                 detail: "−28\u00a0% de stock excédentaire, −22\u00a0% de coût d'expédition",
             },
-            emsworth: {
+            mib: {
                 category: "Produits de luxe en éponge de coton",
                 label: "Précommandes de gros",
                 headline: "$30,000 de précommandes B2B",
@@ -264,11 +264,9 @@ export const fr: Messages = {
         partnership: "Partenariats",
         press: "Presse",
         mediaKit: "Télécharger le kit média",
-        offices: "Bureaux",
         tagline: "Commerce, Coordinated.",
         privacy: "Politique de confidentialité et cookies",
         terms: "Conditions",
-        cookies: "Vos préférences de cookies",
     },
 
     book: {

@@ -124,7 +124,7 @@ export const ja: Messages = {
                 shipping: "配送コスト",
                 detail: "過剰在庫 −28%、配送コスト −22%",
             },
-            emsworth: {
+            mib: {
                 category: "高級テリーコットン製品",
                 label: "卸売の予約注文",
                 headline: "B2B 予約注文 $30,000",
@@ -262,11 +262,9 @@ export const ja: Messages = {
         partnership: "提携のお問い合わせ",
         press: "報道関係のお問い合わせ",
         mediaKit: "メディアキットをダウンロード",
-        offices: "オフィス",
         tagline: "Commerce, Coordinated.",
         privacy: "プライバシー・Cookie ポリシー",
         terms: "利用規約",
-        cookies: "Cookie の設定",
     },
 
     book: {

@@ -126,7 +126,7 @@ export const es: Messages = {
                 shipping: "Coste de envío",
                 detail: "−28\u00a0% de exceso de inventario, −22\u00a0% de coste de envío",
             },
-            emsworth: {
+            mib: {
                 category: "Productos de lujo de rizo de algodón",
                 label: "Preventas mayoristas",
                 headline: "$30,000 en preventas B2B",
@@ -264,11 +264,9 @@ export const es: Messages = {
         partnership: "Alianzas",
         press: "Prensa",
         mediaKit: "Descargar kit de prensa",
-        offices: "Oficinas",
         tagline: "Commerce, Coordinated.",
         privacy: "Política de privacidad y cookies",
         terms: "Términos",
-        cookies: "Sus preferencias de cookies",
     },
 
     book: {

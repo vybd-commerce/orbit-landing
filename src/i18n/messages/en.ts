@@ -133,7 +133,7 @@ export const en = {
                 shipping: "Shipping cost",
                 detail: "−28% excess inventory, −22% shipping cost",
             },
-            emsworth: {
+            mib: {
                 category: "Luxury terry cotton products",
                 label: "Wholesale pre-orders",
                 headline: "$30,000 in B2B pre-orders",
@@ -273,11 +273,9 @@ export const en = {
         partnership: "Partnership inquiries",
         press: "Press inquiries",
         mediaKit: "Download media kit",
-        offices: "Offices",
         tagline: "Commerce, Coordinated.",
         privacy: "Privacy and cookie policy",
         terms: "Terms",
-        cookies: "Your cookie preferences",
     },
 
     book: {
