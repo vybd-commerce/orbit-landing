@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 /* Korean. */
 export const ko: Messages = {
     meta: {
-        homeTitle: "안녕, 세상 | Vybd",
+        homeTitle: "해외 브랜드의 미국 시장 진출 | Vybd",
         homeDescription: "해외 브랜드와 제조사의 미국 진출을 돕고, 진출 이후의 운영까지 맡습니다.",
         bookTitle: "미국 진출 상담 예약 | Vybd",
         thanksTitle: "예약이 완료되었습니다 | Vybd",
@@ -28,47 +28,46 @@ export const ko: Messages = {
 
     hero: {
         title: "안녕, 세상",
-        sub: "미국 시장 진출에 필요한 모든 것, 여기서 시작하세요.",
+        sub: "좋은 제품은 당신이 만들고, 나머지는 우리가 맡습니다.",
         inputLabel: "미국 시장 진출에 필요한 것을 입력하세요",
         submit: "보내기",
         prev: "이전 예시",
         next: "다음 예시",
         pause: "예시 일시정지",
         play: "예시 재생",
-        note: "해외 브랜드와 제조사의 미국 진출을 돕고, 진출 이후의 운영까지 맡습니다.",
         firstSlide: "skincare-korea",
         slides: {
             "spices-india": {
                 alt: "흰 작업대 위에 영수증과 메모지 사이로 마트 제품을 줄지어 놓는 손",
-                prompt: "예: '인도에서 향신료를 만듭니다. 미국 식료품점에 입점하려면?'",
+                prompt: "인도에서 향신료를 만듭니다. 미국 식료품점에 입점하려면?",
             },
             "skincare-korea": {
                 alt: "벽돌 벽 스튜디오에서 커피잔을 들고 코르크 보드에 붙은 패키지 시안을 비교하는 디자이너",
-                prompt: "예: '한국에서 인기 있는 스킨케어 브랜드입니다. 미국에서는 어디서부터 시작해야 할까요?'",
+                prompt: "한국에서 인기 있는 스킨케어 브랜드입니다. 미국 소비자에게 통하려면?",
             },
             "battery-china": {
                 alt: "풀필먼트 센터 작업대에서 장갑 낀 손으로 상자에 빈 라벨을 붙이는 모습",
-                prompt: "예: '중국에서 배터리를 생산합니다. 미국으로 수출하려면 무엇이 필요할까요?'",
+                prompt: "중국에서 만든 배터리입니다. 미국 라벨과 안전 규정은 무엇을 요구하나요?",
             },
             "plates-bangladesh": {
                 alt: "회의실 테이블에서 열린 샘플 상자 옆 샘플 병을 들어 보는 손",
-                prompt: "예: '방글라데시에서 생분해 접시를 만듭니다. 미국에서 누가 살까요?'",
+                prompt: "방글라데시에서 생분해 접시를 만듭니다. 미국에서 누가 살까요?",
             },
             "french-brand": {
                 alt: "높은 창고 통로에서 오더피커 리프트를 타고 상자를 꺼내는 작업자",
-                prompt: "예: '프랑스 브랜드로 아마존 US에서 판매 중인데 매출이 정체됐어요. 다음 단계는?'",
+                prompt: "미국에서 재고를 어디에 보관해야 할까요?",
             },
             "retailer-order": {
                 alt: "창고 하역장에서 태블릿으로 랩핑된 팔레트 줄을 확인하는 작업자",
-                prompt: "예: '미국 리테일러가 우리 제품을 원합니다. 이 주문을 감당할 수 있을까요?'",
+                prompt: "미국 리테일러가 대량 주문을 넣었습니다. 납품할 수 있을까요?",
             },
             "port-dawn": {
                 alt: "새벽 컨테이너 항구 부두에 선 항만 작업자, 뒤로 크레인과 정박한 선박",
-                prompt: "예: '우리 제품을 미국에 들여오는 데 실제로 얼마가 들까요?'",
+                prompt: "우리 제품을 미국에 들여오는 데 실제로 얼마가 들까요?",
             },
             "robots-china": {
                 alt: "해 질 녘 교외 주택 현관 맨 위 계단에 놓인 배송 상자",
-                prompt: "예: '중국에서 로봇을 만듭니다. 미국에서 어떻게 판매하고 지원할까요?'",
+                prompt: "미국 고객에게 어떻게 배송하고 반품은 어떻게 처리하나요?",
             },
         },
     },
@@ -81,9 +80,9 @@ export const ko: Messages = {
         anywhere: "어디서든",
         mid: "미국으로 가져갑니다. 하나의 파트너가 바이어를 찾고,",
         redTape: "복잡한 절차를",
-        rest: "해결하며, 운영까지 맡습니다. 유통업체에 마진을 넘기지 않고, 브랜드의",
-        control: "주도권은",
-        end: "그대로 당신에게 있습니다.",
+        rest: "해결하며, 운영까지 맡습니다. 마진도, 브랜드의",
+        control: "주도권도",
+        end: "유통업체에 넘기지 않고 그대로 지킵니다.",
     },
 
     countries: {
@@ -111,19 +110,11 @@ export const ko: Messages = {
 
     proof: {
         title: "이미 미국에서.",
-        sub: "인도, 한국, 중국의 브랜드들이 지금 미국에서 판매하고 있습니다.",
+        sub: "실제 브랜드, 실제 미국 성과.",
         before: "이전",
         after: "이후",
         done: "완료",
         inProgress: "진행 중",
-        live: "진행 중",
-        pledgedLabel: "목표 대비 후원 금액",
-        notFilled: "아직 입력되지 않음",
-        ofGoal: (pledged, goal) => `${goal} 중 ${pledged}`,
-        asOf: (date) => `${date} 기준`,
-        goal: (amount) => `목표 ${amount}`,
-        inPreorders: (amount) => `사전 주문 ${amount}`,
-        pledged: (amount) => `후원 ${amount}`,
         cards: {
             bayangrom: {
                 category: "아트 및 의류",
@@ -148,8 +139,9 @@ export const ko: Messages = {
             },
             ollobot: {
                 category: "컴패니언 로봇",
-                label: "킥스타터 진행 중",
-                detail: "목표: 사전 주문 $100,000",
+                label: "배송 및 고객 지원",
+                headline: "로봇 5,000대 배송 완료",
+                detail: "미국 고객 지원도 저희가 맡고 있습니다",
             },
             karama: {
                 category: "프리미엄 언더웨어",
@@ -158,11 +150,13 @@ export const ko: Messages = {
             },
             ouwr: {
                 category: "K-패션, 여성복",
-                label: "미국 진출 완료",
+                label: "자금 조달",
+                headline: "미국 진출 자금 $15,000 확보",
             },
             cellre: {
                 category: "K-뷰티",
-                label: "미국 진출 완료",
+                label: "자금 조달",
+                headline: "미국 진출 자금 $15,000 확보",
             },
         },
     },
@@ -200,6 +194,39 @@ export const ko: Messages = {
         you: "당신",
     },
 
+    offer: {
+        label: "진행 방식",
+        title: "미국 진출 플랜으로 시작하세요.",
+        sub: "비용을 쓰기 전에, 미국 시장에 무엇이 필요한지 먼저 확인하세요.",
+        plan: {
+            step: "1단계",
+            name: "미국 진출 플랜",
+            price: "$7,000",
+            time: "1개월",
+            items: [
+                "시장 조사",
+                "미국 가격 및 채널 전략",
+                "미국 소비자를 위한 브랜딩",
+                "규제 대응: 라벨, 인증, 수입 규정",
+                "창고 및 물류 계획",
+            ],
+        },
+        build: {
+            step: "2단계",
+            name: "구축 및 운영",
+            price: "작업량 기준 청구",
+            time: "필요한 기간 동안",
+            items: [
+                "법인 설립 및 출시",
+                "리테일 바이어 및 온라인 채널",
+                "자금 조달 및 투자 유치",
+                "운송, 창고, 풀필먼트",
+                "미국 일상 운영",
+            ],
+        },
+        credit: "플랜 이후 저희와 계속 진행하시면 $7,000은 이후 작업 비용에서 차감됩니다.",
+    },
+
     tech: {
         title: "자체 개발 기술",
         more: "그 외 다수",
@@ -214,7 +241,7 @@ export const ko: Messages = {
     },
 
     contact: {
-        title: "제품을 미국으로 가져갈 준비가 되셨나요?",
+        title: "미국 진출을 함께 계획하세요.",
         sub: "영업 담당자가 아닌 실무 전문가와 30분. 현지 시간대에 맞춰 시간을 고르세요.",
         cta: "상담 예약하기",
     },
@@ -229,18 +256,13 @@ export const ko: Messages = {
         company: "회사",
         about: "회사 소개",
         careers: "커리어",
-        jobs: "채용",
         events: "이벤트",
-        compliance: "컴플라이언스",
-        support: "고객 지원 센터",
-        investors: "투자자",
         follow: "팔로우",
         partnership: "제휴 문의",
         press: "언론 문의",
         mediaKit: "미디어 키트 다운로드",
         offices: "오피스",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "개인정보 및 쿠키 정책",
         terms: "이용약관",
         cookies: "쿠키 설정",

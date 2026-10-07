@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import HeroSectionV2 from "../components/HeroSectionV2";
 import ComplexitySection from "../components/ComplexitySection";
 import ComplexityRing from "../components/ComplexityRing";
+import OfferSection from "../components/OfferSection";
 import ProofCollage from "../components/ProofCollage";
 import StatementSection from "../components/StatementSection";
 import TechSection from "../components/TechSection";
@@ -87,6 +88,7 @@ export default function HelloPage({ complexity = "web" }: { complexity?: "web" |
             <StatementSection />
             <ProofCollage />
             {complexity === "ring" ? <ComplexityRing /> : <ComplexitySection />}
+            <OfferSection />
             <TechSection />
             <ContactSection />
             <HelloFooter />

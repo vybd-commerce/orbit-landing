@@ -47,6 +47,42 @@
     text-wrap: balance;
 }
 
+/* Same pill as the contact section's button. */
+.h2-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 52px;
+    margin-top: clamp(24px, 2.2vw, 32px);
+    padding: 0 24px 0 28px;
+    border-radius: 999px;
+    background: #0f1b33;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease;
+}
+
+.h2-cta svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 200ms ease;
+}
+
+.h2-cta:hover {
+    background: #1b2c4f;
+}
+
+.h2-cta:hover svg {
+    transform: translateX(3px);
+}
+
+.h2-cta:focus-visible {
+    outline: 3px solid #0f1b33;
+    outline-offset: 3px;
+}
+
 /* ── Card ───────────────────────────────────────────── */
 
 .h2-card {
@@ -235,14 +271,6 @@
     opacity: 0.45;
 }
 
-.h2-note {
-    margin: 24px 0 0;
-    max-width: 60ch;
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--h2-muted);
-}
-
 .h2-sr {
     position: absolute;
     width: 1px;
@@ -288,6 +316,12 @@
     .h2-sub {
         margin-top: 12px;
         font-size: 18px;
+    }
+
+    .h2-cta {
+        height: 48px;
+        margin-top: 20px;
+        font-size: 15px;
     }
 
     /* Full width of the panel and portrait, so the photo carries the
@@ -346,9 +380,5 @@
     .h2-ctrl {
         width: 52px;
         height: 52px;
-    }
-
-    .h2-note {
-        font-size: 13px;
     }
 }

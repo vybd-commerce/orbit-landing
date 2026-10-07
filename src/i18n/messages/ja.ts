@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 /* Japanese. */
 export const ja: Messages = {
     meta: {
-        homeTitle: "こんにちは、世界 | Vybd",
+        homeTitle: "海外ブランドの米国市場進出 | Vybd",
         homeDescription: "海外のブランドやメーカーの米国進出を支援し、進出後のオペレーションまで担います。",
         bookTitle: "米国進出のご相談を予約 | Vybd",
         thanksTitle: "ご予約が完了しました | Vybd",
@@ -28,47 +28,46 @@ export const ja: Messages = {
 
     hero: {
         title: "こんにちは、世界",
-        sub: "米国市場への進出に必要なことは、ここから始めましょう。",
+        sub: "いい製品をつくるのはあなた。あとは私たちに。",
         inputLabel: "米国市場への進出に必要なことを入力してください",
         submit: "送信",
         prev: "前の例",
         next: "次の例",
         pause: "例を一時停止",
         play: "例を再生",
-        note: "海外のブランドやメーカーの米国進出を支援し、進出後のオペレーションまで担います。",
         firstSlide: "port-dawn",
         slides: {
             "spices-india": {
                 alt: "白い作業台で、レシートや付箋の間にスーパーの商品を並べる手",
-                prompt: "例：「インドでスパイスを製造しています。米国のスーパーに置いてもらうには？」",
+                prompt: "インドでスパイスを製造しています。米国のスーパーに置いてもらうには？",
             },
             "skincare-korea": {
                 alt: "レンガ壁のスタジオで、コーヒーを手にコルクボードのパッケージ案を見比べるデザイナー",
-                prompt: "例：「韓国で人気のスキンケアブランドです。米国ではどこから始めるべき？」",
+                prompt: "韓国で人気のスキンケアブランドです。米国の消費者に響かせるには？",
             },
             "battery-china": {
                 alt: "フルフィルメントセンターの作業台で、手袋をした手が箱に無地のラベルを貼る様子",
-                prompt: "例：「中国でバッテリーを製造しています。米国へ出荷するには何が必要？」",
+                prompt: "中国製のバッテリーです。米国のラベルや安全規制では何が必要？",
             },
             "plates-bangladesh": {
                 alt: "会議室のテーブルで、開けたサンプル箱の横の瓶を手に取って見る手",
-                prompt: "例：「バングラデシュで生分解性の皿を作っています。米国で誰が買ってくれる？」",
+                prompt: "バングラデシュで生分解性の皿を作っています。米国で誰が買ってくれる？",
             },
             "french-brand": {
                 alt: "天井の高い倉庫の通路で、オーダーピッカーに乗って段ボールに手を伸ばす作業員",
-                prompt: "例：「Amazon US で販売中のフランスのブランドですが、売上が伸び悩んでいます。次の一手は？」",
+                prompt: "米国では、どこの倉庫に在庫を置くべき？",
             },
             "retailer-order": {
                 alt: "倉庫の荷積み場で、ラップ巻きのパレットの列をタブレットで確認する作業員",
-                prompt: "例：「米国の小売業者から引き合いがありました。この注文に対応できる？」",
+                prompt: "米国の小売業者から大口注文が入りました。納品できる？",
             },
             "port-dawn": {
                 alt: "夜明けのコンテナ港の岸壁に立つ港湾作業員。奥にはクレーンと停泊中の船",
-                prompt: "例：「米国に製品を届けるのに、実際いくらかかる？」",
+                prompt: "米国に製品を届けるのに、実際いくらかかる？",
             },
             "robots-china": {
                 alt: "夕暮れの郊外の家のポーチ、最上段に置かれた配送用の箱",
-                prompt: "例：「中国でロボットを製造しています。米国での販売とサポートはどうすれば？」",
+                prompt: "米国の顧客への配送と返品対応はどうすれば？",
             },
         },
     },
@@ -81,9 +80,9 @@ export const ja: Messages = {
         anywhere: "世界中から",
         mid: "アメリカへ。ひとつのパートナーが買い手を見つけ、",
         redTape: "煩雑な手続きを",
-        rest: "片付け、オペレーションまで運営します。代理店にマージンを取られることなく、ブランドの",
-        control: "主導権は",
-        end: "あなたの手に。",
+        rest: "片付け、オペレーションまで運営します。マージンもブランドの",
+        control: "主導権も",
+        end: "代理店に渡さず、あなたの手に。",
     },
 
     countries: {
@@ -111,19 +110,11 @@ export const ja: Messages = {
 
     proof: {
         title: "すでに米国で。",
-        sub: "インド、韓国、中国のブランドが、いまアメリカで販売しています。",
+        sub: "本物のブランド、本物の米国での成果。",
         before: "導入前",
         after: "導入後",
         done: "完了",
         inProgress: "進行中",
-        live: "公開中",
-        pledgedLabel: "目標に対する支援額",
-        notFilled: "未入力",
-        ofGoal: (pledged, goal) => `${goal} 中 ${pledged}`,
-        asOf: (date) => `${date} 時点`,
-        goal: (amount) => `目標 ${amount}`,
-        inPreorders: (amount) => `予約注文 ${amount}`,
-        pledged: (amount) => `支援額 ${amount}`,
         cards: {
             bayangrom: {
                 category: "アート・アパレル",
@@ -148,8 +139,9 @@ export const ja: Messages = {
             },
             ollobot: {
                 category: "コンパニオンロボット",
-                label: "Kickstarter 公開中",
-                detail: "目標：予約注文 $100,000",
+                label: "配送とカスタマーサポート",
+                headline: "ロボット 5,000 台を納品",
+                detail: "米国でのカスタマーサポートも担当しています",
             },
             karama: {
                 category: "プレミアムアンダーウェア",
@@ -158,11 +150,13 @@ export const ja: Messages = {
             },
             ouwr: {
                 category: "K ファッション・レディース",
-                label: "米国で販売中",
+                label: "資金調達",
+                headline: "米国進出のために $15,000 を調達",
             },
             cellre: {
                 category: "K ビューティー",
-                label: "米国で販売中",
+                label: "資金調達",
+                headline: "米国進出のために $15,000 を調達",
             },
         },
     },
@@ -200,6 +194,39 @@ export const ja: Messages = {
         you: "あなた",
     },
 
+    offer: {
+        label: "進め方",
+        title: "まずは米国進出プランから。",
+        sub: "お金をかける前に、米国で何が必要かを把握しましょう。",
+        plan: {
+            step: "ステップ 1",
+            name: "米国進出プラン",
+            price: "$7,000",
+            time: "1 か月",
+            items: [
+                "市場調査",
+                "米国での価格・チャネル戦略",
+                "米国の消費者に向けたブランディング",
+                "規制対応：ラベル、認証、輸入規則",
+                "倉庫・物流プラン",
+            ],
+        },
+        build: {
+            step: "ステップ 2",
+            name: "構築と運営",
+            price: "作業量に応じて請求",
+            time: "必要な期間だけ",
+            items: [
+                "会社設立とローンチ",
+                "小売バイヤーとオンラインチャネル",
+                "融資と資金調達",
+                "輸送、倉庫、フルフィルメント",
+                "米国での日々のオペレーション",
+            ],
+        },
+        credit: "プランの後も私たちと進める場合、$7,000 はその後の作業費用に充当されます。",
+    },
+
     tech: {
         title: "独自テクノロジー",
         more: "ほかにも多数",
@@ -214,7 +241,7 @@ export const ja: Messages = {
     },
 
     contact: {
-        title: "製品をアメリカに届ける準備はできましたか？",
+        title: "米国での立ち上げを、一緒に計画しましょう。",
         sub: "営業担当ではなく、実務担当者との 30 分。ご自身のタイムゾーンで時間を選べます。",
         cta: "相談を予約する",
     },
@@ -229,18 +256,13 @@ export const ja: Messages = {
         company: "会社情報",
         about: "私たちについて",
         careers: "キャリア",
-        jobs: "求人",
         events: "イベント",
-        compliance: "コンプライアンス",
-        support: "サポートセンター",
-        investors: "投資家情報",
         follow: "フォロー",
         partnership: "提携のお問い合わせ",
         press: "報道関係のお問い合わせ",
         mediaKit: "メディアキットをダウンロード",
         offices: "オフィス",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "プライバシー・Cookie ポリシー",
         terms: "利用規約",
         cookies: "Cookie の設定",

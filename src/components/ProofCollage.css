@@ -241,6 +241,15 @@
     font-size: clamp(24px, 2.4vw, 34px);
 }
 
+/* Narrow cards: headline and odometer both have to fit the width. */
+.pc-card--small .pc-headline {
+    font-size: clamp(16px, 1.3vw, 19px);
+}
+
+.pc-card--small .pc-digit {
+    font-size: clamp(20px, 1.8vw, 28px);
+}
+
 /* ── Count-up: the final number reserves the width ─── */
 
 .pc-sr {
@@ -589,70 +598,7 @@
     color: var(--pc-grey);
 }
 
-/* ── Visual: Kickstarter progress ───────────────────── */
-
-.pc-ks {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.pc-live {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: #e3f4ea;
-    color: var(--pc-green);
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.pc-live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-    animation: pc-pulse 2s ease-in-out infinite;
-}
-
-@keyframes pc-pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50%      { transform: scale(1.6); opacity: 0.45; }
-}
-
-.pc-ks-track {
-    height: 10px;
-    border-radius: 999px;
-    background: #e7e9ed;
-    overflow: hidden;
-}
-
-.pc-ks-fill {
-    display: block;
-    height: 100%;
-    border-radius: inherit;
-    background: var(--pc-green);
-    transform-origin: left center;
-    transform: scaleX(0);
-    transition: transform 1200ms var(--pc-ease) 100ms;
-}
-
-.is-seen .pc-ks-fill {
-    transform: none;
-}
-
-.pc-ks-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--pc-muted);
-}
-
-/* ── Visual: pre-order counter ──────────────────────── */
+/* ── Visual: counter ──────────────────────── */
 
 .pc-counter {
     display: flex;
@@ -681,27 +627,6 @@
     color: var(--pc-muted);
 }
 
-/* ── Visual: image slot ─────────────────────────────── */
-
-.pc-image {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    border-radius: 14px;
-    object-fit: cover;
-}
-
-.pc-image--fallback {
-    display: grid;
-    place-items: center;
-    background: linear-gradient(160deg, #ece7e1, #ddd6ce);
-    color: #5a5047;
-    font-family: "Newsreader", Georgia, serif;
-    font-size: clamp(28px, 2.6vw, 40px);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-}
-
 /* ── Reduced motion: no entrance, no lift ───────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -710,7 +635,6 @@
     }
 
     .pc-grid.is-revealed .pc-card,
-    .pc-live-dot,
     .is-seen .pc-route-runner,
     .is-seen .pc-step--active .pc-step-text::after {
         animation: none;
@@ -718,7 +642,6 @@
 
     /* Final states, no transitions. */
     .pc-bar--after,
-    .pc-ks-fill,
     .pc-delta,
     .pc-step--done .pc-step-dot path {
         transition: none;

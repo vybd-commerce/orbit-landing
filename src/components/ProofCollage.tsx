@@ -8,21 +8,13 @@ import "./ProofCollage.css";
 
 /* ── Data (edit numbers here) ────────────────────────────────────────── */
 
-/* TODO(proof): fill in Ollobot's live Kickstarter numbers. While these are
-   null the card shows an obvious "$—" / "As of —" placeholder. */
-const OLLOBOT_PLEDGED: number | null = null; // e.g. 42350 (USD pledged so far)
-const OLLOBOT_AS_OF_DATE: string | null = null; // e.g. "Oct 4, 2026"
-const OLLOBOT_GOAL = 100_000;
-
 type Size = "large" | "medium" | "small";
 
 type Visual =
     | { kind: "bars"; rows: { label: string; before: number; after: number; delta: string }[] }
     | { kind: "steps"; steps: { label: string; state: "done" | "active" }[] }
     | { kind: "route"; from: string; to: string }
-    | { kind: "kickstarter"; pledged: number | null; goal: number; asOf: string | null }
-    | { kind: "counter"; amount: number }
-    | { kind: "image"; src?: string; alt?: string };
+    | { kind: "counter"; amount: number; currency: boolean; label: string };
 
 type ProofCard = {
     id: string;
@@ -100,8 +92,8 @@ function proofCards(t: Messages): ProofCard[] {
             category: c.ollobot.category,
             size: "medium",
             label: c.ollobot.label,
-            headline: t.proof.pledged(OLLOBOT_PLEDGED === null ? "$—" : usd(OLLOBOT_PLEDGED)),
-            visual: { kind: "kickstarter", pledged: OLLOBOT_PLEDGED, goal: OLLOBOT_GOAL, asOf: OLLOBOT_AS_OF_DATE },
+            headline: c.ollobot.headline,
+            visual: { kind: "counter", amount: 5_000, currency: false, label: c.ollobot.headline },
             detail: c.ollobot.detail,
         },
         {
@@ -112,7 +104,7 @@ function proofCards(t: Messages): ProofCard[] {
             size: "medium",
             label: c.karama.label,
             headline: c.karama.headline,
-            visual: { kind: "counter", amount: 10_000 },
+            visual: { kind: "counter", amount: 10_000, currency: true, label: c.karama.headline },
         },
         {
             id: "ouwr",
@@ -121,7 +113,8 @@ function proofCards(t: Messages): ProofCard[] {
             category: c.ouwr.category,
             size: "small",
             label: c.ouwr.label,
-            visual: { kind: "image" }, // TODO(proof): add src (and alt) for an Ouwr image
+            headline: c.ouwr.headline,
+            visual: { kind: "counter", amount: 15_000, currency: true, label: c.ouwr.headline },
         },
         {
             id: "cellre",
@@ -130,7 +123,8 @@ function proofCards(t: Messages): ProofCard[] {
             category: c.cellre.category,
             size: "small",
             label: c.cellre.label,
-            visual: { kind: "image" }, // TODO(proof): add src (and alt) for a Cellre image
+            headline: c.cellre.headline,
+            visual: { kind: "counter", amount: 15_000, currency: true, label: c.cellre.headline },
         },
     ];
 }
@@ -281,45 +275,16 @@ function Route({ from, to }: Extract<Visual, { kind: "route" }>) {
     );
 }
 
-function Kickstarter({ pledged, goal, asOf }: Extract<Visual, { kind: "kickstarter" }>) {
-    const t = useT();
-    const pct = pledged === null ? 0 : Math.min(100, (pledged / goal) * 100);
-    return (
-        <div className="pc-ks">
-            <span className="pc-live">
-                <span className="pc-live-dot" aria-hidden="true" />
-                {t.proof.live}
-            </span>
-            <div
-                className="pc-ks-track"
-                role="progressbar"
-                aria-label={t.proof.pledgedLabel}
-                aria-valuemin={0}
-                aria-valuemax={goal}
-                aria-valuenow={pledged ?? undefined}
-                aria-valuetext={pledged === null ? t.proof.notFilled : t.proof.ofGoal(usd(pledged), usd(goal))}
-            >
-                <span className="pc-ks-fill" style={{ width: `${pct}%` }} />
-            </div>
-            <div className="pc-ks-meta">
-                <span>{t.proof.asOf(asOf ?? "—")}</span>
-                <span>{t.proof.goal(usd(goal))}</span>
-            </div>
-        </div>
-    );
-}
-
 /* Odometer: the tiles are fixed to the final amount's digits, so counting
    up only changes characters (leading zeros), never the number of tiles. */
-function Counter({ amount, run, instant }: Extract<Visual, { kind: "counter" }> & Run) {
-    const t = useT();
+function Counter({ amount, currency, label, run, instant }: Extract<Visual, { kind: "counter" }> & Run) {
     const value = useCountUp(amount, run, instant);
-    const template = usd(amount);
+    const template = currency ? usd(amount) : amount.toLocaleString("en-US");
     const digitCount = template.replace(/\D/g, "").length;
     const digits = String(value).padStart(digitCount, "0").split("");
     let d = 0;
     return (
-        <div className="pc-counter" role="img" aria-label={t.proof.inPreorders(template)}>
+        <div className="pc-counter" role="img" aria-label={label}>
             {template.split("").map((ch, i) =>
                 /\d/.test(ch) ? (
                     <span key={i} className="pc-digit" aria-hidden="true">
@@ -335,15 +300,6 @@ function Counter({ amount, run, instant }: Extract<Visual, { kind: "counter" }> 
     );
 }
 
-function ImageSlot({ src, alt, name }: Extract<Visual, { kind: "image" }> & { name: string }) {
-    if (src) return <img className="pc-image" src={src} alt={alt ?? name} loading="lazy" decoding="async" />;
-    return (
-        <div className="pc-image pc-image--fallback" role="img" aria-label={name}>
-            {name}
-        </div>
-    );
-}
-
 function renderVisual(card: ProofCard, motion: Run): ReactNode {
     const v = card.visual;
     switch (v.kind) {
@@ -353,12 +309,8 @@ function renderVisual(card: ProofCard, motion: Run): ReactNode {
             return <Steps {...v} />;
         case "route":
             return <Route {...v} />;
-        case "kickstarter":
-            return <Kickstarter {...v} />;
         case "counter":
             return <Counter {...v} {...motion} />;
-        case "image":
-            return <ImageSlot {...v} name={card.name} />;
     }
 }
 

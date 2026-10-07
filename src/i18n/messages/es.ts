@@ -4,7 +4,7 @@ import type { Messages } from "./en";
    keeps its non-breaking space so it never splits across lines. */
 export const es: Messages = {
     meta: {
-        homeTitle: "Hola, mundo | Vybd",
+        homeTitle: "Entrar al mercado de EE. UU. | Vybd",
         homeDescription:
             "Llevamos marcas y fabricantes internacionales a EE.\u00a0UU. y gestionamos sus operaciones una vez allí.",
         bookTitle: "Reserve una llamada para entrar en EE.\u00a0UU. | Vybd",
@@ -30,47 +30,46 @@ export const es: Messages = {
 
     hero: {
         title: "Hola, mundo",
-        sub: "Todo lo que necesita para entrar en el mercado estadounidense empieza aquí.",
+        sub: "Usted hace buenos productos. Nosotros nos encargamos del resto.",
         inputLabel: "Describa lo que necesita para entrar en el mercado estadounidense",
         submit: "Enviar",
         prev: "Ejemplo anterior",
         next: "Ejemplo siguiente",
         pause: "Pausar ejemplos",
         play: "Reproducir ejemplos",
-        note: "Llevamos marcas y fabricantes internacionales a EE.\u00a0UU. y gestionamos sus operaciones una vez allí.",
         firstSlide: "retailer-order",
         slides: {
             "spices-india": {
                 alt: "Manos ordenando productos de supermercado en una mesa blanca, entre tickets y notas adhesivas",
-                prompt: "Pruebe «Producimos especias en India. ¿Cómo entramos en los supermercados de EE.\u00a0UU.?»",
+                prompt: "Producimos especias en India. ¿Cómo entramos en los supermercados de EE. UU.?",
             },
             "skincare-korea": {
                 alt: "Diseñador con una taza comparando bocetos de empaque clavados en un tablero en un estudio de ladrillo",
-                prompt: "Pruebe «Nuestra marca de cosmética triunfa en Corea. ¿Por dónde empezamos en EE.\u00a0UU.?»",
+                prompt: "Nuestra marca de cosmética triunfa en Corea. ¿Cómo conquistamos al comprador de EE. UU.?",
             },
             "battery-china": {
                 alt: "Manos con guantes pegando una etiqueta en blanco en una caja en un centro logístico",
-                prompt: "Pruebe «Fabricamos baterías en China. ¿Qué necesitamos para enviarlas a EE.\u00a0UU.?»",
+                prompt: "Fabricamos baterías en China. ¿Qué exigen las normas de etiquetado y seguridad de EE. UU.?",
             },
             "plates-bangladesh": {
                 alt: "Manos levantando un frasco de muestra junto a una caja abierta en una mesa de reuniones",
-                prompt: "Pruebe «Fabricamos platos compostables en Bangladés. ¿Quién los comprará en EE.\u00a0UU.?»",
+                prompt: "Fabricamos platos compostables en Bangladés. ¿Quién los comprará en EE. UU.?",
             },
             "french-brand": {
                 alt: "Operario en una plataforma elevadora alcanzando una caja en un alto pasillo de almacén",
-                prompt: "Pruebe «Nuestra marca francesa vende en Amazon US, pero las ventas no crecen. ¿Y ahora qué?»",
+                prompt: "¿Dónde almacenamos nuestro inventario en EE. UU.?",
             },
             "retailer-order": {
                 alt: "Operario revisando con una tableta una fila de palets embalados en un muelle de carga",
-                prompt: "Pruebe «Un minorista de EE.\u00a0UU. quiere nuestro producto. ¿Podemos cumplir con el pedido?»",
+                prompt: "Un minorista de EE. UU. acaba de hacer un gran pedido. ¿Podemos cumplir?",
             },
             "port-dawn": {
                 alt: "Trabajador portuario en el muelle de un puerto de contenedores al amanecer, con grúas y un barco atracado",
-                prompt: "Pruebe «¿Cuánto cuesta realmente llevar nuestro producto a EE.\u00a0UU.?»",
+                prompt: "¿Cuánto cuesta realmente llevar nuestro producto a EE. UU.?",
             },
             "robots-china": {
                 alt: "Caja de envío en el escalón de un porche de las afueras al atardecer",
-                prompt: "Pruebe «Fabricamos robots en China. ¿Cómo los vendemos y damos soporte en EE.\u00a0UU.?»",
+                prompt: "¿Cómo enviamos a clientes de EE. UU. y gestionamos las devoluciones?",
             },
         },
     },
@@ -83,9 +82,9 @@ export const es: Messages = {
         anywhere: "cualquier lugar",
         mid: "a EE.\u00a0UU. Un solo socio encuentra a sus compradores, resuelve el",
         redTape: "papeleo",
-        rest: "y gestiona sus operaciones. Ningún distribuidor se queda con su margen, y usted mantiene el",
+        rest: "y gestiona sus operaciones. Usted conserva su margen y el",
         control: "control",
-        end: "de su marca.",
+        end: "de su marca, sin cedérselos a un distribuidor.",
     },
 
     countries: {
@@ -113,19 +112,11 @@ export const es: Messages = {
 
     proof: {
         title: "Ya en EE.\u00a0UU.",
-        sub: "Marcas de India, Corea del Sur y China que ya venden en Estados Unidos.",
+        sub: "Marcas reales, resultados reales en EE. UU.",
         before: "Antes",
         after: "Después",
         done: "Hecho",
         inProgress: "En curso",
-        live: "En vivo",
-        pledgedLabel: "Aportado respecto al objetivo",
-        notFilled: "Aún sin completar",
-        ofGoal: (pledged, goal) => `${pledged} de ${goal}`,
-        asOf: (date) => `Al ${date}`,
-        goal: (amount) => `Objetivo: ${amount}`,
-        inPreorders: (amount) => `${amount} en preventas`,
-        pledged: (amount) => `${amount} aportados`,
         cards: {
             bayangrom: {
                 category: "Arte y ropa",
@@ -150,8 +141,9 @@ export const es: Messages = {
             },
             ollobot: {
                 category: "Robots de compañía",
-                label: "Kickstarter, en vivo",
-                detail: "Objetivo: $100,000 en preventas",
+                label: "Entrega y atención al cliente",
+                headline: "5000 robots entregados",
+                detail: "También llevamos su atención al cliente en EE. UU.",
             },
             karama: {
                 category: "Ropa interior premium",
@@ -160,11 +152,13 @@ export const es: Messages = {
             },
             ouwr: {
                 category: "Moda coreana, ropa de mujer",
-                label: "Ya en EE.\u00a0UU.",
+                label: "Financiación",
+                headline: "$15,000 recaudados para su entrada en EE. UU.",
             },
             cellre: {
                 category: "Belleza coreana",
-                label: "Ya en EE.\u00a0UU.",
+                label: "Financiación",
+                headline: "$15,000 recaudados para su entrada en EE. UU.",
             },
         },
     },
@@ -202,6 +196,39 @@ export const es: Messages = {
         you: "Usted",
     },
 
+    offer: {
+        label: "Cómo trabajamos",
+        title: "Empiece con un plan de entrada a EE. UU.",
+        sub: "Sepa lo que exige EE. UU. antes de invertir.",
+        plan: {
+            step: "Paso 1",
+            name: "Plan de entrada a EE. UU.",
+            price: "$7,000",
+            time: "Un mes",
+            items: [
+                "Estudio de mercado",
+                "Precios y estrategia de canales en EE. UU.",
+                "Marca adaptada al comprador estadounidense",
+                "Cumplimiento: etiquetado, certificaciones y normas de importación",
+                "Plan de almacenes y logística",
+            ],
+        },
+        build: {
+            step: "Paso 2",
+            name: "Implementar y operar",
+            price: "Se factura según el trabajo",
+            time: "El tiempo que lo necesite",
+            items: [
+                "Constitución de empresa y lanzamiento",
+                "Compradores minoristas y canales online",
+                "Financiación y captación de fondos",
+                "Flete, almacenes y logística de pedidos",
+                "Operaciones diarias en EE. UU.",
+            ],
+        },
+        credit: "Si sigue con nosotros después del plan, sus $7,000 se descuentan del trabajo posterior.",
+    },
+
     tech: {
         title: "Tecnología propia",
         more: "Y muchas más",
@@ -216,7 +243,7 @@ export const es: Messages = {
     },
 
     contact: {
-        title: "¿Listo para llevar sus productos a EE.\u00a0UU.?",
+        title: "Planifiquemos su lanzamiento en EE. UU.",
         sub: "30 minutos con un operador, no con un vendedor. Elija un horario en su propia zona horaria.",
         cta: "Reservar una llamada",
     },
@@ -231,18 +258,13 @@ export const es: Messages = {
         company: "Empresa",
         about: "Sobre nosotros",
         careers: "Carreras",
-        jobs: "Empleos",
         events: "Eventos",
-        compliance: "Cumplimiento",
-        support: "Centro de ayuda",
-        investors: "Inversores",
         follow: "Síganos",
         partnership: "Alianzas",
         press: "Prensa",
         mediaKit: "Descargar kit de prensa",
         offices: "Oficinas",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "Política de privacidad y cookies",
         terms: "Términos",
         cookies: "Sus preferencias de cookies",

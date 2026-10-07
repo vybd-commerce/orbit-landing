@@ -187,12 +187,6 @@
     letter-spacing: -0.03em;
 }
 
-.hf-tagline-sub {
-    margin-top: 8px !important;
-    font-size: 14px;
-    color: var(--hf-muted);
-}
-
 .hf-legal {
     display: flex;
     flex-wrap: wrap;

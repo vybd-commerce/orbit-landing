@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { HERO_V2_IMAGE_BASE, HERO_V2_IMAGES, HERO_V2_SLIDES, orderedSlides } from "../data/heroV2Slides";
 import { useMediaQuery } from "../hooks/useMediaQuery";
-import { useT } from "../i18n/context";
+import { track } from "../lib/analytics";
+import { useLocale, useLocalePath, useT } from "../i18n/context";
 import "./HeroSectionV2.css";
 
 const AUTOPLAY_MS = 4000;
@@ -16,6 +17,8 @@ const MOBILE = "(max-width: 639px)";
    Under reduced motion nothing advances on its own and swaps are instant. */
 export default function HeroSectionV2() {
     const t = useT();
+    const locale = useLocale();
+    const to = useLocalePath();
     const slides = useMemo(
         () => orderedSlides(t.hero.firstSlide).map((id) => ({ id, image: HERO_V2_IMAGES[id], ...t.hero.slides[id] })),
         [t]
@@ -68,6 +71,16 @@ export default function HeroSectionV2() {
         <section className={`h2-hero${reducedMotion ? " h2-hero--still" : ""}`} aria-labelledby="h2-title">
             <h1 id="h2-title" className="h2-title">{t.hero.title}</h1>
             <p className="h2-sub">{t.hero.sub}</p>
+            {/* The page's one action, above the fold on every screen size,
+                until the search box is wired to the intake flow. */}
+            <a
+                className="h2-cta"
+                href={to("/book")}
+                onClick={() => track("book_call_clicked", { location: "hello_hero", lang: locale })}
+            >
+                {t.contact.cta}
+                <ArrowRight aria-hidden="true" strokeWidth={2.25} />
+            </a>
 
             <div
                 className="h2-card"
@@ -154,8 +167,6 @@ export default function HeroSectionV2() {
                     <ChevronRight aria-hidden="true" />
                 </button>
             </div>
-
-            <p className="h2-note">{t.hero.note}</p>
 
             <div className="h2-sr" aria-live="polite">
                 {announcement}

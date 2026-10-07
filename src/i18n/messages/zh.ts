@@ -3,7 +3,7 @@ import type { Messages } from "./en";
 /* Simplified Chinese. */
 export const zh: Messages = {
     meta: {
-        homeTitle: "你好，世界 | Vybd",
+        homeTitle: "国际品牌进入美国市场 | Vybd",
         homeDescription: "我们帮助国际品牌和制造商进入美国市场，并在落地后负责运营。",
         bookTitle: "预约美国市场咨询 | Vybd",
         thanksTitle: "预约成功 | Vybd",
@@ -28,47 +28,46 @@ export const zh: Messages = {
 
     hero: {
         title: "你好，世界",
-        sub: "进入美国市场所需的一切，从这里开始。",
+        sub: "你们做好产品，其余交给我们。",
         inputLabel: "描述您进入美国市场的需求",
         submit: "提交",
         prev: "上一个示例",
         next: "下一个示例",
         pause: "暂停示例",
         play: "播放示例",
-        note: "我们帮助国际品牌和制造商进入美国市场，并在落地后负责运营。",
         firstSlide: "battery-china",
         slides: {
             "spices-india": {
                 alt: "双手在白色工作台上把超市商品排成几行，旁边有收据和便利贴",
-                prompt: "试试：“我们在印度生产香料，如何进入美国的超市？”",
+                prompt: "我们在印度生产香料，如何进入美国的超市？",
             },
             "skincare-korea": {
                 alt: "砖墙工作室里，设计师端着咖啡杯，比较钉在软木板上的包装打印稿",
-                prompt: "试试：“我们的护肤品牌在韩国很受欢迎，在美国应该从哪里起步？”",
+                prompt: "我们的护肤品牌在韩国很受欢迎，怎样让美国消费者也喜欢？",
             },
             "battery-china": {
                 alt: "履约中心工作台前，戴手套的双手把一张空白标签贴到盒子上",
-                prompt: "试试：“我们在中国生产电池，出口到美国需要做哪些准备？”",
+                prompt: "我们的电池在中国生产，美国对标签和安全有哪些要求？",
             },
             "plates-bangladesh": {
                 alt: "会议桌上，样品箱已拆开，一只手拿起样品罐端详",
-                prompt: "试试：“我们在孟加拉国生产可降解餐盘，美国谁会买？”",
+                prompt: "我们在孟加拉国生产可降解餐盘，美国谁会买？",
             },
             "french-brand": {
                 alt: "高大的仓库货架通道里，拣货升降车上的工人伸手取一个纸箱",
-                prompt: "试试：“我们的法国品牌在美国亚马逊上销售，但增长停滞了，下一步怎么办？”",
+                prompt: "我们的货应该放在美国哪里的仓库？",
             },
             "retailer-order": {
                 alt: "仓库装卸平台上，工人拿着平板电脑核对一排缠膜托盘",
-                prompt: "试试：“一家美国零售商想要我们的产品，我们能接住这笔订单吗？”",
+                prompt: "一家美国零售商刚下了大单，我们能按时交付吗？",
             },
             "port-dawn": {
                 alt: "黎明时分的集装箱码头上，港口工人站在岸边，远处是起重机和停靠的货轮",
-                prompt: "试试：“把我们的产品运到美国，真实成本是多少？”",
+                prompt: "把我们的产品运到美国，真实成本是多少？",
             },
             "robots-china": {
                 alt: "黄昏金色光线下，一个快递箱放在郊区住宅门廊的最上一级台阶上",
-                prompt: "试试：“我们在中国生产机器人，如何在美国销售并提供售后支持？”",
+                prompt: "怎样把货发给美国客户，又怎样处理退货？",
             },
         },
     },
@@ -81,9 +80,9 @@ export const zh: Messages = {
         anywhere: "世界各地",
         mid: "带进美国。一个合作伙伴，为您找到买家、搞定",
         redTape: "繁琐手续，",
-        rest: "并负责日常运营。没有经销商分走您的利润，您始终掌握品牌的",
-        control: "主导权。",
-        end: "",
+        rest: "并负责日常运营。您保住利润，也保住品牌的",
+        control: "主导权，",
+        end: "无需把它交给经销商。",
     },
 
     countries: {
@@ -111,19 +110,11 @@ export const zh: Messages = {
 
     proof: {
         title: "他们已经进入美国。",
-        sub: "来自印度、韩国和中国的品牌，如今已在美国销售。",
+        sub: "真实的品牌，真实的美国成绩。",
         before: "之前",
         after: "之后",
         done: "已完成",
         inProgress: "进行中",
-        live: "众筹中",
-        pledgedLabel: "已认筹金额占目标比例",
-        notFilled: "尚未填写",
-        ofGoal: (pledged, goal) => `${pledged}，目标 ${goal}`,
-        asOf: (date) => `截至 ${date}`,
-        goal: (amount) => `目标 ${amount}`,
-        inPreorders: (amount) => `${amount} 预订单`,
-        pledged: (amount) => `已认筹 ${amount}`,
         cards: {
             bayangrom: {
                 category: "艺术与服饰",
@@ -148,8 +139,9 @@ export const zh: Messages = {
             },
             ollobot: {
                 category: "陪伴机器人",
-                label: "Kickstarter 众筹进行中",
-                detail: "目标：$100,000 预订单",
+                label: "交付与客服",
+                headline: "已交付 5,000 台机器人",
+                detail: "我们也负责他们的美国客服",
             },
             karama: {
                 category: "高端内衣",
@@ -158,11 +150,13 @@ export const zh: Messages = {
             },
             ouwr: {
                 category: "韩国时尚女装",
-                label: "已进入美国",
+                label: "融资",
+                headline: "为进入美国市场筹得 $15,000",
             },
             cellre: {
                 category: "韩国美妆",
-                label: "已进入美国",
+                label: "融资",
+                headline: "为进入美国市场筹得 $15,000",
             },
         },
     },
@@ -200,6 +194,39 @@ export const zh: Messages = {
         you: "您",
     },
 
+    offer: {
+        label: "合作方式",
+        title: "从美国进入计划开始。",
+        sub: "在投入之前，先弄清楚进入美国需要什么。",
+        plan: {
+            step: "第 1 步",
+            name: "美国进入计划",
+            price: "$7,000",
+            time: "一个月",
+            items: [
+                "市场调研",
+                "美国定价与渠道策略",
+                "面向美国消费者的品牌打造",
+                "合规：标签、认证与进口规定",
+                "仓储与物流方案",
+            ],
+        },
+        build: {
+            step: "第 2 步",
+            name: "落地与运营",
+            price: "按工作量计费",
+            time: "按您的需要持续",
+            items: [
+                "公司设立与上市",
+                "零售买家与线上渠道",
+                "融资与资金",
+                "货运、仓储与履约",
+                "美国日常运营",
+            ],
+        },
+        credit: "计划完成后继续与我们合作，$7,000 将抵扣后续工作费用。",
+    },
+
     tech: {
         title: "自研技术",
         more: "以及更多",
@@ -214,7 +241,7 @@ export const zh: Messages = {
     },
 
     contact: {
-        title: "准备好把您的产品带到美国了吗？",
+        title: "一起规划您的美国上市。",
         sub: "30 分钟，与实操专家交流，而不是销售人员。按您所在的时区选择时间。",
         cta: "预约通话",
     },
@@ -229,18 +256,13 @@ export const zh: Messages = {
         company: "公司",
         about: "关于我们",
         careers: "职业发展",
-        jobs: "招聘职位",
         events: "活动",
-        compliance: "合规",
-        support: "支持中心",
-        investors: "投资者",
         follow: "关注我们",
         partnership: "合作咨询",
         press: "媒体咨询",
         mediaKit: "下载媒体资料包",
         offices: "办公地点",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "隐私与 Cookie 政策",
         terms: "条款",
         cookies: "Cookie 偏好设置",

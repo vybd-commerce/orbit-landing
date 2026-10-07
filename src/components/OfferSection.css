@@ -1,0 +1,232 @@
+/* OfferSection: two step cards on the white page, the plan in the hero's
+ * light panel and the build-out in plain white, joined by an arrow. */
+
+.of-section {
+    --of-navy: #0f1b33;
+    --of-grey: #5b6270;
+    --of-muted: #8a909b;
+    --of-line: #e7e9ed;
+
+    padding: clamp(80px, 9vw, 160px) 32px clamp(80px, 9vw, 144px);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--of-navy);
+    text-align: center;
+}
+
+.of-label {
+    margin: 0 0 16px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--of-muted);
+}
+
+.of-title {
+    margin: 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    font-optical-sizing: auto;
+    font-size: clamp(40px, 4.6vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.of-sub {
+    margin: 16px auto 0;
+    max-width: 52ch;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--of-grey);
+    text-wrap: balance;
+}
+
+.of-steps {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: 20px;
+    max-width: 960px;
+    margin: clamp(48px, 5vw, 72px) auto 0;
+    text-align: left;
+}
+
+.of-card {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(28px, 3vw, 40px);
+    border: 1px solid var(--of-line);
+    border-radius: 28px;
+    background: #fff;
+}
+
+.of-card--lead {
+    border-color: transparent;
+    background:
+        radial-gradient(120% 70% at 50% 100%, rgba(255, 255, 255, 0.9), transparent 60%),
+        linear-gradient(180deg, #eceef1 0%, #f3f4f6 55%, #f7f7f8 100%);
+}
+
+.of-step {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--of-muted);
+}
+
+.of-name {
+    margin: 10px 0 0;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+}
+
+.of-price {
+    margin: 18px 0 0;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: clamp(36px, 3.6vw, 48px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+}
+
+/* "Billed by the work" is words, not a figure. */
+.of-card:not(.of-card--lead) .of-price {
+    font-size: clamp(28px, 2.6vw, 34px);
+}
+
+.of-time {
+    margin: 8px 0 0;
+    font-size: 15px;
+    color: var(--of-grey);
+}
+
+.of-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 28px 0 0;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--of-line);
+    list-style: none;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.of-items li {
+    display: flex;
+    gap: 10px;
+}
+
+.of-items svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    color: #1f8f4e;
+}
+
+.of-arrow {
+    display: grid;
+    place-items: center;
+    align-self: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: var(--of-navy);
+    color: #fff;
+}
+
+.of-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+.of-credit {
+    max-width: 48ch;
+    margin: 36px auto 0;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--of-grey);
+    text-wrap: balance;
+}
+
+/* Same pill as the hero and contact buttons. */
+.of-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 56px;
+    margin-top: 28px;
+    padding: 0 28px 0 32px;
+    border-radius: 999px;
+    background: var(--of-navy);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease;
+}
+
+.of-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 200ms ease;
+}
+
+.of-btn:hover {
+    background: #1b2c4f;
+}
+
+.of-btn:hover svg {
+    transform: translateX(3px);
+}
+
+.of-btn:focus-visible {
+    outline: 3px solid var(--of-navy);
+    outline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+    .of-section {
+        padding: 72px 16px 80px;
+    }
+
+    .of-title {
+        font-size: 40px;
+    }
+
+    .of-sub {
+        font-size: 18px;
+    }
+
+    .of-steps {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    /* Stacked, the arrow points down. */
+    .of-arrow {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+
+    .of-card {
+        border-radius: 24px;
+    }
+
+    .of-items {
+        font-size: 15px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .of-btn,
+    .of-btn svg {
+        transition: none;
+    }
+}

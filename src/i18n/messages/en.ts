@@ -5,7 +5,7 @@
 
 export const en = {
     meta: {
-        homeTitle: "Hello, World | Vybd",
+        homeTitle: "US market entry for international brands | Vybd",
         homeDescription:
             "We take international brands and manufacturers into the US, and run the operations once they're here.",
         bookTitle: "Book a US entry call | Vybd",
@@ -32,48 +32,47 @@ export const en = {
 
     hero: {
         title: "Hello, World",
-        sub: "Whatever you need to enter the US market, start here.",
+        sub: "You make great products. We handle the rest.",
         inputLabel: "Describe what you need to enter the US market",
         submit: "Submit",
         prev: "Previous example",
         next: "Next example",
         pause: "Pause examples",
         play: "Play examples",
-        note: "We take international brands and manufacturers into the US, and run the operations once they're here.",
         /* Slide shown first; the rest follow in their usual order. */
         firstSlide: "spices-india",
         slides: {
             "spices-india": {
                 alt: "Hands arranging supermarket products in rows on a white worktable, with receipts and sticky notes",
-                prompt: "Try 'We make spices in India. How do we get into US grocery stores?'",
+                prompt: "We make spices in India. How do we get into US grocery stores?",
             },
             "skincare-korea": {
                 alt: "Designer with a coffee mug comparing packaging printouts pinned to a corkboard in a brick-walled studio",
-                prompt: "Try 'Our skincare brand is big in Korea. Where should we start in the US?'",
+                prompt: "Our skincare brand is big in Korea. How do we make it work for US shoppers?",
             },
             "battery-china": {
                 alt: "Gloved hands pressing a blank label onto a box at a fulfillment center workbench",
-                prompt: "Try 'We build batteries in China. What do we need to ship them to the US?'",
+                prompt: "Our batteries are made in China. What do US labels and safety rules require?",
             },
             "plates-bangladesh": {
                 alt: "Hands lifting a sample jar beside an opened sample box on a conference room table",
-                prompt: "Try 'We make compostable plates in Bangladesh. Who in the US will buy them?'",
+                prompt: "We make compostable plates in Bangladesh. Who in the US will buy them?",
             },
             "french-brand": {
                 alt: "Worker on an order-picker lift reaching for a carton in a tall warehouse aisle",
-                prompt: "Try 'Our French brand sells on Amazon US, but sales are flat. What next?'",
+                prompt: "Where should we warehouse our stock in the US?",
             },
             "retailer-order": {
                 alt: "Worker with a tablet checking a row of shrink-wrapped pallets at a warehouse loading dock",
-                prompt: "Try 'A US retailer wants our product. Can we handle the order?'",
+                prompt: "A US retailer just placed a big order. Can we deliver it?",
             },
             "port-dawn": {
                 alt: "Port worker on the quay of a container port at dawn, cranes and a docked ship beyond",
-                prompt: "Try 'What will it really cost to land our product in the US?'",
+                prompt: "What will it really cost to land our product in the US?",
             },
             "robots-china": {
                 alt: "Plain shipping box on the top step of a suburban porch at golden hour",
-                prompt: "Try 'We build robots in China. How do we sell and support them in the US?'",
+                prompt: "How do we ship to US customers and handle returns?",
             },
         },
     },
@@ -90,9 +89,9 @@ export const en = {
         anywhere: "anywhere",
         mid: "into the US. One partner finds your buyers, clears the",
         redTape: "red tape",
-        rest: "and runs your operations. No distributor takes your margin, and you keep",
+        rest: "and runs your operations. You keep your margin and",
         control: "control",
-        end: "of your brand.",
+        end: "of your brand, without signing it over to a distributor.",
     },
 
     countries: {
@@ -120,19 +119,11 @@ export const en = {
 
     proof: {
         title: "Already in the US.",
-        sub: "Brands from India, South Korea and China, now selling in America.",
+        sub: "Real brands, real US results.",
         before: "Before",
         after: "After",
         done: "Done",
         inProgress: "In progress",
-        live: "Live",
-        pledgedLabel: "Pledged toward goal",
-        notFilled: "Not yet filled in",
-        ofGoal: (pledged: string, goal: string) => `${pledged} of ${goal}`,
-        asOf: (date: string) => `As of ${date}`,
-        goal: (amount: string) => `${amount} goal`,
-        inPreorders: (amount: string) => `${amount} in pre-orders`,
-        pledged: (amount: string) => `${amount} pledged`,
         cards: {
             bayangrom: {
                 category: "Art and apparel",
@@ -157,8 +148,9 @@ export const en = {
             },
             ollobot: {
                 category: "Companion robots",
-                label: "Kickstarter, live now",
-                detail: "Goal: $100,000 in pre-orders",
+                label: "Delivery and customer support",
+                headline: "5,000 robots delivered",
+                detail: "We run their US customer support too",
             },
             karama: {
                 category: "Premium underwear",
@@ -167,11 +159,13 @@ export const en = {
             },
             ouwr: {
                 category: "K-fashion, womenswear",
-                label: "Now in the US",
+                label: "Funding",
+                headline: "$15,000 raised for their US market entry",
             },
             cellre: {
                 category: "K-beauty",
-                label: "Now in the US",
+                label: "Funding",
+                headline: "$15,000 raised for their US market entry",
             },
         },
     },
@@ -192,7 +186,7 @@ export const en = {
             "Tariffs and duties",
             "Freight",
             "Cargo insurance",
-            "Finding financing",
+            "Funding",
             "3PL warehouse",
             "Returns",
             "Retailer chargebacks",
@@ -210,6 +204,40 @@ export const en = {
         you: "You",
     },
 
+    /* The offer, between the nineteen tasks and the tech wall. */
+    offer: {
+        label: "How we work",
+        title: "Start with a US Entry Plan.",
+        sub: "Know what the US will take before you spend on it.",
+        plan: {
+            step: "Step 1",
+            name: "US Entry Plan",
+            price: "$7,000",
+            time: "One month",
+            items: [
+                "Market research",
+                "US pricing and channel strategy",
+                "Branding for American shoppers",
+                "Compliance: labels, certifications and import rules",
+                "Warehousing and logistics plan",
+            ],
+        },
+        build: {
+            step: "Step 2",
+            name: "Build and run",
+            price: "Billed by the work",
+            time: "As long as you need us",
+            items: [
+                "Company setup and launch",
+                "Retail buyers and online channels",
+                "Financing and funding",
+                "Freight, warehousing and fulfillment",
+                "Day-to-day US operations",
+            ],
+        },
+        credit: "Go ahead with us after the plan, and your $7,000 is credited against the work.",
+    },
+
     tech: {
         title: "Proprietary technologies",
         more: "And many more",
@@ -224,7 +252,7 @@ export const en = {
     },
 
     contact: {
-        title: "Ready to bring your products to the US?",
+        title: "Let's plan your US launch.",
         sub: "30 minutes with an operator, not a salesperson. Pick a time in your own time zone.",
         cta: "Book a call",
     },
@@ -239,18 +267,13 @@ export const en = {
         company: "Company",
         about: "About us",
         careers: "Careers",
-        jobs: "Jobs",
         events: "Events",
-        compliance: "Compliance",
-        support: "Support center",
-        investors: "Investors",
         follow: "Follow us",
         partnership: "Partnership inquiries",
         press: "Press inquiries",
         mediaKit: "Download media kit",
         offices: "Offices",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "Privacy and cookie policy",
         terms: "Terms",
         cookies: "Your cookie preferences",

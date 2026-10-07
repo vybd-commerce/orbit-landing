@@ -21,19 +21,12 @@ const explore = (f: Messages["footer"]): Link[] => [
 const company = (f: Messages["footer"]): Link[] => [
     { label: f.about, href: "#" }, // TODO(footer): real routes
     { label: f.careers, href: "#" },
-    { label: f.jobs, href: "#" },
     { label: f.events, href: "#" },
-    { label: f.compliance, href: "#" },
-    { label: f.support, href: "#" },
-    { label: f.investors, href: "#" },
 ];
 
 const FOLLOW: Link[] = [
     { label: "LinkedIn", href: "#" }, // TODO(footer): profile URLs
     { label: "Instagram", href: "#" },
-    { label: "Glassdoor", href: "#" },
-    { label: "Facebook", href: "#" },
-    { label: "Medium", href: "#" },
     { label: "X", href: "#" },
 ];
 
@@ -133,7 +126,6 @@ export default function HelloFooter() {
             <div className="hf-bottom">
                 <div className="hf-tagline">
                     <p className="hf-tagline-main">{f.tagline}</p>
-                    <p className="hf-tagline-sub">{f.taglineSub}</p>
                 </div>
                 <div className="hf-legal">
                     <LanguageSwitcher />

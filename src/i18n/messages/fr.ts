@@ -4,7 +4,7 @@ import type { Messages } from "./en";
    « » so they never start a line on their own. */
 export const fr: Messages = {
     meta: {
-        homeTitle: "Bonjour, le monde | Vybd",
+        homeTitle: "Entrer sur le marché américain | Vybd",
         homeDescription:
             "Nous accompagnons les marques et fabricants internationaux sur le marché américain, puis nous gérons leurs opérations sur place.",
         bookTitle: "Réservez un appel pour entrer aux États-Unis | Vybd",
@@ -30,47 +30,46 @@ export const fr: Messages = {
 
     hero: {
         title: "Bonjour, le monde",
-        sub: "Tout ce qu'il vous faut pour entrer sur le marché américain commence ici.",
+        sub: "Vous faites de bons produits. Nous nous occupons du reste.",
         inputLabel: "Décrivez ce dont vous avez besoin pour entrer sur le marché américain",
         submit: "Envoyer",
         prev: "Exemple précédent",
         next: "Exemple suivant",
         pause: "Mettre les exemples en pause",
         play: "Lire les exemples",
-        note: "Nous accompagnons les marques et fabricants internationaux sur le marché américain, puis nous gérons leurs opérations sur place.",
         firstSlide: "french-brand",
         slides: {
             "spices-india": {
                 alt: "Mains alignant des produits de supermarché sur une table blanche, entre tickets de caisse et post-it",
-                prompt: "Essayez «\u00a0Nous produisons des épices en Inde. Comment entrer dans les supermarchés américains\u00a0?\u00a0»",
+                prompt: "Nous produisons des épices en Inde. Comment entrer dans les supermarchés américains ?",
             },
             "skincare-korea": {
                 alt: "Designer, tasse à la main, comparant des maquettes d'emballage épinglées dans un atelier en briques",
-                prompt: "Essayez «\u00a0Notre marque de soins cartonne en Corée. Par où commencer aux États-Unis\u00a0?\u00a0»",
+                prompt: "Notre marque de soins cartonne en Corée. Comment séduire les consommateurs américains ?",
             },
             "battery-china": {
                 alt: "Mains gantées posant une étiquette vierge sur un carton dans un centre logistique",
-                prompt: "Essayez «\u00a0Nous fabriquons des batteries en Chine. Que faut-il pour les expédier aux États-Unis\u00a0?\u00a0»",
+                prompt: "Nos batteries sont fabriquées en Chine. Quelles règles d'étiquetage et de sécurité aux États-Unis ?",
             },
             "plates-bangladesh": {
                 alt: "Mains soulevant un pot d'échantillon près d'un colis ouvert sur une table de réunion",
-                prompt: "Essayez «\u00a0Nous fabriquons des assiettes compostables au Bangladesh. Qui va les acheter aux États-Unis\u00a0?\u00a0»",
+                prompt: "Nous fabriquons des assiettes compostables au Bangladesh. Qui va les acheter aux États-Unis ?",
             },
             "french-brand": {
                 alt: "Préparateur sur une nacelle attrapant un carton dans une haute allée d'entrepôt",
-                prompt: "Essayez «\u00a0Notre marque française vend sur Amazon US, mais les ventes stagnent. Et maintenant\u00a0?\u00a0»",
+                prompt: "Où stocker notre marchandise aux États-Unis ?",
             },
             "retailer-order": {
                 alt: "Magasinier vérifiant sur une tablette une rangée de palettes filmées sur un quai de chargement",
-                prompt: "Essayez «\u00a0Un détaillant américain veut notre produit. Pouvons-nous honorer la commande\u00a0?\u00a0»",
+                prompt: "Un détaillant américain vient de passer une grosse commande. Pouvons-nous livrer ?",
             },
             "port-dawn": {
                 alt: "Agent portuaire sur le quai d'un port à conteneurs à l'aube, grues et navire à quai au loin",
-                prompt: "Essayez «\u00a0Combien coûte vraiment l'arrivée de notre produit aux États-Unis\u00a0?\u00a0»",
+                prompt: "Combien coûte vraiment l'arrivée de notre produit aux États-Unis ?",
             },
             "robots-china": {
                 alt: "Carton d'expédition posé sur la marche d'un porche de banlieue à l'heure dorée",
-                prompt: "Essayez «\u00a0Nous fabriquons des robots en Chine. Comment les vendre et assurer le support aux États-Unis\u00a0?\u00a0»",
+                prompt: "Comment livrer nos clients américains et gérer les retours ?",
             },
         },
     },
@@ -83,9 +82,9 @@ export const fr: Messages = {
         anywhere: "monde entier",
         mid: "aux États-Unis. Un seul partenaire trouve vos acheteurs, gère la",
         redTape: "paperasse",
-        rest: "et pilote vos opérations. Aucun distributeur ne prend votre marge, et vous gardez le",
+        rest: "et pilote vos opérations. Vous gardez votre marge et le",
         control: "contrôle",
-        end: "de votre marque.",
+        end: "de votre marque, sans les céder à un distributeur.",
     },
 
     countries: {
@@ -113,19 +112,11 @@ export const fr: Messages = {
 
     proof: {
         title: "Déjà aux États-Unis.",
-        sub: "Des marques d'Inde, de Corée du Sud et de Chine, qui vendent aujourd'hui en Amérique.",
+        sub: "De vraies marques, de vrais résultats aux États-Unis.",
         before: "Avant",
         after: "Après",
         done: "Terminé",
         inProgress: "En cours",
-        live: "En direct",
-        pledgedLabel: "Montant promis par rapport à l'objectif",
-        notFilled: "Pas encore renseigné",
-        ofGoal: (pledged, goal) => `${pledged} sur ${goal}`,
-        asOf: (date) => `Au ${date}`,
-        goal: (amount) => `Objectif ${amount}`,
-        inPreorders: (amount) => `${amount} de précommandes`,
-        pledged: (amount) => `${amount} promis`,
         cards: {
             bayangrom: {
                 category: "Art et habillement",
@@ -150,8 +141,9 @@ export const fr: Messages = {
             },
             ollobot: {
                 category: "Robots de compagnie",
-                label: "Kickstarter, en cours",
-                detail: "Objectif\u00a0: $100,000 de précommandes",
+                label: "Livraison et service client",
+                headline: "5000 robots livrés",
+                detail: "Nous gérons aussi leur service client aux États-Unis",
             },
             karama: {
                 category: "Sous-vêtements haut de gamme",
@@ -160,11 +152,13 @@ export const fr: Messages = {
             },
             ouwr: {
                 category: "Mode coréenne, prêt-à-porter féminin",
-                label: "Désormais aux États-Unis",
+                label: "Financement",
+                headline: "$15,000 levés pour leur entrée aux États-Unis",
             },
             cellre: {
                 category: "Beauté coréenne",
-                label: "Désormais aux États-Unis",
+                label: "Financement",
+                headline: "$15,000 levés pour leur entrée aux États-Unis",
             },
         },
     },
@@ -202,6 +196,39 @@ export const fr: Messages = {
         you: "Vous",
     },
 
+    offer: {
+        label: "Notre façon de travailler",
+        title: "Commencez par un plan d'entrée aux États-Unis.",
+        sub: "Sachez ce que le marché américain demande avant d'y investir.",
+        plan: {
+            step: "Étape 1",
+            name: "Plan d'entrée aux États-Unis",
+            price: "$7,000",
+            time: "Un mois",
+            items: [
+                "Étude de marché",
+                "Prix et stratégie de canaux aux États-Unis",
+                "Une marque pensée pour les consommateurs américains",
+                "Conformité : étiquetage, certifications et règles d'importation",
+                "Plan d'entreposage et de logistique",
+            ],
+        },
+        build: {
+            step: "Étape 2",
+            name: "Lancer et opérer",
+            price: "Facturé selon le travail",
+            time: "Aussi longtemps qu'il le faut",
+            items: [
+                "Création de société et lancement",
+                "Acheteurs de la distribution et canaux en ligne",
+                "Financement et levée de fonds",
+                "Fret, entreposage et exécution des commandes",
+                "Opérations quotidiennes aux États-Unis",
+            ],
+        },
+        credit: "Si vous poursuivez avec nous après le plan, vos $7,000 sont déduits des travaux suivants.",
+    },
+
     tech: {
         title: "Technologies propriétaires",
         more: "Et bien d'autres",
@@ -216,7 +243,7 @@ export const fr: Messages = {
     },
 
     contact: {
-        title: "Prêt à lancer vos produits aux États-Unis\u00a0?",
+        title: "Planifions votre lancement aux États-Unis.",
         sub: "30 minutes avec un opérateur, pas un commercial. Choisissez un créneau dans votre fuseau horaire.",
         cta: "Réserver un appel",
     },
@@ -231,18 +258,13 @@ export const fr: Messages = {
         company: "Entreprise",
         about: "À propos",
         careers: "Carrières",
-        jobs: "Offres d'emploi",
         events: "Événements",
-        compliance: "Conformité",
-        support: "Centre d'aide",
-        investors: "Investisseurs",
         follow: "Suivez-nous",
         partnership: "Partenariats",
         press: "Presse",
         mediaKit: "Télécharger le kit média",
         offices: "Bureaux",
         tagline: "Commerce, Coordinated.",
-        taglineSub: "enabling commerce, disabling borders",
         privacy: "Politique de confidentialité et cookies",
         terms: "Conditions",
         cookies: "Vos préférences de cookies",
