@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, type ReactNode } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import ProductPage from "./pages/ProductPage";
@@ -18,23 +18,38 @@ import HelloPage from "./pages/HelloPage";
 import BookPage from "./pages/BookPage";
 import BookThanksPage from "./pages/BookThanksPage";
 import LocaleScope from "./i18n/LocaleScope";
-import { LOCALES, localePath } from "./i18n/locales";
+import { LOCALES, localePath, type Locale } from "./i18n/locales";
 
 /* The stack narrative pulls in three, R3F and drei. Kept out of the main
    bundle — it is one route, and a heavy one. */
 const StackPage = lazy(() => import("./pages/StackPage"));
 
+/* The redesign (redesign/ holds the designer's prototype). Each page loads
+   its own chunk, and suspends again while a non-English dictionary loads. */
+const RdHomePage = lazy(() => import("./pages/redesign/HomePage"));
+
+function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
+  return (
+    <LocaleScope locale={locale}>
+      <Suspense fallback={null}>{children}</Suspense>
+    </LocaleScope>
+  );
+}
+
 function App() {
   return (
     <Router>
       <Routes>
-        {/* The root and booking pages, in every language: / and /book in
-            English, /zh, /zh/book and so on for the rest (see src/i18n). */}
+        {/* The root, redesign and booking pages, in every language: / and
+            /book in English, /zh, /zh/book and so on for the rest (see
+            src/i18n). */}
         {LOCALES.flatMap((locale) => [
-          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<LocaleScope locale={locale}><HelloPage /></LocaleScope>} />,
+          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
+        {/* The root before the redesign, kept reachable while it settles */}
+        <Route path="/classic" element={<LocaleScope locale="en"><HelloPage /></LocaleScope>} />
         {/* Root with the 360° ring variant of the "why it's hard" section, under review. */}
         <Route path="/ring" element={<LocaleScope locale="en"><HelloPage complexity="ring" /></LocaleScope>} />
         {/* The root's address while it was in review */}

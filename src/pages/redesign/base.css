@@ -1,0 +1,17 @@
+/* Shared by every redesign page. The prototype was built on browser
+   defaults, so undo the app-wide border-box reset from index.css inside
+   these pages; rules that ask for border-box are more specific and win. */
+.rd,
+.rd *,
+.rd *::before,
+.rd *::after {
+    box-sizing: content-box;
+}
+
+/* index.css turns on grayscale antialiasing for the whole app; the design
+   was drawn with the browser default, which renders DM Sans a touch
+   heavier. */
+.rd {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}

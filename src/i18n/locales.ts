@@ -27,7 +27,12 @@ export const NATIVE_NAMES: Record<Locale, string> = {
 };
 
 /* Pages that exist in every locale, as their English paths. */
-export const LOCALIZED_PATHS = ["/", "/book", "/book/thanks"] as const;
+export const LOCALIZED_PATHS = ["/", "/book", "/book/thanks", "/product", "/lab", "/case-studies"] as const;
+
+/* True for a LOCALIZED_PATHS page or a case study under /case-studies/. */
+export function isLocalizedPath(path: string) {
+    return (LOCALIZED_PATHS as readonly string[]).includes(path) || path.startsWith("/case-studies/");
+}
 
 /* Set when someone picks a language; middleware.ts then stops guessing. */
 export const LANG_COOKIE = "vybd_lang";
