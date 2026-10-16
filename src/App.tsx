@@ -28,6 +28,7 @@ const StackPage = lazy(() => import("./pages/StackPage"));
    its own chunk, and suspends again while a non-English dictionary loads. */
 const RdHomePage = lazy(() => import("./pages/redesign/HomePage"));
 const RdProductPage = lazy(() => import("./pages/redesign/ProductPage"));
+const RdLabPage = lazy(() => import("./pages/redesign/LabPage"));
 
 function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
@@ -47,6 +48,7 @@ function App() {
         {LOCALES.flatMap((locale) => [
           <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
           <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
+          <Route key={`${locale}-lab`} path={localePath(locale, "/lab")} element={<Rd locale={locale}><RdLabPage /></Rd>} />,
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
@@ -89,7 +91,7 @@ function App() {
         <Route path="/case-studies" element={<CaseStudiesPage />} />
         <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />
-        <Route path="/lab" element={<LabPage />} />
+        <Route path="/classic/lab" element={<LabPage />} />
         <Route path="/work" element={<WorkIndexPage />} />
         <Route path="/work/bayangrom" element={<BayangromCaseStudyPage />} />
         <Route path="/privacy" element={<MarkdownPage title="Privacy Policy" filePath="/privacy.md" />} />

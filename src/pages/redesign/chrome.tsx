@@ -97,11 +97,13 @@ export function RdHeader({
     links,
     mobileLinks,
     ctaHref = "#contact",
+    ctaLabel = "Get started",
 }: {
     logoHref: string;
     links: NavLink[];
     mobileLinks: NavLink[];
     ctaHref?: string;
+    ctaLabel?: string;
 }) {
     const tx = useTx();
     const [open, setOpen] = useState(false);
@@ -130,7 +132,7 @@ export function RdHeader({
                     ))}
                 </nav>
                 <RdLink className="btn btn-dark nav-cta" href={ctaHref} style={{ minHeight: 44, padding: "0 18px", fontSize: 14 }}>
-                    {tx("Get started")}
+                    {tx(ctaLabel)}
                 </RdLink>
                 <button
                     type="button"
@@ -150,7 +152,7 @@ export function RdHeader({
                         </RdLink>
                     ))}
                     <RdLink className="btn btn-dark" href={ctaHref} onClick={close}>
-                        {tx("Get started")}
+                        {tx(ctaLabel)}
                     </RdLink>
                 </nav>
             )}
