@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Already in the US — Route map</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+.pm{--navy:#0f1b33;--grey:#5b6270;--muted:#8a909b;--line:#e7e9ed;--mint:#1BB59B;--mint-d:#17A088;font-family:'DM Sans',system-ui,sans-serif;color:var(--navy);background:#FFFFFF;padding:clamp(56px,7vw,112px) 32px;text-align:center}
+.pm-title{margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(44px,5.2vw,72px);line-height:1;letter-spacing:-.015em}
+.pm-sub{margin:16px auto 0;font-size:clamp(18px,1.6vw,22px);color:var(--grey)}
+.pm-map{position:relative;max-width:1180px;margin:clamp(40px,5vw,72px) auto 0;aspect-ratio:1000/383}
+.pm-map img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pm-ov{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.arc{fill:none;stroke:var(--navy);stroke-width:1.4;stroke-opacity:.14;stroke-dasharray:1;stroke-dashoffset:1;stroke-linecap:round}
+.arc.is-done{stroke-dashoffset:0}
+.arc.is-active{stroke:var(--mint);stroke-opacity:1;stroke-width:2.2;animation:draw 1.3s cubic-bezier(.6,0,.3,1) forwards}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.pin{fill:var(--navy)}
+.pin.is-active{fill:var(--mint)}
+.ring{fill:none;stroke:var(--mint);stroke-width:1.5;transform-box:fill-box;transform-origin:center;opacity:0}
+.ring.is-active{animation:ping 1.8s ease-out infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.dest{fill:#FFFFFF;stroke:var(--navy);stroke-width:2}
+.dest.is-hit{fill:var(--mint);stroke:var(--mint);animation:hit .5s ease-out 1.2s both}
+@keyframes hit{0%{r:4}50%{r:9}100%{r:6}}
+.pm-label{font-size:11px;font-weight:600;letter-spacing:.08em;fill:var(--muted);text-transform:uppercase}
+.card{position:absolute;left:1.5%;bottom:-2%;width:min(360px,44%);text-align:left;background:#FFFFFF;border-radius:22px;padding:22px;box-shadow:rgba(15,27,51,.05) 0 2px 4px,rgba(15,27,51,.2) 0 28px 64px -18px;animation:cardIn .55s cubic-bezier(.2,.7,.2,1)}
+.card.b{animation-name:cardIn2}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px)}}
+@keyframes cardIn2{from{opacity:0;transform:translateY(16px)}}
+.card img{height:40px;max-width:190px;object-fit:contain;object-position:left;display:block}
+.route{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:13px;font-weight:500;color:var(--grey)}
+.route i{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--mint) 0 6px,transparent 6px 11px)}
+.lbl{margin:14px 0 0;font-size:13px;font-weight:500;color:var(--muted)}
+.hl{margin:4px 0 0;font-size:clamp(22px,2.2vw,30px);font-weight:600;line-height:1.15;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.det{margin:12px 0 0;padding:9px 12px;border-radius:12px;background:#f1f3f6;font-size:14px;font-weight:500}
+.meta{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:1000px;margin:clamp(48px,5vw,72px) auto 0}
+.chip{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 18px 0 8px;border:0;border-radius:999px;background:#f3f4f6;font:inherit;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer;transition:background .25s,color .25s,transform .25s}
+.chip:hover{transform:translateY(-2px)}
+.chip.on{background:var(--navy);color:#FFFFFF}
+.chip span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#FFFFFF;font-size:11px;color:var(--grey)}
+.chip.on span{background:var(--mint);color:var(--navy)}
+@media (max-width:760px){.card{position:relative;left:auto;bottom:auto;width:auto;margin-top:16px}.pm-map{aspect-ratio:auto}.pm-map img,.pm-ov{position:relative;height:auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.arc.is-active{stroke-dashoffset:0}}
+</style>
+</helmet>
+<section class="pm" aria-labelledby="pm-title">
+<h2 id="pm-title" class="pm-title">Already in the US.</h2>
+<p class="pm-sub">Real brands, real US results.</p>
+<div class="pm-map">
+<img src="/_blob/2a0f37927adccbab1e7718c52888505d" alt="">
+<svg class="pm-ov" viewBox="0 0 1000 383" aria-hidden="true">
+<path class="{{ a0c }}" d="{{ a0d }}" pathLength="1"></path><path class="{{ a1c }}" d="{{ a1d }}" pathLength="1"></path><path class="{{ a2c }}" d="{{ a2d }}" pathLength="1"></path><path class="{{ a3c }}" d="{{ a3d }}" pathLength="1"></path><path class="{{ a4c }}" d="{{ a4d }}" pathLength="1"></path><path class="{{ a5c }}" d="{{ a5d }}" pathLength="1"></path><path class="{{ a6c }}" d="{{ a6d }}" pathLength="1"></path>
+<circle class="{{ d0c }}" cx="{{ d0x }}" cy="{{ d0y }}" r="5"></circle><circle class="{{ d1c }}" cx="{{ d1x }}" cy="{{ d1y }}" r="5"></circle><circle class="{{ d2c }}" cx="{{ d2x }}" cy="{{ d2y }}" r="5"></circle><circle class="{{ d3c }}" cx="{{ d3x }}" cy="{{ d3y }}" r="5"></circle>
+<circle class="{{ p0r }}" cx="{{ p0x }}" cy="{{ p0y }}" r="6"></circle><circle class="{{ p0c }}" cx="{{ p0x }}" cy="{{ p0y }}" r="3.6"></circle><circle class="{{ p1r }}" cx="{{ p1x }}" cy="{{ p1y }}" r="6"></circle><circle class="{{ p1c }}" cx="{{ p1x }}" cy="{{ p1y }}" r="3.6"></circle><circle class="{{ p2r }}" cx="{{ p2x }}" cy="{{ p2y }}" r="6"></circle><circle class="{{ p2c }}" cx="{{ p2x }}" cy="{{ p2y }}" r="3.6"></circle><circle class="{{ p3r }}" cx="{{ p3x }}" cy="{{ p3y }}" r="6"></circle><circle class="{{ p3c }}" cx="{{ p3x }}" cy="{{ p3y }}" r="3.6"></circle><circle class="{{ p4r }}" cx="{{ p4x }}" cy="{{ p4y }}" r="6"></circle><circle class="{{ p4c }}" cx="{{ p4x }}" cy="{{ p4y }}" r="3.6"></circle><circle class="{{ p5r }}" cx="{{ p5x }}" cy="{{ p5y }}" r="6"></circle><circle class="{{ p5c }}" cx="{{ p5x }}" cy="{{ p5y }}" r="3.6"></circle><circle class="{{ p6r }}" cx="{{ p6x }}" cy="{{ p6y }}" r="6"></circle><circle class="{{ p6c }}" cx="{{ p6x }}" cy="{{ p6y }}" r="3.6"></circle>
+<text class="pm-label" x="226" y="160" text-anchor="middle">United States</text>
+<text class="pm-label" x="722" y="196" text-anchor="middle">India</text>
+<text class="pm-label" x="792" y="110" text-anchor="middle">China</text>
+<text class="pm-label" x="884" y="146" text-anchor="middle">South Korea</text>
+</svg>
+<sc-for list="{{ cardList }}" as="c" hint-placeholder-count="1">
+<div class="{{ c.cls }}" aria-live="polite">
+<img src="{{ c.logo }}" alt="{{ c.name }}">
+<div class="route"><span>{{ c.from }}</span><i></i><span>United States</span></div>
+<p class="lbl">{{ c.label }}</p>
+<p class="hl">{{ c.headline }}</p>
+<sc-if value="{{ c.hasDetail }}" hint-placeholder-val="{{ false }}"><p class="det">{{ c.detail }}</p></sc-if>
+<p class="meta">{{ c.meta }}</p>
+</div>
+</sc-for>
+</div>
+<div class="chips" role="group" aria-label="Choose a brand">
+<sc-for list="{{ chips }}" as="b" hint-placeholder-count="7"><button type="button" class="{{ b.cls }}" onClick="{{ b.pick }}" aria-pressed="{{ b.on }}"><span>{{ b.code }}</span>{{ b.name }}</button></sc-for>
+</div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"autoplay":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.B = [
+{ id: 'bayangrom', name: 'Bayangrom', from: 'India', code: 'IN', o: [712, 157], d: 0, pre: '$', target: 180, comma: false, suf: 'K/yr recovered', label: 'Inventory and shipping', detail: '−28% excess inventory, −22% shipping cost', meta: 'India · Art and apparel', logo: '/_blob/7f753feabce939ea3fa2e0fc24461b0c' },
+{ id: 'ouwr', name: 'Ouwr', from: 'South Korea', code: 'KR', o: [853, 119], d: 1, pre: '$', target: 15000, comma: true, suf: ' raised for their US market entry', label: 'Funding', detail: '', meta: 'South Korea · K-fashion, womenswear', logo: '/_blob/afde41d481be31f2c41fb29d98ebb8f7' },
+{ id: 'mib', name: 'MIB Industries', from: 'India', code: 'IN', o: [724, 166], d: 2, pre: '$', target: 30000, comma: true, suf: ' in B2B pre‑orders', label: 'Wholesale pre-orders', detail: 'Now building their direct-to-consumer store', meta: 'India · Luxury terry cotton products', logo: '/_blob/534fb7a6258c2b063af3137ddd180be6' },
+{ id: 'ollobot', name: 'Ollobot', from: 'China', code: 'CN', o: [789, 128], d: 3, pre: '', target: 5000, comma: true, suf: ' robots delivered', label: 'Delivery and customer support', detail: 'We run their US customer support too', meta: 'China · Companion robots', logo: '/_blob/8173f352091347e9f7dc6ed7f6c12ed4' },
+{ id: 'cellre', name: 'Cellre', from: 'South Korea', code: 'KR', o: [860, 125], d: 0, pre: '$', target: 15000, comma: true, suf: ' raised for their US market entry', label: 'Funding', detail: '', meta: 'South Korea · K-beauty', logo: '/_blob/47fe1ec46037f15173919d5efd51a63b' },
+{ id: 'sugat', name: 'Sugat Traders', from: 'India', code: 'IN', o: [716, 171], d: 1, pre: '$', target: 25000, comma: true, suf: ' in B2B revenue', label: 'B2B revenue', detail: '', meta: 'India · Herbal powders and sustainable food packaging', logo: '/_blob/3cf6ba6d3acce6bd7899b0e12c19ecb1' },
+{ id: 'karama', name: 'Karama', from: 'USA', code: 'US', o: [205, 118], d: 2, pre: '$', target: 10000, comma: true, suf: ' in pre‑orders before launch', label: 'Pre-launch', detail: '', meta: 'USA · Premium underwear', logo: '/_blob/59544c25694837ecadcfcd871815b437' }
+];
+this.D = [[294, 109], [256, 105], [228, 138], [172, 128]];
+this.state = { active: 0, n: 0, seen: { 0: true } };
+}
+componentDidMount() {
+this.go(0);
+this.timer = setInterval(() => {
+if ((this.props.autoplay ?? true) === false) return;
+if (Date.now() < (this.pauseUntil || 0)) return;
+this.go((this.state.active + 1) % this.B.length);
+}, 3600);
+}
+componentWillUnmount() { clearInterval(this.timer); cancelAnimationFrame(this.raf); }
+go(i) {
+const seen = Object.assign({}, this.state.seen); seen[i] = true;
+this.setState({ active: i, n: 0, seen: seen });
+cancelAnimationFrame(this.raf);
+const target = this.B[i].target, t0 = performance.now() + 500;
+const step = (now) => {
+const p = Math.max(0, Math.min(1, (now - t0) / 1200));
+this.setState({ n: Math.round(target * (1 - Math.pow(1 - p, 3))) });
+if (p < 1) this.raf = requestAnimationFrame(step);
+};
+this.raf = requestAnimationFrame(step);
+}
+renderVals() {
+const a = this.state.active;
+const arcs = this.B.map((b, i) => {
+const [x1, y1] = b.o, [x2, y2] = this.D[b.d];
+const cx = (x1 + x2) / 2, cy = Math.min(y1, y2) - (b.id === 'karama' ? 40 : 150);
+return { d: 'M' + x1 + ' ' + y1 + ' Q' + cx + ' ' + cy + ' ' + x2 + ' ' + y2, cls: i === a ? 'arc is-active' : (this.state.seen[i] ? 'arc is-done' : 'arc') };
+});
+const ad = this.B[a].d;
+const dests = this.D.map((d, i) => ({ x: d[0], y: d[1], cls: i === ad ? 'dest is-hit' : 'dest' }));
+const pins = this.B.map((b, i) => ({ x: b.o[0], y: b.o[1], cls: i === a ? 'pin is-active' : 'pin', ringCls: i === a ? 'ring is-active' : 'ring' }));
+const b = this.B[a];
+const n = b.comma ? this.state.n.toLocaleString('en-US') : String(this.state.n);
+const flat = {};
+arcs.forEach((x, i) => { flat['a' + i + 'd'] = x.d; flat['a' + i + 'c'] = x.cls; });
+dests.forEach((x, i) => { flat['d' + i + 'x'] = x.x; flat['d' + i + 'y'] = x.y; flat['d' + i + 'c'] = x.cls; });
+pins.forEach((x, i) => { flat['p' + i + 'x'] = x.x; flat['p' + i + 'y'] = x.y; flat['p' + i + 'c'] = x.cls; flat['p' + i + 'r'] = x.ringCls; });
+return {
+...flat,
+cardList: [{ cls: a % 2 ? 'card b' : 'card', logo: b.logo, name: b.name, from: b.from, label: b.label, headline: b.pre + n + b.suf, hasDetail: !!b.detail, detail: b.detail, meta: b.meta }],
+chips: this.B.map((x, i) => ({ name: x.name, code: x.code, on: i === a, cls: i === a ? 'chip on' : 'chip', pick: () => { this.pauseUntil = Date.now() + 9000; this.go(i); } }))
+};
+}
+}
+</script>
+</body>
+</html>

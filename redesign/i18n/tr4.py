@@ -1,0 +1,15 @@
+T = [
+("Made in","Fabriqué en","Hecho en","产自","メイド・イン","메이드 인"),
+("Made","Fabriqué","Hecho","产地","どこで","어디서"),
+("anywhere","partout","en cualquier lugar","不限","作っても","만들든"),
+("Sold in the","Vendu aux","Vendido en","销往","販売先は","판매는"),
+("#co1",["Vendre aux États-Unis,","c'est gérer","dix-neuf","prestataires."],["Vender en EE. UU.","significa","diecinueve","proveedores."],["在美国销售，","意味着要面对","十九家","供应商。"],["米国で売るには、","","19社","との取引が必要です。"],["미국에서 판매하려면","","열아홉 곳의","업체가 필요합니다."]),
+("#co2",["Ou un seul","partenaire."],["O un solo","socio."],["或者，只需一个","合作伙伴。"],["あるいは、ひとつの","パートナー。"],["아니면 단 하나의","파트너."]),
+("{n} vendors","{n} prestataires","{n} proveedores","{n} 家供应商","{n} 社","{n}개 업체"),
+("1 partner","1 partenaire","1 socio","1 个合作伙伴","1 社のパートナー","1개 파트너"),
+("Three steps.","Trois étapes.","Tres pasos.","三个步骤，","3つのステップ。","세 단계."),
+("No guesswork.","Sans approximation.","Sin adivinanzas.","不靠猜测。","当て推量なし。","추측은 없습니다."),
+("A short call","Un court appel","Una llamada breve","一次简短通话","短い通話","짧은 통화"),
+("Clear costs","Des coûts clairs","Costes claros","费用透明","明確な費用","명확한 비용"),
+("We run it","Nous gérons tout","Lo gestionamos","由我们运营","運営はおまかせ","운영은 우리가"),
+]
