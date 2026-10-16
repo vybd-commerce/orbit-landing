@@ -6,7 +6,8 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // redesign/ is the designer's prototype, kept as reference, not app code
+  globalIgnores(['dist', 'redesign']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
