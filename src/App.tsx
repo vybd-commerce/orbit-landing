@@ -27,6 +27,7 @@ const StackPage = lazy(() => import("./pages/StackPage"));
 /* The redesign (redesign/ holds the designer's prototype). Each page loads
    its own chunk, and suspends again while a non-English dictionary loads. */
 const RdHomePage = lazy(() => import("./pages/redesign/HomePage"));
+const RdProductPage = lazy(() => import("./pages/redesign/ProductPage"));
 
 function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
@@ -45,6 +46,7 @@ function App() {
             src/i18n). */}
         {LOCALES.flatMap((locale) => [
           <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
+          <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
@@ -78,7 +80,7 @@ function App() {
             </Suspense>
           }
         />
-        <Route path="/product" element={<ProductPage />} />
+        <Route path="/classic/product" element={<ProductPage />} />
         <Route path="/consulting" element={<ConsultingPage />} />
         {/* Journey story variant, under review. */}
         <Route path="/consulting/journey" element={<ConsultingPage story="journey" />} />
