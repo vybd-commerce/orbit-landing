@@ -30,6 +30,7 @@ const RdHomePage = lazy(() => import("./pages/redesign/HomePage"));
 const RdProductPage = lazy(() => import("./pages/redesign/ProductPage"));
 const RdLabPage = lazy(() => import("./pages/redesign/LabPage"));
 const RdCaseStudiesPage = lazy(() => import("./pages/redesign/CaseStudiesPage"));
+const RdCaseStudyPage = lazy(() => import("./pages/redesign/CaseStudyPage"));
 
 function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
           <Route key={`${locale}-lab`} path={localePath(locale, "/lab")} element={<Rd locale={locale}><RdLabPage /></Rd>} />,
           <Route key={`${locale}-cases`} path={localePath(locale, "/case-studies")} element={<Rd locale={locale}><RdCaseStudiesPage /></Rd>} />,
+          <Route key={`${locale}-case`} path={localePath(locale, "/case-studies/:slug")} element={<Rd locale={locale}><RdCaseStudyPage /></Rd>} />,
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
@@ -91,7 +93,7 @@ function App() {
         {/* Simplified line-art story variant, under review. */}
         <Route path="/consulting/flow" element={<ConsultingPage story="flow" />} />
         <Route path="/classic/case-studies" element={<CaseStudiesPage />} />
-        <Route path="/case-studies/:slug" element={<CaseStudyDetailPage />} />
+        <Route path="/classic/case-studies/:slug" element={<CaseStudyDetailPage />} />
         <Route path="/case-study" element={<Navigate to="/case-studies" replace />} />
         <Route path="/classic/lab" element={<LabPage />} />
         <Route path="/work" element={<WorkIndexPage />} />
