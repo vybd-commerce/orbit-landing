@@ -1,0 +1,218 @@
+<title>Vybd Footer Motion</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+/* Six footer motion concepts for the Vybd site. Light page matching the site; each footer is a working mini replica. */
+:root{--navy:#0f1b33;--grey:#5b6270;--muted:#8a909b;--line:#e7e9ed;--soft:#f3f4f6;--paper:#FFFFFF;--mint:#1BB59B;--mint-d:#17A088;--serif:'Instrument Serif',Georgia,'Times New Roman',serif;--sans:'DM Sans',system-ui,-apple-system,sans-serif;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color-scheme:light}
+*{box-sizing:border-box}
+body{background:#F4F5F7;color:var(--navy);font-family:var(--sans);font-size:16px}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.page{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:48px 96px}
+.intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;margin-bottom:40px}
+.intro h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.015em}
+.intro h1 em{color:var(--mint)}
+.intro p{margin:0;max-width:54ch;color:var(--grey);line-height:1.5}
+.opts{display:grid;gap:48px}
+.opt{display:grid;gap:14px}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 24px}
+.meta h2{margin:0;font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05}
+.meta h2 small{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);margin-right:8px;vertical-align:middle}
+.meta p{margin:6px 0 0;color:var(--grey);font-size:15px;line-height:1.5;max-width:62ch}
+.replay{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--navy);font-size:14px;font-weight:600;cursor:pointer}
+.replay:hover{background:var(--navy);color:var(--paper);border-color:var(--navy)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{padding:4px 10px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font-size:12px;font-weight:600;color:var(--grey)}
+
+/* shared mini footer */
+.ft{position:relative;overflow:hidden;border-radius:28px;background:var(--paper);border:1px solid var(--line);padding:28px clamp(16px,3vw,32px) 18px;container-type:inline-size}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 20px}
+@media (max-width:640px){.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cols h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:#6b7280}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.cols a{position:relative;display:inline-flex;align-items:center;gap:6px;color:var(--navy);text-decoration:none;font-size:14px}
+.cols a::after{content:"→";font-size:12px;color:var(--mint-d);opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .25s}
+.cols a:hover::after{opacity:1;transform:none}
+.brand{position:relative;display:flex;justify-content:center;align-items:flex-end;height:min(34cqw,300px);margin-top:12px}
+.word{font-family:var(--sans);font-weight:700;font-size:min(27cqw,240px);line-height:.72;letter-spacing:-.07em;color:var(--navy);user-select:none}
+.bottom{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px 24px;padding-top:12px;border-top:1px solid rgba(15,27,51,.08)}
+.bottom b{display:block;font-size:clamp(16px,2vw,22px);font-weight:500;letter-spacing:-.03em}
+.bottom small{display:block;margin-top:4px;font-size:12px;color:var(--grey)}
+.legal{display:flex;gap:16px;font-size:12px;color:var(--grey)}
+.ft.reset *{animation:none!important;transition:none!important}
+
+/* 1 · orbit (current) */
+.o1 .ring{position:absolute;left:50%;top:2cqw;width:60cqw;aspect-ratio:1;border-radius:50%;transform:translateX(-50%)}
+.o1 .brand{overflow:hidden}
+.o1 .ring.thin{border:1px solid rgba(15,27,51,.14);animation:spin 20s linear infinite}
+.o1 .ring.thick{top:2.8cqw;width:58.5cqw;border:2px solid;border-color:var(--navy) transparent;opacity:.25;animation:rock 15s ease-in-out infinite alternate}
+.o1 .planet{position:absolute;left:17%;top:13%;margin:-8px;width:16px;height:16px;border-radius:50%;border:2px solid var(--navy);background:var(--mint)}
+@keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes rock{from{transform:translateX(-50%) rotate(-45deg)}to{transform:translateX(-50%) rotate(-135deg)}}
+
+/* 2 · letters rise on scroll */
+.o2 .word{display:flex}
+.o2 .word span{display:inline-block;overflow:hidden;padding-bottom:.04em}
+.o2 .word span i{display:inline-block;font-style:normal;transform:translateY(105%)}
+.o2.play .word span i{animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards}
+.o2.play .word span:nth-child(2) i{animation-delay:.08s}.o2.play .word span:nth-child(3) i{animation-delay:.16s}.o2.play .word span:nth-child(4) i{animation-delay:.24s}
+@keyframes rise{to{transform:none}}
+.o2 .sweep{position:absolute;left:50%;bottom:-2px;width:min(78cqw,700px);height:6px;border-radius:6px;background:var(--mint);transform:translateX(-50%) scaleX(0);transform-origin:left}
+.o2.play .sweep{animation:sweep .9s cubic-bezier(.6,0,.2,1) .55s forwards}
+@keyframes sweep{to{transform:translateX(-50%) scaleX(1)}}
+.o2 .cols>div,.o2 .bottom{opacity:0;transform:translateY(16px)}
+.o2.play .cols>div,.o2.play .bottom{animation:up .7s cubic-bezier(.2,.8,.2,1) forwards}
+.o2.play .cols>div:nth-child(2){animation-delay:.08s}.o2.play .cols>div:nth-child(3){animation-delay:.16s}.o2.play .cols>div:nth-child(4){animation-delay:.24s}.o2.play .bottom{animation-delay:.9s}
+@keyframes up{to{opacity:1;transform:none}}
+
+/* 3 · cursor spotlight */
+.o3 .word{color:transparent;-webkit-text-stroke:1.5px rgba(15,27,51,.35);position:relative}
+.o3 .fill{position:absolute;inset:0;color:var(--navy);-webkit-text-stroke:0;-webkit-mask-image:radial-gradient(circle min(18cqw,160px) at var(--x,50%) var(--y,50%),#000 60%,transparent 61%);mask-image:radial-gradient(circle min(18cqw,160px) at var(--x,50%) var(--y,50%),#000 60%,transparent 61%);transition:-webkit-mask-position .1s}
+.o3 .fill em{font-style:normal;color:var(--mint)}
+.o3 .hint{position:absolute;right:0;top:0;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.o3 .dot{position:absolute;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 6px rgba(27,181,155,.18);left:var(--x,50%);top:var(--y,50%);pointer-events:none;transition:opacity .3s}
+
+/* 4 · routes into the US */
+.o4 .map{position:absolute;inset:0;background-image:radial-gradient(#d6dae1 1.2px,transparent 1.2px);background-size:14px 14px;-webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 60%,#000,transparent);mask-image:radial-gradient(ellipse 60% 70% at 50% 60%,#000,transparent)}
+.o4 svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:2}
+.o4 .rt{fill:none;stroke:rgba(27,181,155,.35);stroke-width:1.5;stroke-dasharray:3 6}
+.o4 .pin{fill:var(--mint)}
+.o4 .src{fill:#9CA3AF}
+.o4 .word{position:relative;z-index:1}
+
+/* 5 · tape unrolls */
+.o5 .tape{position:absolute;left:-2%;right:-2%;top:42%;height:44px;background:var(--mint);transform:rotate(-3deg) scaleX(0);transform-origin:left;box-shadow:0 8px 20px -10px rgba(15,27,51,.5);overflow:hidden;z-index:2}
+.o5.play .tape{animation:unroll 1.2s cubic-bezier(.6,0,.2,1) .2s forwards}
+@keyframes unroll{to{transform:rotate(-3deg) scaleX(1)}}
+.o5 .tape .run{display:flex;width:max-content;height:100%;align-items:center;gap:28px;padding-left:28px;font-weight:700;font-size:14px;letter-spacing:.14em;color:var(--navy);white-space:nowrap;animation:marq 18s linear infinite}
+.o5 .tape .run span::after{content:"✦";margin-left:28px;font-size:10px}
+@keyframes marq{to{transform:translateX(-50%)}}
+.o5 .word{opacity:.95}
+
+/* 6 · postmark */
+.o6 .word{position:relative}
+.o6 .pm{position:absolute;left:58%;top:6%;width:min(26cqw,220px);aspect-ratio:1;border-radius:50%;border:3px solid var(--mint-d);box-shadow:inset 0 0 0 5px #FFFFFF,inset 0 0 0 7px var(--mint-d);display:grid;place-items:center;text-align:center;color:var(--mint-d);font-weight:800;letter-spacing:.14em;font-size:min(2.6cqw,20px);line-height:1.2;transform:rotate(-16deg) scale(2.2);opacity:0;mix-blend-mode:multiply;z-index:2}
+.o6 .pm small{display:block;font-size:.55em;letter-spacing:.2em}
+.o6.play .pm{animation:thump .6s cubic-bezier(.3,1.5,.5,1) .5s forwards}
+@keyframes thump{0%{opacity:0;transform:rotate(-34deg) scale(2.2)}60%{opacity:.95;transform:rotate(-14deg) scale(.92)}100%{opacity:.9;transform:rotate(-16deg) scale(1)}}
+.o6 .waves{position:absolute;left:calc(58% + min(24cqw,200px));top:18%;width:min(30cqw,260px);height:min(12cqw,100px);background:repeating-linear-gradient(180deg,transparent 0 10px,var(--mint-d) 10px 12.5px);-webkit-mask-image:linear-gradient(90deg,#000,transparent);mask-image:linear-gradient(90deg,#000,transparent);transform:scaleX(0);transform-origin:left;opacity:.7;z-index:2}
+.o6.play .waves{animation:sweep2 .6s ease-out .9s forwards}
+@keyframes sweep2{to{transform:scaleX(1)}}
+.o6.play .ftbox{animation:jolt .35s ease-out .75s}
+@keyframes jolt{40%{transform:translateY(3px)}}
+
+@media (prefers-reduced-motion:reduce){.ft *{animation:none!important}.o2 .word span i{transform:none}.o2 .cols>div,.o2 .bottom{opacity:1;transform:none}.o5 .tape{transform:rotate(-3deg)}.o6 .pm{opacity:.9;transform:rotate(-16deg)}}
+</style>
+
+<main class="page">
+<div class="intro">
+<h1>Footer <em>motion.</em></h1>
+<p>Six ways to animate the Vybd footer. Option 01 is what's on the site now. The others start when they scroll into view; use Replay to watch again. Option 03 follows your cursor (or finger).</p>
+</div>
+<div class="opts">
+
+<section class="opt">
+<div class="meta"><div><h2><small>01</small>Orbit (current)</h2><p>The vybd.ai footer as it is now: a thin ring circles the wordmark with a mint planet, and a thicker arc slowly rocks behind it.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o1"><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><span class="ring thin"><i class="planet"></i></span><span class="ring thick"></span><span class="word">Vybd</span></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Calm</span><span>Always moving</span></div>
+</section>
+
+<section class="opt">
+<div class="meta"><div><h2><small>02</small>Rising wordmark</h2><p>As the footer scrolls in, the link columns fade up one by one, the four letters of "Vybd" rise out of a mask, and a mint line sweeps underneath. Matches the headline animations on the Case Studies, Lab and How It Works pages.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o2" data-play><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><span class="word"><span><i>V</i></span><span><i>y</i></span><span><i>b</i></span><span><i>d</i></span></span><span class="sweep"></span></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Clean</span><span>Plays once</span><span>Fits the other pages</span></div>
+</section>
+
+<section class="opt">
+<div class="meta"><div><h2><small>03</small>Cursor spotlight</h2><p>The wordmark is drawn as an outline. A spotlight follows the cursor and fills in the letters beneath it, echoing the cursor-reactive parcel in the hero. On phones it follows your finger, and drifts on its own when nobody is touching it.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o3" data-spot><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><span class="word">Vybd<span class="fill" aria-hidden="true">Vyb<em>d</em></span></span><span class="hint">Move your cursor</span></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Interactive</span><span>Playful</span></div>
+</section>
+
+<section class="opt">
+<div class="meta"><div><h2><small>04</small>Routes into the US</h2><p>Faint dots map the world behind the wordmark. Small parcels keep flying in along mint routes from all directions and land on a pin in the "d" of Vybd, a quiet last reminder of what Vybd does.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o4"><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><div class="map"></div>
+<svg viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+<path id="r1" class="rt" d="M 40 60 C 300 -20, 600 40, 760 150"></path>
+<path id="r2" class="rt" d="M 960 40 C 900 60, 820 90, 760 150"></path>
+<path id="r3" class="rt" d="M 120 280 C 400 300, 650 220, 760 150"></path>
+<path id="r4" class="rt" d="M 980 270 C 900 250, 820 210, 760 150"></path>
+<circle class="src" cx="40" cy="60" r="5"></circle><circle class="src" cx="960" cy="40" r="5"></circle><circle class="src" cx="120" cy="280" r="5"></circle><circle class="src" cx="980" cy="270" r="5"></circle>
+<g><circle class="pin" cx="760" cy="150" r="9"></circle><circle cx="760" cy="150" r="9" fill="none" stroke="#1BB59B" stroke-width="2"><animate attributeName="r" values="9;24" dur="1.8s" repeatCount="indefinite"></animate><animate attributeName="opacity" values="1;0" dur="1.8s" repeatCount="indefinite"></animate></circle></g>
+<g><rect x="-9" y="-7" width="18" height="14" rx="2" fill="#0f1b33"></rect><rect x="-2.5" y="-7" width="5" height="14" fill="#1BB59B"></rect><animateMotion dur="3.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".5 0 .3 1"><mpath href="#r1"></mpath></animateMotion></g>
+<g><rect x="-9" y="-7" width="18" height="14" rx="2" fill="#0f1b33"></rect><rect x="-2.5" y="-7" width="5" height="14" fill="#1BB59B"></rect><animateMotion dur="2.8s" begin="-1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".5 0 .3 1"><mpath href="#r2"></mpath></animateMotion></g>
+<g><rect x="-9" y="-7" width="18" height="14" rx="2" fill="#0f1b33"></rect><rect x="-2.5" y="-7" width="5" height="14" fill="#1BB59B"></rect><animateMotion dur="4.2s" begin="-2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".5 0 .3 1"><mpath href="#r3"></mpath></animateMotion></g>
+<g><rect x="-9" y="-7" width="18" height="14" rx="2" fill="#0f1b33"></rect><rect x="-2.5" y="-7" width="5" height="14" fill="#1BB59B"></rect><animateMotion dur="3.2s" begin="-.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".5 0 .3 1"><mpath href="#r4"></mpath></animateMotion></g>
+</svg>
+<span class="word">Vybd</span></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Story</span><span>Always moving</span></div>
+</section>
+
+<section class="opt">
+<div class="meta"><div><h2><small>05</small>Packing tape</h2><p>When the footer appears, a strip of mint packing tape unrolls across the wordmark at a slight angle, printed with "Commerce, Coordinated." on a slow loop. It ties back to the tape on the loader.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o5" data-play><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><div class="tape" aria-hidden="true"><div class="run"><span>COMMERCE, COORDINATED.</span><span>VYBD</span><span>COMMERCE, COORDINATED.</span><span>VYBD</span><span>COMMERCE, COORDINATED.</span><span>VYBD</span><span>COMMERCE, COORDINATED.</span><span>VYBD</span><span>COMMERCE, COORDINATED.</span><span>VYBD</span><span>COMMERCE, COORDINATED.</span><span>VYBD</span></div></div><span class="word">Vybd</span></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Bold</span><span>Brand-first</span></div>
+</section>
+
+<section class="opt">
+<div class="meta"><div><h2><small>06</small>Postmark sign-off</h2><p>As the footer lands, a round "Delivered · Vybd" postmark slams onto the wordmark, the footer gives a tiny jolt, and wavy cancellation lines sweep out beside it, like the last stamp on a parcel.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="ft o6" data-play><div class="ftbox">
+<div class="cols"><div><h3>Explore</h3><ul><li><a href="#">How It Works</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Lab</a></li></ul></div><div><h3>Company</h3><ul><li><a href="#">About us</a></li></ul></div><div><h3>Follow us</h3><ul><li><a href="#">LinkedIn</a></li><li><a href="#">Instagram</a></li><li><a href="#">X</a></li></ul></div><div><h3>Partnership inquiries</h3><ul><li><a href="#">hello@vybd.ai</a></li></ul></div></div>
+<div class="brand"><span class="word">Vybd</span><div class="pm" aria-hidden="true"><div>DELIVERED<small>VYBD · 2026</small></div></div><div class="waves" aria-hidden="true"></div></div>
+<div class="bottom"><div><b>Commerce, Coordinated.</b><small>© 2026 Vybd</small></div><div class="legal"><span>Privacy and cookie policy</span><span>Terms</span></div></div>
+</div></div>
+<div class="tags"><span>Punchy</span><span>Plays once</span><span>Stamps</span></div>
+</section>
+
+</div>
+</main>
+<script>
+(function () {
+  var plays = document.querySelectorAll('[data-play]');
+  function play(el) { el.classList.remove('play'); void el.offsetWidth; el.classList.add('play'); }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) { en.forEach(function (e) { if (e.isIntersecting && !e.target.classList.contains('play')) play(e.target); }); }, { threshold: .4 });
+    plays.forEach(function (el) { io.observe(el); });
+  } else { plays.forEach(play); }
+  document.querySelectorAll('.opt').forEach(function (opt) {
+    var ft = opt.querySelector('.ft');
+    opt.querySelector('.replay').addEventListener('click', function () {
+      if (ft.hasAttribute('data-play')) { play(ft); return; }
+      ft.querySelectorAll('svg').forEach(function (s) { if (s.setCurrentTime) s.setCurrentTime(0); });
+      ft.querySelectorAll('*').forEach(function (el) { el.getAnimations && el.getAnimations().forEach(function (a) { a.currentTime = 0; a.play(); }); });
+    });
+  });
+  // spotlight
+  var spot = document.querySelector('[data-spot]');
+  var word = spot.querySelector('.word'), fill = spot.querySelector('.fill');
+  var dot = document.createElement('span'); dot.className = 'dot'; word.appendChild(dot);
+  var active = false, t0 = performance.now();
+  function setPos(x, y) { word.style.setProperty('--x', x + 'px'); word.style.setProperty('--y', y + 'px'); }
+  function move(cx, cy) { var r = word.getBoundingClientRect(); active = true; setPos(cx - r.left, cy - r.top); clearTimeout(move.t); move.t = setTimeout(function () { active = false; }, 1600); }
+  spot.addEventListener('pointermove', function (e) { move(e.clientX, e.clientY); });
+  spot.addEventListener('touchmove', function (e) { if (e.touches[0]) move(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  (function drift(now) {
+    if (!active) { var r = word.getBoundingClientRect(), k = (now - t0) / 1000; setPos(r.width * (0.5 + 0.38 * Math.sin(k * 0.8)), r.height * (0.55 + 0.25 * Math.sin(k * 1.3))); }
+    requestAnimationFrame(drift);
+  })(t0);
+})();
+</script>

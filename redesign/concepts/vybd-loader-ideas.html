@@ -1,0 +1,193 @@
+<title>Vybd Loader Ideas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+/* Six loader concepts for the Vybd site. Light page matching the site; each loader plays on its own dark tile. */
+:root{--navy:#0f1b33;--grey:#5b6270;--muted:#8a909b;--line:#e7e9ed;--soft:#f3f4f6;--paper:#FFFFFF;--night:#0B0F17;--mint:#1BB59B;--mint-d:#17A088;--serif:'Instrument Serif',Georgia,'Times New Roman',serif;--sans:'DM Sans',system-ui,-apple-system,sans-serif;--mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--navy);font-family:var(--sans);font-size:16px}
+button{font:inherit}
+:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.page{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:48px 80px}
+.intro{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px 40px;margin-bottom:40px}
+.intro h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.015em}
+.intro h1 em{color:var(--mint)}
+.intro p{margin:0;max-width:52ch;color:var(--grey);line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tile{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:22px;background:var(--night);color:#FFFFFF;overflow:hidden;container-type:inline-size}
+.tile .foot{position:absolute;left:5%;right:5%;bottom:6%;display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:#9CA3AF}
+.tile .foot b{font-size:16px;letter-spacing:-.04em;color:#FFFFFF}
+.meta{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.meta h2{margin:0;font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.05;letter-spacing:-.01em}
+.meta h2 small{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);margin-right:8px;vertical-align:middle}
+.meta p{margin:6px 0 0;color:var(--grey);font-size:15px;line-height:1.5;max-width:52ch}
+.replay{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--navy);font-size:14px;font-weight:600;cursor:pointer}
+.replay:hover{background:var(--navy);color:var(--paper);border-color:var(--navy)}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{padding:4px 10px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:600;color:var(--grey)}
+.reveal{position:absolute;inset:0;z-index:2;background:var(--paper);color:var(--navy);display:grid;place-items:center;font-family:var(--serif);font-size:9cqw;letter-spacing:-.02em;opacity:0}
+.reveal em{color:var(--mint)}
+.stage{position:absolute;inset:0}
+/* every loader runs on a 4.2s cycle: ~3.2s of loader, then the site reveal holds briefly */
+.tile *{animation-duration:4.2s;animation-iteration-count:infinite}
+
+/* 1. customs stamp */
+.l1 .lbl{position:absolute;left:50%;top:44%;width:46cqw;padding:3cqw;border-radius:2cqw;background:#FFFFFF;color:var(--navy);transform:translate(-50%,-50%);animation-name:l1lbl;animation-timing-function:cubic-bezier(.3,1.2,.5,1)}
+.l1 .lbl small{display:block;font-family:var(--mono);font-size:1.6cqw;letter-spacing:.12em;color:var(--muted)}
+.l1 .lbl strong{display:block;margin-top:1cqw;font-size:4.4cqw;letter-spacing:-.04em}
+.l1 .lbl i{display:block;height:4cqw;margin-top:2cqw;background:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 5px,var(--navy) 5px 6px,transparent 6px 9px)}
+.l1 .stamp{position:absolute;right:2cqw;top:-3cqw;width:15cqw;height:15cqw;border-radius:50%;border:.6cqw solid var(--mint-d);box-shadow:inset 0 0 0 .6cqw #FFFFFF,inset 0 0 0 1cqw var(--mint-d);display:grid;place-items:center;text-align:center;color:var(--mint-d);font-weight:800;font-size:2.2cqw;letter-spacing:.1em;line-height:1.1;opacity:0;animation-name:l1stamp}
+.l1 .stamp small{display:block;font-size:1.3cqw}
+@keyframes l1lbl{0%{opacity:0;transform:translate(-50%,-30%)}10%,32%{opacity:1;transform:translate(-50%,-50%)}35%{transform:translate(-50%,-49%) scale(.98)}38%,62%{transform:translate(-50%,-50%) scale(1)}74%,100%{opacity:1;transform:translate(-50%,-50%) scale(5.5)}}
+@keyframes l1stamp{0%,26%{opacity:0;transform:rotate(-34deg) scale(2.2)}34%{opacity:1;transform:rotate(-12deg) scale(.92)}40%,100%{opacity:.95;transform:rotate(-14deg) scale(1)}}
+.l1 .reveal{animation-name:l1rev}
+@keyframes l1rev{0%,70%{opacity:0}78%,96%{opacity:1}100%{opacity:0}}
+
+/* 2. route to the US */
+.l2 .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.12) 1px,transparent 1px);background-size:2.4cqw 2.4cqw;-webkit-mask-image:radial-gradient(ellipse 60% 55% at 50% 45%,#000,transparent);mask-image:radial-gradient(ellipse 60% 55% at 50% 45%,#000,transparent)}
+.l2 svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.l2 .arc{fill:none;stroke:var(--mint);stroke-width:2;stroke-dasharray:440;stroke-dashoffset:440;animation-name:l2arc;animation-timing-function:cubic-bezier(.5,0,.3,1)}
+@keyframes l2arc{0%,8%{stroke-dashoffset:440}60%,100%{stroke-dashoffset:0}}
+.l2 .pin{position:absolute;padding:.8cqw 1.6cqw;border-radius:999px;font-family:var(--mono);font-size:1.6cqw;letter-spacing:.1em;transform:translate(-50%,-50%)}
+.l2 .from{left:22%;top:62%;background:rgba(255,255,255,.1);color:#D1D5DB}
+.l2 .to{left:78%;top:62%;background:var(--mint);color:var(--night);font-weight:700;animation-name:l2pin}
+@keyframes l2pin{0%,56%{transform:translate(-50%,-50%) scale(1)}62%{transform:translate(-50%,-50%) scale(1.25)}68%,100%{transform:translate(-50%,-50%) scale(1)}}
+@property --pct{syntax:'<integer>';inherits:false;initial-value:0}
+.l2 .pct{position:absolute;left:50%;top:56%;transform:translateX(-50%);font-family:var(--serif);font-size:8cqw;line-height:1;counter-reset:p var(--pct);animation-name:l2pct;animation-timing-function:cubic-bezier(.5,0,.3,1)}
+.l2 .pct::before{content:counter(p) "%"}
+@keyframes l2pct{0%,8%{--pct:0}60%,100%{--pct:100}}
+.l2 .reveal{animation-name:l2rev}
+@keyframes l2rev{0%,66%{opacity:0;clip-path:circle(0% at 78% 62%)}80%,96%{opacity:1;clip-path:circle(120% at 78% 62%)}100%{opacity:0}}
+
+/* 3. tape seal and peel */
+.l3 .word{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-size:14cqw;font-weight:700;letter-spacing:-.07em;color:#FFFFFF;animation-name:l3word}
+@keyframes l3word{0%{opacity:0;transform:translate(-50%,-40%)}12%,100%{opacity:1;transform:translate(-50%,-50%)}}
+.l3 .tape{position:absolute;left:-10%;top:47%;width:120%;height:9%;background:var(--mint);box-shadow:0 1cqw 3cqw rgba(0,0,0,.4);transform-origin:left;transform:scaleX(0) rotate(-4deg);animation-name:l3tape;animation-timing-function:cubic-bezier(.6,0,.3,1)}
+@keyframes l3tape{0%,18%{transform:scaleX(0) rotate(-4deg)}40%,52%{transform:scaleX(1) rotate(-4deg)}}
+.l3 .reveal{animation-name:l3rev;animation-timing-function:cubic-bezier(.6,0,.3,1)}
+@keyframes l3rev{0%,52%{opacity:1;clip-path:inset(0 100% 0 0)}74%,96%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0;clip-path:inset(0 0 0 0)}}
+.l3 .peel{position:absolute;top:0;bottom:0;left:0;width:6cqw;background:linear-gradient(90deg,transparent,rgba(27,181,155,.9));opacity:0;animation-name:l3peel;animation-timing-function:cubic-bezier(.6,0,.3,1)}
+@keyframes l3peel{0%,52%{opacity:0;transform:translateX(-6cqw)}54%{opacity:1}74%{opacity:1;transform:translateX(100cqw)}76%,100%{opacity:0}}
+
+/* 4. barcode scan */
+.l4 .lbl{position:absolute;left:50%;top:44%;width:52cqw;padding:3cqw;border-radius:2cqw;background:#FFFFFF;color:var(--navy);transform:translate(-50%,-50%);overflow:hidden;animation-name:l4lbl}
+@keyframes l4lbl{0%{opacity:0;transform:translate(-50%,-40%)}10%,66%{opacity:1;transform:translate(-50%,-50%)}78%,100%{opacity:0;transform:translate(-50%,-50%) scale(.9)}}
+.l4 .bc{height:14cqw;background:repeating-linear-gradient(90deg,var(--navy) 0 3px,transparent 3px 6px,var(--navy) 6px 7px,transparent 7px 11px,var(--navy) 11px 15px,transparent 15px 17px)}
+.l4 .code{display:flex;justify-content:space-between;margin-top:1.4cqw;font-family:var(--mono);font-size:1.8cqw;letter-spacing:.12em}
+.l4 .ok{color:var(--mint-d);font-weight:700;opacity:0;animation-name:l4ok}
+@keyframes l4ok{0%,52%{opacity:0}56%,100%{opacity:1}}
+.l4 .laser{position:absolute;left:0;right:0;top:3cqw;height:2px;background:var(--mint);box-shadow:0 0 1.4cqw 0.4cqw rgba(27,181,155,.7);animation-name:l4laser;animation-timing-function:ease-in-out}
+@keyframes l4laser{0%,10%{transform:translateY(0);opacity:0}14%{opacity:1}26%{transform:translateY(14cqw)}38%{transform:translateY(0)}50%{transform:translateY(14cqw);opacity:1}54%,100%{opacity:0}}
+.l4 .reveal{animation-name:l4rev}
+@keyframes l4rev{0%,72%{opacity:0;clip-path:inset(50% 0 50% 0)}84%,96%{opacity:1;clip-path:inset(0 0 0 0)}100%{opacity:0}}
+
+/* 5. conveyor into one box */
+.l5 .belt{position:absolute;left:6%;right:36%;top:66%;height:2.4cqw;border-radius:2cqw;background:repeating-linear-gradient(90deg,#2c3b5c 0 1.4cqw,#3e4f72 1.4cqw 2.8cqw);animation:l5belt .5s linear infinite}
+@keyframes l5belt{to{background-position:2.8cqw 0}}
+.l5 .p{position:absolute;left:6%;top:56%;width:6cqw;height:5cqw;border-radius:.5cqw;background:#FFFFFF;opacity:0;animation-name:l5p;animation-timing-function:linear}
+.l5 .p::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1.4cqw;margin-left:-.7cqw;background:var(--mint)}
+.l5 .p2{animation-delay:.35s}.l5 .p3{animation-delay:.7s}
+@keyframes l5p{0%{opacity:0;transform:translate(0,0)}4%{opacity:1}30%{transform:translate(48cqw,0)}36%{transform:translate(56cqw,6cqw) rotate(20deg);opacity:1}38%,100%{opacity:0;transform:translate(56cqw,8cqw)}}
+.l5 .big{position:absolute;left:64%;top:58%;width:24cqw;height:16cqw;background:#F3F4F6;border-radius:.6cqw;animation-name:l5big}
+.l5 .big::after{content:"";position:absolute;left:50%;top:0;width:4cqw;height:6cqw;margin-left:-2cqw;background:var(--mint)}
+.l5 .fl{position:absolute;top:-6cqw;width:12cqw;height:6cqw;background:#E5E7EB;transform-origin:50% 100%}
+.l5 .fl.a{left:0;transform-origin:0 100%;animation-name:l5fa}.l5 .fl.b{right:0;transform-origin:100% 100%;animation-name:l5fb}
+@keyframes l5fa{0%,46%{transform:rotate(-120deg)}56%,100%{transform:rotate(0deg) translateY(6cqw) scaleY(.1)}}
+@keyframes l5fb{0%,48%{transform:rotate(120deg)}58%,100%{transform:rotate(0deg) translateY(6cqw) scaleY(.1)}}
+@keyframes l5big{0%,58%{transform:none}62%{transform:translateY(-1cqw)}66%,100%{transform:none}}
+.l5 .tag{position:absolute;left:76%;top:46%;padding:.8cqw 1.6cqw;border-radius:999px;background:var(--mint);color:var(--night);font-size:1.8cqw;font-weight:700;opacity:0;transform:translate(-50%,0);animation-name:l5tag}
+@keyframes l5tag{0%,60%{opacity:0;transform:translate(-50%,2cqw)}66%,100%{opacity:1;transform:translate(-50%,0)}}
+.l5 .cap{position:absolute;left:6%;top:18%;font-family:var(--serif);font-size:5cqw;line-height:1.05}
+.l5 .cap em{color:var(--mint)}
+.l5 .reveal{animation-name:l5rev}
+@keyframes l5rev{0%,72%{opacity:0;clip-path:circle(0% at 76% 66%)}86%,96%{opacity:1;clip-path:circle(120% at 76% 66%)}100%{opacity:0}}
+
+/* 6. the wordmark flaps open */
+.l6 .row{position:absolute;left:50%;top:44%;display:flex;gap:1.2cqw;transform:translate(-50%,-50%);perspective:60cqw}
+.l6 .t{position:relative;width:13cqw;height:15cqw;border-radius:1.2cqw;background:#1a2333;transform-style:preserve-3d}
+.l6 .t .in{position:absolute;inset:0;border-radius:inherit;background:var(--mint);display:grid;place-items:center;color:var(--night);font-family:var(--serif);font-size:10cqw}
+.l6 .t .lid{position:absolute;inset:0;border-radius:inherit;background:#FFFFFF;transform-origin:50% 0;display:grid;place-items:center;color:var(--navy);font-weight:700;font-size:9cqw;letter-spacing:-.06em;backface-visibility:hidden;animation-name:l6lid;animation-timing-function:cubic-bezier(.45,0,.25,1.2)}
+.l6 .t:nth-child(2) .lid{animation-delay:.15s}.l6 .t:nth-child(3) .lid{animation-delay:.3s}.l6 .t:nth-child(4) .lid{animation-delay:.45s}
+@keyframes l6lid{0%,22%{transform:rotateX(0)}26%{transform:rotateX(-12deg)}46%,100%{transform:rotateX(-178deg)}}
+.l6 .t:nth-child(1){animation-name:l6drop;animation-timing-function:cubic-bezier(.3,1.3,.5,1)}.l6 .t:nth-child(2){animation-name:l6drop;animation-delay:.06s;animation-timing-function:cubic-bezier(.3,1.3,.5,1)}.l6 .t:nth-child(3){animation-name:l6drop;animation-delay:.12s;animation-timing-function:cubic-bezier(.3,1.3,.5,1)}.l6 .t:nth-child(4){animation-name:l6drop;animation-delay:.18s;animation-timing-function:cubic-bezier(.3,1.3,.5,1)}
+@keyframes l6drop{0%{opacity:0;transform:translateY(-6cqw)}10%,100%{opacity:1;transform:none}}
+.l6 .reveal{animation-name:l6rev}
+@keyframes l6rev{0%,62%{opacity:0;clip-path:inset(40% 30% 40% 30% round 2cqw)}80%,96%{opacity:1;clip-path:inset(0 0 0 0 round 0)}100%{opacity:0}}
+
+.tile.is-paused *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.tile *{animation-play-state:paused!important}}
+</style>
+
+<main class="page">
+<div class="intro">
+<h1>Loader <em>ideas.</em></h1>
+<p>Six other ways to open the site, all on the same dark screen as the current box-cutter loader, and all about three seconds long before the site appears. Each one loops; use Replay to watch it from the start.</p>
+</div>
+<div class="grid">
+
+<section class="card">
+<div class="tile l1"><div class="stage">
+<div class="lbl"><small>VYBD POST · PRIORITY</small><strong>To: The US</strong><i></i><div class="stamp"><div>CLEARED<small>USA</small></div></div></div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="foot"><b>Vybd</b><span>Clearing customs</span></div></div>
+<div class="meta"><div><h2><small>01</small>Customs stamp</h2><p>A shipping label slides in, a round "CLEARED · USA" stamp slams down and the label zooms out into the site. Short, bold and ties straight to the stamps on the hero parcel.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Punchy</span><span>Stamps</span><span>~3s</span></div>
+</section>
+
+<section class="card">
+<div class="tile l2"><div class="stage">
+<div class="dots"></div>
+<svg viewBox="0 0 600 375" preserveAspectRatio="none" aria-hidden="true"><path id="l2p" class="arc" d="M 132 232 C 200 40, 400 40, 468 232"></path><g opacity="0"><rect x="-18" y="-15" width="36" height="30" rx="4" fill="#FFFFFF"></rect><rect x="-5" y="-15" width="10" height="30" fill="#1BB59B"></rect><animateMotion dur="4.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.08;0.58;1" keyPoints="0;0;1;1" keySplines="0 0 1 1;.5 0 .3 1;0 0 1 1"><mpath href="#l2p"></mpath></animateMotion><animate attributeName="opacity" dur="4.2s" repeatCount="indefinite" keyTimes="0;0.08;0.12;0.58;0.62;1" values="0;0;1;1;0;0"></animate></g></svg>
+<span class="pin from">ANYWHERE</span><span class="pin to">USA</span>
+<div class="pct"></div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="foot"><b>Vybd</b><span>Routing your launch</span></div></div>
+<div class="meta"><div><h2><small>02</small>Route to the US</h2><p>A mint route draws from "Anywhere" to a US pin while a counter runs 0–100%. The site opens out of the pin like a ripple.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Calm</span><span>Shows progress</span><span>~3s</span></div>
+</section>
+
+<section class="card">
+<div class="tile l3"><div class="stage">
+<div class="word">Vybd</div>
+<div class="tape"></div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="peel"></div><div class="foot"><b>Vybd</b><span>Sealing it up</span></div></div>
+<div class="meta"><div><h2><small>03</small>Tape seal and peel</h2><p>The wordmark appears, a strip of mint packing tape seals across it, then the tape peels away left to right and pulls the site in behind it.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Minimal</span><span>Brand-first</span><span>~3s</span></div>
+</section>
+
+<section class="card">
+<div class="tile l4"><div class="stage">
+<div class="lbl"><div class="bc"></div><div class="code"><span>VYBD-001-US</span><span class="ok">SCANNED ✓</span></div><div class="laser"></div></div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="foot"><b>Vybd</b><span>Scanning your parcel</span></div></div>
+<div class="meta"><div><h2><small>04</small>Barcode scan</h2><p>A glowing mint laser sweeps a parcel barcode twice, it flips to "Scanned ✓" and the site opens from the centre line.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Techy</span><span>Logistics</span><span>~3s</span></div>
+</section>
+
+<section class="card">
+<div class="tile l5"><div class="stage">
+<div class="cap">Many parts.<br><em>One parcel.</em></div>
+<div class="belt"></div><div class="p"></div><div class="p p2"></div><div class="p p3"></div>
+<div class="big"><div class="fl a"></div><div class="fl b"></div></div><div class="tag">Ready</div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="foot"><b>Vybd</b><span>Packing your launch</span></div></div>
+<div class="meta"><div><h2><small>05</small>Conveyor into one box</h2><p>Small parcels ride a belt into one big Vybd box, the flaps fold shut and a "Ready" tag pops up. It previews the idea of section 5 (nineteen things, one relationship).</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Story</span><span>Playful</span><span>~3s</span></div>
+</section>
+
+<section class="card">
+<div class="tile l6"><div class="stage">
+<div class="row"><div class="t"><div class="in">V</div><div class="lid">V</div></div><div class="t"><div class="in">y</div><div class="lid">y</div></div><div class="t"><div class="in">b</div><div class="lid">b</div></div><div class="t"><div class="in">d</div><div class="lid">d</div></div></div>
+</div><div class="reveal">Borderless<em>.</em></div><div class="foot"><b>Vybd</b><span>Opening your next market</span></div></div>
+<div class="meta"><div><h2><small>06</small>Wordmark flaps</h2><p>Each letter of "Vybd" sits on a little box lid. The lids flip open one after another to show mint underneath, and the site opens out of the middle.</p></div><button class="replay" type="button">Replay</button></div>
+<div class="tags"><span>Elegant</span><span>Typographic</span><span>~3s</span></div>
+</section>
+
+</div>
+</main>
+<script>
+document.querySelectorAll('.card').forEach(function (card) {
+  var tile = card.querySelector('.tile');
+  card.querySelector('.replay').addEventListener('click', function () {
+    var svg = tile.querySelector('svg'); if (svg && svg.setCurrentTime) svg.setCurrentTime(0);
+    tile.querySelectorAll('*').forEach(function (el) { el.getAnimations && el.getAnimations().forEach(function (a) { a.currentTime = 0; a.play(); }); });
+  });
+});
+</script>

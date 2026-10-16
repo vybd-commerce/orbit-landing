@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Already in the US — Shipping labels</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+.pl{--navy:#0f1b33;--grey:#5b6270;--muted:#8a909b;--line:#e7e9ed;--mint:#1BB59B;--mint-d:#17A088;font-family:'DM Sans',system-ui,sans-serif;color:var(--navy);background:#FFFFFF;padding:clamp(56px,7vw,112px) clamp(20px,5vw,48px)}
+.pl-wrap{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:clamp(40px,6vw,96px)}
+.pl-copy{flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.pl-title{margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(44px,5.2vw,72px);line-height:1;letter-spacing:-.015em}
+.pl-sub{margin:0;font-size:clamp(18px,1.6vw,22px);color:var(--grey)}
+.pl-idx{margin-top:24px;font-size:14px;font-weight:600;letter-spacing:.08em;color:var(--muted);font-variant-numeric:tabular-nums}
+.pl-name{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,3vw,40px);line-height:1.1}
+.pl-ctrl{display:flex;gap:10px;margin-top:8px}
+.pl-btn{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--navy);background:#FFFFFF;color:var(--navy);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+.pl-btn:hover{background:var(--navy);color:#FFFFFF}
+.pl-hint{font-size:13px;color:var(--muted)}
+.pl-stage{flex:1 1 520px;min-width:0;position:relative;height:500px;display:flex;align-items:center;justify-content:center;touch-action:pan-y;user-select:none}
+.lab{position:absolute;width:min(460px,92%);box-sizing:border-box;background:#FFFFFF;border-radius:14px;padding:22px 24px;box-shadow:rgba(15,27,51,.06) 0 1px 2px,rgba(15,27,51,.16) 0 22px 50px -18px;border:1px solid var(--line);transition:transform .7s cubic-bezier(.2,.75,.2,1),opacity .5s ease;cursor:grab}
+.lab:active{cursor:grabbing}
+.lab-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700;letter-spacing:.16em}
+.lab-prio{border:1.5px solid var(--navy);padding:3px 7px}
+.lab hr{border:0;border-top:1.5px dashed #c9ced6;margin:14px 0}
+.lab img{height:42px;max-width:220px;object-fit:contain;object-position:left;display:block}
+.lab-rt{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.lab-rt small{display:block;font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--muted)}
+.lab-rt b{font-size:15px}
+.lab-res{margin-top:14px;padding:12px 14px;border-radius:10px;background:#f1f3f6}
+.lab-res small{font-size:12px;font-weight:500;color:var(--muted)}
+.lab-res p{margin:2px 0 0;font-size:clamp(18px,1.7vw,22px);font-weight:700;letter-spacing:-.02em;line-height:1.2;font-variant-numeric:tabular-nums}
+.lab-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-top:16px}
+.bars{flex:1;height:34px;background:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 5px,var(--navy) 5px 6px,transparent 6px 9px,var(--navy) 9px 12px,transparent 12px 14px)}
+.lab-trk{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--grey);white-space:nowrap}
+.stamp{position:absolute;right:20px;bottom:52px;width:100px;height:100px;border-radius:50%;border:3px solid var(--mint-d);box-shadow:inset 0 0 0 3px #FFFFFF,inset 0 0 0 5px var(--mint-d);display:grid;place-items:center;text-align:center;color:var(--mint-d);font-size:13px;font-weight:800;letter-spacing:.12em;line-height:1.2;transform:rotate(-14deg);opacity:0;mix-blend-mode:multiply;pointer-events:none}
+.stamp small{display:block;font-size:9px;letter-spacing:.14em;font-weight:700}
+.lab.is-top .stamp{animation:thump .55s cubic-bezier(.3,1.5,.5,1) .55s forwards}
+@keyframes thump{0%{opacity:0;transform:rotate(-30deg) scale(1.9)}60%{opacity:.95;transform:rotate(-12deg) scale(.92)}100%{opacity:.9;transform:rotate(-14deg) scale(1)}}
+.lab.is-done .stamp{opacity:.9}
+.dots{position:absolute;bottom:0;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:#d6dae1;cursor:pointer;transition:width .3s,background .3s}
+.dot.on{width:26px;border-radius:8px;background:var(--navy)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.lab.is-top .stamp{opacity:.9}}
+</style>
+</helmet>
+<section class="pl" aria-labelledby="pl-title">
+<div class="pl-wrap">
+<div class="pl-copy">
+<h2 id="pl-title" class="pl-title">Already in the US.</h2>
+<p class="pl-sub">Real brands, real US results. Every one of them shipped, cleared and delivered.</p>
+<div class="pl-idx">{{ idx }}</div>
+<div class="pl-name">{{ topName }}</div>
+<div class="pl-ctrl">
+<button type="button" class="pl-btn" aria-label="Previous brand" onClick="{{ prev }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="pl-btn" aria-label="Next brand" onClick="{{ next }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+<div class="pl-hint">Drag the top label, or tap it, to see the next delivery.</div>
+</div>
+<div class="pl-stage" onPointerDown="{{ down }}" onPointerMove="{{ move }}" onPointerUp="{{ up }}" onPointerCancel="{{ up }}">
+<sc-for list="{{ labels }}" as="l" hint-placeholder-count="7">
+<div class="{{ l.cls }}" style="{{ l.style }}" aria-hidden="{{ l.hidden }}">
+<div class="lab-top"><span>VYBD POST</span><span class="lab-prio">PRIORITY</span></div>
+<hr>
+<img src="{{ l.logo }}" alt="{{ l.name }}" draggable="false">
+<div class="lab-rt"><div><small>FROM</small><b>{{ l.from }}</b></div><div><small>TO</small><b>United States</b></div></div>
+<div class="lab-res"><small>{{ l.label }}</small><p>{{ l.headline }}</p></div>
+<div class="lab-foot"><div class="bars"></div><div class="lab-trk">{{ l.track }}</div></div>
+<div class="stamp"><div>DELIVERED<small>US · VYBD</small></div></div>
+</div>
+</sc-for>
+<div class="dots"><sc-for list="{{ dots }}" as="d" hint-placeholder-count="7"><button type="button" class="{{ d.cls }}" aria-label="{{ d.label }}" onClick="{{ d.pick }}"></button></sc-for></div>
+</div>
+</div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"autoplay":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.B = [
+{ name: 'Bayangrom', from: 'India', pre: '$', target: 180, comma: false, suf: 'K/yr recovered', label: 'Inventory and shipping · India · Art and apparel', logo: '/_blob/7f753feabce939ea3fa2e0fc24461b0c' },
+{ name: 'MIB Industries', from: 'India', pre: '$', target: 30000, comma: true, suf: ' in B2B pre‑orders', label: 'Wholesale · Luxury terry cotton products', logo: '/_blob/534fb7a6258c2b063af3137ddd180be6' },
+{ name: 'Ouwr', from: 'South Korea', pre: '$', target: 15000, comma: true, suf: ' raised for US entry', label: 'Funding · K-fashion, womenswear', logo: '/_blob/afde41d481be31f2c41fb29d98ebb8f7' },
+{ name: 'Ollobot', from: 'China', pre: '', target: 5000, comma: true, suf: ' robots delivered', label: 'Delivery and support · Companion robots', logo: '/_blob/8173f352091347e9f7dc6ed7f6c12ed4' },
+{ name: 'Sugat Traders', from: 'India', pre: '$', target: 25000, comma: true, suf: ' in B2B revenue', label: 'B2B revenue · Herbal powders and packaging', logo: '/_blob/3cf6ba6d3acce6bd7899b0e12c19ecb1' },
+{ name: 'Cellre', from: 'South Korea', pre: '$', target: 15000, comma: true, suf: ' raised for US entry', label: 'Funding · K-beauty', logo: '/_blob/47fe1ec46037f15173919d5efd51a63b' },
+{ name: 'Karama', from: 'USA', pre: '$', target: 10000, comma: true, suf: ' in pre‑orders before launch', label: 'Pre-launch · Premium underwear', logo: '/_blob/59544c25694837ecadcfcd871815b437' }
+];
+this.state = { active: 0, n: 0, dx: 0, seen: { 0: true } };
+}
+componentDidMount() {
+this.count();
+this.timer = setInterval(() => {
+if ((this.props.autoplay ?? true) === false || Date.now() < (this.pauseUntil || 0) || this.drag) return;
+this.go(this.state.active + 1);
+}, 4200);
+}
+componentWillUnmount() { clearInterval(this.timer); cancelAnimationFrame(this.raf); }
+go(i) {
+const n = this.B.length, a = ((i % n) + n) % n;
+const seen = Object.assign({}, this.state.seen); seen[a] = true;
+this.setState({ active: a, n: 0, dx: 0, seen: seen }, () => this.count());
+}
+count() {
+cancelAnimationFrame(this.raf);
+const target = this.B[this.state.active].target, t0 = performance.now() + 450;
+const step = (now) => {
+const p = Math.max(0, Math.min(1, (now - t0) / 1100));
+this.setState({ n: Math.round(target * (1 - Math.pow(1 - p, 3))) });
+if (p < 1) this.raf = requestAnimationFrame(step);
+};
+this.raf = requestAnimationFrame(step);
+}
+renderVals() {
+const n = this.B.length, a = this.state.active;
+const pose = (k) => {
+if (k === 0) return { t: 'translate(' + this.state.dx + 'px,0) rotate(' + (-1.5 + this.state.dx / 30) + 'deg)', o: 1, z: 10 };
+if (k === 1) return { t: 'translate(26px,18px) rotate(3deg) scale(.97)', o: 1, z: 9 };
+if (k === 2) return { t: 'translate(-22px,34px) rotate(-5deg) scale(.94)', o: 1, z: 8 };
+if (k === n - 1) return { t: 'translate(-135%,-30px) rotate(-16deg)', o: 0, z: 11 };
+return { t: 'translate(0,46px) rotate(1deg) scale(.9)', o: 0, z: 1 };
+};
+const labels = this.B.map((b, i) => {
+const k = (i - a + n) % n, p = pose(k);
+const val = k === 0 ? this.state.n : b.target;
+const num = b.comma ? val.toLocaleString('en-US') : String(val);
+return {
+name: b.name, from: b.from, logo: b.logo, label: b.label,
+headline: b.pre + num + b.suf,
+track: 'VYBD-' + String(i + 1).padStart(3, '0') + '-US',
+hidden: k !== 0,
+cls: 'lab' + (k === 0 ? ' is-top' : (this.state.seen[i] ? ' is-done' : '')),
+style: 'transform: ' + p.t + '; opacity: ' + p.o + '; z-index: ' + p.z + (k === 0 && this.drag ? '; transition: none' : '')
+};
+});
+return {
+labels: labels,
+idx: String(a + 1).padStart(2, '0') + ' / ' + String(n).padStart(2, '0'),
+topName: this.B[a].name,
+prev: () => { this.pauseUntil = Date.now() + 9000; this.go(a - 1); },
+next: () => { this.pauseUntil = Date.now() + 9000; this.go(a + 1); },
+dots: this.B.map((b, i) => ({ cls: i === a ? 'dot on' : 'dot', label: 'Show ' + b.name, pick: () => { this.pauseUntil = Date.now() + 9000; this.go(i); } })),
+down: (e) => { if (e.target.closest && e.target.closest('.dot')) return; this.drag = { x: e.clientX, moved: false }; if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId); },
+move: (e) => { if (!this.drag) return; const dx = e.clientX - this.drag.x; if (Math.abs(dx) > 4) this.drag.moved = true; this.setState({ dx: dx }); },
+up: () => {
+if (!this.drag) return;
+const dx = this.state.dx, moved = this.drag.moved; this.drag = null; this.pauseUntil = Date.now() + 9000;
+if (!moved) { this.go(a + 1); return; }
+if (dx < -90) this.go(a + 1); else if (dx > 90) this.go(a - 1); else this.setState({ dx: 0 });
+}
+};
+}
+}
+</script>
+</body>
+</html>

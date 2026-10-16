@@ -1,0 +1,194 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
+<style>
+body{margin:0;background:#FFFFFF}
+.pg{--navy:#0f1b33;--grey:#5b6270;--muted:#8a909b;--line:#e7e9ed;--mint:#1BB59B;--mint-d:#17A088;font-family:'DM Sans',system-ui,sans-serif;color:var(--navy);background:#FFFFFF;position:relative}
+.pg-stage{overflow:hidden;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box;padding:clamp(48px,6vw,96px) 0}
+.pg-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px;max-width:1180px;width:100%;margin:0 auto;padding:0 clamp(20px,5vw,48px);box-sizing:border-box}
+.pg-title{margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(44px,5.2vw,72px);line-height:1;letter-spacing:-.015em}
+.pg-sub{margin:12px 0 0;font-size:clamp(18px,1.6vw,22px);color:var(--grey)}
+.pg-nav{display:flex;align-items:center;gap:16px}
+.pg-count{font-size:15px;font-weight:600;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--muted)}
+.pg-count b{color:var(--navy)}
+.pg-btn{width:48px;height:48px;border-radius:50%;border:0;background:#f1f3f6;color:var(--navy);display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.pg-btn:hover{background:var(--navy);color:#FFFFFF;transform:scale(1.05)}
+.pg-viewport{position:relative;margin-top:clamp(36px,4vw,56px);height:440px}
+.pg-track{position:absolute;left:0;top:0;display:flex;gap:32px;will-change:transform}
+.pg-track.anim{transition:transform .8s cubic-bezier(.2,.75,.2,1)}
+.pg-card{flex:0 0 auto;box-sizing:border-box;height:420px;border-radius:28px;background:#f6f7f9;padding:32px;display:flex;flex-direction:column;cursor:pointer;transform-origin:center;transition:transform .5s cubic-bezier(.2,.75,.2,1),opacity .5s,background .5s,box-shadow .5s}
+.pg-card.on{background:#FFFFFF;box-shadow:rgba(15,27,51,.05) 0 2px 4px,rgba(15,27,51,.18) 0 30px 70px -24px;cursor:default}
+.pg-top{display:flex;justify-content:space-between;align-items:flex-start}
+.pg-num{font-family:'Instrument Serif',Georgia,serif;font-size:64px;line-height:.8;color:#d6dae1;transition:color .5s}
+.pg-card.on .pg-num{color:var(--mint-d)}
+.pg-card img{height:46px;max-width:230px;object-fit:contain;object-position:right;display:block}
+.pg-lbl{margin:auto 0 0;font-size:14px;font-weight:500;color:var(--muted)}
+.pg-hl{margin:6px 0 0;font-size:clamp(26px,2.6vw,36px);font-weight:700;line-height:1.12;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.pg-route{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:13px;font-weight:500;color:var(--grey)}
+.pg-line{position:relative;flex:1;height:2px;background:repeating-linear-gradient(90deg,#c9ced6 0 6px,transparent 6px 11px)}
+.pg-card.on .pg-line{background:repeating-linear-gradient(90deg,var(--navy) 0 6px,transparent 6px 11px)}
+.pg-ship{position:absolute;top:50%;left:0;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 1px var(--line);display:grid;place-items:center;opacity:0}
+.pg-card.on .pg-ship{animation:sail 3.2s cubic-bezier(.5,0,.5,1) .3s forwards}
+@keyframes sail{0%{left:0;opacity:0}12%{opacity:1}100%{left:100%;opacity:1}}
+.pg-meta{margin:20px 0 0;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pg-prog{max-width:1180px;margin:28px auto 0;padding:0 clamp(20px,5vw,48px);box-sizing:border-box}
+.pg-prog div{height:2px;background:#e7e9ed;border-radius:2px;overflow:hidden}
+.pg-prog i{display:block;height:100%;background:var(--navy);transform-origin:left;transition:transform .6s cubic-bezier(.2,.75,.2,1)}
+.pg-hint{max-width:1180px;margin:12px auto 0;padding:0 clamp(20px,5vw,48px);box-sizing:border-box;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pg-card.on .pg-ship{opacity:1;left:50%}}
+</style>
+</head><body><div id="root"></div>
+<template id="tpl">
+
+<section class="pg" aria-labelledby="pg-title" ref="{{ secRef }}" style="{{ secStyle }}">
+<div class="pg-stage" style="{{ stageStyle }}">
+<div class="pg-head">
+<div><h2 id="pg-title" class="pg-title">Already in the US.</h2><p class="pg-sub">Real brands, real US results.</p></div>
+<div class="pg-nav">
+<div class="pg-count" aria-live="polite"><b>{{ cur }}</b> / {{ total }}</div>
+<button type="button" class="pg-btn" aria-label="Previous brand" onClick="{{ prev }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+<button type="button" class="pg-btn" aria-label="Next brand" onClick="{{ next }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+</div>
+</div>
+<div class="pg-viewport" ref="{{ vpRef }}">
+<div class="{{ trackCls }}" style="{{ trackStyle }}">
+<sc-for list="{{ cards }}" as="c" hint-placeholder-count="7">
+<article class="{{ c.cls }}" style="{{ c.style }}" onClick="{{ c.pick }}" aria-current="{{ c.on }}">
+<div class="pg-top"><span class="pg-num">{{ c.num }}</span><img src="{{ c.logo }}" alt="{{ c.name }}"></div>
+<p class="pg-lbl">{{ c.label }}</p>
+<p class="pg-hl">{{ c.headline }}</p>
+<div class="pg-route"><span>{{ c.from }}</span><span class="pg-line"><span class="pg-ship"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 10.189V14"/><path d="M12 2v3"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-8.188-3.639a2 2 0 0 0-1.624 0L3 14a11.6 11.6 0 0 0 2.81 7.76"/><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1s1.2 1 2.5 1c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span></span><span>United States</span></div>
+<p class="pg-meta">{{ c.meta }}</p>
+</article>
+</sc-for>
+</div>
+</div>
+<div class="pg-prog"><div><i style="{{ progStyle }}"></i></div></div>
+<div class="pg-hint">{{ hint }}</div>
+</div>
+</section>
+</template>
+<script>
+class DCLogic { constructor(props){ this.props = props || {}; this.state = {}; }
+  setState(o, cb){ const v = typeof o === 'function' ? o(this.state) : o; Object.assign(this.state, v); __schedule(cb); }
+  forceUpdate(){ __schedule(); } }
+
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.B = [
+{ name: 'Bayangrom', from: 'India', pre: '$', target: 180, comma: false, suf: 'K/yr recovered', label: 'Inventory and shipping', meta: 'India · Art and apparel · −28% excess inventory, −22% shipping cost', logo: '/_blob/7f753feabce939ea3fa2e0fc24461b0c' },
+{ name: 'MIB Industries', from: 'India', pre: '$', target: 30000, comma: true, suf: ' in B2B pre‑orders', label: 'Wholesale pre-orders', meta: 'India · Luxury terry cotton · now building their D2C store', logo: '/_blob/534fb7a6258c2b063af3137ddd180be6' },
+{ name: 'Ollobot', from: 'China', pre: '', target: 5000, comma: true, suf: ' robots delivered', label: 'Delivery and customer support', meta: 'China · Companion robots · we run their US support too', logo: '/_blob/8173f352091347e9f7dc6ed7f6c12ed4' },
+{ name: 'Sugat Traders', from: 'India', pre: '$', target: 25000, comma: true, suf: ' in B2B revenue', label: 'B2B revenue', meta: 'India · Herbal powders and sustainable food packaging', logo: '/_blob/3cf6ba6d3acce6bd7899b0e12c19ecb1' },
+{ name: 'Ouwr', from: 'South Korea', pre: '$', target: 15000, comma: true, suf: ' raised for their US market entry', label: 'Funding', meta: 'South Korea · K-fashion, womenswear', logo: '/_blob/afde41d481be31f2c41fb29d98ebb8f7' },
+{ name: 'Cellre', from: 'South Korea', pre: '$', target: 15000, comma: true, suf: ' raised for their US market entry', label: 'Funding', meta: 'South Korea · K-beauty', logo: '/_blob/47fe1ec46037f15173919d5efd51a63b' },
+{ name: 'Karama', from: 'USA', pre: '$', target: 10000, comma: true, suf: ' in pre‑orders before launch', label: 'Pre-launch', meta: 'USA · Premium underwear', logo: '/_blob/59544c25694837ecadcfcd871815b437' }
+];
+this.state = { f: 0, n: 0, vw: 1440, vh: 0, vpw: 1440 };
+this.secRef = (el) => { this.sec = el; };
+this.vpRef = (el) => { this.vp = el; };
+this.lastActive = -1;
+}
+pinned() { return this.state.vh > 0 && this.state.vh < 1600; }
+componentDidMount() {
+this.measure = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight, vpw: this.vp ? this.vp.offsetWidth : window.innerWidth }, this.onScroll);
+this.onScroll = () => {
+if (!this.pinned() || !this.sec) return;
+const r = this.sec.getBoundingClientRect(), span = Math.max(1, r.height - window.innerHeight);
+const p = Math.max(0, Math.min(1, -r.top / span));
+this.setState({ f: p * (this.B.length - 1) }, () => this.checkActive());
+};
+this.measure();
+window.addEventListener('resize', this.measure, { passive: true });
+window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
+this.timer = setInterval(() => {
+if (this.pinned() || (this.props.autoplay ?? true) === false || Date.now() < (this.pauseUntil || 0)) return;
+this.go(Math.round(this.state.f) + 1);
+}, 4000);
+this.checkActive();
+}
+componentWillUnmount() { clearInterval(this.timer); cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.measure); window.removeEventListener('scroll', this.onScroll, { capture: true }); }
+go(i) {
+const n = this.B.length, a = ((i % n) + n) % n;
+if (this.pinned() && this.sec) {
+const r = this.sec.getBoundingClientRect(), span = r.height - window.innerHeight;
+window.scrollBy({ top: r.top + span * (a / (n - 1)), behavior: 'smooth' });
+return;
+}
+this.setState({ f: a }, () => this.checkActive());
+}
+checkActive() {
+const a = Math.round(this.state.f);
+if (a === this.lastActive) return;
+this.lastActive = a;
+cancelAnimationFrame(this.raf);
+const target = this.B[a].target, t0 = performance.now() + 300;
+const step = (now) => {
+const p = Math.max(0, Math.min(1, (now - t0) / 1100));
+this.setState({ n: Math.round(target * (1 - Math.pow(1 - p, 3))) });
+if (p < 1) this.raf = requestAnimationFrame(step);
+};
+this.raf = requestAnimationFrame(step);
+}
+renderVals() {
+const n = this.B.length, f = this.state.f, a = Math.round(f);
+const W = Math.min(560, Math.round(this.state.vw * 0.8)), G = 32;
+const x = this.state.vpw / 2 - (f * (W + G) + W / 2);
+const pin = this.pinned();
+return {
+secRef: this.secRef, vpRef: this.vpRef,
+secStyle: pin ? 'height: ' + Math.round(this.state.vh * 2.8) + 'px' : 'height: auto',
+stageStyle: pin ? 'position: sticky; top: 0; height: ' + this.state.vh + 'px' : '',
+trackCls: pin ? 'pg-track' : 'pg-track anim',
+trackStyle: 'transform: translateX(' + x.toFixed(1) + 'px)',
+progStyle: 'transform: scaleX(' + ((f + 1) / n).toFixed(3) + ')',
+cur: String(a + 1).padStart(2, '0'), total: String(n).padStart(2, '0'),
+hint: pin ? 'Scroll to travel through each brand, or use the arrows.' : 'Use the arrows or tap a card.',
+prev: () => { this.pauseUntil = Date.now() + 9000; this.go(a - 1); },
+next: () => { this.pauseUntil = Date.now() + 9000; this.go(a + 1); },
+cards: this.B.map((b, i) => {
+const d = Math.min(1, Math.abs(i - f));
+const val = i === a ? this.state.n : b.target;
+return {
+name: b.name, logo: b.logo, from: b.from, label: b.label, meta: b.meta, on: i === a,
+num: String(i + 1).padStart(2, '0'),
+headline: b.pre + (b.comma ? val.toLocaleString('en-US') : String(val)) + b.suf,
+cls: i === a ? 'pg-card on' : 'pg-card',
+style: 'width: ' + W + 'px; transform: scale(' + (1 - d * 0.12).toFixed(3) + '); opacity: ' + (1 - d * 0.5).toFixed(3),
+pick: () => { this.pauseUntil = Date.now() + 9000; this.go(i); }
+};
+})
+};
+}
+}
+
+const TPL = document.getElementById('tpl');
+let comp, pending = false, cbs = [];
+function lookup(path, scope){ path = path.trim(); if (path === 'true') return true; if (path === 'false') return false; if (/^-?[0-9.]+$/.test(path)) return Number(path);
+  const parts = path.split('.'); let v = scope; for (const p of parts) { if (v == null) return undefined; v = v[p]; } return v; }
+function interp(str, scope){ const m = str.match(/^\s*\{\{([^}]*)\}\}\s*$/); if (m) return lookup(m[1], scope); return str.replace(/\{\{([^}]*)\}\}/g, (_, p) => { const v = lookup(p, scope); return v == null ? '' : v; }); }
+const EV = { onClick:'click', onMouseMove:'mousemove', onMouseLeave:'mouseleave', onMouseEnter:'mouseenter', onPointerDown:'pointerdown', onPointerMove:'pointermove', onPointerUp:'pointerup', onPointerCancel:'pointercancel', onFocus:'focus', onBlur:'blur', onKeyDown:'keydown', onChange:'change' };
+function build(node, scope, parent){
+  if (node.nodeType === 3) { parent.appendChild(document.createTextNode(interp(node.textContent, scope))); return; }
+  if (node.nodeType !== 1) return;
+  const tag = node.tagName.toLowerCase();
+  if (tag === 'sc-for') { const list = interp(node.getAttribute('list'), scope) || []; const as = node.getAttribute('as');
+    list.forEach((item, i) => { const sc = Object.assign(Object.create(scope), { [as]: item, $index: i }); node.childNodes.forEach(c => build(c, sc, parent)); }); return; }
+  if (tag === 'sc-if') { if (interp(node.getAttribute('value'), scope)) node.childNodes.forEach(c => build(c, scope, parent)); return; }
+  const ns = node.namespaceURI; const el = ns && ns !== 'http://www.w3.org/1999/xhtml' ? document.createElementNS(ns, node.tagName) : document.createElement(node.tagName);
+  let ref = null;
+  for (const a of node.attributes) { const name = a.name; const v = interp(a.value, scope);
+    if (name === 'ref') { ref = v; continue; }
+    const ev = Object.keys(EV).find(k => k.toLowerCase() === name.toLowerCase());
+    if (ev) { if (typeof v === 'function') el.addEventListener(EV[ev], v); continue; }
+    if (v === false || v == null) continue; el.setAttribute(name, v === true ? '' : v); }
+  node.childNodes.forEach(c => build(c, scope, el));
+  if (tag === 'select' && node.getAttribute('value')) el.value = interp(node.getAttribute('value'), scope);
+  parent.appendChild(el);
+  if (typeof ref === 'function') ref(el);
+}
+function render(){ const vals = comp.renderVals(); const root = document.getElementById('root'); root.innerHTML = '';
+  const frag = document.createElement('div'); TPL.content.childNodes.forEach(n => build(n, vals, frag)); while (frag.firstChild) root.appendChild(frag.firstChild); }
+function __schedule(cb){ if (cb) cbs.push(cb); if (pending) return; pending = true; setTimeout(() => { pending = false; render(); const c = cbs; cbs = []; c.forEach(f => f()); }, 0); }
+comp = new Component({"showLoader": false}); render(); if (comp.componentDidMount) comp.componentDidMount();
+</script></body></html>
