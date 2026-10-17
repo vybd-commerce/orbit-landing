@@ -15,3 +15,10 @@
     -webkit-font-smoothing: auto;
     -moz-osx-font-smoothing: auto;
 }
+
+/* Trustpilot review button in the footer, between the tagline and the
+   language picker. The widget fills its box, so the box sets the width. */
+.rd .hf-trust {
+    width: 240px;
+    max-width: 100%;
+}

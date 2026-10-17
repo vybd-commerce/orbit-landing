@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
+import TrustpilotWidget from "../../components/TrustpilotWidget";
 import { useLocalePath } from "../../i18n/context";
 import { isLocalizedPath } from "../../i18n/locales";
 import { useTx } from "./i18n";
@@ -236,6 +237,9 @@ export function RdFooter({ current }: { current?: "product" | "cases" | "lab" })
                 <div className="hf-tagline">
                     <p className="hf-tagline-main">{tx("Commerce, Coordinated.")}</p>
                     <p className="hf-copy">© 2026 Vybd</p>
+                </div>
+                <div className="hf-trust">
+                    <TrustpilotWidget key={tx.locale} locale={tx.locale} />
                 </div>
                 <div className="hf-legal">
                     <LanguageSwitcher />
