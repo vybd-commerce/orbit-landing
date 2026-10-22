@@ -183,6 +183,14 @@
     color: var(--hf-muted);
 }
 
+/* Trustpilot review button: the widget fills its box, so the box sets the
+   width. */
+.hf-trust {
+    width: 240px;
+    max-width: 100%;
+    margin-top: 16px;
+}
+
 .hf-legal {
     display: flex;
     flex-wrap: wrap;

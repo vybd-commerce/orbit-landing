@@ -1,4 +1,5 @@
 import LanguageSwitcher from "./LanguageSwitcher";
+import TrustpilotWidget from "./TrustpilotWidget";
 import { useLocale, useT } from "../i18n/context";
 import type { Locale } from "../i18n/locales";
 import type { Messages } from "../i18n/messages";
@@ -31,9 +32,9 @@ const company = (f: Messages["footer"], locale: Locale): Link[] => [
 ];
 
 const FOLLOW: Link[] = [
-    { label: "LinkedIn", href: "#" }, // TODO(footer): profile URLs
-    { label: "Instagram", href: "#" },
-    { label: "X", href: "#" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/vybdcommerce" },
+    { label: "Instagram", href: "https://www.instagram.com/vybd.ai/" },
+    { label: "X", href: "https://x.com/vybdai" },
 ];
 
 /* One inbox for partnership and press alike. */
@@ -85,7 +86,9 @@ export default function HelloFooter() {
                     <ul>
                         {FOLLOW.map((l) => (
                             <li key={l.label}>
-                                <a href={l.href}>{l.label}</a>
+                                <a href={l.href} target="_blank" rel="noopener noreferrer">
+                                    {l.label}
+                                </a>
                             </li>
                         ))}
                     </ul>
@@ -123,6 +126,9 @@ export default function HelloFooter() {
                 <div className="hf-tagline">
                     <p className="hf-tagline-main">{f.tagline}</p>
                     <p className="hf-copy">{COPYRIGHT}</p>
+                    <div className="hf-trust">
+                        <TrustpilotWidget />
+                    </div>
                 </div>
                 <div className="hf-legal">
                     <LanguageSwitcher />
