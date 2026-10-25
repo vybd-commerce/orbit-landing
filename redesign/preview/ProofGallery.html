@@ -167,7 +167,7 @@ let comp, pending = false, cbs = [];
 function lookup(path, scope){ path = path.trim(); if (path === 'true') return true; if (path === 'false') return false; if (/^-?[0-9.]+$/.test(path)) return Number(path);
   const parts = path.split('.'); let v = scope; for (const p of parts) { if (v == null) return undefined; v = v[p]; } return v; }
 function interp(str, scope){ const m = str.match(/^\s*\{\{([^}]*)\}\}\s*$/); if (m) return lookup(m[1], scope); return str.replace(/\{\{([^}]*)\}\}/g, (_, p) => { const v = lookup(p, scope); return v == null ? '' : v; }); }
-const EV = { onClick:'click', onMouseMove:'mousemove', onMouseLeave:'mouseleave', onMouseEnter:'mouseenter', onPointerDown:'pointerdown', onPointerMove:'pointermove', onPointerUp:'pointerup', onPointerCancel:'pointercancel', onFocus:'focus', onBlur:'blur', onKeyDown:'keydown', onChange:'change' };
+const EV = { onClick:'click', onMouseMove:'mousemove', onMouseLeave:'mouseleave', onMouseEnter:'mouseenter', onPointerDown:'pointerdown', onPointerMove:'pointermove', onPointerUp:'pointerup', onPointerCancel:'pointercancel', onFocus:'focus', onBlur:'blur', onKeyDown:'keydown', onChange:'change', onInput:'input' };
 function build(node, scope, parent){
   if (node.nodeType === 3) { parent.appendChild(document.createTextNode(interp(node.textContent, scope))); return; }
   if (node.nodeType !== 1) return;
@@ -183,7 +183,7 @@ function build(node, scope, parent){
     if (ev) { if (typeof v === 'function') el.addEventListener(EV[ev], v); continue; }
     if (v === false || v == null) continue; el.setAttribute(name, v === true ? '' : v); }
   node.childNodes.forEach(c => build(c, scope, el));
-  if (tag === 'select' && node.getAttribute('value')) el.value = interp(node.getAttribute('value'), scope);
+  if ((tag === 'select' || tag === 'input') && node.getAttribute('value')) el.value = interp(node.getAttribute('value'), scope);
   parent.appendChild(el);
   if (typeof ref === 'function') ref(el);
 }

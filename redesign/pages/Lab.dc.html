@@ -9,6 +9,7 @@
 <body>
 <x-dc>
 <helmet>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -8 112 108'%3E%3Cpath d='M4 4 L36 4 L50 46 Z' fill='%235FD6BF'/%3E%3Cpath d='M4 4 L50 46 L38 88 Z' fill='%231BB59B'/%3E%3Cpath d='M96 4 L64 4 L50 46 Z' fill='%2325324d'/%3E%3Cpath d='M96 4 L50 46 L62 88 Z' fill='%230f1b33'/%3E%3Cpath d='M38 88 L50 46 L62 88 Z' fill='%2313987F'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap">
 <style>
 body{margin:0;background:#FFFFFF}
@@ -225,6 +226,23 @@ header .secnum{top:auto;bottom:-34px}
 @media (max-width:639px){.hf-band{--o:calc(100vw - 40px)}.hf-brand{margin-top:40px;padding:0 8px 16px}.hf-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 20px}.hf-col a{font-size:15px}.hf-bottom,.hf-legal{flex-direction:column;align-items:flex-start}}
 @media (prefers-reduced-motion:reduce){.hf-ring{animation:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.lb-h1 .w>span{transform:none}.lb-hero .lb-eyebrow,.lb-lead,.lb-hero-cta,.lb-mon-wrap{opacity:1}}
+
+/* app bar language switcher */
+.nav-end{display:flex;align-items:center;gap:10px}
+.nls{position:relative;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 11px 0 11px;border-radius:999px;border:1px solid rgba(15,27,51,.14);color:#0f1b33;font-size:13px;font-weight:600;letter-spacing:.02em;white-space:nowrap;cursor:pointer;transition:border-color .2s,background .2s}
+.nls:hover{border-color:rgba(15,27,51,.35);background:rgba(255,255,255,.7)}
+.nls:focus-within{outline:2px solid var(--mint,#1BB59B);outline-offset:2px}
+.nls svg{flex:none}
+.nls .nls-chev{opacity:.6}
+.nls-select{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;border:0;font-size:16px;appearance:none;-webkit-appearance:none}
+@media (max-width:760px){.nls{height:44px;padding:0 12px}}
+
+/* brand: folded V logo. Static by default; JS plays the fold-in once on load and on hover (never loops) */
+.lg{display:inline-flex;align-items:center;gap:9px;color:#0f1b33}
+.lg-mark{display:block;overflow:visible;flex:none}
+.lg-f{transform-box:fill-box}
+.lg-f:nth-child(1){transform-origin:100% 100%}.lg-f:nth-child(2){transform-origin:100% 50%}.lg-f:nth-child(3){transform-origin:0 100%}.lg-f:nth-child(4){transform-origin:0 50%}.lg-f:nth-child(5){transform-origin:50% 0}
+
 </style>
 </helmet>
 <div ref="{{ rootRef }}" style="--sec: clamp(72px, 8vw, 132px); --mint: {{accent}}; --mint-hover: #17A088; font-family: 'DM Sans', -apple-system, system-ui, sans-serif; color: #111827; background: #FFFFFF; overflow-x: clip">
@@ -232,14 +250,17 @@ header .secnum{top:auto;bottom:-34px}
 <header style="position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.78); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px)">
 <sc-if value="{{ showNums }}" hint-placeholder-val="{{ false }}"><span class="secnum" aria-hidden="true">L1 · Nav</span></sc-if>
 <div class="wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 56px">
-<a href="Main.dc.html" class="display" style="font-size: 22px; font-weight: 600; letter-spacing: -.04em">Vybd</a>
+<a href="Main.dc.html" class="display lg" aria-label="Vybd home" style="font-size: 22px; font-weight: 600; letter-spacing: -.04em; --lgd: .15s"><svg class="lg-mark" viewBox="0 0 100 92" width="28" height="26" aria-hidden="true"><path class="lg-f" d="M4 4 L36 4 L50 46 Z" fill="#5FD6BF"/><path class="lg-f" d="M4 4 L50 46 L38 88 Z" fill="#1BB59B"/><path class="lg-f" d="M96 4 L64 4 L50 46 Z" fill="#25324d"/><path class="lg-f" d="M96 4 L50 46 L62 88 Z" fill="#0f1b33"/><path class="lg-f" d="M38 88 L50 46 L62 88 Z" fill="#13987F"/></svg>Vybd</a>
 <nav class="nav-links" style="display: flex; gap: 36px">
 <a class="nav-link" href="Main.dc.html#services">What we do</a>
 <a class="nav-link" href="CaseStudies.dc.html">Case studies</a>
 <a class="nav-link" href="#top" aria-current="page">Lab</a>
 </nav>
+<div class="nav-end">
+<label class="nls" title="Language"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span class="nls-code" data-notx="">{{ langCode }}</span><svg class="nls-chev" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg><select class="nls-select" data-notx="" aria-label="Language" value="{{ lang }}" onChange="{{ onLang }}"><option value="en">English</option><option value="zh">简体中文</option><option value="ko">한국어</option><option value="ja">日本語</option><option value="fr">Français</option><option value="es">Español</option></select></label>
 <a class="btn btn-dark nav-cta" href="#status" style="min-height: 44px; padding: 0 18px; font-size: 14px">Talk to us</a>
 <button type="button" class="menu-btn" aria-label="{{ menuLabel }}" aria-expanded="{{ navOpen }}" onClick="{{ toggleNav }}"><sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></sc-if><sc-if value="{{ navClosed }}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></sc-if></button>
+</div>
 </div>
 <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
 <nav class="mnav" aria-label="Menu">
@@ -510,6 +531,20 @@ i18nApply() {
   if (this.i18nMO) this.i18nMO.takeRecords();
 }
 componentDidMount() {
+// logo fold-in (Web Animations, plays once; can't loop or leave the V hidden) + browser-tab icon
+this.lgPlay = (a, delay) => {
+  if (!a || a.__lgBusy || !a.animate) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fs = [...a.querySelectorAll('.lg-f')]; if (!fs.length) return;
+  a.__lgBusy = true; const lag = [0, 100, 200, 300, 450];
+  const anims = fs.map((f, i) => f.animate([{ transform: 'scale(.2) rotate(-20deg)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 900, delay: (delay || 0) + (lag[i] || 0), easing: 'cubic-bezier(.2,.9,.25,1.15)', fill: 'backwards' }));
+  Promise.all(anims.map((x) => x.finished.catch(() => {}))).then(() => { a.__lgBusy = false; });
+};
+this.lgOver = (e) => { const a = e.target && e.target.closest && e.target.closest('.lg'); const now = performance.now(); if (a && !this.lgIn && now - (this.lgT || 0) > 1600) { this.lgT = now; this.lgPlay(a, 0); } this.lgIn = !!a; };
+document.addEventListener('pointermove', this.lgOver, { passive: true });
+{ const a = document.querySelector('.lg'); if (a) { const d = parseFloat(getComputedStyle(a).getPropertyValue('--lgd')) || 0; this.lgPlay(a, d * 1000); } }
+try { if (!document.head.querySelector('link[rel~="icon"]')) { const l = document.createElement('link'); l.rel = 'icon'; l.type = 'image/svg+xml'; l.href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -8 112 108'%3E%3Cpath d='M4 4 L36 4 L50 46 Z' fill='%235FD6BF'/%3E%3Cpath d='M4 4 L50 46 L38 88 Z' fill='%231BB59B'/%3E%3Cpath d='M96 4 L64 4 L50 46 Z' fill='%2325324d'/%3E%3Cpath d='M96 4 L50 46 L62 88 Z' fill='%230f1b33'/%3E%3Cpath d='M38 88 L50 46 L62 88 Z' fill='%2313987F'/%3E%3C/svg%3E"; document.head.appendChild(l); } } catch (e) {}
+
 this.i18nInit();
   if ('IntersectionObserver' in window && this.loopEl) {
     this.io = new IntersectionObserver((en) => { const v = en[0].isIntersecting; if (v !== this.loopVisible) { this.loopVisible = v; this.schedule(); } }, { threshold: .25 });
@@ -518,6 +553,7 @@ this.i18nInit();
   this.logTimer = setInterval(() => this.setState({ log: this.state.log + 1 }), 2200);
 }
 componentWillUnmount() {
+if (this.lgOver) document.removeEventListener('pointermove', this.lgOver);
 if (this.i18nMO) this.i18nMO.disconnect();
   if (this.io) this.io.disconnect();
   this.timers.forEach(clearTimeout);
@@ -537,6 +573,7 @@ renderVals() {
     accent: this.props.accent || '#1BB59B',
     showNums: this.props.showSectionNumbers === true,
 lang: this.lang || 'en', onLang: this.onLang, i18nRef: this.i18nRef,
+langCode: ({ en: 'EN', fr: 'FR', es: 'ES', zh: '中文', ja: '日本語', ko: '한국어' })[this.lang || 'en'] || 'EN',
     navOpen: !!this.state.navOpen, navClosed: !this.state.navOpen,
     menuLabel: this.state.navOpen ? 'Close menu' : 'Open menu',
     toggleNav: () => this.setState({ navOpen: !this.state.navOpen }),

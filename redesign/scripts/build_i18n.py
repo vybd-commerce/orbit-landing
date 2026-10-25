@@ -4,7 +4,7 @@ S=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..')+'/'
 P=S+'pages/'
 def load(name):
     spec=importlib.util.spec_from_file_location(name,S+'i18n/'+name+'.py'); m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m.T
-rows=load('tr1')+load('tr2')+load('tr3')+load('tr4')+load('tr5')+load('tr6')+load('tr7')+load('tr8')
+rows=load('tr1')+load('tr2')+load('tr3')+load('tr4')+load('tr5')+load('tr6')+load('tr7')+load('tr8')+load('tr9')+load('tr10')+load('tr11')
 LANGS=['fr','es','zh','ja','ko']
 full={l:{} for l in LANGS}
 for r in rows:

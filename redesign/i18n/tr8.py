@@ -37,3 +37,7 @@ T = [
 ("SCALED","EN CROISSANCE","ESCALADO","已扩张","拡大済み","확장 완료"),
 ("Show US brands","Afficher Marques américaines","Mostrar Marcas de EE. UU.","显示美国品牌","米国ブランドを表示","미국 브랜드 보기"),
 ]
+T += [
+("Made anywhere.","Fabriqué partout.","Hecho en cualquier lugar.","产自全球，","どこで作っても、","어디서 만들든,"),
+("Sold in America.","Vendu en Amérique.","Vendido en EE. UU.","销往美国。","アメリカで売る。","미국에서 팝니다."),
+]
