@@ -84,7 +84,7 @@ const Store = ({ tx }: { tx: Tx }) => (
 
 const CARDS: { title: string; body: string; stamp: string; art: (tx: Tx) => ReactNode }[] = [
     { title: "Manufacturers", body: "Based outside the US? Open a US sales channel without opening a US office.", stamp: "CLEARED", art: () => <Factory /> },
-    { title: "Growing brands", body: "Doing well in your home market and ready for American customers.", stamp: "CLEARED", art: () => <Growth /> },
+    { title: "Growing brands", body: "Doing well in your home market and ready for US customers.", stamp: "CLEARED", art: () => <Growth /> },
     { title: "US brands", body: "Already selling in the US and ready to grow faster, with less to manage.", stamp: "SCALED", art: (tx) => <Route tx={tx} /> },
     { title: "Online sellers", body: "Selling online, from anywhere, and want US stock, faster delivery and more buyers.", stamp: "CLEARED", art: (tx) => <Store tx={tx} /> },
 ];
@@ -128,7 +128,7 @@ export default function WhoWeHelp({ tx }: { tx: Tx }) {
     };
 
     return (
-        <section id="who" className="wrap wh" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)" }} ref={secRef}>
+        <section id="who" className="wrap wh bleed" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)" }} ref={secRef}>
             <div className="rv" style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 16, marginBottom: 48 }}>
                 <span className="eyebrow">{tx("Who we help")}</span>
                 <h2 className="h2 wh-h2">

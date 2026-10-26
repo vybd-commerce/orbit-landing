@@ -1,9 +1,11 @@
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import TrustpilotWidget from "../../components/TrustpilotWidget";
 import { useLocalePath } from "../../i18n/context";
-import { isLocalizedPath } from "../../i18n/locales";
+import { LOCALES, NATIVE_NAMES, isLocalizedPath, type Locale } from "../../i18n/locales";
+import { useChangeLocale } from "../../i18n/useChangeLocale";
+import { prefersReducedMotion } from "./motion";
 import { useTx } from "./i18n";
 import "./fonts.css";
 import "./base.css";
@@ -22,6 +24,8 @@ export function RdLink({
     className,
     style,
     onClick,
+    onPointerEnter,
+    ariaLabel,
     children,
     current,
 }: {
@@ -29,6 +33,8 @@ export function RdLink({
     className?: string;
     style?: CSSProperties;
     onClick?: () => void;
+    onPointerEnter?: () => void;
+    ariaLabel?: string;
     children: ReactNode;
     current?: boolean;
 }) {
@@ -38,13 +44,21 @@ export function RdLink({
         const [path, hash] = href.split("#");
         const to = isLocalizedPath(path) ? lp(path) : path;
         return (
-            <Link to={to + (hash ? `#${hash}` : "")} className={className} style={style} onClick={onClick} aria-current={aria}>
+            <Link
+                to={to + (hash ? `#${hash}` : "")}
+                className={className}
+                style={style}
+                onClick={onClick}
+                onPointerEnter={onPointerEnter}
+                aria-label={ariaLabel}
+                aria-current={aria}
+            >
                 {children}
             </Link>
         );
     }
     return (
-        <a href={href} className={className} style={style} onClick={onClick} aria-current={aria}>
+        <a href={href} className={className} style={style} onClick={onClick} onPointerEnter={onPointerEnter} aria-label={ariaLabel} aria-current={aria}>
             {children}
         </a>
     );
@@ -93,14 +107,135 @@ const MenuIcon = ({ open }: { open: boolean }) =>
         </svg>
     );
 
+/* Folded V logo: five facets that fold in once on load (after `delay`
+   seconds) and again on hover, at most every 1.6s. Web Animations with
+   fill: backwards, so the mark can never be left hidden. */
+const FACETS: [string, string][] = [
+    ["M4 4 L36 4 L50 46 Z", "#5FD6BF"],
+    ["M4 4 L50 46 L38 88 Z", "#1BB59B"],
+    ["M96 4 L64 4 L50 46 Z", "#25324d"],
+    ["M96 4 L50 46 L62 88 Z", "#0f1b33"],
+    ["M38 88 L50 46 L62 88 Z", "#13987F"],
+];
+const FACET_LAG = [0, 100, 200, 300, 450];
+
+function RdLogo({ href, delay }: { href: string; delay: number }) {
+    const markRef = useRef<SVGSVGElement>(null);
+    const busy = useRef(false);
+    const last = useRef(0);
+
+    const play = (ms: number) => {
+        const mark = markRef.current;
+        if (!mark || busy.current || !mark.animate || prefersReducedMotion()) return;
+        busy.current = true;
+        const anims = [...mark.querySelectorAll<SVGPathElement>(".lg-f")].map((f, i) =>
+            f.animate(
+                [
+                    { transform: "scale(.2) rotate(-20deg)", opacity: 0 },
+                    { transform: "none", opacity: 1 },
+                ],
+                {
+                    duration: 900,
+                    delay: ms + FACET_LAG[i],
+                    easing: "cubic-bezier(.2,.9,.25,1.15)",
+                    fill: "backwards",
+                },
+            ),
+        );
+        Promise.all(anims.map((a) => a.finished.catch(() => {}))).then(() => {
+            busy.current = false;
+        });
+    };
+
+    useEffect(() => {
+        play(delay * 1000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <RdLink
+            href={href}
+            className="display lg"
+            ariaLabel="Vybd home"
+            style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-.04em" }}
+            onPointerEnter={() => {
+                const now = performance.now();
+                if (now - last.current < 1600) return;
+                last.current = now;
+                play(0);
+            }}
+        >
+            <svg className="lg-mark" ref={markRef} viewBox="0 0 100 92" width="28" height="26" aria-hidden="true">
+                {FACETS.map(([d, fill]) => (
+                    <path key={d} className="lg-f" d={d} fill={fill} />
+                ))}
+            </svg>
+            Vybd
+        </RdLink>
+    );
+}
+
+const LANG_CODES: Record<Locale, string> = { en: "EN", zh: "中文", ko: "한국어", ja: "日本語", fr: "FR", es: "ES" };
+
+/* Header language picker: a pill showing the current code over a native
+   select, so the phone's own picker opens. */
+function HeaderLanguage() {
+    const tx = useTx();
+    const changeLocale = useChangeLocale();
+    return (
+        <label className="nls" title={tx("Language")}>
+            <svg
+                aria-hidden="true"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
+            </svg>
+            <span className="nls-code">{LANG_CODES[tx.locale]}</span>
+            <svg
+                className="nls-chev"
+                aria-hidden="true"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            >
+                <path d="m6 9 6 6 6-6" />
+            </svg>
+            <select className="nls-select" aria-label={tx("Language")} value={tx.locale} onChange={(e) => changeLocale(e.target.value)}>
+                {LOCALES.map((l) => (
+                    <option key={l} value={l} lang={l}>
+                        {NATIVE_NAMES[l]}
+                    </option>
+                ))}
+            </select>
+        </label>
+    );
+}
+
 export function RdHeader({
     logoHref,
     links,
     mobileLinks,
     ctaHref = "#contact",
     ctaLabel = "Get started",
+    logoDelay = 0.15,
 }: {
     logoHref: string;
+    /* seconds before the logo folds in; the home page waits out its intro */
+    logoDelay?: number;
     links: NavLink[];
     mobileLinks: NavLink[];
     ctaHref?: string;
@@ -122,9 +257,7 @@ export function RdHeader({
             }}
         >
             <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, height: 56 }}>
-                <RdLink href={logoHref} className="display" style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-.04em" }}>
-                    Vybd
-                </RdLink>
+                <RdLogo href={logoHref} delay={logoDelay} />
                 <nav className="nav-links" style={{ display: "flex", gap: 36 }}>
                     {links.map((l) => (
                         <RdLink key={l.href} className="nav-link" href={l.href} current={l.current}>
@@ -132,18 +265,21 @@ export function RdHeader({
                         </RdLink>
                     ))}
                 </nav>
-                <RdLink className="btn btn-dark nav-cta" href={ctaHref} style={{ minHeight: 44, padding: "0 18px", fontSize: 14 }}>
-                    {tx(ctaLabel)}
-                </RdLink>
-                <button
-                    type="button"
-                    className="menu-btn"
-                    aria-label={tx(open ? "Close menu" : "Open menu")}
-                    aria-expanded={open}
-                    onClick={() => setOpen((o) => !o)}
-                >
-                    <MenuIcon open={open} />
-                </button>
+                <div className="nav-end">
+                    <HeaderLanguage />
+                    <RdLink className="btn btn-dark nav-cta" href={ctaHref} style={{ minHeight: 44, padding: "0 18px", fontSize: 14 }}>
+                        {tx(ctaLabel)}
+                    </RdLink>
+                    <button
+                        type="button"
+                        className="menu-btn"
+                        aria-label={tx(open ? "Close menu" : "Open menu")}
+                        aria-expanded={open}
+                        onClick={() => setOpen((o) => !o)}
+                    >
+                        <MenuIcon open={open} />
+                    </button>
+                </div>
             </div>
             {open && (
                 <nav className="mnav" aria-label={tx("Menu")}>

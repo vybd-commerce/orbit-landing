@@ -136,7 +136,7 @@ export default function WhatWeDo({ tx }: { tx: Tx }) {
     const state = (i: number) => (i < on ? " is-done" : i === on ? " is-on" : "");
 
     return (
-        <section id="services" className="wrap" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)" }}>
+        <section id="services" className="wrap bleed" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)" }}>
             <div
                 className="rv"
                 style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 16, margin: "0 auto 48px", maxWidth: 820 }}

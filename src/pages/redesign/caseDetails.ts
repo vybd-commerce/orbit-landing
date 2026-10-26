@@ -15,7 +15,7 @@ export const CASE_DETAILS: Record<string, CaseDetail> = {
         overview: "The Indian Tapas is a modern Indian street food brand that people already love. To expand into the US, it needed new positioning, a clear picture of demand, and a step-by-step plan for going to market.",
         role: "We were the brand's US expansion and growth partner, building the foundation it needed to enter the market and scale.",
         challenges: [
-            "No clear positioning for American customers",
+            "No clear positioning for US customers",
             "No clear sense of which dishes to lead with",
             "Few people found the brand unless they already knew it",
             "Too dependent on delivery apps",
@@ -87,7 +87,7 @@ export const CASE_DETAILS: Record<string, CaseDetail> = {
             "Built a search strategy around what ready-to-buy shoppers type into Google",
             "Improved product and collection pages, and launched new pages built for search",
             "Used customer and social insights to create content that earns more clicks and sales",
-            "Tailored search work to how and where Americans shop",
+            "Tailored search work to how and where US shoppers buy",
         ],
         impact: "Karma now has a stronger base for US growth: more people find it, it relies less on paid ads, and its production strengths now show up as clear value for customers.",
     },

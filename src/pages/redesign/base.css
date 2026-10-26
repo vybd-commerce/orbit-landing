@@ -22,3 +22,21 @@
     width: 240px;
     max-width: 100%;
 }
+
+/* Header language picker and folded V logo, shared by every page (from
+   the prototype's app bar). */
+.rd .nav-end{display:flex;align-items:center;gap:10px}
+.rd .nls{position:relative;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 11px 0 11px;border-radius:999px;border:1px solid rgba(15,27,51,.14);color:#0f1b33;font-size:13px;font-weight:600;letter-spacing:.02em;white-space:nowrap;cursor:pointer;transition:border-color .2s,background .2s}
+.rd .nls:hover{border-color:rgba(15,27,51,.35);background:rgba(255,255,255,.7)}
+.rd .nls:focus-within{outline:2px solid var(--mint,#1BB59B);outline-offset:2px}
+.rd .nls svg{flex:none}
+.rd .nls .nls-chev{opacity:.6}
+.rd .nls-select{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;border:0;font-size:16px;appearance:none;-webkit-appearance:none}
+@media (max-width:760px){.rd .nls{height:44px;padding:0 12px}}
+
+/* brand: folded V logo. Static by default; JS plays the fold-in once on load and on hover (never loops) */
+.rd .lg{display:inline-flex;align-items:center;gap:9px;color:#0f1b33}
+.rd .lg-mark{display:block;overflow:visible;flex:none}
+.rd .lg-f{transform-box:fill-box}
+.rd .lg-f:nth-child(1){transform-origin:100% 100%}.rd .lg-f:nth-child(2){transform-origin:100% 50%}.rd .lg-f:nth-child(3){transform-origin:0 100%}.rd .lg-f:nth-child(4){transform-origin:0 50%}.rd .lg-f:nth-child(5){transform-origin:50% 0}
+

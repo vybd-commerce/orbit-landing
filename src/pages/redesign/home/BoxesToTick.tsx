@@ -31,7 +31,13 @@ const PILLS: [string, number, number, number][] = [
     ["Customer service", 0.3599, -0.0392, 0.141],
 ];
 
-function render(sec: HTMLElement, p: number, tx: Tx) {
+/* How far the parcel has been nudged down (px) and shrunk to keep its open
+   flaps off the headline; kept between frames so it settles, not jitters. */
+type Fit = { shift: number; fit: number };
+
+type Box = { l: number; t: number; r: number; b: number };
+
+function render(sec: HTMLElement, p: number, tx: Tx, pos: Fit) {
     const stick = sec.querySelector<HTMLElement>(".co-stick"),
         pk = sec.querySelector<HTMLElement>(".co-pk");
     if (!stick || !pk) return;
@@ -48,14 +54,53 @@ function render(sec: HTMLElement, p: number, tx: Tx) {
         grow = sm((p - 0.1) / 0.72),
         bump = Math.sin(Math.PI * cl((p - 0.86) / 0.1));
     const sc = base * (0.58 + 0.42 * grow) * (1 + 0.05 * bump);
+    // keep-out zone: the headline(s), padded, so neither the pills nor the parcel ever sit on the text
+    const sr0 = stick.getBoundingClientRect();
+    let ko: Box | null = null;
+    sec.querySelectorAll(".co-cap h2").forEach((h) => {
+        const r = h.getBoundingClientRect();
+        if (!r.width) return;
+        const b = { l: r.left - sr0.left, t: r.top - sr0.top, r: r.right - sr0.left, b: r.bottom - sr0.top };
+        ko = ko ? { l: Math.min(ko.l, b.l), t: Math.min(ko.t, b.t), r: Math.max(ko.r, b.r), b: Math.max(ko.b, b.b) } : b;
+    });
+    const k = ko as Box | null;
+    if (k) {
+        const pad = W < 700 ? 10 : 16;
+        k.l -= pad;
+        k.r += pad;
+        k.t -= pad;
+        k.b += pad;
+    }
     pk.style.opacity = appear.toFixed(3);
-    pk.style.transform = `translateY(${((1 - appear) * 70).toFixed(1)}px) scale(${sc.toFixed(4)})`;
     const open = sm((p - 0.05) / 0.1) - sm((p - 0.8) / 0.07),
         ang = 118 * open;
     const fl = pk.querySelector<HTMLElement>(".co-flap.l"),
         fr = pk.querySelector<HTMLElement>(".co-flap.r");
     if (fl) fl.style.transform = `rotateY(${(-ang).toFixed(2)}deg)`;
     if (fr) fr.style.transform = `rotateY(${ang.toFixed(2)}deg)`;
+    // place the parcel: nudge it down (and shrink it if needed) so its open flaps clear the headline
+    const rise = (1 - appear) * 70;
+    const place = () => {
+        pk.style.transform = `translateY(${(rise + pos.shift).toFixed(1)}px) scale(${(sc * pos.fit).toFixed(4)})`;
+    };
+    place();
+    if (k) {
+        const parts = [...pk.querySelectorAll(".co-flap, .f1, .f2, .f5")].map((n) => n.getBoundingClientRect()).filter((r) => r.width);
+        if (parts.length) {
+            const top = Math.min(...parts.map((r) => r.top)) - sr0.top - rise,
+                bottom = Math.max(...parts.map((r) => r.bottom)) - sr0.top - rise;
+            const want = k.b + 4,
+                floor = H - Math.max(28, H * 0.06);
+            const ns = Math.max(0, pos.shift + (want - top));
+            let nf = pos.fit;
+            if (bottom + (ns - pos.shift) > floor) nf = Math.max(0.55, Math.min(1, (pos.fit * (floor - want)) / Math.max(1, bottom - top)));
+            if (Math.abs(ns - pos.shift) > 0.5 || Math.abs(nf - pos.fit) > 0.01) {
+                pos.shift = ns;
+                pos.fit = nf;
+                place();
+            }
+        }
+    }
     pk.classList.toggle("is-done", p > 0.88);
     const sr = stick.getBoundingClientRect(),
         f1 = pk.querySelector(".f1");
@@ -69,16 +114,36 @@ function render(sec: HTMLElement, p: number, tx: Tx) {
     let inside = 0;
     sec.querySelectorAll<HTMLElement>(".co-pill").forEach((el, i) => {
         const [, ax, ay, d] = PILLS[i];
-        const sx = Math.max(70, Math.min(W - 70, W / 2 + ax * W * 1.08)),
-            sy = H * 0.66 + ay * H * 0.78;
+        const pw = el.offsetWidth || 120,
+            ph = el.offsetHeight || 36,
+            hw = pw / 2 + 8,
+            hh = ph / 2 + 6;
+        let sx = Math.max(hw, Math.min(W - hw, W / 2 + ax * W * 1.08)),
+            sy = Math.max(hh, Math.min(H - hh, H * 0.66 + ay * H * 0.78));
+        // start point: if it lands on the headline, move it beside the text when there's room, otherwise just below it
+        if (k && sx + pw / 2 > k.l && sx - pw / 2 < k.r && sy + ph / 2 > k.t && sy - ph / 2 < k.b) {
+            const leftX = k.l - pw / 2,
+                rightX = k.r + pw / 2;
+            if (ax < 0 && leftX >= hw) sx = leftX;
+            else if (ax >= 0 && rightX <= W - hw) sx = rightX;
+            else if (leftX >= hw) sx = leftX;
+            else if (rightX <= W - hw) sx = rightX;
+            else sy = Math.min(H - hh, k.b + ph / 2);
+        }
         const t = cl((p - 0.14 - d) / 0.42),
             e = eio(t);
         const cx = (sx + tx0) / 2,
             cy = Math.min(sy, ty0) - H * 0.16;
-        const x = (1 - e) * (1 - e) * sx + 2 * (1 - e) * e * cx + e * e * tx0,
-            y = (1 - e) * (1 - e) * sy + 2 * (1 - e) * e * cy + e * e * ty0;
+        const x = (1 - e) * (1 - e) * sx + 2 * (1 - e) * e * cx + e * e * tx0;
+        let y = (1 - e) * (1 - e) * sy + 2 * (1 - e) * e * cy + e * e * ty0;
         const s = 1 - 0.7 * e,
             o = 1 - sm((e - 0.82) / 0.18);
+        // in flight: never cross the headline; slide along under it instead
+        if (k) {
+            const w2 = (pw * s) / 2,
+                h2 = (ph * s) / 2;
+            if (x + w2 > k.l && x - w2 < k.r && y + h2 > k.t && y - h2 < k.b) y = k.b + h2;
+        }
         el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) translate(-50%,-50%) scale(${s.toFixed(3)})`;
         el.style.opacity = o.toFixed(3);
         if (e > 0.985) inside++;
@@ -108,6 +173,7 @@ export default function BoxesToTick({ tx }: { tx: Tx }) {
     const pinned = !reduce && vh > 0 && vh < PIN_MAX_VH;
     const progress = useRef(0);
     const played = useRef(false);
+    const fit = useRef<Fit>({ shift: 0, fit: 1 });
 
     // Re-measure only on a real resize, not the mobile URL bar showing/hiding.
     useEffect(() => {
@@ -129,7 +195,7 @@ export default function BoxesToTick({ tx }: { tx: Tx }) {
         if (!sec) return;
         const draw = (p: number) => {
             progress.current = p;
-            render(sec, p, tx);
+            render(sec, p, tx, fit.current);
         };
         if (reduce) {
             draw(1);

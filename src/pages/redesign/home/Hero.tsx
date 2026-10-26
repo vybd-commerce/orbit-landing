@@ -1,9 +1,116 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
+import { prefersReducedMotion } from "../motion";
 
-/* "Borderless." hero with a 3D parcel that spins on its own, follows the
-   mouse a little, and can be dragged around with momentum. */
+/* Split hero: "The US is ready for your <word>", the word typed and
+   retyped through a list of products, beside a 3D parcel that spins on its
+   own, follows the mouse a little, and can be dragged around with momentum.
+   Behind it, a drifting dot grid with a mint spotlight that follows the
+   pointer, or wanders when the pointer is still. */
+
+const HERO_WORDS: Record<Tx["locale"], string[]> = {
+    en: ["snacks.", "skincare.", "spices.", "towels.", "supplements.", "coffee.", "fashion.", "art."],
+    fr: ["snacks.", "soins de beauté.", "épices.", "serviettes.", "compléments.", "cafés.", "vêtements.", "œuvres."],
+    es: ["snacks.", "cosmética.", "especias.", "toallas.", "suplementos.", "café.", "moda.", "arte."],
+    zh: ["零食。", "护肤品。", "香料。", "毛巾。", "保健品。", "咖啡。", "服装。", "艺术品。"],
+    ja: ["スナックを。", "スキンケアを。", "スパイスを。", "タオルを。", "サプリを。", "コーヒーを。", "ファッションを。", "アートを。"],
+    ko: ["스낵을.", "스킨케어를.", "향신료를.", "수건을.", "보충제를.", "커피를.", "패션을.", "작품을."],
+};
+
+/* Holds each word, deletes it, types the next. Writes the text node
+   directly so the hero doesn't re-render per keystroke. */
+function HeroWord({ locale }: { locale: Tx["locale"] }) {
+    const words = HERO_WORDS[locale];
+    const ref = useRef<HTMLSpanElement>(null);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el || prefersReducedMotion()) return;
+        let i = 0,
+            cur = words[0],
+            t = 0;
+        const put = (text: string, typing: boolean) => {
+            cur = text;
+            el.textContent = text;
+            el.classList.toggle("typing", typing);
+        };
+        const del = () => {
+            if (cur.length > 0) {
+                put(cur.slice(0, -1), true);
+                t = window.setTimeout(del, 42);
+                return;
+            }
+            i = (i + 1) % words.length;
+            t = window.setTimeout(type, 260);
+        };
+        const type = () => {
+            const next = words[i];
+            if (cur.length < next.length) {
+                put(next.slice(0, cur.length + 1), true);
+                t = window.setTimeout(type, 70 + Math.random() * 50);
+                return;
+            }
+            put(next, false);
+            t = window.setTimeout(del, 1900);
+        };
+        t = window.setTimeout(del, 2600);
+        return () => {
+            clearTimeout(t);
+            el.textContent = words[0];
+            el.classList.remove("typing");
+        };
+    }, [words]);
+
+    return (
+        <span className="hx-w" ref={ref}>
+            {words[0]}
+        </span>
+    );
+}
+
+function useSpotlight() {
+    const ref = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        const bg = ref.current;
+        if (!bg) return;
+        const set = (x: number, y: number) => {
+            bg.style.setProperty("--hxmx", x + "px");
+            bg.style.setProperty("--hxmy", y + "px");
+        };
+        let last = 0;
+        const move = (e: globalThis.PointerEvent) => {
+            const r = bg.getBoundingClientRect();
+            if (e.clientY < r.top || e.clientY > r.bottom) return;
+            last = performance.now();
+            set(e.clientX - r.left, e.clientY - r.top);
+        };
+        window.addEventListener("pointermove", move, { passive: true });
+        if (prefersReducedMotion()) return () => window.removeEventListener("pointermove", move);
+        let raf = 0,
+            idle = 0;
+        const loop = (t: number) => {
+            const r = bg.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > window.innerHeight) {
+                // off screen: check back now and then instead of every frame
+                idle = window.setTimeout(() => (raf = requestAnimationFrame(loop)), 400);
+                return;
+            }
+            if (performance.now() - last > 1500) {
+                const a = (t / 1000) * 0.35;
+                set(r.width * (0.66 + 0.24 * Math.sin(a)), r.height * (0.52 + 0.28 * Math.sin(a * 1.7 + 1)));
+            }
+            raf = requestAnimationFrame(loop);
+        };
+        raf = requestAnimationFrame(loop);
+        return () => {
+            window.removeEventListener("pointermove", move);
+            cancelAnimationFrame(raf);
+            clearTimeout(idle);
+        };
+    }, []);
+    return ref;
+}
 
 const Chevron = () => (
     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -38,7 +145,18 @@ export default function Hero({ tx }: { tx: Tx }) {
         setMouseState(m);
     };
     const rigRef = useRef<HTMLDivElement>(null);
-    const p = useRef({ rx: -20, ry: -30, vx: 0, vy: 0.25, tx: 0, ty: 0, dragging: false, lx: 0, ly: 0 });
+    const bgRef = useSpotlight();
+    const p = useRef({
+        rx: -20,
+        ry: -30,
+        vx: 0,
+        vy: 0.25,
+        tx: 0,
+        ty: 0,
+        dragging: false,
+        lx: 0,
+        ly: 0,
+    });
 
     useEffect(() => {
         let raf = 0;
@@ -53,8 +171,7 @@ export default function Hero({ tx }: { tx: Tx }) {
             }
             s.tx += (mouseRef.current.mx * 24 - s.tx) * 0.08;
             s.ty += (mouseRef.current.my * -18 - s.ty) * 0.08;
-            if (rigRef.current)
-                rigRef.current.style.transform = `rotateX(${(s.rx + s.ty).toFixed(2)}deg) rotateY(${(s.ry + s.tx).toFixed(2)}deg)`;
+            if (rigRef.current) rigRef.current.style.transform = `rotateX(${(s.rx + s.ty).toFixed(2)}deg) rotateY(${(s.ry + s.tx).toFixed(2)}deg)`;
             raf = requestAnimationFrame(tick);
         };
         raf = requestAnimationFrame(tick);
@@ -94,131 +211,135 @@ export default function Hero({ tx }: { tx: Tx }) {
             style={{ position: "relative" }}
             onMouseMove={(e) => {
                 const r = e.currentTarget.getBoundingClientRect();
-                setMouse({ mx: (e.clientX - r.left) / r.width - 0.5, my: (e.clientY - r.top) / r.height - 0.5 });
+                setMouse({
+                    mx: (e.clientX - r.left) / r.width - 0.5,
+                    my: (e.clientY - r.top) / r.height - 0.5,
+                });
             }}
             onMouseLeave={() => setMouse({ mx: 0, my: 0 })}
         >
-            <div
-                className="wrap"
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 22, paddingTop: "var(--sec)", paddingBottom: 32 }}
-            >
-                <div className="in d1 eyebrow">Vybd</div>
-                <h1 className="in d2" style={{ margin: 0, fontSize: "clamp(76px, 14vw, 200px)", lineHeight: 0.92 }}>
-                    {tx("Borderless.")}
-                </h1>
-                <p className="in d3" style={{ margin: 0, maxWidth: 620, fontSize: "clamp(20px, 2.1vw, 28px)", lineHeight: 1.3, color: "#6B7280" }}>
-                    {tx("You know your product. We know the American market.")}
-                    <br />
-                    {tx("Together, that's a launch.")}
-                </p>
-                <div className="in d4" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 8 }}>
-                    <RdLink className="btn btn-dark" href="#contact">
-                        {tx("Launch in the US")}
-                    </RdLink>
-                    <RdLink className="btn btn-text" href="#how">
-                        {tx("See how it works")}
-                        <Chevron />
-                    </RdLink>
-                </div>
+            <div className="hx-bg" aria-hidden="true" ref={bgRef}>
+                <span className="hx-glow"></span>
             </div>
-            <div className="in d5">
-                <div
-                    className="stage"
-                    role="img"
-                    aria-label={tx("A Vybd parcel you can drag to turn in 3D")}
-                    onPointerDown={grab}
-                    onPointerMove={drag}
-                    onPointerUp={drop}
-                    onPointerCancel={drop}
-                >
-                    <div className="float">
-                        <div className="rig" ref={rigRef}>
-                            <div className="face f1">
-                                <i className="tape"></i>
-                                <Postage />
-                                <svg
-                                    className="ink"
-                                    aria-hidden="true"
-                                    style={{ right: 54, top: 62, transform: "rotate(-14deg)" }}
-                                    width="70"
-                                    height="70"
-                                    viewBox="0 0 70 70"
-                                    fill="none"
-                                    stroke="currentColor"
-                                >
-                                    <defs>
-                                        <path id="stampArcA" d="M35 35m-24 0a24 24 0 1 1 48 0a24 24 0 1 1 -48 0" />
-                                    </defs>
-                                    <circle cx="35" cy="35" r="32" strokeWidth="2" />
-                                    <circle cx="35" cy="35" r="17" strokeWidth="1.4" />
-                                    <text fill="currentColor" stroke="none" fontSize="7.4" fontWeight="700" letterSpacing="1.6">
-                                        <textPath href="#stampArcA">{tx("CUSTOMS CLEARED · CUSTOMS CLEARED ·")}</textPath>
-                                    </text>
-                                    <path d="M28 35.5l4.5 4.5 9-9" strokeWidth="2.4" />
-                                </svg>
-                                <div className="label">
-                                    <small>{tx("To: Everywhere")}</small>
-                                    <strong>Vybd</strong>
-                                    <div className="bars"></div>
+            <div className="hx-grid">
+                <div className="hx-copy">
+                    <h1 className="in d2 hx-h">
+                        {tx("The US is ready")}
+                        <br />
+                        {tx("for your")}
+                        <br />
+                        <HeroWord key={tx.locale} locale={tx.locale} />
+                    </h1>
+                    <p className="in d3 hx-p">{tx("One team for everything it takes to sell in the US.")}</p>
+                    <div className="in d4 hx-cta">
+                        <RdLink className="btn btn-dark" href="#contact">
+                            {tx("Launch in the US")}
+                        </RdLink>
+                        <RdLink className="btn btn-text" href="#how">
+                            {tx("See how it works")}
+                            <Chevron />
+                        </RdLink>
+                    </div>
+                </div>
+                <div className="in d5 hx-art">
+                    <div
+                        className="stage"
+                        role="img"
+                        aria-label={tx("A Vybd parcel you can drag to turn in 3D")}
+                        onPointerDown={grab}
+                        onPointerMove={drag}
+                        onPointerUp={drop}
+                        onPointerCancel={drop}
+                    >
+                        <div className="float">
+                            <div className="rig" ref={rigRef}>
+                                <div className="face f1">
+                                    <i className="tape"></i>
+                                    <Postage />
+                                    <svg
+                                        className="ink"
+                                        aria-hidden="true"
+                                        style={{ right: 54, top: 62, transform: "rotate(-14deg)" }}
+                                        width="70"
+                                        height="70"
+                                        viewBox="0 0 70 70"
+                                        fill="none"
+                                        stroke="currentColor"
+                                    >
+                                        <defs>
+                                            <path id="stampArcA" d="M35 35m-24 0a24 24 0 1 1 48 0a24 24 0 1 1 -48 0" />
+                                        </defs>
+                                        <circle cx="35" cy="35" r="32" strokeWidth="2" />
+                                        <circle cx="35" cy="35" r="17" strokeWidth="1.4" />
+                                        <text fill="currentColor" stroke="none" fontSize="7.4" fontWeight="700" letterSpacing="1.6">
+                                            <textPath href="#stampArcA">{tx("CUSTOMS CLEARED · CUSTOMS CLEARED ·")}</textPath>
+                                        </text>
+                                        <path d="M28 35.5l4.5 4.5 9-9" strokeWidth="2.4" />
+                                    </svg>
+                                    <div className="label">
+                                        <small>{tx("To: Everywhere")}</small>
+                                        <strong>Vybd</strong>
+                                        <div className="bars"></div>
+                                    </div>
+                                    <UpArrows />
                                 </div>
-                                <UpArrows />
-                            </div>
-                            <div className="face f2">
-                                <i className="tape"></i>
-                                <div className="label">
-                                    <small>{tx("From: Anywhere")}</small>
-                                    <strong>Vybd</strong>
-                                    <div className="bars"></div>
+                                <div className="face f2">
+                                    <i className="tape"></i>
+                                    <div className="label">
+                                        <small>{tx("From: Anywhere")}</small>
+                                        <strong>Vybd</strong>
+                                        <div className="bars"></div>
+                                    </div>
+                                    <div className="rubber" style={{ right: 22, top: 70, transform: "rotate(9deg)" }}>
+                                        {tx("PRIORITY")}
+                                    </div>
+                                    <Postage />
                                 </div>
-                                <div className="rubber" style={{ right: 22, top: 70, transform: "rotate(9deg)" }}>
-                                    {tx("PRIORITY")}
+                                <div className="face f3">
+                                    {tx("Made anywhere")}
+                                    <div className="rubber" style={{ left: 22, top: 26, transform: "rotate(-7deg)" }}>
+                                        {tx("INSPECTED")}
+                                    </div>
                                 </div>
-                                <Postage />
-                            </div>
-                            <div className="face f3">
-                                {tx("Made anywhere")}
-                                <div className="rubber" style={{ left: 22, top: 26, transform: "rotate(-7deg)" }}>
-                                    {tx("INSPECTED")}
+                                <div className="face f4">
+                                    {tx("Sold everywhere")}
+                                    <svg
+                                        className="ink"
+                                        aria-hidden="true"
+                                        style={{ right: 22, top: 22, transform: "rotate(12deg)" }}
+                                        width="64"
+                                        height="64"
+                                        viewBox="0 0 70 70"
+                                        fill="none"
+                                        stroke="currentColor"
+                                    >
+                                        <defs>
+                                            <path id="stampArcB" d="M35 35m-24 0a24 24 0 1 1 48 0a24 24 0 1 1 -48 0" />
+                                        </defs>
+                                        <circle cx="35" cy="35" r="32" strokeWidth="2" />
+                                        <circle cx="35" cy="35" r="17" strokeWidth="1.4" />
+                                        <text fill="currentColor" stroke="none" fontSize="7.4" fontWeight="700" letterSpacing="1.6">
+                                            <textPath href="#stampArcB">{tx("VYBD POST · HANDLED WITH CARE ·")}</textPath>
+                                        </text>
+                                        <text x="35" y="39" textAnchor="middle" fill="currentColor" stroke="none" fontSize="12" fontWeight="700">
+                                            V
+                                        </text>
+                                    </svg>
                                 </div>
+                                <div className="face f5">
+                                    <i className="tape"></i>
+                                </div>
+                                <div className="face f6"></div>
                             </div>
-                            <div className="face f4">
-                                {tx("Sold everywhere")}
-                                <svg
-                                    className="ink"
-                                    aria-hidden="true"
-                                    style={{ right: 22, top: 22, transform: "rotate(12deg)" }}
-                                    width="64"
-                                    height="64"
-                                    viewBox="0 0 70 70"
-                                    fill="none"
-                                    stroke="currentColor"
-                                >
-                                    <defs>
-                                        <path id="stampArcB" d="M35 35m-24 0a24 24 0 1 1 48 0a24 24 0 1 1 -48 0" />
-                                    </defs>
-                                    <circle cx="35" cy="35" r="32" strokeWidth="2" />
-                                    <circle cx="35" cy="35" r="17" strokeWidth="1.4" />
-                                    <text fill="currentColor" stroke="none" fontSize="7.4" fontWeight="700" letterSpacing="1.6">
-                                        <textPath href="#stampArcB">{tx("VYBD POST · HANDLED WITH CARE ·")}</textPath>
-                                    </text>
-                                    <text x="35" y="39" textAnchor="middle" fill="currentColor" stroke="none" fontSize="12" fontWeight="700">
-                                        V
-                                    </text>
-                                </svg>
-                            </div>
-                            <div className="face f5">
-                                <i className="tape"></i>
-                            </div>
-                            <div className="face f6"></div>
                         </div>
-                    </div>
-                    <div className="chip" style={{ left: "2%", top: "20%", transform: chip(-50) }}>
-                        <u></u>
-                        {tx("Made Anywhere")}
-                    </div>
-                    <div className="chip" style={{ right: "3%", bottom: "16%", transform: chip(-64) }}>
-                        <u></u>
-                        {tx("Sold In USA")}
+                        <div className="chip" style={{ left: "2%", top: "20%", transform: chip(-50) }}>
+                            <u></u>
+                            {tx("Made Anywhere")}
+                        </div>
+                        <div className="chip" style={{ right: "3%", bottom: "16%", transform: chip(-64) }}>
+                            <u></u>
+                            {tx("Sold In USA")}
+                        </div>
                     </div>
                 </div>
             </div>

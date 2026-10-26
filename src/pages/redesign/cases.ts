@@ -25,7 +25,7 @@ export const CASES: CaseSummary[] = [
         category: "Food & Beverage",
         icon: "M3 11h18a9 9 0 0 1-18 0zM8 7.5c0-1.5 1-2 1-3.5M12 7.5c0-1.5 1-2 1-3.5M16 7.5c0-1.5 1-2 1-3.5",
         title: "A US growth plan for an Indian quick-service restaurant brand",
-        desc: "We got The Indian Tapas ready for the US: how to present the brand, which dishes to lead with, and a growth plan based on what Americans actually look for.",
+        desc: "We got The Indian Tapas ready for the US: how to present the brand, which dishes to lead with, and a growth plan based on what US shoppers actually look for.",
         metrics: [
             ["3", "Core menu categories chosen"],
             ["High Intent", "Plan to reach ready-to-buy diners"],

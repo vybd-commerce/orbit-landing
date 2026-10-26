@@ -6,6 +6,7 @@ import Hero from "./home/Hero";
 import HowItWorks from "./home/HowItWorks";
 import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
+import Pricing from "./home/Pricing";
 import ProofLabels from "./home/ProofLabels";
 import WhatWeDo from "./home/WhatWeDo";
 import WhoWeHelp from "./home/WhoWeHelp";
@@ -47,16 +48,19 @@ export default function HomePage() {
 
             <RdHeader
                 logoHref="#top"
+                logoDelay={showLoader ? 3.35 : 0.15}
                 links={[
                     { label: "What we do", href: "#services" },
                     { label: "How it works", href: "#how" },
                     { label: "Who we help", href: "#who" },
+                    { label: "Pricing", href: "#pricing" },
                     { label: "Lab", href: "/lab" },
                 ]}
                 mobileLinks={[
                     { label: "What we do", href: "#services" },
                     { label: "How it works", href: "#how" },
                     { label: "Who we help", href: "#who" },
+                    { label: "Pricing", href: "#pricing" },
                     { label: "Lab", href: "/lab" },
                 ]}
             />
@@ -66,11 +70,11 @@ export default function HomePage() {
             <BoxesToTick tx={tx} />
             <ProofLabels tx={tx} />
 
-            <section id="problem" className="wrap" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)", textAlign: "center" }}>
+            <section id="problem" className="wrap bleed" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)", textAlign: "center" }}>
                 <div className="rv" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20, maxWidth: 860, margin: "0 auto" }}>
                     <span className="eyebrow">{tx("The idea")}</span>
                     <h2 className="h2" style={{ fontSize: "clamp(32px, 4.2vw, 54px)" }}>
-                        {tx("You don't need to move to America to sell there.")}
+                        {tx("You don't need to move to the US to sell there.")}
                     </h2>
                     <p className="lead" style={{ maxWidth: 640 }}>
                         {tx(
@@ -83,9 +87,10 @@ export default function HomePage() {
             <WhatWeDo tx={tx} />
             <HowItWorks tx={tx} />
             <WhoWeHelp tx={tx} />
+            <Pricing tx={tx} />
 
             <section id="contact" style={{ position: "relative", padding: "0 clamp(12px, 2vw, 24px) clamp(12px, 2vw, 24px)" }}>
-                <div style={{ background: "#111827", color: "#FFFFFF", borderRadius: 36 }}>
+                <div className="cta-routes" style={{ background: "#111827", color: "#FFFFFF", borderRadius: 36 }}>
                     <div className="wrap" style={{ paddingTop: "calc(var(--sec) * 1.25)", paddingBottom: 8 }}>
                         <div
                             className="rv"
