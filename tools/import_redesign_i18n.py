@@ -1,6 +1,6 @@
 """Builds the redesign pages' translations from the designer's dictionaries.
 
-Reads redesign/i18n/tr1.py ... tr8.py (rows of (en, fr, es, zh, ja, ko); later
+Reads redesign/i18n/tr1.py ... tr11.py (rows of (en, fr, es, zh, ja, ko); later
 files win, matching redesign/scripts/build_i18n.py) and writes one JSON file
 per locale to src/pages/redesign/i18n/<locale>.json, keyed by the English text.
 
@@ -27,7 +27,7 @@ def load(name):
     return mod.T
 
 
-rows = [r for i in range(1, 9) for r in load(f"tr{i}")]
+rows = [r for i in range(1, 12) for r in load(f"tr{i}")]
 full = {lang: {} for lang in LANGS}
 for row in rows:
     assert len(row) == 6, (row[0], len(row))
