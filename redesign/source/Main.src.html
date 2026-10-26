@@ -554,27 +554,29 @@ header .secnum{top:auto;bottom:-34px}
 .lb-foot .btn{display:flex;margin:0 22px 22px;box-sizing:border-box}
 .lb-part{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:clamp(36px,4vw,52px);text-align:center;font-size:16px;line-height:1.5;color:#4B5563}
 .lb-part b{padding:5px 11px;border:2px solid #0f1b33;font-size:11px;letter-spacing:.16em;color:#0f1b33}
+.lb-calc-n{margin:10px 0 0;font-size:13px;color:#6B7280;text-align:right}
 .pr-fine{margin:16px 0 0;text-align:center;font-size:14px;color:#8a909b}
 @media (max-width:860px){.pr-grid{grid-template-columns:1fr}}
 @media (max-width:480px){.lb-ft{grid-template-columns:1fr}.lb-ft > div + div{border-left:0;border-top:2px solid #0f1b33}.lb-top,.lb-ft > div,.lb-name,.lb-price,.lb-con,.lb-trk{padding-left:18px;padding-right:18px}.lb-bars,.lb-calc,.lb-foot .btn{margin-left:18px;margin-right:18px}}
 @media (prefers-reduced-motion:reduce){.lb-list svg path{animation:none;stroke-dashoffset:0}.lb{transition:none}}
 
 /* hero: split layout, typewriter word */
-.hx-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:center;gap:clamp(16px,3vw,48px);max-width:1120px;box-sizing:content-box;min-height:max(560px,calc(100svh - 150px));margin:0 auto;padding:clamp(56px,6vw,88px) clamp(20px,5vw,48px) 24px}
-.hx-copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:22px;min-width:0}
+.hx-grid{display:flex;flex-direction:column;align-items:center;max-width:1120px;box-sizing:content-box;margin:0 auto;padding:var(--sec) clamp(20px,5vw,48px) 0}
+.hx-copy{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px;min-width:0;padding-bottom:32px}
 .hx-k{font-size:clamp(15px,1.3vw,17px);letter-spacing:.01em}
 .hx-k b{font-weight:500;color:#0f1b33}
-.hx-h{margin:0;font-size:clamp(48px,5.4vw,84px);line-height:.98;color:#0f1b33}
+.hx-h{margin:0;font-size:clamp(76px,14vw,200px);line-height:.92;color:#0f1b33}
 .hx-w{display:inline-block;min-height:1em;font-style:italic;color:var(--mint);white-space:pre-wrap}
 .hx-w::after{content:"";display:inline-block;width:.055em;height:.82em;margin-left:.08em;vertical-align:-.06em;background:var(--mint);transform:skewX(-8deg);animation:hxCaret 1s steps(1) infinite}
 .hx-w.typing::after{animation:none}
 @keyframes hxCaret{50%{opacity:0}}
-.hx-p{margin:0;max-width:520px;font-size:clamp(18px,1.6vw,21px);line-height:1.5;color:#6B7280;text-wrap:pretty}
-.hx-cta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px}
-.hx-cta .btn-text{padding-left:14px}
-.hx-art{min-width:0}
-.hx-art .stage{max-width:620px;height:540px}
-@media (max-width:960px){.hx-grid{grid-template-columns:1fr;padding-bottom:0;min-height:0}.hx-art .stage{height:400px}}
+.hx-tw{margin-top:-4px;font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,3.4vw,46px);line-height:1.15;color:#0f1b33;text-wrap:balance}
+.hx-p{margin:0;max-width:620px;font-size:clamp(18px,1.7vw,22px);line-height:1.4;color:#6B7280;text-wrap:balance}
+.hx-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin-top:8px}
+.hx-cta .btn-text{padding-left:12px}
+.hx-art{min-width:0;width:100%}
+.hx-art .stage{max-width:760px;height:480px}
+@media (max-width:760px){.hx-art .stage{height:380px}}
 @media (prefers-reduced-motion:reduce){.hx-w::after{animation:none}}
 
 /* hero background: drifting dot grid with a mint spotlight */
@@ -708,7 +710,9 @@ header .secnum{top:auto;bottom:-34px}
 <sc-if value="{{ showNums }}" hint-placeholder-val="{{ false }}"><span class="secnum" aria-hidden="true">2 · Hero</span></sc-if>
 <div class="hx-grid">
 <div class="hx-copy">
-<h1 class="in d2 hx-h">The US is ready<br>for your<br><span class="hx-w" data-notx="" ref="{{ hwRef }}">{{ heroWord }}</span></h1>
+<div class="in d1 eyebrow">Vybd</div>
+<h1 class="in d2 hx-h">Borderless.</h1>
+<div class="in d3 hx-tw">The US is ready for your <span class="hx-w" data-notx="" ref="{{ hwRef }}">{{ heroWord }}</span></div>
 <p class="in d3 hx-p">One team for everything it takes to sell in the US.</p>
 <div class="in d4 hx-cta">
 <a class="btn btn-dark" href="#contact">Launch in the US</a>
@@ -863,19 +867,20 @@ header .secnum{top:auto;bottom:-34px}
 <div class="lb-top"><span>VYBD POST</span><span>RECOMMENDED NEXT</span></div>
 <div class="lb-ft"><div><small>FROM</small><b>Selling in the US</b></div><div><small>TO</small><b>Selling more, with less to run</b></div></div>
 <div class="lb-name"><h3>US Scale</h3><div class="lb-stamp" aria-hidden="true"><div>EVERY<small>MONTH</small></div></div></div>
-<div class="lb-price"><div class="lb-amt">$3,000<small>/ month</small></div><div class="lb-plus"><b>+ 6%</b><span>of US sales</span></div></div>
+<div class="lb-price"><div class="lb-amt">$3,000<small>/ month</small></div><div class="lb-plus"><b>+ 12%</b><span>of US sales</span></div></div>
 <div class="lb-con"><span class="lb-k">CONTENTS</span><ul class="lb-list"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Our agents run inventory, purchase orders, deductions and reporting</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>A senior operator, 8 hours a month</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Ongoing content and listing updates</span></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Monthly market and buyer research</span></li></ul></div>
 <div class="lb-calc">
 <div class="lb-calc-l"><span>Your yearly US sales</span><b data-notx="">{{ pr.sales }}</b></div>
 <input type="range" min="100000" max="3000000" step="50000" value="{{ pr.v }}" style="--p: {{ pr.p }}" onInput="{{ pr.on }}" onChange="{{ pr.on }}" aria-label="Your yearly US sales">
 <div class="pr-chips" data-notx=""><button type="button" class="{{ pr.k0 }}" onClick="{{ pr.c0 }}">$250K</button><button type="button" class="{{ pr.k1 }}" onClick="{{ pr.c1 }}">$500K</button><button type="button" class="{{ pr.k2 }}" onClick="{{ pr.c2 }}">$1M</button><button type="button" class="{{ pr.k3 }}" onClick="{{ pr.c3 }}">$2M</button></div>
 <div class="lb-calc-o"><span>US Scale costs about</span><span><b data-notx="">{{ pr.fee }}</b> <span>a year</span></span></div>
+<p class="lb-calc-n">Plus shipping and warehousing fees.</p>
 </div>
 <div class="lb-foot"><div class="lb-bars" aria-hidden="true"></div><div class="lb-trk"><span>VYBD-SCALE-US</span><span>STEP 02</span></div><a class="btn btn-mint" href="#contact">Talk to us about US Scale</a></div>
 </article>
 </div>
 <div class="lb-part rv"><b>PARTNER</b><span>By invitation, after six months of real numbers: lower fees, a higher revenue share and an equity stake.</span></div>
-<p class="pr-fine">All prices in US dollars.</p>
+<p class="pr-fine">All prices in US dollars. Shipping and warehousing fees are charged separately, based on what you ship and store.</p>
 </section>
 <section id="contact" style="position: relative; padding: 0 clamp(12px, 2vw, 24px) clamp(12px, 2vw, 24px)">
 <sc-if value="{{ showNums }}" hint-placeholder-val="{{ false }}"><span class="secnum" aria-hidden="true">10 · Closing CTA</span></sc-if>
@@ -1563,7 +1568,7 @@ showNums: this.props.showSectionNumbers === true,
 langCode: ({ en: 'EN', fr: 'FR', es: 'ES', zh: '中文', ja: '日本語', ko: '한국어' })[this.lang || 'en'] || 'EN',
 heroWord: this.hwTxt == null ? this.hwWord() : this.hwTxt, hwRef: this.hwRef, hxBgRef: this.hxBgRef,
 pr: (() => { const v = this.state.prV || 500000; const fmt = (n) => '$' + Math.round(n).toLocaleString('en-US');
-  const o = { v: v, p: ((v - 100000) / 2900000 * 100).toFixed(2) + '%', sales: fmt(v) + (v >= 3000000 ? '+' : ''), fee: fmt(Math.round((36000 + v * 0.06) / 1000) * 1000), on: this.prOn };
+  const o = { v: v, p: ((v - 100000) / 2900000 * 100).toFixed(2) + '%', sales: fmt(v) + (v >= 3000000 ? '+' : ''), fee: fmt(Math.round((36000 + v * 0.12) / 1000) * 1000), on: this.prOn };
   [250000, 500000, 1000000, 2000000].forEach((x, i) => { o['c' + i] = this.prSet[i]; o['k' + i] = x === v ? 'on' : ''; }); return o; })(),
 showStats: !!this.props.showStats,
 lxRef: this.lxRef,
