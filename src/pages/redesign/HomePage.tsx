@@ -8,9 +8,9 @@ import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
 import "./HomePage.css";
 
-/* The global home at /: "Borderless.", the idea and the closing call. The
-   full US story lives at /us (UsPage); the hero buttons and the parcel
-   itself lead there. Shares the /us page's stylesheet and intro, which
+/* The global home at /: "Borderless.", the idea and the closing call, all
+   on one navy canvas (.rd-global in HomePage.css). The full US story lives
+   at /us (UsPage); the header link and the parcel itself lead there. Shares the /us page's stylesheet and intro, which
    plays once per session on whichever of the two is opened first. */
 
 const LINKS = [
@@ -28,29 +28,24 @@ export default function HomePage() {
     const [showLoader] = useState(shouldShowLoader);
 
     return (
-        <RdPage name="home" className={showLoader ? undefined : "no-loader"}>
+        <RdPage name="home" className={showLoader ? "rd-global" : "rd-global no-loader"}>
             {showLoader && <Loader tx={tx} />}
 
             <RdHeader logoHref="#top" logoDelay={showLoader ? 3.35 : 0.15} links={LINKS} mobileLinks={LINKS} />
 
-            <Hero
-                tx={tx}
-                line={tx("Made anywhere. Sold everywhere.")}
-                sub={null}
-                primary={{ label: "Explore the US", href: "/us" }}
-                secondary={{ label: "Book a free call", href: "/book" }}
-                boxHref="/us"
-            />
-            <IdeaSection
-                tx={tx}
-                heading={
-                    <>
-                        {tx("The world is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
-                    </>
-                }
-                body={IDEA_BODY}
-            />
-            <ClosingCta tx={tx} />
+            <Hero tx={tx} line={tx("Made anywhere. Sold everywhere.")} sub={null} primary={null} secondary={null} boxHref="/us" />
+            <div className="g-routes">
+                <IdeaSection
+                    tx={tx}
+                    heading={
+                        <>
+                            {tx("The world is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
+                        </>
+                    }
+                    body={IDEA_BODY}
+                />
+                <ClosingCta tx={tx} />
+            </div>
 
             <RdFooter />
         </RdPage>

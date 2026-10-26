@@ -143,7 +143,7 @@ const Postage = () => (
 type HeroLink = { label: string; href: string };
 
 /* Defaults are the /us hero. The global home swaps the line under
-   "Borderless.", drops the sub line, points the buttons elsewhere and makes
+   "Borderless.", drops the sub line and the buttons (null), and makes
    the parcel a link (`boxHref`): a tap or Enter follows it, a drag still
    just turns the parcel. */
 export default function Hero({
@@ -157,8 +157,8 @@ export default function Hero({
     tx: Tx;
     line?: ReactNode;
     sub?: string | null;
-    primary?: HeroLink;
-    secondary?: HeroLink;
+    primary?: HeroLink | null;
+    secondary?: HeroLink | null;
     boxHref?: string;
 }) {
     const navigate = useNavigate();
@@ -267,15 +267,21 @@ export default function Hero({
                         )}
                     </div>
                     {sub && <p className="in d3 hx-p">{tx(sub)}</p>}
-                    <div className="in d4 hx-cta">
-                        <RdLink className="btn btn-dark" href={primary.href}>
-                            {tx(primary.label)}
-                        </RdLink>
-                        <RdLink className="btn btn-text" href={secondary.href}>
-                            {tx(secondary.label)}
-                            <Chevron />
-                        </RdLink>
-                    </div>
+                    {(primary || secondary) && (
+                        <div className="in d4 hx-cta">
+                            {primary && (
+                                <RdLink className="btn btn-dark" href={primary.href}>
+                                    {tx(primary.label)}
+                                </RdLink>
+                            )}
+                            {secondary && (
+                                <RdLink className="btn btn-text" href={secondary.href}>
+                                    {tx(secondary.label)}
+                                    <Chevron />
+                                </RdLink>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="in d5 hx-art">
                     <div
