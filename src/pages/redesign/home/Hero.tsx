@@ -3,9 +3,10 @@ import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
 import { prefersReducedMotion } from "../motion";
 
-/* Split hero: "The US is ready for your <word>", the word typed and
-   retyped through a list of products, beside a 3D parcel that spins on its
-   own, follows the mouse a little, and can be dragged around with momentum.
+/* Centred "Borderless." hero with a typing line under it ("The US is ready
+   for your <word>", the word typed and retyped through a list of products),
+   above a 3D parcel that spins on its own, follows the mouse a little, and
+   can be dragged around with momentum.
    Behind it, a drifting dot grid with a mint spotlight that follows the
    pointer, or wanders when the pointer is still. */
 
@@ -223,13 +224,11 @@ export default function Hero({ tx }: { tx: Tx }) {
             </div>
             <div className="hx-grid">
                 <div className="hx-copy">
-                    <h1 className="in d2 hx-h">
-                        {tx("The US is ready")}
-                        <br />
-                        {tx("for your")}
-                        <br />
-                        <HeroWord key={tx.locale} locale={tx.locale} />
-                    </h1>
+                    <div className="in d1 eyebrow">Vybd</div>
+                    <h1 className="in d2 hx-h">{tx("Borderless.")}</h1>
+                    <div className="in d3 hx-tw">
+                        {tx("The US is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
+                    </div>
                     <p className="in d3 hx-p">{tx("One team for everything it takes to sell in the US.")}</p>
                     <div className="in d4 hx-cta">
                         <RdLink className="btn btn-dark" href="#contact">

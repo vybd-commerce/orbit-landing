@@ -18,3 +18,4 @@ T = [
 ]
 T += [("You don't need to move to the US to sell there.","Inutile de déménager aux États-Unis pour y vendre.","No necesitas mudarte a Estados Unidos para vender allí.","你不必搬去美国，也能在那里销售。","米国で売るために、米国へ移る必要はありません。","미국에서 팔기 위해 미국으로 이사할 필요는 없습니다.")]
 T += [("One team for everything it takes to sell in the US.","Une seule équipe pour tout ce qu'il faut pour vendre aux États-Unis.","Un solo equipo para todo lo que hace falta para vender en EE. UU.","一个团队，搞定在美国销售所需的一切。","米国で売るために必要なことすべてを、ひとつのチームで。","미국에서 판매하는 데 필요한 모든 것을, 한 팀이.")]
+T += [("The US is ready for your","Les États-Unis attendent vos","EE. UU. está listo para tus","美国市场已准备好迎接你的","米国が待っています、あなたの","미국이 기다립니다, 당신의")]

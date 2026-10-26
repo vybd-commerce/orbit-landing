@@ -4,7 +4,7 @@ import type { Tx } from "../i18n";
 
 /* Two plans drawn as shipping labels: a one-time US Launch and the monthly
    US Scale, whose card carries a calculator for the yearly cost at a given
-   level of US sales ($3,000 a month plus 6% of sales). */
+   level of US sales ($3,000 a month plus 12% of sales). */
 
 const Tick = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -78,7 +78,7 @@ function Route({ tx, from, to }: { tx: Tx; from: string; to: string }) {
 export default function Pricing({ tx }: { tx: Tx }) {
     const [sales, setSales] = useState(500_000);
     const fill = (((sales - MIN) / (MAX - MIN)) * 100).toFixed(2) + "%";
-    const fee = Math.round((36_000 + sales * 0.06) / 1000) * 1000;
+    const fee = Math.round((36_000 + sales * 0.12) / 1000) * 1000;
 
     return (
         <section id="pricing" className="wrap pr bleed" style={{ position: "relative", paddingTop: "var(--sec)", paddingBottom: "var(--sec)" }}>
@@ -141,7 +141,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             $3,000<small>{tx("/ month")}</small>
                         </div>
                         <div className="lb-plus">
-                            <b>+ 6%</b>
+                            <b>+ 12%</b>
                             <span>{tx("of US sales")}</span>
                         </div>
                     </div>
@@ -174,6 +174,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                                 <b>{usd(fee)}</b> <span>{tx("a year")}</span>
                             </span>
                         </div>
+                        <p className="lb-calc-n">{tx("Plus shipping and warehousing fees.")}</p>
                     </div>
                     <div className="lb-foot">
                         <div className="lb-bars" aria-hidden="true"></div>
@@ -191,7 +192,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <b>{tx("PARTNER")}</b>
                 <span>{tx("By invitation, after six months of real numbers: lower fees, a higher revenue share and an equity stake.")}</span>
             </div>
-            <p className="pr-fine">{tx("All prices in US dollars.")}</p>
+            <p className="pr-fine">{tx("All prices in US dollars. Shipping and warehousing fees are charged separately, based on what you ship and store.")}</p>
         </section>
     );
 }
