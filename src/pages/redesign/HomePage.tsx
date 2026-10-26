@@ -8,7 +8,8 @@ import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
 import "./HomePage.css";
 
-/* The global home at /: "Borderless.", the idea and the closing call, all
+/* The global home at /: "Borderless.", the idea and the closing call
+   ("The world is ready for your <typed word>"), all
    on one navy canvas (.rd-global in HomePage.css). The full US story lives
    at /us (UsPage); the header link and the parcel itself lead there. Shares the /us page's stylesheet and intro, which
    plays once per session on whichever of the two is opened first. */
@@ -34,16 +35,19 @@ export default function HomePage() {
 
             <Hero tx={tx} line={tx("Made anywhere. Sold everywhere.")} sub={null} primary={null} secondary={null} boxHref="/us" />
             <div className="g-routes">
-                <IdeaSection
+                <IdeaSection tx={tx} heading={null} body={IDEA_BODY} />
+                <ClosingCta
                     tx={tx}
                     heading={
                         <>
-                            {tx("The world is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
+                            {tx("The world is ready for your")}
+                            <br />
+                            <HeroWord key={tx.locale} locale={tx.locale} />
                         </>
                     }
-                    body={IDEA_BODY}
+                    text={null}
+                    button="Get Vybd"
                 />
-                <ClosingCta tx={tx} />
             </div>
 
             <RdFooter />

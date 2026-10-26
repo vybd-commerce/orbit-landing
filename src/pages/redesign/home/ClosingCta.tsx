@@ -1,9 +1,23 @@
+import type { ReactNode } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
 
-/* Closing call to book, on navy with shipping routes. */
+/* Closing call to book, on navy with shipping routes. Defaults are the /us
+   copy; the global home passes its own heading and button, and no line. */
 
-export default function ClosingCta({ tx }: { tx: Tx }) {
+const US_TEXT = "Tell us what you make. We'll show you what it takes to sell it in the US.";
+
+export default function ClosingCta({
+    tx,
+    heading,
+    text = US_TEXT,
+    button = "Book a free call",
+}: {
+    tx: Tx;
+    heading?: ReactNode;
+    text?: string | null;
+    button?: string;
+}) {
     return (
         <section id="contact" style={{ position: "relative", padding: "0 clamp(12px, 2vw, 24px) clamp(12px, 2vw, 24px)" }}>
             <div className="cta-routes" style={{ background: "#111827", color: "#FFFFFF", borderRadius: 36 }}>
@@ -20,15 +34,17 @@ export default function ClosingCta({ tx }: { tx: Tx }) {
                         }}
                     >
                         <h2 style={{ margin: 0, fontSize: "clamp(52px, 8.4vw, 120px)", lineHeight: 0.98 }}>
-                            {tx("Your next market")}
-                            <br />
-                            <em style={{ color: "var(--mint)" }}>{tx("is waiting.")}</em>
+                            {heading ?? (
+                                <>
+                                    {tx("Your next market")}
+                                    <br />
+                                    <em style={{ color: "var(--mint)" }}>{tx("is waiting.")}</em>
+                                </>
+                            )}
                         </h2>
-                        <p style={{ margin: 0, maxWidth: 480, fontSize: 20, lineHeight: 1.45, color: "#9CA3AF" }}>
-                            {tx("Tell us what you make. We'll show you what it takes to sell it in the US.")}
-                        </p>
+                        {text && <p style={{ margin: 0, maxWidth: 480, fontSize: 20, lineHeight: 1.45, color: "#9CA3AF" }}>{tx(text)}</p>}
                         <RdLink className="btn btn-mint" href="/book">
-                            {tx("Book a free call")}
+                            {tx(button)}
                         </RdLink>
                     </div>
                 </div>
