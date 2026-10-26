@@ -429,7 +429,7 @@ export default function LabPage() {
             <RdHeader
                 logoHref="/"
                 links={[
-                    { label: "What we do", href: "/#services" },
+                    { label: "What we do", href: "/us#services" },
                     { label: "Case studies", href: "/case-studies" },
                     { label: "Lab", href: "#top", current: true },
                 ]}

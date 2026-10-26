@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocalePath } from "../../../i18n/context";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
 import { prefersReducedMotion } from "../motion";
@@ -21,7 +23,7 @@ const HERO_WORDS: Record<Tx["locale"], string[]> = {
 
 /* Holds each word, deletes it, types the next. Writes the text node
    directly so the hero doesn't re-render per keystroke. */
-function HeroWord({ locale }: { locale: Tx["locale"] }) {
+export function HeroWord({ locale }: { locale: Tx["locale"] }) {
     const words = HERO_WORDS[locale];
     const ref = useRef<HTMLSpanElement>(null);
 
@@ -138,7 +140,32 @@ const Postage = () => (
     </div>
 );
 
-export default function Hero({ tx }: { tx: Tx }) {
+type HeroLink = { label: string; href: string };
+
+/* Defaults are the /us hero. The global home swaps the line under
+   "Borderless.", drops the sub line, points the buttons elsewhere and makes
+   the parcel a link (`boxHref`): a tap or Enter follows it, a drag still
+   just turns the parcel. */
+export default function Hero({
+    tx,
+    line,
+    sub = "One team for everything it takes to sell in the US.",
+    primary = { label: "Launch in the US", href: "#contact" },
+    secondary = { label: "See how it works", href: "#how" },
+    boxHref,
+}: {
+    tx: Tx;
+    line?: ReactNode;
+    sub?: string | null;
+    primary?: HeroLink;
+    secondary?: HeroLink;
+    boxHref?: string;
+}) {
+    const navigate = useNavigate();
+    const lp = useLocalePath();
+    const follow = () => {
+        if (boxHref) navigate(lp(boxHref));
+    };
     const [mouse, setMouseState] = useState({ mx: 0, my: 0 });
     const mouseRef = useRef(mouse);
     const setMouse = (m: { mx: number; my: number }) => {
@@ -157,6 +184,7 @@ export default function Hero({ tx }: { tx: Tx }) {
         dragging: false,
         lx: 0,
         ly: 0,
+        moved: 0,
     });
 
     useEffect(() => {
@@ -188,6 +216,7 @@ export default function Hero({ tx }: { tx: Tx }) {
         s.ly = e.clientY;
         s.vx = 0;
         s.vy = 0;
+        s.moved = 0;
         e.currentTarget.setPointerCapture?.(e.pointerId);
     };
     const drag = (e: PointerEvent<HTMLDivElement>) => {
@@ -195,6 +224,7 @@ export default function Hero({ tx }: { tx: Tx }) {
         if (!s.dragging) return;
         const dx = e.clientX - s.lx,
             dy = e.clientY - s.ly;
+        s.moved += Math.abs(dx) + Math.abs(dy);
         s.lx = e.clientX;
         s.ly = e.clientY;
         s.ry += dx * 0.5;
@@ -202,8 +232,11 @@ export default function Hero({ tx }: { tx: Tx }) {
         s.vy = dx * 0.5;
         s.vx = -dy * 0.25;
     };
-    const drop = () => {
-        p.current.dragging = false;
+    const drop = (e: PointerEvent<HTMLDivElement>) => {
+        const s = p.current;
+        // a tap, not a drag: follow the parcel's link
+        if (s.dragging && e.type === "pointerup" && s.moved < 6) follow();
+        s.dragging = false;
     };
 
     return (
@@ -227,15 +260,19 @@ export default function Hero({ tx }: { tx: Tx }) {
                     <div className="in d1 eyebrow">Vybd</div>
                     <h1 className="in d2 hx-h">{tx("Borderless.")}</h1>
                     <div className="in d3 hx-tw">
-                        {tx("The US is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
+                        {line ?? (
+                            <>
+                                {tx("The US is ready for your")} <HeroWord key={tx.locale} locale={tx.locale} />
+                            </>
+                        )}
                     </div>
-                    <p className="in d3 hx-p">{tx("One team for everything it takes to sell in the US.")}</p>
+                    {sub && <p className="in d3 hx-p">{tx(sub)}</p>}
                     <div className="in d4 hx-cta">
-                        <RdLink className="btn btn-dark" href="#contact">
-                            {tx("Launch in the US")}
+                        <RdLink className="btn btn-dark" href={primary.href}>
+                            {tx(primary.label)}
                         </RdLink>
-                        <RdLink className="btn btn-text" href="#how">
-                            {tx("See how it works")}
+                        <RdLink className="btn btn-text" href={secondary.href}>
+                            {tx(secondary.label)}
                             <Chevron />
                         </RdLink>
                     </div>
@@ -243,8 +280,10 @@ export default function Hero({ tx }: { tx: Tx }) {
                 <div className="in d5 hx-art">
                     <div
                         className="stage"
-                        role="img"
-                        aria-label={tx("A Vybd parcel you can drag to turn in 3D")}
+                        role={boxHref ? "link" : "img"}
+                        tabIndex={boxHref ? 0 : undefined}
+                        aria-label={tx(boxHref ? "Open the US page" : "A Vybd parcel you can drag to turn in 3D")}
+                        onKeyDown={boxHref ? (e: KeyboardEvent) => e.key === "Enter" && follow() : undefined}
                         onPointerDown={grab}
                         onPointerMove={drag}
                         onPointerUp={drop}

@@ -27,6 +27,7 @@ const StackPage = lazy(() => import("./pages/StackPage"));
 /* The redesign (redesign/ holds the designer's prototype). Each page loads
    its own chunk, and suspends again while a non-English dictionary loads. */
 const RdHomePage = lazy(() => import("./pages/redesign/HomePage"));
+const RdUsPage = lazy(() => import("./pages/redesign/UsPage"));
 const RdProductPage = lazy(() => import("./pages/redesign/ProductPage"));
 const RdLabPage = lazy(() => import("./pages/redesign/LabPage"));
 const RdCaseStudiesPage = lazy(() => import("./pages/redesign/CaseStudiesPage"));
@@ -49,6 +50,7 @@ function App() {
             src/i18n). */}
         {LOCALES.flatMap((locale) => [
           <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
+          <Route key={`${locale}-us`} path={localePath(locale, "/us")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
           <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
           <Route key={`${locale}-lab`} path={localePath(locale, "/lab")} element={<Rd locale={locale}><RdLabPage /></Rd>} />,
           <Route key={`${locale}-cases`} path={localePath(locale, "/case-studies")} element={<Rd locale={locale}><RdCaseStudiesPage /></Rd>} />,

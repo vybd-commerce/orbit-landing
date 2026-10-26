@@ -1,4 +1,4 @@
-/* Vercel Routing Middleware: sends a first-time visitor on / or /book to the
+/* Vercel Routing Middleware: sends a first-time visitor on /, /us or /book to the
    same page in their language (/zh, /ko/book, ...).
 
    The browser's language comes first: a VPN changes the visitor's IP, not
@@ -51,7 +51,7 @@ const COUNTRY_LOCALE: Record<string, string> = {
 const BOT = /bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|lighthouse|headless/i;
 
 export const config = {
-    matcher: ["/", "/book"],
+    matcher: ["/", "/us", "/book"],
 };
 
 /* First language in Accept-Language (by q-value) that we speak. */
