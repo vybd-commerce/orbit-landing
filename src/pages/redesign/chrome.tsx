@@ -163,6 +163,12 @@ export function RdHeader({
 
 const EMAIL = "hello@vybd.ai";
 
+const FOLLOW: [string, string][] = [
+    ["LinkedIn", "https://www.linkedin.com/company/vybdcommerce"],
+    ["Instagram", "https://www.instagram.com/vybd.ai/"],
+    ["X", "https://x.com/vybdai"],
+];
+
 export function RdFooter({ current }: { current?: "product" | "cases" | "lab" }) {
     const tx = useTx();
     const explore: [string, string, boolean][] = [
@@ -197,16 +203,13 @@ export function RdFooter({ current }: { current?: "product" | "cases" | "lab" })
                 <div className="hf-col">
                     <h2 className="hf-head">{tx("Follow us")}</h2>
                     <ul>
-                        {/* TODO(footer): profile URLs, as in HelloFooter */}
-                        <li>
-                            <a href="#">LinkedIn</a>
-                        </li>
-                        <li>
-                            <a href="#">Instagram</a>
-                        </li>
-                        <li>
-                            <a href="#">X</a>
-                        </li>
+                        {FOLLOW.map(([label, href]) => (
+                            <li key={href}>
+                                <a href={href} target="_blank" rel="noopener noreferrer">
+                                    {label}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
                 </div>
                 <div className="hf-col">

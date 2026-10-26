@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { markLoaderSeen } from "./loaderSession";
 
 /* Opening animation: a top-down parcel drops in, its tape peels off, the
@@ -142,9 +142,57 @@ const UpArrow = () => (
     </svg>
 );
 
+/* Holds the page at the top while the intro plays, so a wheel, swipe or key
+   press during it doesn't leave the visitor halfway down the page when it
+   clears. Returns the release, which is safe to call twice. */
+const SCROLL_KEYS = new Set([" ", "Spacebar", "PageUp", "PageDown", "Home", "End", "ArrowUp", "ArrowDown"]);
+
+function lockScroll() {
+    const de = document.documentElement,
+        b = document.body;
+    const prev = [de.style.overflow, b.style.overflow, de.style.overscrollBehavior];
+    const block = (e: Event) => {
+        if (e instanceof KeyboardEvent && !SCROLL_KEYS.has(e.key)) return;
+        if (e.cancelable) e.preventDefault();
+    };
+    try {
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    } catch {
+        /* not fatal: the scrollTo below still resets */
+    }
+    de.style.overflow = "hidden";
+    b.style.overflow = "hidden";
+    de.style.overscrollBehavior = "none";
+    window.scrollTo(0, 0);
+    const opts = { passive: false } as const;
+    window.addEventListener("wheel", block, opts);
+    window.addEventListener("touchmove", block, opts);
+    window.addEventListener("keydown", block, opts);
+    let held = true;
+    return () => {
+        if (!held) return;
+        held = false;
+        window.removeEventListener("wheel", block);
+        window.removeEventListener("touchmove", block);
+        window.removeEventListener("keydown", block);
+        window.scrollTo(0, 0);
+        [de.style.overflow, b.style.overflow, de.style.overscrollBehavior] = prev;
+    };
+}
+
 export default function Loader({ tx }: { tx: (s: string) => string }) {
     const ref = useRef<HTMLDivElement>(null);
     const [gone, setGone] = useState(false);
+
+    // layout effect: lock before the first paint, released as the intro fades
+    useLayoutEffect(() => {
+        const release = lockScroll();
+        const t = window.setTimeout(release, 3450);
+        return () => {
+            clearTimeout(t);
+            release();
+        };
+    }, []);
 
     useEffect(() => {
         markLoaderSeen();
