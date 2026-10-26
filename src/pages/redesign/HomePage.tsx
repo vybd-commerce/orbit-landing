@@ -19,9 +19,8 @@ const LINKS = [
     { label: "Lab", href: "/lab" },
 ];
 
-// TODO(copy): placeholder until the final idea line is written
 const IDEA_BODY =
-    "You don't need to move to sell in a new market. You need a team that's already there. Vybd handles the rules, the stock, the shipping and the customers, so selling abroad feels as easy as selling at home.";
+    "Customers everywhere are one tap away. Everything in between is slow, and that's about to change. Vybd is rebuilding the road from maker to customer, so the brands on it reach the world first.";
 
 export default function HomePage() {
     const tx = useTx();
