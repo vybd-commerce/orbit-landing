@@ -49,8 +49,8 @@ function App() {
             /book in English, /zh, /zh/book and so on for the rest (see
             src/i18n). */}
         {LOCALES.flatMap((locale) => [
-          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
-          <Route key={`${locale}-us`} path={localePath(locale, "/us")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
+          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
+          <Route key={`${locale}-vybd`} path={localePath(locale, "/vybd")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
           <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
           <Route key={`${locale}-lab`} path={localePath(locale, "/lab")} element={<Rd locale={locale}><RdLabPage /></Rd>} />,
           <Route key={`${locale}-cases`} path={localePath(locale, "/case-studies")} element={<Rd locale={locale}><RdCaseStudiesPage /></Rd>} />,

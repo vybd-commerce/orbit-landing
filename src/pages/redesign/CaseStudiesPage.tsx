@@ -236,14 +236,14 @@ export default function CaseStudiesPage() {
             <RdHeader
                 logoHref="/"
                 links={[
-                    { label: "What we do", href: "/us#services" },
-                    { label: "How it works", href: "/us#how" },
+                    { label: "What we do", href: "/#services" },
+                    { label: "How it works", href: "/#how" },
                     { label: "Case studies", href: "#cases", current: true },
                     { label: "Lab", href: "/lab" },
                 ]}
                 mobileLinks={[
                     { label: "Home", href: "/" },
-                    { label: "What we do", href: "/us#services" },
+                    { label: "What we do", href: "/#services" },
                     { label: "Case studies", href: "#cases" },
                     { label: "Lab", href: "/lab" },
                 ]}

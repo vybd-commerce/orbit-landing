@@ -14,9 +14,9 @@ import WhatWeDo from "./home/WhatWeDo";
 import WhoWeHelp from "./home/WhoWeHelp";
 import "./HomePage.css";
 
-/* The full US page at /us (the redesign's original home), ported from
-   redesign/source/Main.src.html. The global home at / reuses its hero,
-   idea and closing sections. */
+/* The US page, the home at /, ported from redesign/source/Main.src.html.
+   The global preview at /vybd (HomePage) reuses its hero, idea and closing
+   sections. */
 
 const TICKER: [string, string][] = [
     ["Made in", "India"],

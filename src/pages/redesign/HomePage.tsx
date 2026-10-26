@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RdFooter, RdHeader, RdPage } from "./chrome";
 import { useTx } from "./i18n";
 import ClosingCta from "./home/ClosingCta";
@@ -8,14 +8,15 @@ import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
 import "./HomePage.css";
 
-/* The global home at /: "Borderless.", the idea and the closing call
-   ("The world is ready for your <typed word>"), all
-   on one navy canvas (.rd-global in HomePage.css). The full US story lives
-   at /us (UsPage); the header link and the parcel itself lead there. Shares the /us page's stylesheet and intro, which
-   plays once per session on whichever of the two is opened first. */
+/* The global "Borderless." page, previewed at /vybd for feedback before it
+   replaces the home: the hero, the idea and the closing call ("The world is
+   ready for your <typed word>"), all on one navy canvas (.rd-global in
+   HomePage.css). The US page (UsPage) is still the home at /; the header
+   link and the parcel itself lead there. Shares its stylesheet and intro,
+   which plays once per session on whichever of the two is opened first. */
 
 const LINKS = [
-    { label: "The US", href: "/us" },
+    { label: "The US", href: "/" },
     { label: "Case studies", href: "/case-studies" },
     { label: "Lab", href: "/lab" },
 ];
@@ -27,13 +28,22 @@ export default function HomePage() {
     const tx = useTx();
     const [showLoader] = useState(shouldShowLoader);
 
+    // A preview for feedback, not for search.
+    useEffect(() => {
+        const robots = document.createElement("meta");
+        robots.name = "robots";
+        robots.content = "noindex";
+        document.head.appendChild(robots);
+        return () => robots.remove();
+    }, []);
+
     return (
         <RdPage name="home" className={showLoader ? "rd-global" : "rd-global no-loader"}>
             {showLoader && <Loader tx={tx} />}
 
             <RdHeader logoHref="#top" logoDelay={showLoader ? 3.35 : 0.15} links={LINKS} mobileLinks={LINKS} />
 
-            <Hero tx={tx} line={tx("Made anywhere. Sold everywhere.")} sub={null} primary={null} secondary={null} boxHref="/us" />
+            <Hero tx={tx} line={tx("Made anywhere. Sold everywhere.")} sub={null} primary={null} secondary={null} boxHref="/" />
             <div className="g-routes">
                 <IdeaSection tx={tx} heading={null} body={IDEA_BODY} />
                 <ClosingCta

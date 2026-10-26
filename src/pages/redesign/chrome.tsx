@@ -17,7 +17,7 @@ import "./base.css";
 
 export type NavLink = { label: string; href: string; current?: boolean };
 
-/* Internal route ("/lab", "/us#services") through the router, in the current
+/* Internal route ("/lab", "/#services") through the router, in the current
    locale; in-page anchors and external links as plain <a>. */
 export function RdLink({
     href,

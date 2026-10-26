@@ -151,7 +151,7 @@ export default function CaseStudyPage() {
             <RdHeader
                 logoHref="/"
                 links={[
-                    { label: "What we do", href: "/us#services" },
+                    { label: "What we do", href: "/#services" },
                     { label: "How it works", href: "/product" },
                     { label: "Case studies", href: "/case-studies", current: true },
                     { label: "Lab", href: "/lab" },

@@ -142,7 +142,7 @@ const Postage = () => (
 
 type HeroLink = { label: string; href: string };
 
-/* Defaults are the /us hero. The global home swaps the line under
+/* Defaults are the US hero. The /vybd page swaps the line under
    "Borderless.", drops the sub line and the buttons (null), and makes
    the parcel a link (`boxHref`): a tap or Enter follows it, a drag still
    just turns the parcel. */

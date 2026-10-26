@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import type { Tx } from "../i18n";
 
-/* "The idea": a navy band with one headline and a short paragraph. The /us
-   page uses the US copy below; the global home passes its own body and no
+/* "The idea": a navy band with one headline and a short paragraph. The US
+   page uses the US copy below; /vybd passes its own body and no
    headline (heading={null}). */
 
 const US_BODY =

@@ -2,8 +2,8 @@ import type { ReactNode } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
 
-/* Closing call to book, on navy with shipping routes. Defaults are the /us
-   copy; the global home passes its own heading and button, and no line. */
+/* Closing call to book, on navy with shipping routes. Defaults are the US
+   copy; the /vybd page passes its own heading and button, and no line. */
 
 const US_TEXT = "Tell us what you make. We'll show you what it takes to sell it in the US.";
 
