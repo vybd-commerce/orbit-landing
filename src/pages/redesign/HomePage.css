@@ -554,6 +554,25 @@
 .rd-home .lb-bars{height:36px;margin:0 22px;background:repeating-linear-gradient(90deg,#0f1b33 0 2px,transparent 2px 5px,#0f1b33 5px 6px,transparent 6px 9px,#0f1b33 9px 12px,transparent 12px 14px)}
 .rd-home .lb-trk{display:flex;justify-content:space-between;gap:12px;padding:8px 22px 18px;font-size:11px;font-weight:600;letter-spacing:.1em;color:#6B7280}
 .rd-home .lb-foot .btn{display:flex;margin:0 22px 22px;box-sizing:border-box}
+/* /signup (SignupPage.tsx): one card on the navy canvas */
+.rd-home .su{display:flex;justify-content:center;padding-top:calc(var(--sec) * 1.2);padding-bottom:var(--sec)}
+.rd-home .su-card{box-sizing:border-box;width:100%;max-width:520px;padding:clamp(24px,4vw,40px);border-radius:28px;background:rgba(255,255,255,.04);border:1px solid var(--mint);color:#FFFFFF}
+.rd-home .su-k{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.rd-home .su-h{margin:10px 0 12px;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(44px,6vw,64px);line-height:1;letter-spacing:-.015em;color:#FFFFFF}
+.rd-home .su-p{margin:0 0 24px;font-size:16px;line-height:1.55;color:#AEB6C4}
+.rd-home .su-p b{color:#FFFFFF;font-weight:600}
+.rd-home .su-form{display:flex;flex-direction:column;gap:14px}
+.rd-home .su-form label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:500;color:#D5DAE3}
+.rd-home .su-form em{font-style:normal;color:#8a93a6}
+.rd-home .su-form input,.rd-home .su-form textarea{box-sizing:border-box;width:100%;padding:12px 14px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.06);color:#FFFFFF;font:inherit;font-size:16px;outline:0;transition:border-color .2s,box-shadow .2s}
+.rd-home .su-form textarea{resize:vertical}
+.rd-home .su-form input:focus,.rd-home .su-form textarea:focus{border-color:var(--mint);box-shadow:0 0 0 3px rgba(27,181,155,.25)}
+.rd-home .su-form .btn{margin-top:6px;border:0;cursor:pointer;font-family:inherit}
+.rd-home .su-form .btn:disabled{opacity:.6;cursor:default}
+.rd-home .su-done,.rd-home .su-err{margin:0;font-size:15px;line-height:1.5;color:#D5DAE3}
+.rd-home .su-err{color:#F5B7B1}
+.rd-home .su-done a,.rd-home .su-err a{color:var(--mint);text-decoration:underline}
+
 /* US page: the Vybd app label above the two service labels, laid flat */
 .rd-home .lb-app{margin-bottom:clamp(28px,4vw,48px);margin-right:10px;box-shadow:10px 10px 0 var(--mint)}.rd-home .lb-app:hover{box-shadow:14px 14px 0 var(--mint)}
 .rd-home .lb-app .lb-top span:last-child{background:var(--mint);color:#0f1b33}

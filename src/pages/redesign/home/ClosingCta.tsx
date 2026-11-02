@@ -5,13 +5,13 @@ import type { Tx } from "../i18n";
 /* Closing call to book, on navy with shipping routes. Defaults are the US
    copy; the Borderless home (/) passes its own heading and button, and no line. */
 
-const US_TEXT = "Tell us what you make. We'll show you what it takes to sell it in the US.";
+const US_TEXT = "Meet one of our operators. Leave the call with a rough plan and an honest reality check.";
 
 export default function ClosingCta({
     tx,
     heading,
     text = US_TEXT,
-    button = "Book a free call",
+    button = "Talk to an operator",
     href = "/book",
 }: {
     tx: Tx;

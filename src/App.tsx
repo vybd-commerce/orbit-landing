@@ -34,6 +34,7 @@ const RdCaseStudiesPage = lazy(() => import("./pages/redesign/CaseStudiesPage"))
 const RdCaseStudyPage = lazy(() => import("./pages/redesign/CaseStudyPage"));
 const RdEcosystemPage = lazy(() => import("./pages/redesign/EcosystemPage"));
 const RdEnterprisePage = lazy(() => import("./pages/redesign/EnterprisePage"));
+const RdSignupPage = lazy(() => import("./pages/redesign/SignupPage"));
 
 function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
@@ -66,6 +67,8 @@ function App() {
         <Route path="/ecosystem" element={<Rd locale="en"><RdEcosystemPage /></Rd>} />
         {/* For established US brands: operations, data and agents. English only for now. */}
         <Route path="/enterprise" element={<Rd locale="en"><RdEnterprisePage /></Rd>} />
+        {/* Vybd Plan sign-up, until the product's own is live. English only for now. */}
+        <Route path="/signup" element={<Rd locale="en"><RdSignupPage /></Rd>} />
         {/* The root before the redesign, kept reachable while it settles */}
         <Route path="/classic" element={<LocaleScope locale="en"><HelloPage /></LocaleScope>} />
         {/* Root with the 360° ring variant of the "why it's hard" section, under review. */}

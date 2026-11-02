@@ -20,7 +20,8 @@ export const softwareTier = (sales: number): SoftwareTier => SOFTWARE_TIERS.find
 export const MIN_MONTHLY_FEE = SOFTWARE_TIERS[0].fee / 12;
 export const SOFTWARE_CAP = SOFTWARE_TIERS[SOFTWARE_TIERS.length - 1].fee;
 
-/* The self-serve Vybd app: first week free, then a flat monthly price.
-   Signed up for on the product, not here. */
-export const SIGNUP_URL = "https://app.vybd.ai/signup";
+/* Vybd Plan, the self-serve app: first week free, then a flat monthly
+   price. Sign-up is the simple /signup page (SignupPage.tsx) until the
+   product's own sign-up is live; then point this at it. */
+export const SIGNUP_URL = "/signup";
 export const APP_MONTHLY = 33;

@@ -81,4 +81,6 @@ T = [
  "计算方式：每笔订单一次美国境内发货，因此年发货量 = 销售额 ÷ 订单金额。运费为基于重量的简单估算，并非承运商实时报价。每单假设拣货包装 2.50 美元、包材 0.50 美元、仓储 0.50 美元、退货 0.60 美元；实际仓储取决于库存量和存放时长，退货取决于品类。",
  "計算方法：1注文につき米国内配送1回とし、年間配送数は売上÷注文額で算出します。配送料は重量ベースの簡易試算で、配送業者のリアルタイム料金ではありません。1注文あたりピッキング・梱包2.50ドル、梱包材0.50ドル、保管0.50ドル、返品0.60ドルを想定しています。実際の保管費は在庫量と保管期間、返品はカテゴリーによって変わります。",
  "계산 방식: 주문당 미국 내 배송 1회로, 연간 배송 건수는 매출을 주문 금액으로 나눈 값입니다. 배송비는 무게 기반의 단순 추정이며 운송사 실시간 요금이 아닙니다. 주문당 피킹·패킹 2.50달러, 포장재 0.50달러, 보관 0.50달러, 반품 0.60달러를 가정합니다. 실제 보관비는 재고량과 보관 기간에, 반품은 카테고리에 따라 달라집니다."),
+("Talk to an operator","Parler à un opérateur","Habla con un operador","与运营专家沟通","オペレーターに相談する","운영 전문가와 상담하기"),
+("Meet one of our operators. Leave the call with a rough plan and an honest reality check.","Rencontrez l'un de nos opérateurs. Repartez de l'appel avec un premier plan et un avis franc sur votre projet.","Conoce a uno de nuestros operadores. Sal de la llamada con un plan inicial y una evaluación honesta de tu proyecto.","与我们的一位运营专家面谈。通话结束时，你将获得一份初步计划和一次坦诚的现实评估。","当社のオペレーターとお話しください。通話の中で、大まかな計画と率直な現状評価をお渡しします。","저희 운영 전문가와 만나 보세요. 통화가 끝나면 대략적인 계획과 솔직한 현실 점검을 받아 가실 수 있습니다."),
 ]
