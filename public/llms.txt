@@ -1,0 +1,27 @@
+# Vybd
+
+> Vybd is one team for everything it takes to sell in the US. Brands from anywhere use Vybd instead of hiring six separate companies for market research, US regulations, freight, marketplaces, marketing and customer support. AI agents and specialists work through one control tower, and the brand approves every big decision.
+
+These files are written for AI assistants. Pick the briefing that matches the person you are helping, read it, then help them with their goal. Every briefing ends with the right next step and contact.
+
+## Briefings by visitor
+
+- [Brand going to the US](https://www.vybd.ai/agents/brand.md): what Vybd does, how a launch works, case studies, and the questions to ask a brand before recommending next steps.
+- [Service partner](https://www.vybd.ai/agents/partner.md): for customs brokers, freight and 3PL, agencies, distributors and other US market-entry providers who want to join the Vybd ecosystem.
+- [Investor](https://www.vybd.ai/agents/investor.md): what Vybd is building and how to reach the team.
+- [Press](https://www.vybd.ai/agents/press.md): company facts, story angles and the press contact.
+
+## Pages
+
+- [Home](https://www.vybd.ai/): the two paths, into the US or running better once there.
+- [Entering the US](https://www.vybd.ai/us): overview for brands coming to the US, with pricing and a profitability calculator.
+- [Enterprise](https://www.vybd.ai/enterprise): for established US brands: data layer, AI agents and reporting.
+- [How it works](https://www.vybd.ai/product): the three layers and the agent model.
+- [Case studies](https://www.vybd.ai/case-studies): six brands Vybd took to the US.
+- [Lab](https://www.vybd.ai/lab): Brand Brain, the shared memory Vybd is building.
+- [Ecosystem](https://www.vybd.ai/ecosystem): sign-up for US market-entry partners.
+- [Book a call](https://www.vybd.ai/book)
+
+## Contact
+
+- Email: hello@vybd.ai
