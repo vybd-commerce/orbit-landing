@@ -61,7 +61,7 @@ export default function Cockpit() {
     return (
         <section id="reports" className="wrap ent-sec">
             <SectionTop
-                kicker="06 / Executive intelligence"
+                kicker="Executive intelligence"
                 title={
                     <>
                         Every channel.

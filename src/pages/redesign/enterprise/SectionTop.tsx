@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-/* Section opener on /enterprise: numbered mono kicker (as on the US
+/* Section opener on /enterprise: mono kicker (as on the US
    pricing section), a serif headline with a mint <em> and a lead line. */
 export default function SectionTop({ kicker, title, children, center }: { kicker: string; title: ReactNode; children?: ReactNode; center?: boolean }) {
     return (

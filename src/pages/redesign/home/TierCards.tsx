@@ -67,7 +67,7 @@ const TIERS: Tier[] = [
             "A dedicated operator",
         ],
         cta: { label: "Contact sales", href: "/book" },
-        more: { label: "How it works at scale", href: "/enterprise" },
+        more: { label: "See how Scale works", href: "/us" },
     },
     {
         id: "enterprise",
@@ -78,7 +78,7 @@ const TIERS: Tier[] = [
         includes: [
             "Everything in Scale",
             "Agents across warehouses, stores and DCs",
-            "WMS and ERP integration",
+            "NetSuite, SAP, Dynamics 365 and Odoo connected",
             "Forecasting across large SKU counts",
             "A dedicated team and SLAs",
             "Security review",

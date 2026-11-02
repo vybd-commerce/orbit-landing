@@ -28,9 +28,9 @@ export default function OpsMap() {
     const [on, setOn] = useState(0);
     const s = SOURCES[on];
     return (
-        <section id="what" className="wrap ent-sec ent-soft bleed">
+        <section id="systems" className="wrap ent-sec ent-soft bleed">
             <SectionTop
-                kicker="01 / The data layer"
+                kicker="Your systems stay"
                 title={
                     <>
                         Different systems.

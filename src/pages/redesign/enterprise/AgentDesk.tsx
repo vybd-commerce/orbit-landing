@@ -42,7 +42,7 @@ export default function AgentDesk() {
     return (
         <section id="agents" className="wrap ent-sec ent-soft bleed">
             <SectionTop
-                kicker="03 / AI agents at work"
+                kicker="AI agents at work"
                 title={
                     <>
                         Less chasing.

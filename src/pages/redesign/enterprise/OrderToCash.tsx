@@ -55,11 +55,6 @@ const STAGES = [
     },
 ];
 
-const OUTCOMES = [
-    ["01 / Audit", "Find the leaks.", "An operator maps your business end to end, costs the bottlenecks and ranks the fixes by payback."],
-    ["02 / Data layer", "Connect the truth.", "Your systems stay. Ops OS brings sales, inventory, orders, suppliers and finance into one picture."],
-    ["03 / Your team", "Supercharge the people.", "Agents chase, reconcile, flag and prepare. Your people focus on the calls that matter."],
-];
 
 export default function OrderToCash() {
     const [on, setOn] = useState(0);
@@ -67,7 +62,7 @@ export default function OrderToCash() {
     return (
         <section id="capabilities" className="wrap ent-sec">
             <SectionTop
-                kicker="02 / Where money leaks"
+                kicker="Where margin leaks"
                 title={
                     <>
                         Follow the money.
@@ -114,16 +109,6 @@ export default function OrderToCash() {
                         </ul>
                     </div>
                 </div>
-            </div>
-
-            <div className="oc-three">
-                {OUTCOMES.map(([k, h, p]) => (
-                    <article key={k} className="rv">
-                        <small className="ent-k">{k}</small>
-                        <h3>{h}</h3>
-                        <p>{p}</p>
-                    </article>
-                ))}
             </div>
         </section>
     );
