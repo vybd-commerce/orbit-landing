@@ -1,6 +1,22 @@
 {
     "rewrites": [
         {
+            "source": "/us",
+            "destination": "/us.html"
+        },
+        {
+            "source": "/:locale(zh|ko|ja|fr|es)/us",
+            "destination": "/us.html"
+        },
+        {
+            "source": "/enterprise",
+            "destination": "/enterprise.html"
+        },
+        {
+            "source": "/signup",
+            "destination": "/signup.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/"
         }
