@@ -32,6 +32,8 @@ const RdProductPage = lazy(() => import("./pages/redesign/ProductPage"));
 const RdLabPage = lazy(() => import("./pages/redesign/LabPage"));
 const RdCaseStudiesPage = lazy(() => import("./pages/redesign/CaseStudiesPage"));
 const RdCaseStudyPage = lazy(() => import("./pages/redesign/CaseStudyPage"));
+const RdEcosystemPage = lazy(() => import("./pages/redesign/EcosystemPage"));
+const RdEnterprisePage = lazy(() => import("./pages/redesign/EnterprisePage"));
 
 function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
@@ -49,8 +51,10 @@ function App() {
             /book in English, /zh, /zh/book and so on for the rest (see
             src/i18n). */}
         {LOCALES.flatMap((locale) => [
-          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
-          <Route key={`${locale}-vybd`} path={localePath(locale, "/vybd")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
+          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
+          <Route key={`${locale}-us`} path={localePath(locale, "/us")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
+          /* The Borderless page's address while it was in preview */
+          <Route key={`${locale}-vybd`} path={localePath(locale, "/vybd")} element={<Navigate to={localePath(locale, "/")} replace />} />,
           <Route key={`${locale}-product`} path={localePath(locale, "/product")} element={<Rd locale={locale}><RdProductPage /></Rd>} />,
           <Route key={`${locale}-lab`} path={localePath(locale, "/lab")} element={<Rd locale={locale}><RdLabPage /></Rd>} />,
           <Route key={`${locale}-cases`} path={localePath(locale, "/case-studies")} element={<Rd locale={locale}><RdCaseStudiesPage /></Rd>} />,
@@ -58,6 +62,10 @@ function App() {
           <Route key={`${locale}-book`} path={localePath(locale, "/book")} element={<LocaleScope locale={locale}><BookPage /></LocaleScope>} />,
           <Route key={`${locale}-thanks`} path={localePath(locale, "/book/thanks")} element={<LocaleScope locale={locale}><BookThanksPage /></LocaleScope>} />,
         ])}
+        {/* Sign-up for US market-entry partners. English only for now. */}
+        <Route path="/ecosystem" element={<Rd locale="en"><RdEcosystemPage /></Rd>} />
+        {/* For established US brands: operations, data and agents. English only for now. */}
+        <Route path="/enterprise" element={<Rd locale="en"><RdEnterprisePage /></Rd>} />
         {/* The root before the redesign, kept reachable while it settles */}
         <Route path="/classic" element={<LocaleScope locale="en"><HelloPage /></LocaleScope>} />
         {/* Root with the 360° ring variant of the "why it's hard" section, under review. */}

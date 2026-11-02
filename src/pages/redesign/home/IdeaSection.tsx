@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { Tx } from "../i18n";
 
 /* "The idea": a navy band with one headline and a short paragraph. The US
-   page uses the US copy below; /vybd passes its own body and no
+   page uses the US copy below; the Borderless home (/) passes its own body and no
    headline (heading={null}). */
 
 const US_BODY =

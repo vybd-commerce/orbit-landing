@@ -673,3 +673,87 @@
 .rd-home.rd-global .chip{color:#0f1b33}
 /* logo: the brand kit's on-dark mark (redesign/brand/vybd-mark-on-dark.svg) */
 .rd-home.rd-global .lg-f:nth-child(3){fill:#3a4a6b}.rd-home.rd-global .lg-f:nth-child(4){fill:#25324d}
+
+/* Global home: the two paths under the idea (home/PathCards.tsx), route
+   tickets on the navy canvas. */
+.rd-home .pc{position:relative;padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(24px,3vw,40px)}
+.rd-home .pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px)}
+.rd-home .pc-card{box-sizing:border-box;position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;padding:clamp(24px,3vw,36px);border-radius:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:#FFFFFF;backdrop-filter:blur(2px);transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s,box-shadow .4s}
+.rd-home .pc-card:hover{transform:translateY(-4px);border-color:var(--mint);background:rgba(27,181,155,.08);box-shadow:0 30px 60px -36px rgba(0,0,0,.6);color:#FFFFFF}
+.rd-home .pc-card:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.rd-home .pc-kicker{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.rd-home .pc-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(34px,3.6vw,48px);line-height:1.02;letter-spacing:-.015em}
+.rd-home .pc-body{font-size:17px;line-height:1.5;color:#AEB6C4;max-width:420px}
+.rd-home .pc-card .pc-route{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;text-align:left;gap:14px;margin-top:6px;padding:14px 0;border-top:1px dashed rgba(255,255,255,.18);border-bottom:1px dashed rgba(255,255,255,.18);font-size:15px;font-weight:600}
+.rd-home .pc-card .pc-route>span{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
+.rd-home .pc-route small{font-size:10px;font-weight:700;letter-spacing:.16em;color:#8a93a6}
+.rd-home .pc-route i{flex:1;height:0;border-top:1.5px dashed var(--mint);opacity:.7;position:relative}
+.rd-home .pc-route i::after{content:"";position:absolute;right:-2px;top:-5px;width:8px;height:8px;border-top:1.5px solid var(--mint);border-right:1.5px solid var(--mint);transform:rotate(45deg)}
+.rd-home .pc-cta{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:8px;font-size:16px;font-weight:600;color:var(--mint)}
+.rd-home .pc-cta svg{transition:transform .3s}
+.rd-home .pc-card:hover .pc-cta svg{transform:translateX(4px)}
+@media (max-width:760px){.rd-home .pc-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.rd-home .pc-card,.rd-home .pc-cta svg{transition:none}.rd-home .pc-card:hover{transform:none}}
+.rd-home .lb-calc-go{display:flex;justify-content:flex-end;gap:6px;margin-top:8px;font-size:14px;font-weight:600;color:var(--mint-hover)}
+.rd-home .lb-calc-go:hover{color:#0f1b33}
+
+/* US page: the profitability calculator after Pricing (home/ProfitCalc.tsx).
+   White sheet with a dashed perforation on top, a white inputs panel and a
+   navy outlook card. */
+.rd-home #calculator::before{background:#FFFFFF;border-top:2px dashed #C9D6D2}
+.rd-home .pc2-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(18px,2.4vw,28px);align-items:start}
+.rd-home .pc2-panel,.rd-home .pc2-out{box-sizing:border-box;min-width:0;border-radius:28px;padding:clamp(22px,3vw,34px)}
+.rd-home .pc2-panel{background:#FFFFFF;border:1px solid #E7E9ED;box-shadow:0 30px 60px -44px rgba(15,27,51,.35)}
+.rd-home .pc2-out{position:sticky;top:76px;background:#0f1b33;color:#FFFFFF;box-shadow:0 40px 70px -40px rgba(15,27,51,.7)}
+.rd-home .pc2-k{margin:0 0 18px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8a909b}
+.rd-home .pc2-out .pc2-k{margin:0;color:#AEB6C4}
+.rd-home .pc2-k--gap{margin-top:30px;padding-top:26px;border-top:1px dashed #DDE2E8}
+.rd-home .pc2-field{margin-bottom:16px;min-width:0}
+.rd-home .pc2-field label,.rd-home .pc2-lbl{display:block;margin-bottom:8px;font-size:15px;font-weight:500;color:#374151}
+.rd-home .pc2-in{box-sizing:border-box;display:flex;align-items:center;height:52px;border:1.5px solid #D5DBE3;border-radius:14px;background:#F8FAFB;transition:border-color .2s,box-shadow .2s,background .2s}
+.rd-home .pc2-in:hover{border-color:#B8C2CE}
+.rd-home .pc2-in:focus-within{border-color:var(--mint);background:#FFFFFF;box-shadow:0 0 0 4px rgba(27,181,155,.16)}
+.rd-home .pc2-pre{padding-left:14px;font-weight:600;color:var(--mint-hover)}
+.rd-home .pc2-suf{padding-right:14px;font-size:14px;font-weight:600;color:#8a909b}
+.rd-home .pc2-in input{box-sizing:border-box;flex:1;width:100%;min-width:0;height:100%;padding:0 12px;border:0;outline:0;background:transparent;font:inherit;font-size:18px;font-weight:600;color:#0f1b33;font-variant-numeric:tabular-nums}
+.rd-home .pc2-two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rd-home .pc2-three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rd-home .pc2-three .pc2-field{margin-bottom:12px}
+.rd-home .pc2-hint{margin:-6px 0 14px;font-size:13px;line-height:1.45;color:#8a909b}
+.rd-home .pc2-out .pc2-hint{margin:8px 0 0;color:#8a93a6}
+.rd-home .pc2-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:8px 0;font-size:14px}
+.rd-home .pc2-row span{color:#6B7280}
+.rd-home .pc2-out .pc2-row span{color:#AEB6C4}
+.rd-home .pc2-row b{font-weight:600;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rd-home .pc2-billable{margin-top:4px;padding:12px 14px;border-radius:12px;background:#E8F7F3;color:#0f1b33}
+.rd-home .pc2-billable+.pc2-hint{margin:8px 0 0}
+.rd-home .pc2-out-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.rd-home .pc2-live{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--mint)}
+.rd-home .pc2-live i{width:8px;height:8px;border-radius:50%;background:var(--mint);animation:rd-home-skblink 1.6s ease-in-out infinite}
+.rd-home .pc2-kpis{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 18px}
+.rd-home .pc2-kpis span,.rd-home .pc2-minis span{display:block;font-size:13px;color:#AEB6C4}
+.rd-home .pc2-kpis b{display:block;margin-top:6px;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(38px,4.2vw,58px);line-height:1;letter-spacing:-.02em;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.rd-home .pc2-out .pos{color:var(--mint)}
+.rd-home .pc2-out .neg{color:#F08A6B}
+.rd-home .pc2-meter{height:8px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;margin-bottom:20px}
+.rd-home .pc2-meter i{display:block;height:100%;border-radius:inherit;background:var(--mint);transition:width .3s cubic-bezier(.2,.8,.2,1)}
+.rd-home .pc2-minis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rd-home .pc2-minis>div{padding:14px;border-radius:14px;background:rgba(255,255,255,.06)}
+.rd-home .pc2-minis b{display:block;margin-top:4px;font-size:22px;font-weight:600;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.rd-home .pc2-fees{margin-top:16px;padding:12px 16px 14px;border:1.5px dashed rgba(255,255,255,.22);border-radius:14px}
+.rd-home .pc2-tag{padding:4px 10px;border-radius:99px;background:rgba(27,181,155,.18);color:var(--mint)!important;font-size:12px;font-weight:700;letter-spacing:.04em}
+.rd-home .pc2-warn{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:rgba(184,83,46,.18);border:1px solid rgba(240,138,107,.45);color:#FFE3D8;font-size:14px;line-height:1.45}
+.rd-home .pc2-bd{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.12)}
+.rd-home .pc2-bd summary{cursor:pointer;margin-bottom:6px;font-size:15px;font-weight:600}
+.rd-home .pc2-bd summary:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.rd-home .pc2-total{margin-top:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.18);font-size:16px}
+.rd-home .pc2-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.rd-home .pc2-actions .btn{flex:1 1 200px;font-size:16px;border:0;cursor:pointer;font-family:inherit}
+.rd-home .pc2-actions .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.rd-home .pc2-ghost{box-sizing:border-box;border:1.5px solid rgba(255,255,255,.3)!important;color:#FFFFFF}
+.rd-home .pc2-ghost:hover{border-color:#FFFFFF!important;color:#FFFFFF}
+.rd-home .pc2-fine{margin:16px 0 0;font-size:12px;line-height:1.5;color:#8a93a6}
+.rd-home #calculator .pr-fine{max-width:820px;margin:28px auto 0;font-size:13px;line-height:1.55}
+@media (max-width:860px){.rd-home .pc2-grid{grid-template-columns:1fr}.rd-home .pc2-out{position:static}}
+@media (max-width:420px){.rd-home .pc2-two{grid-template-columns:1fr}.rd-home .pc2-kpis,.rd-home .pc2-minis{gap:8px}.rd-home .pc2-minis b{font-size:18px}}
+@media (prefers-reduced-motion:reduce){.rd-home .pc2-live i{animation:none}.rd-home .pc2-meter i{transition:none}}
