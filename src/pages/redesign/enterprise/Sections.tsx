@@ -139,7 +139,7 @@ export function NextSteps() {
                 </article>
                 <aside className="of-alt">
                     <small className="ent-k">Doing $10M to $50M on 3PLs?</small>
-                    <p>Scale starts at $3K a month, with the same agents and an operator on your account.</p>
+                    <p>Scale starts at $3K a month plus 12% of US sales, with the same agents and an operator on your account.</p>
                     <RdLink className="btn btn-text" href="/us">
                         See Scale
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -183,7 +183,7 @@ const FAQ: [string, string][] = [
     ],
     [
         "How is pricing set?",
-        "Enterprise pricing is custom, based on the systems, sites and workflows in scope. The audit gives you a costed plan with expected payback before you sign. Brands doing $10M to $50M on 3PLs can start on Scale from $3K a month.",
+        "Enterprise pricing is custom, based on the systems, sites and workflows in scope. The audit gives you a costed plan with expected payback before you sign. Brands doing $10M to $50M on 3PLs can start on Scale from $3K a month plus 12% of US sales.",
     ],
 ];
 

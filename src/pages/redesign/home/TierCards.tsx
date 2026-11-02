@@ -6,8 +6,8 @@ import { SIGNUP_URL } from "./pricingTiers";
    (the self-serve Vybd Plan app, up to $10M, with US Launch and US Scale
    as services on top), Scale ($10M-$50M on 3PLs) and Enterprise
    ($50M+ with their own warehouses). Each card has its CTA (sign up or
-   contact sales) and a text link to the page that goes deeper (/us or
-   /enterprise). Styles: .tc-* in HomePage.css. */
+   contact sales) at the bottom, and a link in the top row to the page
+   that goes deeper (/us or /enterprise). Styles: .tc-* in HomePage.css. */
 
 type Tier = {
     id: string;
@@ -49,7 +49,7 @@ const TIERS: Tier[] = [
             ],
         },
         cta: { label: "Start your free week", href: SIGNUP_URL },
-        more: { label: "See Launch and Scale pricing", href: "/us#pricing" },
+        more: { label: "See pricing", href: "/us#pricing" },
         featured: true,
     },
     {
@@ -57,7 +57,7 @@ const TIERS: Tier[] = [
         name: "Scale",
         who: "For brands doing $10M to $50M, running on 3PLs.",
         price: "Starts at $3K",
-        priceNote: "per month",
+        priceNote: "per month, plus 12% of US sales",
         includes: [
             "Everything in US Launch and US Scale",
             "Multi-3PL, multi-channel orchestration",
@@ -67,7 +67,7 @@ const TIERS: Tier[] = [
             "A dedicated operator",
         ],
         cta: { label: "Contact sales", href: "/book" },
-        more: { label: "See how Scale works", href: "/us" },
+        more: { label: "How it works", href: "/us" },
     },
     {
         id: "enterprise",
@@ -84,7 +84,7 @@ const TIERS: Tier[] = [
             "Security review",
         ],
         cta: { label: "Contact sales", href: "/book" },
-        more: { label: "Vybd for enterprise", href: "/enterprise" },
+        more: { label: "How it works", href: "/enterprise" },
     },
 ];
 
@@ -108,8 +108,13 @@ export default function TierCards({ tx }: { tx: Tx }) {
                 {TIERS.map((t) => (
                     <article key={t.id} className={t.featured ? "tc-card tc-card--featured rv" : "tc-card rv"}>
                         <div className="tc-top">
-                            <span className="tc-name">{tx(t.name)}</span>
-                            {t.featured && <span className="tc-tag">{tx("Start here")}</span>}
+                            <span className="tc-name">
+                                {tx(t.name)}
+                                {t.featured && <span className="tc-tag">{tx("Start here")}</span>}
+                            </span>
+                            <RdLink className="tc-more" href={t.more.href} ariaLabel={`${tx(t.name)}: ${tx(t.more.label)}`}>
+                                {tx(t.more.label)} <Arrow />
+                            </RdLink>
                         </div>
                         <p className="tc-who">{tx(t.who)}</p>
                         <div className="tc-price">
@@ -140,9 +145,6 @@ export default function TierCards({ tx }: { tx: Tx }) {
                         <div className="tc-actions">
                             <RdLink className={t.featured ? "btn btn-mint" : "btn btn-ghost"} href={t.cta.href}>
                                 {tx(t.cta.label)}
-                            </RdLink>
-                            <RdLink className="tc-more" href={t.more.href}>
-                                {tx(t.more.label)} <Arrow />
                             </RdLink>
                         </div>
                     </article>

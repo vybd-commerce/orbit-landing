@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
-import { REVENUE_SHARE, SOFTWARE_CAP, softwareTier } from "./pricingTiers";
+import { MIN_MONTHLY_FEE, REVENUE_SHARE, softwareTier } from "./pricingTiers";
 
 /* "Run your numbers": the US profitability calculator, after Pricing on
    the US page. A brand enters its projected US sales, order value, costs
@@ -252,7 +252,7 @@ export default function ProfitCalc({ tx }: { tx: Tx }) {
                                     <b>{Math.round(REVENUE_SHARE * 100)}%</b>
                                 </div>
                                 <p className="pc2-hint">
-                                    {tx("Software is tiered below $500K of sales and capped at {n} a year from $500K on.").replace("{n}", money(SOFTWARE_CAP))}
+                                    {tx("Software is a flat {n} a month.").replace("{n}", money(MIN_MONTHLY_FEE))}
                                 </p>
                             </div>
                             {neg && (

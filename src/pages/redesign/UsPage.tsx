@@ -11,13 +11,16 @@ import { shouldShowLoader } from "./home/loaderSession";
 import Pricing from "./home/Pricing";
 import ProfitCalc from "./home/ProfitCalc";
 import ProofLabels from "./home/ProofLabels";
+import StartPicker from "./home/StartPicker";
 import Ticker from "./home/Ticker";
 import WhatWeDo from "./home/WhatWeDo";
 import WhoWeHelp from "./home/WhoWeHelp";
 import "./HomePage.css";
 
-/* The US page at /us, for brands coming to the US, ported from
-   redesign/source/Main.src.html. The Borderless home at / (HomePage)
+/* The US page at /us, for anyone launching or growing in the US: from
+   abroad, new US brands and brands already selling here. Ported from
+   redesign/source/Main.src.html; the "Where are you today?" picker under
+   the hero sends each to Vybd Plan, US Launch or US Scale. The Borderless home at / (HomePage)
    reuses its hero, idea and closing sections and links here. */
 
 const TICKER: [string, string][] = [
@@ -56,6 +59,7 @@ export default function UsPage() {
             />
 
             <Hero tx={tx} />
+            <StartPicker tx={tx} />
             <Ticker tx={tx} items={TICKER} label="Brands from India, South Korea, China and anywhere else, sold in the USA" />
             <BoxesToTick tx={tx} />
             <ProofLabels tx={tx} />

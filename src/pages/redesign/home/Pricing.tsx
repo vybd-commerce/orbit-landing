@@ -1,15 +1,17 @@
 import { useState, type CSSProperties } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
-import { APP_MONTHLY, MIN_MONTHLY_FEE, REVENUE_SHARE, SIGNUP_URL, SOFTWARE_CAP, softwareTier } from "./pricingTiers";
+import { APP_MONTHLY, MIN_MONTHLY_FEE, REVENUE_SHARE, SIGNUP_URL, softwareTier } from "./pricingTiers";
 
 /* Plans drawn as shipping labels, in order: Vybd Plan (the self-serve app
-   that helps plan a brand: research, positioning, pricing; flat monthly,
+   for a US market plan: research, positioning, pricing; flat monthly,
    first week free), then the services where our team does the work: a
-   one-time US Launch (sourcing to shelves) and the monthly US Scale, whose card carries a slider for the yearly cost at a given
-   level of US sales (the software tier for those sales plus 12% of them,
-   see pricingTiers.ts). The full profitability calculator follows this
-   section (#calculator). */
+   one-time US Launch (sourcing to shelves, for new brands and new
+   entries) and the monthly US Scale (where anyone already selling in the
+   US starts), whose card carries a slider for the yearly cost at a given
+   level of US sales (the flat software fee plus 12% of sales, see
+   pricingTiers.ts). A Plan / Launch / Scale comparison sits under the
+   labels; the full profitability calculator follows (#calculator). */
 
 const Tick = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -18,10 +20,22 @@ const Tick = () => (
 );
 
 const APP = [
-    "Learn how brands are built, step by step",
-    "Research your market and competitors",
-    "Find your customer and your positioning",
-    "Work out your name, story and pricing",
+    "US demand and competitors in your category",
+    "Who buys it in the US, and how to position it",
+    "US pricing and margins",
+    "Which channels to start on: Amazon, Walmart, DTC or retail",
+];
+
+/* Plan / Launch / Scale side by side. true = included, a string = included
+   with that note, false = not included. */
+const COMPARE: [string, boolean | string, boolean | string, boolean | string][] = [
+    ["Who does the work", "You, with the app", "Our team", "Our team"],
+    ["US market research and positioning", true, true, "Monthly"],
+    ["Sourcing and manufacturer matching", false, true, false],
+    ["FDA and compliance support", false, true, false],
+    ["Store set up and listings", false, true, "Ongoing updates"],
+    ["Agents run inventory, POs and deductions", false, false, true],
+    ["A senior operator", false, false, "8 hours a month"],
 ];
 const LAUNCH = [
     "Sourcing and manufacturer matching",
@@ -39,12 +53,12 @@ const SCALE = [
 ];
 
 const MIN = 100_000,
-    MAX = 3_000_000;
+    MAX = 10_000_000;
 const CHIPS: [number, string][] = [
-    [250_000, "$250K"],
     [500_000, "$500K"],
     [1_000_000, "$1M"],
-    [2_000_000, "$2M"],
+    [5_000_000, "$5M"],
+    [10_000_000, "$10M"],
 ];
 const usd = (n: number) => "$" + Math.round(n).toLocaleString("en-US");
 
@@ -99,7 +113,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <h2 className="pr-h">
                     {tx("Pick your")} <em>{tx("postage.")}</em>
                 </h2>
-                <p className="pr-sub">{tx("Plan your brand with Vybd Plan for $33 a month. When you're ready to make it real, our team launches it, then scales it.")}</p>
+                <p className="pr-sub">{tx("Work out your US plan with Vybd Plan for $33 a month. When you're ready, our team launches you, then runs it with you. Already selling in the US? Start with US Scale.")}</p>
             </div>
             <article className="lb lb-app rv">
                 <div className="lb-top">
@@ -123,10 +137,13 @@ export default function Pricing({ tx }: { tx: Tx }) {
                                 <small>{tx("/ month")}</small>
                             </div>
                             <div className="lb-once">{tx("Free for your first week")}</div>
+                            <p className="lb-note">
+                                {tx("Plan tells you what to do. Sourcing, compliance, stores, freight and running the operation are US Launch and US Scale, done by our team.")}
+                            </p>
                         </div>
                     </div>
                     <div>
-                        <Contents tx={tx} items={APP} last="Leave with a brand plan you can act on" />
+                        <Contents tx={tx} items={APP} last="Leave with a US go-to-market plan" />
                         <div className="lb-foot">
                             <div className="lb-bars" aria-hidden="true"></div>
                             <div className="lb-trk">
@@ -144,7 +161,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <article className="lb rv">
                     <div className="lb-top">
                         <span>{tx("VYBD POST")}</span>
-                        <span>{tx("ONE-TIME")}</span>
+                        <span>{tx("NEW TO THE US")}</span>
                     </div>
                     <Route tx={tx} from="Your plan" to="US shelves, 90 days from first stock" />
                     <div className="lb-name">
@@ -175,7 +192,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <article className="lb alt rv">
                     <div className="lb-top">
                         <span>{tx("VYBD POST")}</span>
-                        <span>{tx("RECOMMENDED NEXT")}</span>
+                        <span>{tx("ALREADY SELLING")}</span>
                     </div>
                     <Route tx={tx} from="Selling in the US" to="Selling more, with less to run" />
                     <div className="lb-name">
@@ -208,7 +225,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             type="range"
                             min={MIN}
                             max={MAX}
-                            step={50_000}
+                            step={100_000}
                             value={sales}
                             style={{ "--p": fill } as CSSProperties}
                             onChange={(e) => setSales(+e.target.value)}
@@ -228,7 +245,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             </span>
                         </div>
                         <p className="lb-calc-n">
-                            {tx("Software is tiered by sales and capped at {n} a year.").replace("{n}", usd(SOFTWARE_CAP))} {tx("Plus shipping and warehousing fees.")}
+                            {tx("Software is a flat {n} a month.").replace("{n}", usd(MIN_MONTHLY_FEE))} {tx("Plus shipping and warehousing fees.")}
                         </p>
                         <RdLink className="lb-calc-go" href="#calculator">
                             {tx("Run your full numbers")} <span aria-hidden="true">↓</span>
@@ -245,6 +262,42 @@ export default function Pricing({ tx }: { tx: Tx }) {
                         </RdLink>
                     </div>
                 </article>
+            </div>
+            <div className="cmp rv" role="region" aria-label={tx("Compare Plan, Launch and Scale")}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span className="cmp-sr">{tx("What you get")}</span>
+                            </th>
+                            <th scope="col">{tx("Vybd Plan")}</th>
+                            <th scope="col">{tx("US Launch")}</th>
+                            <th scope="col">{tx("US Scale")}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {COMPARE.map(([row, ...cells]) => (
+                            <tr key={row}>
+                                <th scope="row">{tx(row)}</th>
+                                {cells.map((c, i) => (
+                                    <td key={i}>
+                                        {c === true ? (
+                                            <span className="cmp-y" role="img" aria-label={tx("Included")}>
+                                                <Tick />
+                                            </span>
+                                        ) : c === false ? (
+                                            <span className="cmp-n" role="img" aria-label={tx("Not included")}>
+                                                –
+                                            </span>
+                                        ) : (
+                                            tx(c)
+                                        )}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
             <div className="lb-part rv">
                 <b>{tx("PARTNER")}</b>

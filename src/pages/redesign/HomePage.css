@@ -573,6 +573,36 @@
 .rd-home .su-err{color:#F5B7B1}
 .rd-home .su-done a,.rd-home .su-err a{color:var(--mint);text-decoration:underline}
 
+/* US page: "Where are you today?" under the hero (home/StartPicker.tsx) */
+.rd-home .sp{position:relative;padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(40px,5vw,72px)}
+.rd-home .sp-h{margin:0 0 clamp(24px,3vw,40px);font-size:clamp(40px,5vw,64px);line-height:1;text-align:center;color:#0f1b33}
+.rd-home .sp-h em{color:var(--mint)}
+.rd-home .sp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2vw,28px);padding-right:10px}
+.rd-home .sp-card{display:flex;flex-direction:column;gap:12px;padding:clamp(22px,2.4vw,28px);background:#FFFFFF;border:2px solid #0f1b33;border-radius:6px;box-shadow:8px 8px 0 #0f1b33}
+.rd-home .sp-card:nth-child(1){box-shadow:8px 8px 0 var(--mint)}
+.rd-home .sp-k{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mint-hover)}
+.rd-home .sp-card h3{margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(28px,2.6vw,34px);line-height:1.05;color:#0f1b33}
+.rd-home .sp-card p{margin:0;font-size:16px;line-height:1.5;color:#4B5563}
+.rd-home .sp-foot{display:flex;flex-direction:column;gap:10px;margin-top:auto;padding-top:14px;border-top:2px dashed #DDE2E8}
+.rd-home .sp-foot small{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#6B7280}
+.rd-home .sp-foot .btn{width:100%;box-sizing:border-box}
+.rd-home .sp-more{display:flex;justify-content:center;gap:6px;margin-top:clamp(20px,2.4vw,32px);font-size:15px;font-weight:600;color:var(--mint-hover)}
+.rd-home .sp-more:hover{color:#0f1b33}
+@media (max-width:900px){.rd-home .sp-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
+
+/* US pricing: what Plan leaves to the services, and the comparison grid */
+.rd-home .lb-note{margin:14px 0 0;padding:12px 14px;border:2px dashed #0f1b33;background:#F5F7F9;font-size:14px;line-height:1.5;color:#374151}
+.rd-home .cmp{margin-top:clamp(36px,4vw,52px);margin-right:10px;overflow-x:auto;background:#FFFFFF;border:2px solid #0f1b33;border-radius:6px}
+.rd-home .cmp table{width:100%;min-width:560px;border-collapse:collapse;font-size:15px}
+.rd-home .cmp th,.rd-home .cmp td{padding:14px 18px;border-bottom:1px solid #E7E9ED;text-align:center;color:#374151}
+.rd-home .cmp thead th{border-bottom:2px solid #0f1b33;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(20px,1.8vw,24px);color:#0f1b33}
+.rd-home .cmp tbody th{text-align:left;font-weight:500;color:#0f1b33}
+.rd-home .cmp tbody tr:first-child td{font-weight:600;color:#0f1b33}
+.rd-home .cmp tbody tr:last-child th,.rd-home .cmp tbody tr:last-child td{border-bottom:0}
+.rd-home .cmp-y{display:inline-flex;color:var(--mint)}.rd-home .cmp-y svg{width:20px;height:20px}
+.rd-home .cmp-n{color:#B8C2CE}
+.rd-home .cmp-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
 /* US page: the Vybd app label above the two service labels, laid flat */
 .rd-home .lb-app{margin-bottom:clamp(28px,4vw,48px);margin-right:10px;box-shadow:10px 10px 0 var(--mint)}.rd-home .lb-app:hover{box-shadow:14px 14px 0 var(--mint)}
 .rd-home .lb-app .lb-top span:last-child{background:var(--mint);color:#0f1b33}
@@ -711,8 +741,8 @@
 .rd-home .tc-card--featured{border-color:var(--mint);background:rgba(27,181,155,.08)}
 .rd-home .tc-card--featured:hover{border-color:var(--mint)}
 .rd-home .tc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.rd-home .tc-name{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
-.rd-home .tc-tag{padding:4px 10px;border-radius:999px;background:var(--mint);color:#111827;font-size:12px;font-weight:600}
+.rd-home .tc-name{display:inline-flex;align-items:center;flex-wrap:wrap;gap:10px;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.rd-home .tc-tag{padding:4px 10px;border-radius:999px;background:var(--mint);color:#111827;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none}
 .rd-home .tc-who{margin:0;font-size:16px;line-height:1.5;color:#AEB6C4}
 .rd-home .tc-price{display:flex;flex-direction:column;gap:2px;padding:14px 0;border-top:1px dashed rgba(255,255,255,.18);border-bottom:1px dashed rgba(255,255,255,.18)}
 .rd-home .tc-price b{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(32px,3vw,42px);line-height:1.05;letter-spacing:-.01em}
@@ -727,8 +757,9 @@
 .rd-home .tc-actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:auto;padding-top:8px}
 .rd-home .tc-actions .btn{width:100%;box-sizing:border-box}
 .rd-home .btn-ghost{color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}.rd-home .btn-ghost:hover{color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF}
-.rd-home .tc-more{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;color:#AEB6C4;transition:color .2s}
-.rd-home .tc-more:hover{color:var(--mint)}
+.rd-home .tc-more{flex:none;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid rgba(27,181,155,.5);font-size:14px;font-weight:600;color:var(--mint);transition:color .2s,background .2s,border-color .2s}
+.rd-home .tc-more:hover{background:rgba(27,181,155,.14);border-color:var(--mint);color:#FFFFFF}
+.rd-home .tc-more:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
 .rd-home .tc-more svg{transition:transform .25s}.rd-home .tc-more:hover svg{transform:translateX(4px)}
 @media (max-width:900px){.rd-home .tc-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
 @media (prefers-reduced-motion:reduce){.rd-home .tc-card,.rd-home .tc-more svg{transition:none}}
