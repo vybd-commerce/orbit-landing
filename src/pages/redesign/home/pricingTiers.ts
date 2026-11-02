@@ -19,3 +19,8 @@ export const softwareTier = (sales: number): SoftwareTier => SOFTWARE_TIERS.find
 /* Lowest monthly software fee, for the "from $1,000 / month" headline. */
 export const MIN_MONTHLY_FEE = SOFTWARE_TIERS[0].fee / 12;
 export const SOFTWARE_CAP = SOFTWARE_TIERS[SOFTWARE_TIERS.length - 1].fee;
+
+/* The self-serve Vybd app: first week free, then a flat monthly price.
+   Signed up for on the product, not here. */
+export const SIGNUP_URL = "https://app.vybd.ai/signup";
+export const APP_MONTHLY = 33;

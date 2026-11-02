@@ -6,17 +6,19 @@ import Hero, { HeroWord } from "./home/Hero";
 import IdeaSection from "./home/IdeaSection";
 import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
-import PathCards from "./home/PathCards";
+import TierCards from "./home/TierCards";
+import { SIGNUP_URL } from "./home/pricingTiers";
 import "./HomePage.css";
 
-/* The home at /: the global "Borderless." page. The hero, the idea, two
-   paths (brands entering the US go to the US page at /us, brands already
-   selling there go to /enterprise) and the closing call ("The world is
+/* The home at /: the global "Borderless." page. The hero, the idea, three
+   sizes (Launch signs up; Scale and Enterprise contact sales; each links on
+   to /us or /enterprise) and the closing call ("The world is
    ready for your <typed word>"), all on one navy canvas (.rd-global in
    HomePage.css). Shares its stylesheet and intro with the US page; the
    intro plays once per session on whichever of the two is opened first. */
 
 const LINKS = [
+    { label: "Pricing", href: "#tiers" },
     { label: "Enter the US", href: "/us" },
     { label: "Enterprise", href: "/enterprise" },
     { label: "Case studies", href: "/case-studies" },
@@ -24,7 +26,7 @@ const LINKS = [
 ];
 
 const IDEA_BODY =
-    "Customers everywhere are one tap away. Everything in between is slow, and that's about to change. Vybd is rebuilding the road from maker to customer: the team on the ground for brands coming to the US, and the operating layer for brands already here.";
+    "Vybd runs the day-to-day of your supply chain: stock, orders, suppliers, 3PLs and channels, so you can build the brand. Start on your own in minutes, or bring us your whole operation.";
 
 export default function HomePage() {
     const tx = useTx();
@@ -36,10 +38,10 @@ export default function HomePage() {
 
             <RdHeader logoHref="#top" logoDelay={showLoader ? 3.35 : 0.15} links={LINKS} mobileLinks={LINKS} />
 
-            <Hero tx={tx} line={tx("Made anywhere. Sold everywhere.")} sub={null} primary={null} secondary={null} boxHref="/us" />
+            <Hero tx={tx} line={tx("Supply chain intelligence.")} sub={null} primary={null} secondary={null} boxHref="/us" />
             <div className="g-routes">
                 <IdeaSection tx={tx} heading={null} body={IDEA_BODY} />
-                <PathCards tx={tx} />
+                <TierCards tx={tx} />
                 <ClosingCta
                     tx={tx}
                     heading={
@@ -51,6 +53,7 @@ export default function HomePage() {
                     }
                     text={null}
                     button="Get Vybd"
+                    href={SIGNUP_URL}
                 />
             </div>
 

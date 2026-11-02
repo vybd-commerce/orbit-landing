@@ -1,10 +1,12 @@
 import { useState, type CSSProperties } from "react";
 import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
-import { MIN_MONTHLY_FEE, REVENUE_SHARE, SOFTWARE_CAP, softwareTier } from "./pricingTiers";
+import { APP_MONTHLY, MIN_MONTHLY_FEE, REVENUE_SHARE, SIGNUP_URL, SOFTWARE_CAP, softwareTier } from "./pricingTiers";
 
-/* Two plans drawn as shipping labels: a one-time US Launch and the monthly
-   US Scale, whose card carries a slider for the yearly cost at a given
+/* Plans drawn as shipping labels, in order: Vybd Plan (the self-serve app
+   that helps plan a brand: research, positioning, pricing; flat monthly,
+   first week free), then the services where our team does the work: a
+   one-time US Launch (sourcing to shelves) and the monthly US Scale, whose card carries a slider for the yearly cost at a given
    level of US sales (the software tier for those sales plus 12% of them,
    see pricingTiers.ts). The full profitability calculator follows this
    section (#calculator). */
@@ -15,7 +17,14 @@ const Tick = () => (
     </svg>
 );
 
+const APP = [
+    "Learn how brands are built, step by step",
+    "Research your market and competitors",
+    "Find your customer and your positioning",
+    "Work out your name, story and pricing",
+];
 const LAUNCH = [
+    "Sourcing and manufacturer matching",
     "Diagnostic sprint included ($5K value)",
     "FDA and compliance support, label review",
     "Amazon, Walmart and Shopify store set up",
@@ -90,15 +99,54 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <h2 className="pr-h">
                     {tx("Pick your")} <em>{tx("postage.")}</em>
                 </h2>
-                <p className="pr-sub">{tx("A one-time fee gets you selling in the US. After that, one monthly plan keeps it running and growing.")}</p>
+                <p className="pr-sub">{tx("Plan your brand with Vybd Plan for $33 a month. When you're ready to make it real, our team launches it, then scales it.")}</p>
             </div>
+            <article className="lb lb-app rv">
+                <div className="lb-top">
+                    <span>{tx("VYBD POST")}</span>
+                    <span>{tx("START HERE")}</span>
+                </div>
+                <div className="lb-app-body">
+                    <div>
+                        <div className="lb-name">
+                            <h3>{tx("Vybd Plan")}</h3>
+                            <div className="lb-stamp" aria-hidden="true">
+                                <div>
+                                    {tx("FREE")}
+                                    <small>{tx("FIRST WEEK")}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="lb-price">
+                            <div className="lb-amt">
+                                ${APP_MONTHLY}
+                                <small>{tx("/ month")}</small>
+                            </div>
+                            <div className="lb-once">{tx("Free for your first week")}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <Contents tx={tx} items={APP} last="Leave with a brand plan you can act on" />
+                        <div className="lb-foot">
+                            <div className="lb-bars" aria-hidden="true"></div>
+                            <div className="lb-trk">
+                                <span>VYBD-PLAN</span>
+                                <span>{tx("STEP 00")}</span>
+                            </div>
+                            <RdLink className="btn btn-mint" href={SIGNUP_URL}>
+                                {tx("Start your free week")}
+                            </RdLink>
+                        </div>
+                    </div>
+                </div>
+            </article>
             <div className="pr-grid">
                 <article className="lb rv">
                     <div className="lb-top">
                         <span>{tx("VYBD POST")}</span>
                         <span>{tx("ONE-TIME")}</span>
                     </div>
-                    <Route tx={tx} from="Your factory" to="US shelves in 90 days" />
+                    <Route tx={tx} from="Your plan" to="US shelves, 90 days from first stock" />
                     <div className="lb-name">
                         <h3>{tx("US Launch")}</h3>
                         <div className="lb-stamp" aria-hidden="true">
@@ -112,7 +160,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                         <div className="lb-amt">$20,000</div>
                         <div className="lb-once">{tx("Paid once")}</div>
                     </div>
-                    <Contents tx={tx} items={LAUNCH} last="Landed, listed and selling in 90 days" />
+                    <Contents tx={tx} items={LAUNCH} last="Landed, listed and selling 90 days from first stock" />
                     <div className="lb-foot">
                         <div className="lb-bars" aria-hidden="true"></div>
                         <div className="lb-trk">

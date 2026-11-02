@@ -12,11 +12,13 @@ export default function ClosingCta({
     heading,
     text = US_TEXT,
     button = "Book a free call",
+    href = "/book",
 }: {
     tx: Tx;
     heading?: ReactNode;
     text?: string | null;
     button?: string;
+    href?: string;
 }) {
     return (
         <section id="contact" style={{ position: "relative", padding: "0 clamp(12px, 2vw, 24px) clamp(12px, 2vw, 24px)" }}>
@@ -43,7 +45,7 @@ export default function ClosingCta({
                             )}
                         </h2>
                         {text && <p style={{ margin: 0, maxWidth: 480, fontSize: 20, lineHeight: 1.45, color: "#9CA3AF" }}>{tx(text)}</p>}
-                        <RdLink className="btn btn-mint" href="/book">
+                        <RdLink className="btn btn-mint" href={href}>
                             {tx(button)}
                         </RdLink>
                     </div>

@@ -554,6 +554,14 @@
 .rd-home .lb-bars{height:36px;margin:0 22px;background:repeating-linear-gradient(90deg,#0f1b33 0 2px,transparent 2px 5px,#0f1b33 5px 6px,transparent 6px 9px,#0f1b33 9px 12px,transparent 12px 14px)}
 .rd-home .lb-trk{display:flex;justify-content:space-between;gap:12px;padding:8px 22px 18px;font-size:11px;font-weight:600;letter-spacing:.1em;color:#6B7280}
 .rd-home .lb-foot .btn{display:flex;margin:0 22px 22px;box-sizing:border-box}
+/* US page: the Vybd app label above the two service labels, laid flat */
+.rd-home .lb-app{margin-bottom:clamp(28px,4vw,48px);margin-right:10px;box-shadow:10px 10px 0 var(--mint)}.rd-home .lb-app:hover{box-shadow:14px 14px 0 var(--mint)}
+.rd-home .lb-app .lb-top span:last-child{background:var(--mint);color:#0f1b33}
+.rd-home .lb-app-body{display:grid;grid-template-columns:1fr 1fr}
+.rd-home .lb-app-body > div + div{display:flex;flex-direction:column;border-left:2px solid #0f1b33}
+.rd-home .lb-app .lb-price{border-bottom:0}
+.rd-home .lb-app .lb-foot{margin-top:auto}
+@media (max-width:860px){.rd-home .lb-app-body{grid-template-columns:1fr}.rd-home .lb-app-body > div + div{border-left:0;border-top:2px solid #0f1b33}}
 .rd-home .lb-part{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:clamp(36px,4vw,52px);text-align:center;font-size:16px;line-height:1.5;color:#4B5563}
 .rd-home .lb-part b{padding:5px 11px;border:2px solid #0f1b33;font-size:11px;letter-spacing:.16em;color:#0f1b33}
 .rd-home .lb-calc-n{margin:10px 0 0;font-size:13px;color:#6B7280;text-align:right}
@@ -674,26 +682,37 @@
 /* logo: the brand kit's on-dark mark (redesign/brand/vybd-mark-on-dark.svg) */
 .rd-home.rd-global .lg-f:nth-child(3){fill:#3a4a6b}.rd-home.rd-global .lg-f:nth-child(4){fill:#25324d}
 
-/* Global home: the two paths under the idea (home/PathCards.tsx), route
-   tickets on the navy canvas. */
-.rd-home .pc{position:relative;padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(24px,3vw,40px)}
-.rd-home .pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px)}
-.rd-home .pc-card{box-sizing:border-box;position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;padding:clamp(24px,3vw,36px);border-radius:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:#FFFFFF;backdrop-filter:blur(2px);transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s,background .3s,box-shadow .4s}
-.rd-home .pc-card:hover{transform:translateY(-4px);border-color:var(--mint);background:rgba(27,181,155,.08);box-shadow:0 30px 60px -36px rgba(0,0,0,.6);color:#FFFFFF}
-.rd-home .pc-card:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
-.rd-home .pc-kicker{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
-.rd-home .pc-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(34px,3.6vw,48px);line-height:1.02;letter-spacing:-.015em}
-.rd-home .pc-body{font-size:17px;line-height:1.5;color:#AEB6C4;max-width:420px}
-.rd-home .pc-card .pc-route{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;text-align:left;gap:14px;margin-top:6px;padding:14px 0;border-top:1px dashed rgba(255,255,255,.18);border-bottom:1px dashed rgba(255,255,255,.18);font-size:15px;font-weight:600}
-.rd-home .pc-card .pc-route>span{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
-.rd-home .pc-route small{font-size:10px;font-weight:700;letter-spacing:.16em;color:#8a93a6}
-.rd-home .pc-route i{flex:1;height:0;border-top:1.5px dashed var(--mint);opacity:.7;position:relative}
-.rd-home .pc-route i::after{content:"";position:absolute;right:-2px;top:-5px;width:8px;height:8px;border-top:1.5px solid var(--mint);border-right:1.5px solid var(--mint);transform:rotate(45deg)}
-.rd-home .pc-cta{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:8px;font-size:16px;font-weight:600;color:var(--mint)}
-.rd-home .pc-cta svg{transition:transform .3s}
-.rd-home .pc-card:hover .pc-cta svg{transform:translateX(4px)}
-@media (max-width:760px){.rd-home .pc-grid{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){.rd-home .pc-card,.rd-home .pc-cta svg{transition:none}.rd-home .pc-card:hover{transform:none}}
+/* Global home: the three sizes under the idea (home/TierCards.tsx), on the
+   navy canvas. Launch is the featured, self-serve card. */
+.rd-home .tc{position:relative;padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(24px,3vw,40px)}
+.rd-home .tc-h{margin:0 0 clamp(20px,3vw,32px);font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1;letter-spacing:-.015em;color:#FFFFFF;text-align:center}
+.rd-home .tc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,22px);align-items:stretch}
+.rd-home .tc-card{box-sizing:border-box;display:flex;flex-direction:column;gap:16px;min-width:0;padding:clamp(22px,2.6vw,32px);border-radius:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);color:#FFFFFF;backdrop-filter:blur(2px);transition:border-color .3s,background .3s}
+.rd-home .tc-card:hover{border-color:rgba(255,255,255,.3)}
+.rd-home .tc-card--featured{border-color:var(--mint);background:rgba(27,181,155,.08)}
+.rd-home .tc-card--featured:hover{border-color:var(--mint)}
+.rd-home .tc-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rd-home .tc-name{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mint)}
+.rd-home .tc-tag{padding:4px 10px;border-radius:999px;background:var(--mint);color:#111827;font-size:12px;font-weight:600}
+.rd-home .tc-who{margin:0;font-size:16px;line-height:1.5;color:#AEB6C4}
+.rd-home .tc-price{display:flex;flex-direction:column;gap:2px;padding:14px 0;border-top:1px dashed rgba(255,255,255,.18);border-bottom:1px dashed rgba(255,255,255,.18)}
+.rd-home .tc-price b{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(32px,3vw,42px);line-height:1.05;letter-spacing:-.01em}
+.rd-home .tc-price span{font-size:14px;color:#8a93a6}
+.rd-home .tc-list{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;font-size:15px;line-height:1.4;color:#D5DAE3}
+.rd-home .tc-list li{display:flex;gap:10px;align-items:flex-start}
+.rd-home .tc-list svg{flex:none;margin-top:2px;color:var(--mint)}
+.rd-home .tc-add{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.18)}
+.rd-home .tc-add-k{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8a93a6}
+.rd-home .tc-list--add{gap:8px;font-size:14px;color:#AEB6C4}
+.rd-home .tc-plus{flex:none;width:16px;text-align:center;font-weight:700;color:var(--mint)}
+.rd-home .tc-actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:auto;padding-top:8px}
+.rd-home .tc-actions .btn{width:100%;box-sizing:border-box}
+.rd-home .btn-ghost{color:#FFFFFF;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}.rd-home .btn-ghost:hover{color:#FFFFFF;box-shadow:inset 0 0 0 1px #FFFFFF}
+.rd-home .tc-more{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;color:#AEB6C4;transition:color .2s}
+.rd-home .tc-more:hover{color:var(--mint)}
+.rd-home .tc-more svg{transition:transform .25s}.rd-home .tc-more:hover svg{transform:translateX(4px)}
+@media (max-width:900px){.rd-home .tc-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.rd-home .tc-card,.rd-home .tc-more svg{transition:none}}
 .rd-home .lb-calc-go{display:flex;justify-content:flex-end;gap:6px;margin-top:8px;font-size:14px;font-weight:600;color:var(--mint-hover)}
 .rd-home .lb-calc-go:hover{color:#0f1b33}
 

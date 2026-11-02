@@ -149,8 +149,8 @@ type HeroLink = { label: string; href: string };
 export default function Hero({
     tx,
     line,
-    sub = "One team for everything it takes to sell in the US.",
-    primary = { label: "Launch in the US", href: "#contact" },
+    sub = "Launching from abroad or already selling here: one team runs it.",
+    primary = { label: "Start your launch", href: "#contact" },
     secondary = { label: "See how it works", href: "#how" },
     boxHref,
 }: {
