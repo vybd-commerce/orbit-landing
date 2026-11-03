@@ -27,3 +27,6 @@ dist-ssr
 
 # Hero loop render scratch
 tools/hero-loop/.work/
+
+# Draft hero image generations (not used by the site)
+hero-images/
