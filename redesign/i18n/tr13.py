@@ -135,3 +135,21 @@ T = [
 ('Launching from abroad or already selling here: one team runs it.',"Lancement depuis l'étranger ou déjà en vente ici : une seule équipe s'occupe de tout.",'Lanzando desde el extranjero o ya vendiendo aquí: un solo equipo lo gestiona.','无论是从海外进入，还是已在美国销售：一个团队全包。','海外からの進出でも、すでに米国で販売中でも、ひとつのチームが運営します。','해외에서 진출하든 이미 여기서 판매 중이든, 한 팀이 운영합니다.'),
 ('Scale','Scale','Scale','Scale','Scale','Scale'),
 ]
+
+# Hero picker and the slider calculator (Nov 2026)
+T += [
+("Choose what you're here for","Choisissez ce qui vous amène","Elige qué te trae aquí","选择你的需求","目的を選んでください","원하는 것을 선택하세요"),
+("I want to","Je veux","Quiero","我想要","やりたいこと：","저는"),
+("run my supply chain","gérer ma chaîne logistique","gestionar mi cadena de suministro","管理我的供应链","サプライチェーンを回す","공급망을 운영하고 싶어요"),
+("sell in the US","vendre aux États-Unis","vender en EE. UU.","在美国销售","米国で売る","미국에서 팔고 싶어요"),
+("Your business","Votre activité","Tu negocio","你的业务","あなたのビジネス","당신의 비즈니스"),
+("Shipping details: box size and billable weight","Détails d'expédition : taille du carton et poids facturable","Detalles de envío: tamaño de la caja y peso facturable","运输详情：箱子尺寸和计费重量","配送の詳細：箱のサイズと請求重量","배송 세부 정보: 상자 크기와 청구 중량"),
+("You'd keep about","Vous garderiez environ","Te quedarías con unos","你大约能留下","手元に残るのは約","남는 금액은 약"),
+("a year, or {n} of every dollar you sell in the US.","par an, soit {n} de chaque dollar vendu aux États-Unis.","al año, o el {n} de cada dólar que vendes en EE. UU.","每年，相当于你在美国每卖出一美元留下 {n}。","（年間）。米国での売上1ドルあたり {n} です。","(연간). 미국에서 판매하는 1달러당 {n}입니다."),
+("Product + shipping","Produit + transport","Producto + envío","产品 + 运输","製品＋輸送","제품 + 운송"),
+("US logistics","Logistique aux États-Unis","Logística en EE. UU.","美国物流","米国物流","미국 물류"),
+("Vybd fees","Frais Vybd","Tarifas de Vybd","Vybd 费用","Vybd の手数料","Vybd 수수료"),
+("You keep","Vous gardez","Te quedas con","你留下","手元に残る","남는 금액"),
+("Orders a year","Commandes par an","Pedidos al año","每年订单","年間注文数","연간 주문 수"),
+("/mo","/mois","/mes","/月","/月","/월"),
+]

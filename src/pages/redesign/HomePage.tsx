@@ -38,7 +38,7 @@ export default function HomePage() {
 
             <RdHeader logoHref="#top" logoDelay={showLoader ? 3.35 : 0.15} links={LINKS} mobileLinks={LINKS} />
 
-            <Hero tx={tx} line={tx("Supply chain intelligence.")} sub={null} primary={null} secondary={null} boxHref="/us" />
+            <Hero tx={tx} line={tx("Supply chain intelligence.")} sub={null} primary={null} secondary={null} boxHref="/us" pick="chain" />
             <div className="g-routes">
                 <IdeaSection tx={tx} heading={null} body={IDEA_BODY} />
                 <TierCards tx={tx} />

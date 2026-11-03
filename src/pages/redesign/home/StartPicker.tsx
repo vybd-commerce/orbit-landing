@@ -2,7 +2,7 @@ import { RdLink } from "../chrome";
 import type { Tx } from "../i18n";
 import { SIGNUP_URL } from "./pricingTiers";
 
-/* "Where are you today?" on the US page, right under the hero: three
+/* "Where are you today?" on the US page, right after the idea section: three
    starting points on the Plan / Launch / Scale ladder, each with its own
    action. Styles: .sp-* in HomePage.css. */
 

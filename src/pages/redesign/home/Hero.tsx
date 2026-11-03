@@ -142,6 +142,31 @@ const Postage = () => (
 
 type HeroLink = { label: string; href: string };
 
+/* "I want to [run my supply chain] / [sell in the US]": under
+   "Borderless." on both the home (/) and the US page (/us). The current
+   page's choice is filled in; the other one goes to its page. Styles:
+   .hx-pick in HomePage.css. */
+export type HeroPick = "chain" | "us";
+
+function HeroPicker({ tx, pick }: { tx: Tx; pick: HeroPick }) {
+    const opts: { id: HeroPick; label: string; href: string }[] = [
+        { id: "chain", label: "run my supply chain", href: "/" },
+        { id: "us", label: "sell in the US", href: "/us" },
+    ];
+    return (
+        <nav className="in d3 hx-pick" aria-label={tx("Choose what you're here for")}>
+            <span className="hx-pick-k">{tx("I want to")}</span>
+            <span className="hx-pick-opts">
+                {opts.map((o) => (
+                    <RdLink key={o.id} href={o.href} className={o.id === pick ? "on" : undefined} current={o.id === pick}>
+                        {tx(o.label)}
+                    </RdLink>
+                ))}
+            </span>
+        </nav>
+    );
+}
+
 /* Defaults are the US hero. The Borderless home (/) swaps the line under
    "Borderless.", drops the sub line and the buttons (null), and makes
    the parcel a link (`boxHref`): a tap or Enter follows it, a drag still
@@ -153,8 +178,10 @@ export default function Hero({
     primary = { label: "Start your launch", href: "#contact" },
     secondary = { label: "See how it works", href: "#how" },
     boxHref,
+    pick,
 }: {
     tx: Tx;
+    pick?: HeroPick;
     line?: ReactNode;
     sub?: string | null;
     primary?: HeroLink | null;
@@ -259,6 +286,7 @@ export default function Hero({
                 <div className="hx-copy">
                     <div className="in d1 eyebrow">Vybd</div>
                     <h1 className="in d2 hx-h">{tx("Borderless.")}</h1>
+                    {pick && <HeroPicker tx={tx} pick={pick} />}
                     <div className="in d3 hx-tw">
                         {line ?? (
                             <>

@@ -19,8 +19,8 @@ import "./HomePage.css";
 
 /* The US page at /us, for anyone launching or growing in the US: from
    abroad, new US brands and brands already selling here. Ported from
-   redesign/source/Main.src.html; the "Where are you today?" picker under
-   the hero sends each to Vybd Plan, US Launch or US Scale. The Borderless home at / (HomePage)
+   redesign/source/Main.src.html; the "Where are you today?" picker after
+   the idea section sends each to Vybd Plan, US Launch or US Scale. The Borderless home at / (HomePage)
    reuses its hero, idea and closing sections and links here. */
 
 const TICKER: [string, string][] = [
@@ -58,13 +58,13 @@ export default function UsPage() {
                 ]}
             />
 
-            <Hero tx={tx} />
-            <StartPicker tx={tx} />
+            <Hero tx={tx} pick="us" />
             <Ticker tx={tx} items={TICKER} label="Brands from India, South Korea, China and anywhere else, sold in the USA" />
             <BoxesToTick tx={tx} />
             <ProofLabels tx={tx} />
 
             <IdeaSection tx={tx} />
+            <StartPicker tx={tx} />
 
             <WhatWeDo tx={tx} />
             <HowItWorks tx={tx} />
