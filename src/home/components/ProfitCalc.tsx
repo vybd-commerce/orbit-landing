@@ -29,7 +29,7 @@ export function ProfitCalc() {
         <div className="eyebrow rv">Profit calculator</div>
         <h2 className="prod rv">Run your numbers.</h2>
         <p className="tag rv">See what you'd keep after every cost.</p>
-        <div className="links rv"><a className="more" href="#us">Try the full calculator</a></div>
+        <div className="links rv"><a className="more" href="/test-drop#numbers">Try the full calculator</a></div>
       </div>
       <div className="art"><div className="calc-art rv">
         <div className="lab"><span>Yearly US sales</span><b>${fmt(rev)}</b></div>

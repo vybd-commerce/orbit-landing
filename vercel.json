@@ -13,6 +13,10 @@
             "destination": "/enterprise.html"
         },
         {
+            "source": "/test-drop",
+            "destination": "/test-drop.html"
+        },
+        {
             "source": "/signup",
             "destination": "/signup.html"
         },

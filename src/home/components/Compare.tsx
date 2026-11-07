@@ -26,6 +26,7 @@ export function Compare() {
             <div className="ds">{p.desc}</div>
             <ul>{p.features.map((f) => <li key={f.text} className={f.no ? 'no' : undefined}>{f.text}</li>)}</ul>
             <div className="links"><a className={'pill ' + p.cta.style} href={p.cta.href}>{p.cta.label}</a></div>
+            {p.aside && <a className="more aside" href={p.aside.href}>{p.aside.label}</a>}
           </div>
         ))}
       </div>
