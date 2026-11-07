@@ -15,7 +15,7 @@ export function SupplyChain() {
         <div className="eyebrow rv" style={{ color: 'var(--mint)' }}>For brands already selling</div>
         <h2 className="prod rv">Vybd Supply Chain</h2>
         <p className="tag big rv">Run it better. <em style={{ color: 'var(--mint)' }}>Pay only for what earns its place.</em></p>
-        <div className="links rv"><a className="pill fill" href="#compare">Start for $33/mo</a><a className="pill out" href="#compare">Learn more</a></div>
+        <div className="links rv"><a className="pill fill" href="/signup">Start for $33/mo</a><a className="pill out" href="/product">Learn more</a></div>
       </div>
       <div className="art"><div className="ops-art rv">
         <div className="panel p1">

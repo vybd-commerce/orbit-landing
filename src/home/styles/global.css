@@ -228,6 +228,7 @@ img,svg{max-width:100%}
 .cmp li{padding:13px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--body)}
 .cmp li.no{color:#b0b0b5}
 .cmp .links{margin-top:22px}
+.cmp .aside{margin-top:14px;font-size:14px}
 @media (max-width:760px){.cmp .cols{grid-template-columns:minmax(0,1fr);gap:56px}}
 
 /* ---------- footer ---------- */
@@ -237,6 +238,7 @@ footer .fn{padding-bottom:14px;border-bottom:1px solid var(--line);line-height:1
 footer .dir{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
 footer .dir h6{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--ink)}
 footer .dir a{display:block;margin-bottom:8px;color:var(--body)}footer .dir a:hover{text-decoration:underline}
+footer .bt a{color:var(--body)}footer .bt a:hover{text-decoration:underline}
 footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:14px}
 @media (max-width:833px){footer .dir{grid-template-columns:repeat(2,minmax(0,1fr))}}
 

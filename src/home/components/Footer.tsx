@@ -16,7 +16,7 @@ export function Footer({ base = '' }: { base?: string }) {
         ))}
       </div>
       <div className="bt">
-        <span>Copyright © 2026 Vybd. All rights reserved.</span>
+        <span>Copyright © 2026 Vybd. All rights reserved. <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
         <span>English · Français · Español · 中文 · 日本語 · 한국어</span>
       </div>
     </div></footer>
