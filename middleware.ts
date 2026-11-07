@@ -76,15 +76,25 @@ function cookie(header: string | null, name: string) {
         .find(([k]) => k === name)?.[1];
 }
 
+/* English "/" is the standalone landing page (home.html, built from src/home).
+   A vercel.json rewrite can't do this: dist/index.html exists, and Vercel
+   serves files before rewrites. Same mechanism as rewrite() in @vercel/functions. */
+function serveAsIs(request: Request) {
+    if (new URL(request.url).pathname !== "/") return;
+    return new Response(null, {
+        headers: { "x-middleware-rewrite": new URL("/home.html", request.url).toString() },
+    });
+}
+
 export default function middleware(request: Request) {
     const headers = request.headers;
-    if (cookie(headers.get("cookie"), LANG_COOKIE)) return;
-    if (BOT.test(headers.get("user-agent") ?? "")) return;
+    if (cookie(headers.get("cookie"), LANG_COOKIE)) return serveAsIs(request);
+    if (BOT.test(headers.get("user-agent") ?? "")) return serveAsIs(request);
 
     const browser = fromAcceptLanguage(headers.get("accept-language"));
     const locale =
         browser && browser !== "en" ? browser : COUNTRY_LOCALE[headers.get("x-vercel-ip-country") ?? ""] ?? "en";
-    if (locale === "en") return;
+    if (locale === "en") return serveAsIs(request);
 
     const url = new URL(request.url);
     url.pathname = url.pathname === "/" ? `/${locale}` : `/${locale}${url.pathname}`;

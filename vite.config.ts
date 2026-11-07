@@ -30,6 +30,16 @@ function pageMetaHtml(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), pageMetaHtml()],
+  build: {
+    rollupOptions: {
+      // home.html is the "/" landing page (src/home); index.html is the SPA for every other route.
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        home: path.resolve(__dirname, 'home.html'),
+        essay: path.resolve(__dirname, 'essay.html'),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -17,8 +17,12 @@
             "destination": "/signup.html"
         },
         {
+            "source": "/essay",
+            "destination": "/essay.html"
+        },
+        {
             "source": "/(.*)",
-            "destination": "/"
+            "destination": "/index.html"
         }
     ]
 }
