@@ -17,6 +17,10 @@
             "destination": "/signup.html"
         },
         {
+            "source": "/:path(outside-context|outsidecontext)",
+            "destination": "/outside-context.html"
+        },
+        {
             "source": "/essay",
             "destination": "/essay.html"
         },
