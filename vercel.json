@@ -29,6 +29,10 @@
             "destination": "/essay.html"
         },
         {
+            "source": "/:path(askinkind|ask-in-kind)",
+            "destination": "/askinkind.html"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }

@@ -1,29 +1,26 @@
 import { useReveal } from './hooks/useReveal'
-import { GlobalNav } from './components/GlobalNav'
-import { Hero } from './components/Hero'
-import { SupplyChain } from './components/SupplyChain'
-import { ForTheUS } from './components/ForTheUS'
-import { TileGrid } from './components/TileGrid'
-import { Cases } from './components/Cases'
-import { Chapters } from './components/Chapters'
-import { Compare } from './components/Compare'
-import { Footer } from './components/Footer'
+import { BoardNav } from './board/BoardNav'
+import { BoardFooter } from './board/BoardFooter'
+import { Hero } from './board/Hero'
+import { Cases, EnterpriseAndCalc, Essay, Fares, ForTheUS, Promises, Record, SupplyChain } from './board/Sections'
 
 export default function App() {
   useReveal()
   return (
     <>
-      <GlobalNav />
+      <BoardNav />
       <main id="top">
         <Hero />
         <SupplyChain />
         <ForTheUS />
-        <TileGrid />
+        <EnterpriseAndCalc />
+        <Promises />
+        <Record />
         <Cases />
-        <Chapters />
-        <Compare />
+        <Essay />
+        <Fares />
       </main>
-      <Footer />
+      <BoardFooter />
     </>
   )
 }
