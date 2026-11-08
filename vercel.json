@@ -1,4 +1,10 @@
 {
+    "headers": [
+        {
+            "source": "/:path(fund-raise|fund-raise\\.html)",
+            "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+        }
+    ],
     "rewrites": [
         {
             "source": "/us",
@@ -13,12 +19,28 @@
             "destination": "/enterprise.html"
         },
         {
+            "source": "/test-drop",
+            "destination": "/test-drop.html"
+        },
+        {
+            "source": "/fund-raise",
+            "destination": "/fund-raise.html"
+        },
+        {
             "source": "/signup",
             "destination": "/signup.html"
         },
         {
+            "source": "/:path(outside-context|outsidecontext)",
+            "destination": "/outside-context.html"
+        },
+        {
+            "source": "/essay",
+            "destination": "/essay.html"
+        },
+        {
             "source": "/(.*)",
-            "destination": "/"
+            "destination": "/index.html"
         }
     ]
 }
