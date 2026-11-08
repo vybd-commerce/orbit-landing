@@ -1,4 +1,10 @@
 {
+    "headers": [
+        {
+            "source": "/:path(fund-raise|fund-raise\\.html)",
+            "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+        }
+    ],
     "rewrites": [
         {
             "source": "/us",
@@ -15,6 +21,10 @@
         {
             "source": "/test-drop",
             "destination": "/test-drop.html"
+        },
+        {
+            "source": "/fund-raise",
+            "destination": "/fund-raise.html"
         },
         {
             "source": "/signup",
