@@ -272,3 +272,4 @@ img,svg{max-width:100%}
   .js .rv{opacity:1;transform:none;transition:none}
   .share s,.switch button,.calc .cells s{transition:none}
 }
+.panels .note{grid-column:1/-1;margin:0}

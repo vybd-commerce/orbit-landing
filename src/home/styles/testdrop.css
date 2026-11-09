@@ -1,0 +1,116 @@
+/* /test-drop, inside the board world (board.css). Page-specific rules under .td. */
+.td .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* section nav under the main strip */
+.snav{position:sticky;top:58px;z-index:40;background:#1a1d21;color:#cfcdc6;border-top:1px solid #2a2e35;font-size:14px}
+.snav .wrap{display:flex;align-items:center;gap:24px;min-height:44px;overflow-x:auto;scrollbar-width:none}
+.snav b{color:var(--flap);font-weight:800;font-stretch:80%;white-space:nowrap}
+.snav .lk{display:flex;gap:20px;white-space:nowrap}
+.snav a:hover{color:var(--flap)}
+
+/* hero */
+.td-hero .disp{font-size:clamp(56px,8.4vw,132px)}
+.td-hero .who{margin:0 0 12px}
+.td-facts .frow,.td-stats .frow{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 0;border-bottom:1px solid #22262c}
+.td-facts .frow:last-child,.td-stats .frow:last-child{border-bottom:0}
+.td-facts .cap,.td-stats .frow .cap{color:var(--flap-dim)}
+.td-facts .flap.mid,.td-stats .flap.mid{--cw:clamp(15px,1.4vw,21px)}
+.td-facts{align-self:end}
+
+/* flow */
+.td-flow{list-style:none;margin:0;padding:0;border-top:1px solid #2a2e35}
+.td-flow li{display:grid;grid-template-columns:40px auto minmax(0,1fr) minmax(0,1.6fr);gap:6px 24px;align-items:center;padding:16px 0;border-bottom:1px solid #22262c}
+.td-flow .n{color:#7d807d;font-weight:700}
+.td-flow b{font-weight:750;font-stretch:80%;font-size:clamp(20px,1.8vw,24px)}
+.td-flow p{margin:0;color:#d4d2cb}
+.td-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);margin-top:clamp(40px,5vw,64px)}
+.td-pillars > div{border-top:4px solid var(--go);padding-top:18px}
+.td-pillars p{margin:10px 0 0;color:#d4d2cb}
+
+/* ticks */
+.td-ticks{list-style:none;margin:0;padding:0}
+.td-ticks li{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px;color:var(--body)}
+.td-ticks svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--go-ink)}
+.td-ticks.plain svg{color:var(--mute)}
+.panel .td-ticks li{border-bottom-color:#22262c;color:var(--flap)}
+.panel .td-ticks svg{color:var(--go)}
+.panel .td-ticks li:last-child{border-bottom:0}
+
+.td-split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.td-offer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.td-offer .price{display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding:clamp(20px,2vw,28px)}
+.td-offer .price .cap{color:var(--flap-dim)}
+.td-offer .terms{color:var(--flap-dim);font-size:15px}
+.td-offer .h3{margin-bottom:8px}
+
+/* calculator */
+.hall2{background:var(--paper);border-block:1px solid var(--line)}
+.dc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.dc-controls{background:var(--hall);border-radius:8px;padding:clamp(20px,2vw,28px);outline:1px solid var(--line)}
+.dc-out{background:var(--board);color:var(--flap);border-radius:8px;padding:clamp(20px,2vw,28px)}
+.dc-reset{border:0;background:none;padding:0 0 1px;margin-bottom:18px;font:700 14px var(--sans);color:var(--ink);border-bottom:1.5px solid currentColor;cursor:pointer}
+.dc-reset:hover{color:var(--go-ink)}
+.dc-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dc-field label,.dc-range label{display:block;margin-bottom:6px;font-size:13px;font-weight:600;color:var(--body)}
+.dc-input{display:flex;align-items:center;gap:6px;height:44px;padding:0 12px;border-radius:4px;background:#fff;box-shadow:inset 0 0 0 1.5px var(--line)}
+.dc-input:focus-within{box-shadow:inset 0 0 0 2px var(--board)}
+.dc-input span{color:var(--mute);font-size:15px}
+.dc-input input{flex:1;min-width:0;border:0;outline:0;background:none;font:600 16px var(--sans);color:var(--ink)}
+.dc-range{margin-top:20px}
+.dc-range b{color:var(--ink)}
+.dc-range input{width:100%;accent-color:var(--board)}
+.dc-check{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;color:var(--body);cursor:pointer}
+.dc-check input{accent-color:var(--board);width:16px;height:16px}
+.dc-out table{width:100%;border-collapse:collapse;font-size:14px}
+.dc-out th{text-align:left;font-weight:400;color:#d4d2cb;padding:9px 12px 9px 0;border-bottom:1px solid #22262c}
+.dc-out td{text-align:right;padding:9px 0;border-bottom:1px solid #22262c;white-space:nowrap;font-weight:600}
+.dc-out td.zero{color:var(--go)}
+.dc-out tfoot th{font-weight:700;color:var(--flap);border:0;padding-top:18px}
+.dc-out tfoot td{font-weight:800;font-stretch:76%;font-size:40px;line-height:1;color:var(--go);border:0;padding-top:18px}
+.dc-out tfoot td.neg{color:var(--rent)}
+.dc-be{margin:16px 0 0;font-size:14px;color:var(--flap-dim)}
+.dc-be b{color:var(--flap)}
+
+/* pricing */
+.td-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.td-tiers .badge{color:var(--flap-dim);margin-bottom:14px}
+.td-tiers .pr{margin:14px 0 4px}
+.td-tiers .ds{min-height:0}
+.td-tiers .line{margin:10px 0 0;font-size:15px;color:var(--flap)}
+
+/* proof */
+.td-stats{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.td-stats .board{background:var(--cell)}
+.td-story > div{border-top:1px solid #2a2e35;padding:16px 0}
+.td-story .cap{color:var(--go)}
+.td-story p{margin:6px 0 0;color:#d4d2cb}
+.td-origins{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:40px;padding-top:24px;border-top:1px solid #2a2e35;color:var(--flap-dim);font-size:15px}
+.td-origins ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.td-origins .flap{--cw:15px}
+
+/* next steps */
+.td-next{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px)}
+.td-next li{border-top:1.5px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.td-next .n{font-weight:800;font-stretch:76%;font-size:40px;line-height:1;color:var(--go-ink)}
+.td-next .tag{color:var(--mute)}
+.td-next p{margin:0;color:var(--body)}
+
+/* faq */
+.td-faq summary{grid-template-columns:minmax(0,1fr) 40px}
+.td-faq details > p{margin:0;padding:0 56px 26px 0;max-width:72ch;color:var(--body)}
+
+.td-close{padding:clamp(72px,9vw,128px) 0}
+.td-close .lede{max-width:48ch}
+
+@media (max-width:1060px){
+  .td-offer,.td-stats,.td-pillars{grid-template-columns:1fr}
+  .td-tiers,.td-next{grid-template-columns:1fr 1fr}
+  .dc{grid-template-columns:1fr}
+  .td-flow li{grid-template-columns:32px auto minmax(0,1fr)}
+  .td-flow p{grid-column:3}
+}
+@media (max-width:640px){
+  .td-split,.td-tiers,.td-next,.dc-fields{grid-template-columns:1fr}
+  .snav .lk{display:none}
+}

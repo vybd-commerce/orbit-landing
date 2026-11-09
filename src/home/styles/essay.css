@@ -1,0 +1,38 @@
+/* /essay, inside the board world (board.css). A reading page: the board is
+   the table of contents, the essays are set for long reading on the hall. */
+.essays-hd{padding:clamp(40px,6vw,88px) 0 clamp(48px,6vw,80px)}
+.essays-hd .back{display:inline-flex;font-weight:700;font-size:15px;border-bottom:1.5px solid currentColor;margin-bottom:28px}
+.essays-hd .back:hover{color:var(--go-ink)}
+.essays-hd .disp{font-size:clamp(60px,10vw,160px)}
+.essays-hd .disp span{color:var(--go-ink)}
+.essays-hd .lede{max-width:52ch}
+.toc{margin-top:36px;padding:8px clamp(14px,1.6vw,22px)}
+.toc a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid #22262c}
+.toc a:last-child{border-bottom:0}
+.toc .t{font-weight:650;font-size:clamp(16px,1.5vw,19px)}
+.toc a:hover .t{color:var(--go)}
+.toc .flap{--cw:clamp(13px,1.2vw,17px)}
+
+.essay-a{border-top:1.5px solid var(--ink);padding:clamp(48px,6vw,96px) 0}
+.essay-a .wrap{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);gap:24px clamp(24px,4vw,64px)}
+.essay-a .meta{display:flex;flex-direction:column;gap:6px;position:sticky;top:90px;align-self:start}
+.essay-a .meta .cap{color:var(--go-ink)}
+.essay-a .by{font-weight:600;color:var(--mute)}
+.essay-a .text{max-width:68ch}
+.essay-a .h2{font-size:clamp(36px,4.4vw,64px);margin-bottom:20px}
+.essay-a .dek{font-size:clamp(19px,1.7vw,23px);line-height:1.38;color:var(--body);margin:0 0 32px}
+.essay-a .text p,.essay-a .text li{font-size:18px;line-height:1.65;color:var(--body);text-wrap:pretty}
+.essay-a .text p{margin:0 0 20px}
+.essay-a .text h2:not(.h2){font-weight:800;font-stretch:78%;font-size:clamp(24px,2.2vw,30px);line-height:1.1;margin:44px 0 14px}
+.essay-a .text ul,.essay-a .text ol{margin:0 0 20px;padding-left:22px}
+.essay-a .text li{margin-bottom:8px}
+.essay-a .text b{color:var(--ink)}
+.essay-a .soon{font-weight:700;color:var(--mute)}
+@media (max-width:860px){
+  .essay-a .wrap{grid-template-columns:1fr}
+  .essay-a .meta{position:static;flex-direction:row;gap:14px}
+}
+@media (max-width:640px){
+  .toc a{grid-template-columns:auto minmax(0,1fr)}
+  .toc a .flap:last-child{display:none}
+}

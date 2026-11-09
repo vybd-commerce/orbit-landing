@@ -1,21 +1,22 @@
 import type { ReactNode } from 'react'
 import { useReveal } from './hooks/useReveal'
-import { GlobalNav } from './components/GlobalNav'
-import { Footer } from './components/Footer'
+import { BoardNav } from './board/BoardNav'
+import { BoardFooter } from './board/BoardFooter'
+import { Flap } from './board/Flap'
 import DropCalc from './components/testdrop/DropCalc'
 import {
   BOOK, DROP_MAX_UNITS, FAQ, FLOW, FREIGHT_NOTE, GO_LIVE, INCLUDED, NEXT, ORIGINS,
   PILLARS, PROOF, TIERS, WE_OWN, YOU_COVER, YOU_OWN,
 } from './data/testDrop'
 import { CASE_STUDIES_URL } from './data/cases'
-import './styles/test-drop.css'
+import './styles/testdrop.css'
 
 /* /test-drop: the "Sell in the US" deck as a page we can send to brands
-   outside the US instead of a PDF. Ported from orbit-landing and restyled
-   in this site's tiles and type. Order follows the deck: hero, how it works,
-   who does what, the offer, a calculator, pricing ladder, proof, next steps,
-   FAQ, closing call. Copy lives in data/testDrop.ts; styles in
-   styles/test-drop.css under .td. Served at /test-drop from test-drop.html (vercel.json). */
+   outside the US instead of a PDF, in the board world (DESIGN.md). Order
+   follows the deck: hero, how it works, who does what, the offer, a
+   calculator, pricing ladder, proof, next steps, FAQ, closing call. Copy
+   lives in data/testDrop.ts; page styles in styles/testdrop.css under .td.
+   Served at /test-drop from test-drop.html (vercel.json). */
 
 const LINKS = [
   { label: 'How it works', href: '#how' },
@@ -25,170 +26,202 @@ const LINKS = [
   { label: 'FAQ', href: '#faq' },
 ]
 
+const Check = () => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 8.5l3.2 3L13 4.5" /></svg>
+const Dot = () => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="8" cy="8" r="3.5" /></svg>
 const Ticks = ({ items, plain }: { items: string[]; plain?: boolean }) => (
-  <ul className={'td-ticks' + (plain ? ' plain' : '')}>{items.map((x) => <li key={x}>{x}</li>)}</ul>
+  <ul className={'td-ticks' + (plain ? ' plain' : '')}>{items.map((x) => <li key={x}>{plain ? <Dot /> : <Check />}{x}</li>)}</ul>
 )
 
-function Head({ kicker, children, sub }: { kicker: string; children: ReactNode; sub?: ReactNode }) {
+function Head({ children, sub }: { children: ReactNode; sub?: ReactNode }) {
   return (
-    <header className="td-head">
-      <div className="eyebrow rv">{kicker}</div>
-      <h2 className="rv">{children}</h2>
-      {sub && <p className="rv">{sub}</p>}
-    </header>
+    <div className="head">
+      <h2 className="h2 rv">{children}</h2>
+      {sub && <p className="lede rv">{sub}</p>}
+    </div>
   )
-}
-
-function Sec({ id, gray, children }: { id: string; gray?: boolean; children: ReactNode }) {
-  return <section id={id} className={'td-sec' + (gray ? ' gray' : '')}><div className="td-in">{children}</div></section>
 }
 
 export default function TestDropApp() {
   useReveal()
   return (
     <div className="td">
-      <GlobalNav base="/" ribbon={false} />
+      <BoardNav base="/" notice={false} />
       <nav className="snav" aria-label="Test Drop">
-        <div className="in">
+        <div className="wrap">
           <b>Test Drop</b>
-          {LINKS.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
-          <a className="buy" href={BOOK}>Book an intro</a>
+          <span className="lk">{LINKS.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}</span>
         </div>
       </nav>
 
       <main id="top">
-        <section className="tile td-hero">
-          <div className="copy">
-            <div className="eyebrow rv">For brands outside the US</div>
-            <h1 className="rv">Sell in the US.<br />Start with <em>one</em> drop.</h1>
-            <p className="tag rv">From import and storage to fulfillment, reporting and AI-enabled operations, without building your own US team.</p>
-            <div className="links rv">
-              <a className="pill fill" href={BOOK}>Book a 30-minute intro</a>
-              <a className="pill out" href="#numbers">Run your numbers</a>
+        <section className="hero td-hero">
+          <div className="wrap">
+            <h1 className="disp">Sell in the US. Start with one drop<span>.</span></h1>
+            <div className="copy">
+              <span className="who">For brands outside the US</span>
+              <p className="lede">From import and storage to fulfillment, reporting and AI-enabled operations, without building your own US team.</p>
+              <div className="acts">
+                <a className="plate go" href={BOOK}>Book a 30-minute intro</a>
+                <a className="plate line" href="#numbers">Run your numbers</a>
+              </div>
             </div>
-            <ul className="td-facts rv" aria-label="Test Drop at a glance">
-              <li><b>$3,000</b> one time + 15% of US sales</li>
-              <li><b>Up to {DROP_MAX_UNITS} units</b> with freight on us*</li>
-              <li><b>{GO_LIVE}</b> to go live</li>
-            </ul>
+            <div className="board td-facts" aria-label="Test Drop at a glance">
+              <div className="top"><span className="cap">Test Drop · <b>at a glance</b></span></div>
+              {[
+                ['One time', '$3,000', 'go'],
+                ['US sales share', '15%', ''],
+                ['Units', `Up to ${DROP_MAX_UNITS}`, ''],
+                ['Freight to US', 'On us*', 'go'],
+                ['Go live', GO_LIVE.replace('–', '-'), ''],
+              ].map(([k, v, t], i) => (
+                <div className="frow" key={k}>
+                  <span className="cap">{k}</span>
+                  <Flap text={v} len={10} align="right" delay={i * 120} className={'mid ' + t} />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
-        <Sec id="how" gray>
-          <Head kicker="How it works" sub="You make it and sell it. We handle everything in between.">
-            From your factory to a US <em>doorstep.</em>
-          </Head>
-          <ol className="td-flow">
-            {FLOW.map((s, n) => (
-              <li key={s.title} className={'rv ' + s.who}>
-                <span className="n">{n + 1}</span>
-                <small>{s.who === 'you' ? 'You' : 'Vybd'}</small>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
-              </li>
-            ))}
-          </ol>
-          <div className="td-pillars">
-            {PILLARS.map(([h, p]) => <div key={h} className="rv"><b>{h}</b><p>{p}</p></div>)}
-          </div>
-        </Sec>
-
-        <Sec id="split">
-          <Head kicker="Who does what">You own the <em>brand.</em><br />We own the operations.</Head>
-          <div className="td-split rv">
-            <div className="you"><h3>You</h3><Ticks items={YOU_OWN} /></div>
-            <div className="us"><h3>Vybd</h3><Ticks items={WE_OWN} /></div>
-          </div>
-          <p className="td-fine">*On the Test Drop, Vybd covers freight to the US for up to {DROP_MAX_UNITS} units, depending on dimensions and weight.</p>
-        </Sec>
-
-        <Sec id="drop" gray>
-          <Head kicker="The Test Drop">One limited drop to <em>test</em> the US market.</Head>
-          <div className="td-offer rv">
-            <div className="price">
-              <b>$3,000</b><span>one time</span><em>+ 15% of US sales</em>
-              <a className="pill fill" href={BOOK}>Book a 30-minute intro</a>
+        <section className="sec dark" id="how">
+          <div className="wrap">
+            <Head sub="You make it and sell it. We handle everything in between.">From your factory to a US doorstep.</Head>
+            <ol className="td-flow">
+              {FLOW.map((s, n) => (
+                <li key={s.title} className="rv">
+                  <span className="n">{n + 1}</span>
+                  <Flap text={s.who === 'you' ? 'You' : 'Vybd'} len={4} className={s.who === 'you' ? '' : 'go'} />
+                  <b>{s.title}</b>
+                  <p>{s.body}</p>
+                </li>
+              ))}
+            </ol>
+            <div className="td-pillars">
+              {PILLARS.map(([h, p]) => <div key={h} className="rv"><h3 className="h3">{h}</h3><p>{p}</p></div>)}
             </div>
-            <div><h3>Included</h3><Ticks items={INCLUDED} /></div>
-            <div><h3>You cover</h3><Ticks items={YOU_COVER} plain /></div>
           </div>
-          <p className="td-fine">*{FREIGHT_NOTE}</p>
-        </Sec>
+        </section>
 
-        <Sec id="numbers">
-          <Head
-            kicker="Your numbers"
-            sub="Start from our example, a sold-out drop of 500 tees at $38, then put in your own product. You also leave with real data: which designs sold, at what price, in which cities, and what it costs to serve a US customer."
-          >
-            What a drop <em>leaves you.</em>
-          </Head>
-          <DropCalc />
-          <p className="td-fine">Illustrative. Duty rates vary by product; postage and card fees are estimates. Not a quote.</p>
-        </Sec>
+        <section className="sec" id="split">
+          <div className="wrap">
+            <Head>You own the brand. We own the operations.</Head>
+            <div className="td-split rv">
+              <div className="panel"><div className="ttl cap"><span>You</span><b>Brand</b></div><Ticks items={YOU_OWN} /></div>
+              <div className="panel"><div className="ttl cap"><span>Vybd</span><b>Operations</b></div><Ticks items={WE_OWN} /></div>
+            </div>
+            <p className="note">*On the Test Drop, Vybd covers freight to the US for up to {DROP_MAX_UNITS} units, depending on dimensions and weight.</p>
+          </div>
+        </section>
 
-        <Sec id="pricing" gray>
-          <Head kicker="Pricing" sub="Grow at the pace your sales justify.">Start with one drop.<br />Then <em>scale.</em></Head>
-          <div className="td-tiers">
-            {TIERS.map((t) => (
-              <article key={t.name} className={'rv ' + t.style}>
-                <span className="badge">{t.badge}</span>
-                <h3>{t.name}</h3>
-                <div className="amt">{t.price}</div>
-                <p className="terms">{t.terms}</p>
-                {t.line && <p className="line">{t.line}</p>}
-                <Ticks items={t.points} />
-                <a className={'pill ' + (t.style === 'plain' ? 'out' : 'fill')} href={BOOK}>{t.cta}</a>
-              </article>
-            ))}
+        <section className="sec tight" id="drop">
+          <div className="wrap">
+            <Head>One limited drop to test the US market.</Head>
+            <div className="td-offer rv">
+              <div className="board price">
+                <span className="cap">Test Drop</span>
+                <Flap text="$3,000" len={6} className="big go" />
+                <span className="terms">one time + 15% of US sales</span>
+                <a className="plate go" href={BOOK}>Book a 30-minute intro</a>
+              </div>
+              <div><h3 className="h3">Included</h3><Ticks items={INCLUDED} /></div>
+              <div><h3 className="h3">You cover</h3><Ticks items={YOU_COVER} plain /></div>
+            </div>
+            <p className="note">*{FREIGHT_NOTE}</p>
           </div>
-          <p className="td-fine">*{FREIGHT_NOTE}</p>
-        </Sec>
+        </section>
 
-        <Sec id="proof">
-          <Head kicker={`Proof: ${PROOF.brand}`} sub={PROOF.about}>Real operating results.<br /><em>Not just a promise.</em></Head>
-          <div className="td-stats">
-            {PROOF.stats.map(([n, l], k) => <div key={l} className={'rv' + (k === 2 ? ' hi' : '')}><b>{n}</b><span>{l}</span></div>)}
+        <section className="sec hall2" id="numbers">
+          <div className="wrap">
+            <Head sub="Start from our example, a sold-out drop of 500 tees at $38, then put in your own product. You also leave with real data: which designs sold, at what price, in which cities, and what it costs to serve a US customer.">
+              What a drop leaves you.
+            </Head>
+            <DropCalc />
+            <p className="note">Illustrative. Duty rates vary by product; postage and card fees are estimates. Not a quote.</p>
           </div>
-          <div className="td-story rv">
-            {PROOF.story.map(([k, p]) => <div key={k}><small>{k}</small><p>{p}</p></div>)}
-          </div>
-          <p className="td-fine">{PROOF.note}</p>
-          <div className="td-origins rv">
-            <span>We work with brands and manufacturers from</span>
-            <ul>{ORIGINS.map((o) => <li key={o}>{o}</li>)}</ul>
-            <a className="more" href={CASE_STUDIES_URL}>Read the case studies</a>
-          </div>
-        </Sec>
+        </section>
 
-        <Sec id="steps" gray>
-          <Head kicker="Next steps">Your first US drop,<br />in <em>four</em> steps.</Head>
-          <div className="td-next">
-            {NEXT.map(([tag, h, p], n) => (
-              <article key={h} className="rv">
-                <div className="num">{String(n + 1).padStart(2, '0')} <span>{tag}</span></div>
-                <h3>{h}</h3>
-                <p>{p}</p>
-              </article>
-            ))}
+        <section className="sec" id="pricing">
+          <div className="wrap">
+            <Head sub="Grow at the pace your sales justify.">Start with one drop. Then scale.</Head>
+            <div className="td-tiers">
+              {TIERS.map((t) => (
+                <article key={t.name} className={'fare rv' + (t.style === 'drop' ? ' feat' : '')}>
+                  <span className="cap badge">{t.badge}</span>
+                  <h3 className="h3">{t.name}</h3>
+                  <div className="pr">{t.price}</div>
+                  <p className="ds">{t.terms}</p>
+                  {t.line && <p className="line">{t.line}</p>}
+                  <ul>{t.points.map((p) => <li key={p}><Check />{p}</li>)}</ul>
+                  <div className="acts"><a className={'plate ' + (t.style === 'drop' ? 'go' : 'line')} href={BOOK}>{t.cta}</a></div>
+                </article>
+              ))}
+            </div>
+            <p className="note">*{FREIGHT_NOTE}</p>
           </div>
-        </Sec>
+        </section>
 
-        <Sec id="faq">
-          <Head kicker="FAQ">Questions brands<br /><em>ask us first.</em></Head>
-          <div className="td-faq rv">
-            {FAQ.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}
+        <section className="sec dark" id="proof">
+          <div className="wrap">
+            <Head sub={PROOF.about}>Real operating results. Not just a promise.</Head>
+            <div className="td-stats">
+              <div className="board">
+                <div className="top"><span className="cap">Proof · <b>{PROOF.brand}</b></span></div>
+                {PROOF.stats.map(([n, l], k) => (
+                  <div className="frow" key={l}><span className="cap">{l}</span><Flap text={n} len={8} align="right" delay={k * 140} className={'mid ' + (k === 2 ? 'go' : '')} /></div>
+                ))}
+              </div>
+              <div className="td-story">
+                {PROOF.story.map(([k, p]) => <div key={k} className="rv"><span className="cap">{k}</span><p>{p}</p></div>)}
+              </div>
+            </div>
+            <p className="note">{PROOF.note}</p>
+            <div className="td-origins rv">
+              <span>We work with brands and manufacturers from</span>
+              <ul>{ORIGINS.map((o) => <li key={o}><Flap text={o} len={o.length} /></li>)}</ul>
+              <a className="textlink" href={CASE_STUDIES_URL}>Read the case studies</a>
+            </div>
           </div>
-        </Sec>
+        </section>
 
-        <section className="tile dark td-close">
-          <div className="copy">
-            <h2 className="rv">Your first US drop<br /><em>starts with one call.</em></h2>
-            <p className="tag rv">30 minutes on your brand, your audience and your goals. Leave with a clear view of what a Test Drop would look like for you.</p>
-            <div className="links rv"><a className="pill fill" href={BOOK}>Book a 30-minute intro</a></div>
+        <section className="sec" id="steps">
+          <div className="wrap">
+            <Head>Your first US drop, in four steps.</Head>
+            <ol className="td-next">
+              {NEXT.map(([tag, h, p], n) => (
+                <li key={h} className="rv">
+                  <span className="n">{n + 1}</span>
+                  <h3 className="h3">{h}</h3>
+                  <span className="cap tag">{tag}</span>
+                  <p>{p}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="sec tight" id="faq">
+          <div className="wrap">
+            <Head>Questions brands ask us first.</Head>
+            <div className="essay td-faq">
+              {FAQ.map(([q, a]) => (
+                <details key={q}>
+                  <summary><span className="h3">{q}</span><span className="pm" aria-hidden="true" /></summary>
+                  <p>{a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="dark td-close">
+          <div className="wrap">
+            <h2 className="h2 rv">Your first US drop starts with one call.</h2>
+            <p className="lede rv">30 minutes on your brand, your audience and your goals. Leave with a clear view of what a Test Drop would look like for you.</p>
+            <div className="acts rv"><a className="plate go" href={BOOK}>Book a 30-minute intro</a></div>
           </div>
         </section>
       </main>
-      <Footer base="/" />
+      <BoardFooter base="/" notes={false} />
     </div>
   )
 }
