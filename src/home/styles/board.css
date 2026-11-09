@@ -104,6 +104,7 @@ img,svg{max-width:100%}
 .board .heads .cap{color:#7d807d;font-size:11px}
 .board .row{padding:5px 0}
 .share{display:flex;gap:2px;justify-self:start}
+.board .row .c-t{display:none}
 .share s{display:block;width:calc(var(--cw)*.5);height:calc(var(--cw)*1.5);background:var(--cell);border-radius:1px;transition:background-color .5s}
 .share s.on{background:var(--flap-dim)}
 .row.mk .share s.on{background:var(--go)}
@@ -255,13 +256,16 @@ img,svg{max-width:100%}
   .essay .body .q{margin-bottom:16px}
 }
 @media (max-width:640px){
-  .board .rows{--cw:calc((100cqi - 34px) / 18)}
+  /* One line per row: plain-text label, then amount and status cells,
+     with the share of $40 as a thin bar underneath. */
+  .board .rows{--cw:clamp(11px,calc((100cqi - 150px) / 13 - 2px),16px)}
   .board .heads{display:none}
-  .board .row{grid-template-columns:auto 1fr auto;gap:4px 8px;padding:8px 0;border-bottom:1px solid #22262c}
-  .board .row .c-l{grid-column:1/-1}
-  .board .row .share{display:none}
-  .board .row .c-a{grid-column:1}
-  .board .row .c-s{grid-column:3}
+  .board .row{grid-template-columns:minmax(0,1fr) auto auto;gap:7px 10px;padding:10px 0;border-bottom:1px solid #22262c}
+  .board .row:last-child{border-bottom:0}
+  .board .row .c-l{display:none}
+  .board .row .c-t{display:block;font-size:15px;font-weight:650;font-stretch:88%;line-height:1.15;color:var(--flap)}
+  .board .row .share{grid-column:1/-1;grid-row:2;display:flex;width:100%}
+  .board .row .share s{flex:1;width:auto;height:4px}
   .trio,.panels,.signs{grid-template-columns:1fr}
   .sign{min-height:0;gap:20px;flex-direction:row;align-items:center}
   .bfoot .dir{grid-template-columns:1fr 1fr}
@@ -272,3 +276,4 @@ img,svg{max-width:100%}
   .js .rv{opacity:1;transform:none;transition:none}
   .share s,.switch button,.calc .cells s{transition:none}
 }
+.panels .note{grid-column:1/-1;margin:0}
