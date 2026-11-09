@@ -1,0 +1,21 @@
+# Hourly Outside Context digest to Discord. Vercel Hobby crons run only daily, so GitHub
+# Actions calls the endpoint instead. Needs repo secret OC_CRON_SECRET (= Vercel CRON_SECRET).
+name: Outside Context digest
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Post even if the hour was quiet"
+        type: boolean
+        default: false
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Post digest
+        run: |
+          curl -fsS --retry 2 -H "Authorization: Bearer ${{ secrets.OC_CRON_SECRET }}" \
+            "https://www.vybd.ai/api/oc/digest${{ inputs.force && '?force=1' || '' }}"

@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en">
 <!-- Outside Context community page. Served at /outside-context (the URL printed on the
-     posters and in their QR code) and /outsidecontext, via vercel.json. Plain static HTML. -->
+     posters and in their QR code) and /outsidecontext, via vercel.json. Plain static HTML.
+     Sign-up posts to /api/oc/signup, page events to /api/oc/track, community link is /api/oc/join. -->
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,12 +29,20 @@
     @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
-    :root { --paper: #F4F1EA; --ink: #111111; --gray: #6B6B6B; --accent: #C4552D; color-scheme: light; }
+    :root {
+      --paper: #F4F1EA; --ink: #111111; --gray: #5F5F5F; --line: rgba(17,17,17,.2);
+      --accent: #C4552D; --error: #A3311A;
+      --ease: cubic-bezier(.16, 1, .3, 1);
+      color-scheme: light;
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { background: var(--paper); }
+    html { background: var(--paper); scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    ::selection { background: var(--accent); color: var(--paper); }
     body { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center;
       background: var(--paper); color: var(--ink); font-family: "EB Garamond", Georgia, "Times New Roman", serif;
-      text-align: center; font-kerning: normal; -webkit-font-smoothing: antialiased; padding: clamp(48px, 9vh, 96px) 24px 40px; }
+      text-align: center; font-kerning: normal; -webkit-font-smoothing: antialiased; padding: clamp(48px, 9vh, 96px) 24px 40px;
+      caret-color: var(--accent); }
     main { flex: 1; display: flex; flex-direction: column; align-items: center; max-width: 640px; width: 100%; }
     .mark { width: clamp(120px, 22vw, 168px); height: auto; transform: translateX(8%); }
     h1 { margin-top: clamp(28px, 5vh, 48px); font-weight: 400; font-size: clamp(56px, 13vw, 104px); line-height: .94; letter-spacing: -.012em; }
@@ -46,10 +55,96 @@
     .when .sep { color: var(--gray); padding: 0 .3em; }
     .when a { border-bottom: 1px solid rgba(17,17,17,.25); color: inherit; text-decoration: none; transition: border-color .2s; }
     .when a:hover { border-color: var(--accent); }
-    footer { margin-top: 64px; font-size: 15px; color: var(--gray); }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    /* ---------- call to action ---------- */
+    .btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+      font: inherit; font-size: 20px; line-height: 1; letter-spacing: .01em; padding: 16px 30px 17px; min-height: 52px;
+      border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: var(--paper);
+      text-decoration: none; cursor: pointer; transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
+    .btn:hover { background: var(--accent); border-color: var(--accent); }
+    .btn:active { transform: translateY(1px); }
+    .btn[disabled] { cursor: progress; opacity: .7; }
+    .btn.ghost { background: transparent; color: var(--ink); }
+    .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .btn svg { width: 18px; height: 18px; flex: none; }
+    .cta { margin-top: 36px; }
+    .cta-note { margin-top: 12px; font-size: 16px; color: var(--gray); font-style: italic; }
+
+    /* ---------- sign-up ---------- */
+    .join { width: 100%; max-width: 30rem; margin-top: clamp(80px, 13vh, 120px); text-align: left; scroll-margin-top: 32px; }
+    .join h2 { font-weight: 400; font-size: clamp(38px, 7vw, 50px); line-height: 1; letter-spacing: -.01em; text-align: center; }
+    .join .lede { margin-top: 12px; font-size: 18px; line-height: 1.45; color: var(--gray); text-align: center; text-wrap: balance; }
+    .step { margin-top: 44px; }
+    .step[hidden] { display: none; }
+    .step.enter { animation: rise .7s var(--ease) both; }
+    @keyframes rise { from { opacity: .001; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+    @media (prefers-reduced-motion: reduce) { .step.enter { animation: none; } }
+
+    .q { border: 0; margin-top: 32px; min-width: 0; }
+    .q:first-child { margin-top: 0; }
+    .q > label, .q > legend { display: block; font-size: 19px; font-weight: 500; line-height: 1.3; margin-bottom: 10px; padding: 0; }
+    .q .hint { display: block; margin-top: 4px; font-weight: 400; color: var(--gray); font-style: italic; font-size: 17px; }
+    .q legend .hint { display: inline; margin: 0 0 0 .35em; }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%; font: inherit; font-size: 20px; color: var(--ink); background: transparent;
+      border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 8px 0 10px;
+      transition: border-color .2s; }
+    textarea { border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; min-height: 9.5em; resize: vertical; line-height: 1.4; background: rgba(255,255,255,.35); }
+    input::placeholder, textarea::placeholder { color: #737373; font-style: italic; opacity: 1; }
+    input[type="text"]:hover, input[type="email"]:hover, textarea:hover { border-color: rgba(17,17,17,.45); }
+    input[type="text"]:focus, input[type="email"]:focus, textarea:focus { outline: none; border-color: var(--ink); }
+    input[type="text"]:focus-visible, input[type="email"]:focus-visible { box-shadow: 0 1px 0 0 var(--ink); }
+    textarea:focus-visible { box-shadow: 0 0 0 1px var(--ink); }
+    [aria-invalid="true"] { border-color: var(--error) !important; }
+    .err { color: var(--error); font-size: 16px; margin-top: 6px; }
+    .err:empty { display: none; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { position: relative; }
+    .chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    .chip span { display: inline-flex; align-items: baseline; min-height: 44px; padding: 11px 18px 10px; border: 1px solid var(--line);
+      border-radius: 999px; font-size: 18px; line-height: 1.1; transition: background .2s, border-color .2s, color .2s; }
+    .chip input:hover + span { border-color: var(--ink); }
+    .chip input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .chip small { font-size: 15px; font-style: italic; opacity: .75; margin-left: .4em; }
+    #field-other-wrap { margin-top: 14px; }
+    #field-other-wrap[hidden] { display: none; }
+
+    .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .actions { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+    .link-btn { appearance: none; background: none; border: 0; font: inherit; font-size: 18px; color: var(--gray); cursor: pointer;
+      text-decoration: underline; text-decoration-color: rgba(95,95,95,.4); text-underline-offset: .2em; padding: 10px 0; }
+    .link-btn:hover { color: var(--ink); text-decoration-color: var(--accent); }
+    .form-err { margin-top: 18px; color: var(--error); font-size: 17px; }
+    .form-err:empty { display: none; }
+    .fine { margin-top: 20px; font-size: 15px; color: var(--gray); line-height: 1.4; }
+
+    /* ---------- done ---------- */
+    .done { text-align: center; outline: none; }
+    .done .seal { width: 56px; height: 56px; margin: 0 auto 22px; display: block; }
+    .done h3 { font-weight: 400; font-size: clamp(34px, 7vw, 44px); line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
+    .ticket { margin: 28px auto 0; padding: 22px 12px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); max-width: 24rem; }
+    .ticket .day { font-size: 26px; line-height: 1.15; }
+    .ticket .place { margin-top: 6px; font-size: 18px; color: var(--gray); }
+    .ticket .place a { color: var(--ink); text-decoration: underline; text-decoration-color: rgba(17,17,17,.3); text-underline-offset: .18em; }
+    .ticket .place a:hover { text-decoration-color: var(--accent); }
+    .done .actions { justify-content: center; margin-top: 28px; }
+    .done .next { margin-top: 44px; font-size: 18px; line-height: 1.45; color: var(--gray); text-wrap: balance; }
+    .done .next strong { font-weight: 500; color: var(--ink); }
+    .done .community { margin-top: 18px; }
+
+    footer { margin-top: 88px; font-size: 15px; color: var(--gray); }
     footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(107,107,107,.3); }
     footer a:hover { color: var(--ink); }
-    @media (max-width: 420px) { .when .sep { display: block; height: 0; overflow: hidden; } }
+    @media (max-width: 420px) {
+      .when .sep { display: block; height: 0; overflow: hidden; }
+      .actions { flex-direction: column; align-items: stretch; }
+      .actions .btn { width: 100%; }
+      .link-btn { align-self: center; }
+    }
   </style>
 </head>
 <body>
@@ -65,7 +160,301 @@
     <p class="tagline">Figuring out the future of work, together.</p>
     <p class="desc">A Jersey City community for freelancers, builders, professionals and anyone rethinking how they work alongside AI. Real conversations, people from every field.</p>
     <p class="when">Sundays · 5pm<span class="sep">·</span><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Indian+Tapas+Exchange+Place+Jersey+City" target="_blank" rel="noopener">The Indian Tapas, Exchange Place</a></p>
+    <a class="btn cta" href="#join" data-track="cta">Save me a seat</a>
+    <p class="cta-note">Free. Takes thirty seconds.</p>
+
+    <section class="join" id="join" aria-labelledby="join-title">
+      <h2 id="join-title">Pull up a chair</h2>
+      <p class="lede">Tell us you're coming so we know how many seats to save, and who's in the room.</p>
+
+      <!-- Step 1: register -->
+      <form class="step" id="step-register" novalidate>
+        <div class="q">
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" maxlength="120" required placeholder="First and last" />
+          <p class="err" id="name-err"></p>
+        </div>
+        <div class="q">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required placeholder="you@example.com" />
+          <p class="err" id="email-err"></p>
+        </div>
+        <fieldset class="q">
+          <legend>What do you do?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="field" value="freelancer" /><span>Freelancer</span></label>
+            <label class="chip"><input type="radio" name="field" value="builder" /><span>Builder</span></label>
+            <label class="chip"><input type="radio" name="field" value="professional" /><span>Professional</span></label>
+            <label class="chip"><input type="radio" name="field" value="student" /><span>Student</span></label>
+            <label class="chip"><input type="radio" name="field" value="other" /><span>Something else</span></label>
+          </div>
+          <div id="field-other-wrap" hidden>
+            <label class="sr" for="field_other">What do you do?</label>
+            <input id="field_other" name="field_other" type="text" maxlength="120" placeholder="Teacher, nurse, chef, lawyer…" />
+          </div>
+        </fieldset>
+        <fieldset class="q">
+          <legend>Which Sunday?<span class="hint">5pm</span></legend>
+          <div class="chips" id="sundays"></div>
+        </fieldset>
+        <fieldset class="q">
+          <legend>How did you hear about us?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="source" value="poster" /><span>A poster</span></label>
+            <label class="chip"><input type="radio" name="source" value="friend" /><span>A friend</span></label>
+            <label class="chip"><input type="radio" name="source" value="linkedin" /><span>LinkedIn</span></label>
+            <label class="chip"><input type="radio" name="source" value="instagram" /><span>Instagram</span></label>
+            <label class="chip"><input type="radio" name="source" value="other" /><span>Elsewhere</span></label>
+          </div>
+        </fieldset>
+        <div class="hp" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">Save my seat</button>
+        </div>
+        <p class="form-err" role="alert" id="register-err"></p>
+        <p class="fine">We only use your email for Outside Context. No newsletter blasts, and we never sell it.</p>
+      </form>
+
+      <!-- Step 2: onboarding -->
+      <form class="step" id="step-onboard" hidden novalidate>
+        <div class="q">
+          <label for="ai_use">You're in, <span data-first-name>friend</span>. One question before Sunday: how does AI show up in your work right now?
+            <span class="hint">A sentence is plenty. It helps us shape the conversation.</span></label>
+          <textarea id="ai_use" name="ai_use" maxlength="1000" placeholder="I use it to draft proposals, but I'm not sure what it means for my rates…"></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">Send</button>
+          <button class="link-btn" type="button" id="skip">Skip for now</button>
+        </div>
+        <p class="form-err" role="alert" id="onboard-err"></p>
+      </form>
+
+      <!-- Step 3: done -->
+      <div class="step done" id="step-done" hidden tabindex="-1">
+        <svg class="seal" viewBox="0 0 56 56" aria-hidden="true">
+          <circle cx="28" cy="28" r="26.5" fill="none" stroke="#111" stroke-width="1" />
+          <path d="M18 28.5l7 7 13-15" fill="none" stroke="#C4552D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <h3>See you Sunday, <span data-first-name>friend</span>.</h3>
+        <div class="ticket">
+          <p class="day" id="done-day">Sunday · 5pm</p>
+          <p class="place"><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Indian+Tapas+Exchange+Place+Jersey+City" target="_blank" rel="noopener">The Indian Tapas, Exchange Place</a></p>
+        </div>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="ics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+            Add to calendar
+          </button>
+          <a class="link-btn" id="gcal" href="#" target="_blank" rel="noopener" data-track="calendar">Google Calendar</a>
+        </div>
+        <p class="next">The conversation doesn't stop on Sunday. <strong>Join the community</strong> to meet people before you show up and keep talking after.</p>
+        <a class="btn community" href="/api/oc/join" target="_blank" rel="noopener" data-track="community">Join the community</a>
+      </div>
+    </section>
   </main>
   <footer><a href="/">vybd.ai</a></footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var TZ = "America/New_York";
+    var VENUE = "The Indian Tapas, Exchange Place, Jersey City, NJ";
+    var params = new URLSearchParams(location.search);
+    var utm = (params.get("utm_source") || params.get("ref") || "").slice(0, 60) || null;
+    var store = {
+      get: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+      set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    };
+
+    function track(event) {
+      var body = JSON.stringify({ event: event, path: location.pathname, referrer: document.referrer || null, utm_source: utm });
+      try {
+        if (navigator.sendBeacon && navigator.sendBeacon("/api/oc/track", new Blob([body], { type: "application/json" }))) return;
+      } catch (e) {}
+      fetch("/api/oc/track", { method: "POST", body: body, headers: { "content-type": "application/json" }, keepalive: true }).catch(function () {});
+    }
+    track("view");
+    document.addEventListener("click", function (e) {
+      var el = e.target.closest && e.target.closest("[data-track]");
+      if (el) track(el.getAttribute("data-track"));
+    });
+
+    /* Dates in New York time. Next four Sundays; today counts until 5pm. */
+    function nyParts(d) {
+      var p = {};
+      new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" })
+        .formatToParts(d).forEach(function (x) { p[x.type] = x.value; });
+      return p;
+    }
+    function nyToday() { var p = nyParts(new Date()); return p.year + "-" + p.month + "-" + p.day; }
+    function upcomingSundays(count) {
+      var p = nyParts(new Date());
+      var base = new Date(Date.UTC(+p.year, +p.month - 1, +p.day));
+      var add = (7 - base.getUTCDay()) % 7;
+      if (add === 0 && +p.hour >= 17) add = 7;
+      var out = [];
+      for (var i = 0; i < count; i++) out.push(new Date(base.getTime() + (add + 7 * i) * 864e5).toISOString().slice(0, 10));
+      return out;
+    }
+    function label(iso, long) {
+      return new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", long
+        ? { weekday: "long", month: "long", day: "numeric", timeZone: "UTC" }
+        : { month: "short", day: "numeric", timeZone: "UTC" });
+    }
+    var sundays = upcomingSundays(4);
+    document.getElementById("sundays").innerHTML = sundays.map(function (iso, i) {
+      var tag = i === 0 ? "<small>" + (iso === nyToday() ? "today" : "this week") + "</small>" : "";
+      return '<label class="chip"><input type="radio" name="sunday" value="' + iso + '"' + (i === 0 ? " checked" : "") + " /><span>" + label(iso) + tag + "</span></label>";
+    }).join("");
+
+    var reg = document.getElementById("step-register");
+    var onb = document.getElementById("step-onboard");
+    var done = document.getElementById("step-done");
+    var otherWrap = document.getElementById("field-other-wrap");
+
+    reg.addEventListener("change", function (e) {
+      if (e.target.name === "field") {
+        otherWrap.hidden = e.target.value !== "other";
+        if (!otherWrap.hidden) document.getElementById("field_other").focus();
+      }
+    });
+
+    function setErr(id, msg) {
+      var input = document.getElementById(id);
+      document.getElementById(id + "-err").textContent = msg || "";
+      if (msg) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+      input.setAttribute("aria-describedby", id + "-err");
+    }
+    ["name", "email"].forEach(function (id) {
+      document.getElementById(id).addEventListener("input", function () { setErr(id, ""); });
+    });
+
+    var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function show(step) {
+      [reg, onb, done].forEach(function (s) { s.hidden = s !== step; s.classList.remove("enter"); });
+      void step.offsetWidth;
+      step.classList.add("enter");
+      document.getElementById("join").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+      var target = step.querySelector("textarea") || step;
+      setTimeout(function () { try { target.focus({ preventScroll: true }); } catch (e) {} }, reduce ? 0 : 400);
+    }
+
+    var me = store.get("oc_signup") || {};
+
+    function personalize() {
+      var first = (me.name || "").split(" ")[0] || "friend";
+      document.querySelectorAll("[data-first-name]").forEach(function (el) { el.textContent = first; });
+      var day = me.sunday || sundays[0];
+      document.getElementById("done-day").textContent = label(day, true) + " · 5pm";
+      var d = day.replace(/-/g, "");
+      document.getElementById("gcal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+        "&text=" + encodeURIComponent("Outside Context") +
+        "&dates=" + d + "T170000/" + d + "T190000&ctz=" + TZ +
+        "&location=" + encodeURIComponent(VENUE) +
+        "&details=" + encodeURIComponent("Figuring out the future of work, together. https://www.vybd.ai/outside-context");
+    }
+
+    async function post(payload) {
+      var r = await fetch("/api/oc/signup", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+      var data = {};
+      try { data = await r.json(); } catch (e) {}
+      if (!r.ok || !data.ok) {
+        var err = new Error(data.error || "We couldn't save that. Check your connection and try again.");
+        err.field = data.field;
+        throw err;
+      }
+      return data;
+    }
+
+    function busy(form, on, text) {
+      var b = form.querySelector("button[type=submit]");
+      if (!b.dataset.label) b.dataset.label = b.textContent;
+      b.disabled = on;
+      b.textContent = on ? text : b.dataset.label;
+    }
+
+    reg.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var f = new FormData(reg);
+      var name = String(f.get("name") || "").trim();
+      var email = String(f.get("email") || "").trim();
+      var badName = !name, badEmail = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+      setErr("name", badName ? "Tell us your name." : "");
+      setErr("email", badEmail ? (email ? "That email doesn't look right. Check for typos." : "We need an email to hold your seat.") : "");
+      if (badName || badEmail) { document.getElementById(badName ? "name" : "email").focus(); return; }
+      var payload = {
+        name: name, email: email, field: f.get("field"), field_other: f.get("field_other"),
+        sunday: f.get("sunday"), source: f.get("source"), utm_source: utm, website: f.get("website")
+      };
+      document.getElementById("register-err").textContent = "";
+      busy(reg, true, "Saving…");
+      try {
+        await post(payload);
+        me = { name: name, email: email, sunday: payload.sunday };
+        store.set("oc_signup", me);
+        track("register");
+        personalize();
+        show(onb);
+      } catch (err) {
+        if (err.field === "name" || err.field === "email") setErr(err.field, err.message);
+        else document.getElementById("register-err").textContent = err.message;
+      } finally { busy(reg, false); }
+    });
+
+    function finish() { me.done = true; store.set("oc_signup", me); show(done); }
+    function skip() { track("skip_onboard"); finish(); }
+    onb.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var answer = document.getElementById("ai_use").value.trim();
+      if (!answer) { skip(); return; }
+      document.getElementById("onboard-err").textContent = "";
+      busy(onb, true, "Sending…");
+      try {
+        await post({ step: "onboard", email: me.email, ai_use: answer });
+        track("onboard");
+        finish();
+      } catch (err) { document.getElementById("onboard-err").textContent = err.message; }
+      finally { busy(onb, false); }
+    });
+    document.getElementById("skip").addEventListener("click", skip);
+
+    document.getElementById("ics").addEventListener("click", function () {
+      track("calendar");
+      var d = (me.sunday || sundays[0]).replace(/-/g, "");
+      var stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + "Z";
+      var ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//vybd.ai//Outside Context//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+        "BEGIN:VEVENT",
+        "UID:oc-" + d + "-" + Math.random().toString(36).slice(2) + "@vybd.ai",
+        "DTSTAMP:" + stamp,
+        "DTSTART;TZID=" + TZ + ":" + d + "T170000",
+        "DTEND;TZID=" + TZ + ":" + d + "T190000",
+        "SUMMARY:Outside Context",
+        "LOCATION:" + VENUE.replace(/,/g, "\\,"),
+        "DESCRIPTION:Figuring out the future of work\\, together. https://www.vybd.ai/outside-context",
+        "URL:https://www.vybd.ai/outside-context",
+        "END:VEVENT", "END:VCALENDAR"
+      ].join("\r\n");
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+      a.download = "outside-context-" + d + ".ics";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+
+    /* Returning visitor already registered for an upcoming Sunday: show their seat. */
+    personalize();
+    if (me.email && me.done && me.sunday && me.sunday >= nyToday()) {
+      reg.hidden = true; onb.hidden = true; done.hidden = false;
+      document.querySelector(".cta").textContent = "You're on the list";
+    } else {
+      if (me.name) document.getElementById("name").value = me.name;
+      if (me.email) document.getElementById("email").value = me.email;
+    }
+  })();
+  </script>
 </body>
 </html>
