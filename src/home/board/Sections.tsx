@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { CHAPTERS } from '@/home/data/chapters'
 import { CASE_STUDIES_URL } from '@/home/data/cases'
 import { PLANS } from '@/home/data/pricing'
 import { Flap } from './Flap'
+import { prefersReducedMotion, useInView, useSequence } from './motion'
 
 const Check = () => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 8.5l3.2 3L13 4.5" /></svg>
 const Dash = () => <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 8h8" /></svg>
@@ -18,14 +19,14 @@ const AGENTS = [
   { title: 'Invoice mismatch, $412', sub: '3PL storage, flagged for an operator', st: 'Flagged', tone: 'rent' },
   { title: 'Listings synced, 4 channels', sub: 'Amazon, Shopify, Walmart, TikTok', st: 'Done', tone: 'go' },
 ]
-const cells = (score: number) => Array.from({ length: 10 }, (_, k) => <s key={k} className={k < Math.round(score / 10) ? 'on' : undefined} />)
+const cells = (score: number) => Array.from({ length: 10 }, (_, k) => <s key={k} className={k < Math.round(score / 10) ? 'on' : undefined} style={{ '--k': k } as CSSProperties} />)
 
 export function SupplyChain() {
   return (
     <section className="path dark" id="chain">
       <div className="wrap">
         <div className="copy">
-          <h2 className="h2 rv">Vybd Supply Chain</h2>
+          <h2 className="h2 rv">Vybd Supply <em>Chain</em></h2>
           <span className="who rv">For brands already selling</span>
           <p className="lede rv">Run it better. <b>Pay only for what earns its place.</b></p>
           <div className="acts rv">
@@ -36,62 +37,81 @@ export function SupplyChain() {
         <div className="panels rv">
           <div className="panel">
             <div className="ttl cap"><span>Landed cost / unit</span><b>Live</b></div>
-            <div className="kpi"><Flap text="$9.42" len={5} className="mid" /><small>−18% vs Q2</small></div>
+            <div className="kpi"><Flap text="$9.42" len={5} className="mid" /><small className="later">−18% vs Q2</small></div>
           </div>
           <div className="panel">
             <div className="ttl cap"><span>Partners, scored</span><b>6</b></div>
-            {PARTNERS.slice(0, 3).map(([n, s, lo]) => (
-              <div className={'score' + (lo ? ' lo' : '')} key={n}><span>{n}</span><span className="bar">{cells(s)}</span><b>{s}</b></div>
+            {PARTNERS.slice(0, 3).map(([n, s, lo], i) => (
+              <div className={'score' + (lo ? ' lo' : '')} key={n} style={{ '--i': i } as CSSProperties}><span>{n}</span><span className="bar">{cells(s)}</span><b>{s}</b></div>
             ))}
           </div>
           <div className="panel wide">
             <div className="ttl cap"><span>Agents today</span><b>3 running</b></div>
-            {AGENTS.map((a) => (
+            {AGENTS.map((a, i) => (
               <div className="prow" key={a.title}>
                 <span className="lbl">{a.title}</span>
-                <span className="st"><Flap text={a.st} len={7} className={a.tone} /></span>
+                <span className="st"><Flap text={a.st} len={7} delay={400 + i * 450} className={a.tone} /></span>
                 <span className="sub">{a.sub}</span>
               </div>
             ))}
+            <p className="pfoot">Example data.</p>
           </div>
-          <p className="note">Example data.</p>
         </div>
       </div>
     </section>
   )
 }
 
+/* Each shipment walks the journey one step at a time, then holds where it
+   is, so the board ends showing goods at different stages. */
+const JOURNEY = ['Departed', 'At sea', 'At customs', 'Cleared', 'On sale']
 const ARRIVALS = [
-  { goods: 'Spices', from: 'India', st: 'Cleared', tone: 'go' },
-  { goods: 'Skincare', from: 'Korea', st: 'On time', tone: '' },
-  { goods: 'Electronics', from: 'China', st: 'Landing', tone: '' },
+  { goods: 'Spices', from: 'India', end: 4 },
+  { goods: 'Skincare', from: 'Korea', end: 3 },
+  { goods: 'Electronics', from: 'China', end: 2 },
 ]
+const STEP_MS = 1600
+const reached = (t: number) => ARRIVALS.map((a) => Math.min(t, a.end))
 
 export function ForTheUS() {
+  const [ref, seen] = useInView<HTMLDivElement>()
+  const last = Math.max(...ARRIVALS.map((a) => a.end))
+  const [t, setT] = useState(0)
+  useSequence(Array.from({ length: last }, (_, k): [number, () => void] => [k ? STEP_MS : 900, () => setT(k + 1)]), seen)
+  const steps = reached(seen ? t : 0)
+  const reduced = prefersReducedMotion()
+  const at = reduced ? ARRIVALS.map((a) => a.end) : steps
+
   return (
-    <section className="path flip hall" id="us">
+    <section className="path flip" id="us">
       <div className="wrap">
         <div className="copy">
-          <h2 className="h2 rv">Vybd for the US</h2>
+          <h2 className="h2 rv">Vybd for the <em>US</em></h2>
           <span className="who rv">For makers outside the US</span>
           <p className="lede rv">Made anywhere. <b>Sold in the US.</b></p>
           <div className="acts rv">
-            <a className="plate ink" href="/us">Plan my launch</a>
+            <a className="plate go" href="/us">Plan my launch</a>
             <a className="plate line" href="/test-drop">Start with a Test Drop</a>
           </div>
         </div>
         <div className="rv">
-          <div className="panel">
+          <div className="panel arrivals" ref={ref}>
             <div className="ttl cap"><span>Arrivals · USA</span><b>Ship to USA</b></div>
-            {ARRIVALS.map((a) => (
-              <div className="prow" key={a.goods}>
-                <span className="lbl"><Flap text={a.goods} len={11} /></span>
-                <span className="st"><Flap text={a.st} len={7} className={a.tone} /></span>
-                <span className="sub">From {a.from}</span>
-              </div>
-            ))}
+            {ARRIVALS.map((a, i) => {
+              const st = JOURNEY[at[i]]
+              return (
+                <div className="prow" key={a.goods}>
+                  <span className="lbl"><Flap text={a.goods} len={11} delay={i * 120} /></span>
+                  <span className="st"><Flap text={st} len={10} align="right" className={at[i] >= 3 ? 'go' : ''} /></span>
+                  <span className="sub">From {a.from}</span>
+                  <span className="trip" role="img" aria-label={`Step ${at[i] + 1} of ${JOURNEY.length}: ${st}`}>
+                    {JOURNEY.map((j, k) => <s key={j} className={k <= at[i] ? 'on' : undefined} />)}
+                  </span>
+                </div>
+              )
+            })}
+            <p className="pfoot"><span>{JOURNEY.join(' → ')}</span><span>Illustrative.</span></p>
           </div>
-          <p className="note">Illustrative.</p>
         </div>
       </div>
     </section>
@@ -104,11 +124,11 @@ const AOV = 40
 const BILLABLE_LB = Math.ceil(Math.max(1.5, (12 * 9 * 5) / 139))
 const UNIT_LOGISTICS = 5.5 + 1.2 * Math.max(0, BILLABLE_LB - 1) + 2.5 + 0.5 + 0.5 + 0.6
 const SPLIT = [
-  { name: 'Product cost', color: '#575d66' },
-  { name: 'Logistics', color: '#8a9099' },
-  { name: 'Marketing', color: '#b7bcc3' },
-  { name: 'Vybd', color: '#111316' },
-  { name: 'You keep', color: '#1bb59b' },
+  { name: 'Product cost', color: '#3a4a6b' },
+  { name: 'Logistics', color: '#7E8AA3' },
+  { name: 'Marketing', color: '#B9C2D3' },
+  { name: 'Vybd', color: '#0f1b33' },
+  { name: 'You keep', color: '#1BB59B' },
 ]
 function model(rev: number) {
   const logistics = (rev / AOV) * UNIT_LOGISTICS
@@ -126,10 +146,17 @@ const CALC_CELLS = 40
 export function EnterpriseAndCalc() {
   const [rev, setRev] = useState(250000)
   const { keep, shares } = model(rev)
+  // The cells follow the slider live; the flap value waits until the hand
+  // pauses, so it doesn't flicker through every step of a drag.
+  const [settledKeep, setSettledKeep] = useState(keep)
+  useEffect(() => {
+    const id = window.setTimeout(() => setSettledKeep(keep), 150)
+    return () => window.clearTimeout(id)
+  }, [keep])
   // Paint 40 cells by cumulative share so the row reads like a lit board.
   const bounds = shares.map((_, i) => shares.slice(0, i + 1).reduce((a, b) => a + b, 0))
   const colorAt = (k: number) => SPLIT[Math.max(0, bounds.findIndex((b) => (k + 0.5) / CALC_CELLS <= b + 1e-9))].color
-  const kept = (keep < 0 ? '-$' : '$') + fmt(Math.abs(Math.round(keep)))
+  const kept = (settledKeep < 0 ? '-$' : '$') + fmt(Math.abs(Math.round(settledKeep)))
 
   return (
     <div className="duo">
@@ -142,10 +169,10 @@ export function EnterpriseAndCalc() {
             <a className="plate go" href="/enterprise">Learn more</a>
             <a className="plate line" href="/book">Talk to sales</a>
           </div>
-          <div className="panel duties rv" style={{ background: 'var(--cell)' }}>
+          <div className="panel duties rv">
             <div className="ttl cap"><span>On duty</span><b>Agents + operator</b></div>
-            {['Reorders', 'Deductions', 'Reporting'].map((d) => (
-              <div className="prow" key={d}><span className="lbl"><Flap text={d} len={10} /></span><span className="st"><Flap text="Running" len={7} className="go" /></span></div>
+            {['Reorders', 'Deductions', 'Reporting'].map((d, i) => (
+              <div className="prow" key={d}><span className="lbl"><Flap text={d} len={10} delay={i * 120} /></span><span className="st"><Flap text="Running" len={7} delay={500 + i * 350} className="go" /></span></div>
             ))}
           </div>
         </div>
@@ -158,7 +185,7 @@ export function EnterpriseAndCalc() {
             <div className="lab"><label htmlFor="rev">Yearly US sales</label><b>${fmt(rev)}</b></div>
             <input id="rev" type="range" min={50000} max={2000000} step={10000} value={rev} onChange={(e) => setRev(+e.target.value)} />
             <div className="res">You'd keep about</div>
-            <Flap text={kept} len={9} align="right" className={'big ' + (keep < 0 ? 'rent' : 'go')} />
+            <Flap text={kept} len={9} align="right" className={'big ' + (settledKeep < 0 ? 'rent' : 'go')} />
             <div className="cells" aria-hidden="true">
               {Array.from({ length: CALC_CELLS }, (_, k) => <s key={k} style={{ background: colorAt(k) }} />)}
             </div>
@@ -219,8 +246,8 @@ export function Record() {
           <p className="rv">See what each partner, and we, charged on every order.</p>
           <div className="panel rv">
             <div className="ttl cap"><span>Example order · illustrative</span><b>$40.00</b></div>
-            {LEDGER.map(([k, v]) => <div className="lrow" key={k}><span>{k}</span><b>{v}</b></div>)}
-            <div className="lrow tot"><span>To the maker</span><b>$17.20</b></div>
+            {LEDGER.map(([k, v], i) => <div className="lrow" key={k} style={{ '--i': i } as CSSProperties}><span>{k}</span><b>{v}</b></div>)}
+            <div className="lrow tot" style={{ '--i': LEDGER.length + 1 } as CSSProperties}><span>To the maker</span><b>$17.20</b></div>
           </div>
         </div>
         <div>
@@ -228,10 +255,10 @@ export function Record() {
           <p className="rv">One lane at a time. <a className="textlink" href="#chapters">See the gates</a></p>
           <div className="panel rv">
             <div className="ttl cap"><span>The plan</span><b>Stage 1 of 3</b></div>
-            {STAGES.map((s) => (
+            {STAGES.map((s, i) => (
               <div className="stage" key={s.title}>
                 <span className="lbl">{s.title}</span>
-                <span className="st"><Flap text={s.st} len={4} className={s.tone} /></span>
+                <span className="st"><Flap text={s.st} len={4} delay={i * 450} className={s.tone} /></span>
                 <span className="sub">{s.sub}</span>
               </div>
             ))}
@@ -242,8 +269,8 @@ export function Record() {
           <p className="rv">Real work, paid visibly, scored openly. <a className="textlink" href="/ecosystem">Join the network</a></p>
           <div className="panel rv">
             <div className="ttl cap"><span>Partner scores · examples</span><b>/100</b></div>
-            {PARTNER_SCORES.map(([k, v]) => (
-              <div className="score" key={k}><span>{k}</span><span className="bar">{cells(v)}</span><b>{v}</b></div>
+            {PARTNER_SCORES.map(([k, v], i) => (
+              <div className="score" key={k} style={{ '--i': i } as CSSProperties}><span>{k}</span><span className="bar">{cells(v)}</span><b>{v}</b></div>
             ))}
           </div>
         </div>
@@ -259,10 +286,10 @@ export function Cases() {
     <section className="cases" id="cases">
       <div className="wrap">
         <div>
-          <h2 className="h2 rv">Makers who made it here.</h2>
+          <h2 className="h2 rv">Makers who made it <em>here.</em></h2>
           <p className="lede rv">From six countries to US shelves and screens.</p>
         </div>
-        <a className="plate ink rv" href={CASE_STUDIES_URL}>See all stories <Arrow /></a>
+        <a className="plate go rv" href={CASE_STUDIES_URL}>See all stories <Arrow /></a>
       </div>
     </section>
   )
@@ -282,7 +309,7 @@ export function Essay() {
           {CHAPTERS.map((c, i) => (
             <details key={c.title}>
               <summary>
-                <span className="pn">PART {i + 1}</span>
+                <span className="pn">Part {i + 1}</span>
                 <span className="h3">{c.title}</span>
                 <p>{c.preview}</p>
                 <span className="pm" aria-hidden="true" />
@@ -317,7 +344,7 @@ export function Fares() {
               <div className="pr">{p.price}</div>
               <div className="ds">{p.desc}</div>
               <ul>{p.features.map((f) => <li key={f.text} className={f.no ? 'no' : undefined}>{f.no ? <Dash /> : <Check />}{f.no ? <><span className="sr">Not included: </span>{f.text}</> : f.text}</li>)}</ul>
-              <div className="acts"><a className={'plate ' + (p.cta.style === 'fill' ? 'go' : 'line')} href={p.cta.href}>{p.cta.label}</a></div>
+              <div className="acts"><a className={'plate ' + (i === 1 ? 'go' : 'line')} href={p.cta.href}>{p.cta.label}</a></div>
               {p.aside && <a className="aside" href={p.aside.href}>{p.aside.label}</a>}
             </div>
           ))}
