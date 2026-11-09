@@ -1,4 +1,4 @@
-/* /fund-raise (FundRaiseApp.tsx). Builds on global.css (fonts, reset,
+/* /fundraise (FundRaiseApp.tsx). Builds on global.css (fonts, reset,
    .rv reveal); everything page-specific sits under .fr. Two canvases:
    .white (navy headlines) and .navy (white text), one per section. Mint is
    a fill; mint words use mint-deep on white (large only) and mint-light on
@@ -70,6 +70,8 @@
 .fr-lockup svg{width:24px;height:22px}
 .fr-mail{font-size:15px;color:var(--on-navy-2)}
 .fr-mail:hover{color:var(--on-navy)}
+.fr-hero-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.fr-audience{font:500 16px/1.35 var(--sans);color:var(--mint-light)}
 .fr-hero h1{margin-top:24px;font-size:clamp(52px,9vw,112px);line-height:.98;color:var(--on-navy)}
 .fr-hero h1 span{display:block}
 .fr-lead{margin-top:24px;max-width:600px;font-size:clamp(19px,2vw,22px);line-height:1.45;color:var(--on-navy-2)}

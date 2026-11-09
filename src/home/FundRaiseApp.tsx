@@ -10,7 +10,7 @@ import {
 } from './data/fundRaise'
 import './styles/fund-raise.css'
 
-/* /fund-raise: the seed deck as a page for investors. Reachable by URL only:
+/* /fundraise (old path /fund-raise redirects here): the seed deck as a page for investors. Reachable by URL only:
    noindex (fund-raise.html + an X-Robots-Tag header in vercel.json), not in
    the sitemap, the nav or any link on the site. Copy and numbers live in
    data/fundRaise.ts; styles in styles/fund-raise.css under .fr. Sections
@@ -57,7 +57,10 @@ export default function FundRaiseApp() {
               <a className="fr-lockup" href="/" aria-label="Vybd home"><Logo />Vybd</a>
               <a className="fr-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
             </div>
-            <span className="fr-pill-chip rv">{hero.round}</span>
+            <div className="fr-hero-meta rv">
+              <span className="fr-pill-chip">{hero.round}</span>
+              <span className="fr-audience">{hero.audience}</span>
+            </div>
             <h1 id="hero-h" className="rv">
               {hero.lines.map((l) => <span key={l}><Em text={l} /></span>)}
             </h1>

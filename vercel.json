@@ -1,7 +1,10 @@
 {
+    "redirects": [
+        { "source": "/fund-raise", "destination": "/fundraise", "permanent": true }
+    ],
     "headers": [
         {
-            "source": "/:path(fund-raise|fund-raise\\.html)",
+            "source": "/:path(fundraise|fund-raise|fund-raise\\.html)",
             "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
         }
     ],
@@ -23,7 +26,7 @@
             "destination": "/test-drop.html"
         },
         {
-            "source": "/fund-raise",
+            "source": "/fundraise",
             "destination": "/fund-raise.html"
         },
         {
@@ -37,6 +40,10 @@
         {
             "source": "/essay",
             "destination": "/essay.html"
+        },
+        {
+            "source": "/:path(askinkind|ask-in-kind)",
+            "destination": "/askinkind.html"
         },
         {
             "source": "/(.*)",

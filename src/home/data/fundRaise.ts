@@ -1,4 +1,4 @@
-/* /fund-raise: every word and number on the investor page. Edit here;
+/* /fundraise: every word and number on the investor page. Edit here;
    layout lives in FundRaiseApp.tsx and styles/fund-raise.css.
    In headlines, wrap one word in *asterisks* to set it in italic. */
 
@@ -7,15 +7,16 @@ export const EMAIL = 'hello@vybd.ai'
 export const ESSAY_URL = '/essay#middleman'
 
 export const hero = {
+  audience: 'For CPG brands and anyone who makes a physical product',
   lines: ['Make it anywhere.', '*Sell it everywhere.*'],
-  sub: 'Market entry and operations for consumer brands, with equity in the winners.',
+  sub: 'Market entry and operations for CPG and physical-product brands, with equity in the winners.',
   round: 'Seed round · $3M',
   cta: 'Book a call',
 }
 
 export const problem = {
   eyebrow: 'The problem',
-  title: 'Selling in a new country comes with a long list of boxes to tick.',
+  title: 'Selling a physical product in a new country comes with a long list of boxes to tick.',
   boxes: [
     'Inventory planning', 'Cargo insurance', 'Funding', '3PL warehouse', 'Returns',
     'Freight', 'Retailer chargebacks', 'Tariffs and duties', 'Amazon account', 'Importer of record',
