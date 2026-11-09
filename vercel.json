@@ -1,4 +1,16 @@
 {
+    "redirects": [
+        {
+            "source": "/:path(outside-context|outsidecontext|Outside-Context|OutsideContext)/",
+            "destination": "/outside-context",
+            "permanent": true
+        },
+        {
+            "source": "/:path(Outside-Context|OutsideContext|outsidecontext)",
+            "destination": "/outside-context",
+            "permanent": true
+        }
+    ],
     "rewrites": [
         {
             "source": "/us",
