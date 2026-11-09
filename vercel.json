@@ -6,6 +6,11 @@
             "permanent": true
         },
         {
+            "source": "/outside-context/community/",
+            "destination": "/outside-context/community",
+            "permanent": true
+        },
+        {
             "source": "/:path(Outside-Context|OutsideContext|outsidecontext)",
             "destination": "/outside-context",
             "permanent": true
@@ -31,6 +36,10 @@
         {
             "source": "/signup",
             "destination": "/signup.html"
+        },
+        {
+            "source": "/outside-context/community",
+            "destination": "/outside-context-community.html"
         },
         {
             "source": "/:path(outside-context|outsidecontext)",

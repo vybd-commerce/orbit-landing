@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<!-- Outside Context community hub. Served at /outside-context/community via vercel.json.
+     Live RSVP counts from /api/oc/sessions, hand-raises and topic ideas to /api/oc/interest,
+     WhatsApp invite via /api/oc/join. Add session notes to NOTES in the script below. -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community | Outside Context</title>
+  <meta name="description" content="The Outside Context community: upcoming Sundays in Jersey City, notes from past conversations, and ways to help shape what's next." />
+  <link rel="canonical" href="https://www.vybd.ai/outside-context/community" />
+  <meta name="theme-color" content="#F4F1EA" />
+  <link rel="icon" type="image/svg+xml" href="/outside-context-icon.svg" />
+  <meta property="og:title" content="Outside Context · The community" />
+  <meta property="og:description" content="Upcoming Sundays in Jersey City, notes from past conversations, and ways to help." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.vybd.ai/outside-context/community" />
+  <meta property="og:image" content="https://www.vybd.ai/og-outside-context.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.vybd.ai/og-outside-context.png" />
+  <link rel="preload" href="/fonts/EBGaramond-Latin-Regular.woff" as="font" type="font/woff" crossorigin />
+  <script defer data-domain="vybd.ai" src="https://plausible.io/js/script.js"></script>
+  <style>
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+    :root { --paper: #F4F1EA; --ink: #111111; --gray: #5F5F5F; --line: rgba(17,17,17,.2); --accent: #C4552D; --error: #A3311A;
+      --ease: cubic-bezier(.16, 1, .3, 1); color-scheme: light; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: var(--paper); scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    ::selection { background: var(--accent); color: var(--paper); }
+    body { min-height: 100svh; display: flex; flex-direction: column; align-items: center; background: var(--paper); color: var(--ink);
+      font-family: "EB Garamond", Georgia, "Times New Roman", serif; font-kerning: normal; -webkit-font-smoothing: antialiased;
+      padding: clamp(40px, 7vh, 72px) 24px 40px; caret-color: var(--accent); }
+    main { width: 100%; max-width: 36rem; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    a { color: inherit; text-underline-offset: .18em; }
+
+    .top { display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; }
+    .top svg { width: 34px; height: auto; }
+    .top span { font-weight: 500; font-size: 17px; letter-spacing: .08em; }
+    header.intro { text-align: center; margin-top: clamp(40px, 8vh, 72px); }
+    h1 { font-weight: 400; font-size: clamp(48px, 11vw, 84px); line-height: .95; letter-spacing: -.012em; text-wrap: balance; }
+    .lede { margin: 20px auto 0; font-size: 20px; line-height: 1.45; color: var(--gray); max-width: 28em; text-wrap: balance; }
+    .count { margin-top: 16px; font-style: italic; font-size: 18px; min-height: 1.4em; }
+
+    .btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+      font: inherit; font-size: 20px; line-height: 1; padding: 16px 30px 17px; min-height: 52px; border-radius: 999px;
+      border: 1px solid var(--ink); background: var(--ink); color: var(--paper); text-decoration: none; cursor: pointer;
+      transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
+    .btn:hover { background: var(--accent); border-color: var(--accent); }
+    .btn:active { transform: translateY(1px); }
+    .btn[disabled] { cursor: progress; opacity: .7; }
+    .btn svg { width: 20px; height: 20px; flex: none; }
+    .intro .btn { margin-top: 30px; }
+
+    section { margin-top: clamp(72px, 12vh, 104px); }
+    h2 { font-weight: 400; font-size: clamp(32px, 6vw, 40px); line-height: 1.05; letter-spacing: -.01em; }
+    h2 + p { margin-top: 10px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 32em; }
+
+    .sessions { list-style: none; margin-top: 26px; border-top: 1px solid var(--ink); }
+    .sessions li { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 16px; padding: 18px 0 17px; border-bottom: 1px solid var(--line); }
+    .sessions .d { font-size: 23px; line-height: 1.2; }
+    .sessions .w { grid-column: 1; font-size: 17px; color: var(--gray); }
+    .sessions .g { grid-column: 2; grid-row: 1 / span 2; align-self: center; text-align: right; font-size: 17px; font-variant-numeric: tabular-nums; }
+    .sessions .g a { display: block; margin-top: 4px; font-size: 17px; color: var(--ink); text-decoration-color: rgba(17,17,17,.35); }
+    .sessions .g a:hover { text-decoration-color: var(--accent); }
+    .sessions .g .n { color: var(--gray); font-style: italic; }
+    .sessions li.first .d::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-left: 10px; vertical-align: .2em; }
+
+    .notes { margin-top: 26px; }
+    .note { padding: 22px 0; border-top: 1px solid var(--line); }
+    .note time { font-size: 16px; color: var(--gray); font-style: italic; }
+    .note h3 { margin-top: 4px; font-weight: 500; font-size: 22px; line-height: 1.25; }
+    .note p { margin-top: 8px; font-size: 18px; line-height: 1.5; max-width: 34em; }
+    .empty { margin-top: 26px; padding: 26px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-size: 19px; line-height: 1.5; font-style: italic; color: var(--gray); text-wrap: pretty; }
+
+    form { margin-top: 26px; }
+    fieldset { border: 0; min-width: 0; }
+    .q { margin-top: 28px; }
+    .q:first-child { margin-top: 0; }
+    .q > label, legend { display: block; font-size: 19px; font-weight: 500; line-height: 1.3; margin-bottom: 10px; padding: 0; }
+    .q .hint { font-weight: 400; color: var(--gray); font-style: italic; font-size: 17px; margin-left: .35em; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+    .row .q { margin-top: 28px; }
+    input[type="text"], input[type="email"], textarea { width: 100%; font: inherit; font-size: 20px; color: var(--ink); background: transparent;
+      border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 8px 0 10px; transition: border-color .2s; }
+    textarea { border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; min-height: 7.5em; resize: vertical; line-height: 1.4; background: rgba(255,255,255,.35); }
+    input::placeholder, textarea::placeholder { color: #737373; font-style: italic; opacity: 1; }
+    input[type="text"]:hover, input[type="email"]:hover, textarea:hover { border-color: rgba(17,17,17,.45); }
+    input:focus, textarea:focus { outline: none; border-color: var(--ink); }
+    input[type="text"]:focus-visible, input[type="email"]:focus-visible { box-shadow: 0 1px 0 0 var(--ink); }
+    textarea:focus-visible { box-shadow: 0 0 0 1px var(--ink); }
+    [aria-invalid="true"] { border-color: var(--error) !important; }
+    .err { color: var(--error); font-size: 16px; margin-top: 6px; }
+    .err:empty { display: none; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { position: relative; }
+    .chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    .chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px;
+      font-size: 18px; line-height: 1.1; transition: background .2s, border-color .2s, color .2s; }
+    .chip input:hover + span { border-color: var(--ink); }
+    .chip input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 3px; }
+    .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .actions { margin-top: 32px; }
+    .form-err { margin-top: 16px; color: var(--error); font-size: 17px; }
+    .form-err:empty { display: none; }
+    .thanks { margin-top: 26px; padding: 26px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); text-align: center; animation: rise .7s var(--ease) both; }
+    .thanks p:first-child { font-size: 26px; line-height: 1.2; }
+    .thanks p + p { margin-top: 8px; font-size: 18px; color: var(--gray); }
+    .thanks button { margin-top: 14px; }
+    @keyframes rise { from { opacity: .001; transform: translateY(12px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+    @media (prefers-reduced-motion: reduce) { .thanks { animation: none; } }
+    .link-btn { appearance: none; background: none; border: 0; font: inherit; font-size: 18px; color: var(--gray); cursor: pointer;
+      text-decoration: underline; text-decoration-color: rgba(95,95,95,.4); text-underline-offset: .2em; padding: 8px 0; }
+    .link-btn:hover { color: var(--ink); text-decoration-color: var(--accent); }
+
+    .closing { text-align: center; }
+    .closing h2 + p { margin-left: auto; margin-right: auto; }
+    .closing .btn { margin-top: 26px; }
+    footer { margin-top: 88px; font-size: 15px; color: var(--gray); display: flex; gap: 22px; }
+    footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(107,107,107,.3); }
+    footer a:hover { color: var(--ink); }
+    @media (max-width: 480px) {
+      .row { grid-template-columns: 1fr; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="top" href="/outside-context" aria-label="Outside Context home">
+      <svg viewBox="-50.9 -58.48 127.953 109.38" aria-hidden="true"><circle cx="0" cy="0" r="50" fill="none" stroke="#111" stroke-width="2.2" /><circle cx="67.553" cy="-49.08" r="9.5" fill="#C4552D" /></svg>
+      <span>OUTSIDE CONTEXT</span>
+    </a>
+
+    <header class="intro">
+      <h1>The conversation keeps going.</h1>
+      <p class="lede">Sundays are where we meet. This is where we stay in touch between them: what's coming up, what we talked about, and how to help shape what's next.</p>
+      <p class="count" id="count" aria-live="polite"></p>
+      <a class="btn" href="/api/oc/join" target="_blank" rel="noopener" data-track="community">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.6 18.6z"/></svg>
+        Join the WhatsApp community
+      </a>
+    </header>
+
+    <section aria-labelledby="up-title">
+      <h2 id="up-title">Upcoming Sundays</h2>
+      <p>Every Sunday at 5pm, The Indian Tapas, Exchange Place. Walk in, or save a seat so we set out enough chairs.</p>
+      <ul class="sessions" id="sessions"></ul>
+    </section>
+
+    <section aria-labelledby="notes-title">
+      <h2 id="notes-title">From past Sundays</h2>
+      <p>The questions that came up, and where the conversation went.</p>
+      <div id="notes"></div>
+    </section>
+
+    <section aria-labelledby="help-title" id="help">
+      <h2 id="help-title">Lend a hand</h2>
+      <p>Outside Context is run by the people who show up. Raise your hand for something, or tell us what we should talk about next.</p>
+      <form id="help-form" novalidate>
+        <fieldset class="q">
+          <legend>What would you like to do?</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="role" value="topic" checked /><span>Suggest a topic</span></label>
+            <label class="chip"><input type="radio" name="role" value="host" /><span>Host a table</span></label>
+            <label class="chip"><input type="radio" name="role" value="speaker" /><span>Lead a conversation</span></label>
+            <label class="chip"><input type="radio" name="role" value="spread" /><span>Spread the word</span></label>
+            <label class="chip"><input type="radio" name="role" value="photos" /><span>Take photos</span></label>
+            <label class="chip"><input type="radio" name="role" value="venue" /><span>Know a venue</span></label>
+            <label class="chip"><input type="radio" name="role" value="other" /><span>Something else</span></label>
+          </div>
+        </fieldset>
+        <div class="q">
+          <label for="message" id="message-label">What should we talk about?</label>
+          <textarea id="message" name="message" maxlength="1000" placeholder="Should I tell clients I use AI? What happens to junior roles?"></textarea>
+          <p class="err" id="message-err"></p>
+        </div>
+        <div class="row">
+          <div class="q">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="First and last" />
+            <p class="err" id="name-err"></p>
+          </div>
+          <div class="q">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" />
+            <p class="err" id="email-err"></p>
+          </div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+        <div class="actions"><button class="btn" type="submit">Send it</button></div>
+        <p class="form-err" role="alert" id="form-err"></p>
+      </form>
+      <div class="thanks" id="thanks" hidden tabindex="-1">
+        <p id="thanks-title">Thank you.</p>
+        <p id="thanks-body">We'll be in touch before Sunday.</p>
+        <button class="link-btn" type="button" id="again">Send another</button>
+      </div>
+    </section>
+
+    <section class="closing" aria-labelledby="close-title">
+      <h2 id="close-title">Haven't been yet?</h2>
+      <p>Freelancers, builders, professionals, students. No expertise needed, just curiosity about where work is heading.</p>
+      <a class="btn" href="/outside-context#join" data-track="cta">Save me a seat</a>
+    </section>
+  </main>
+  <footer><a href="/outside-context">Outside Context</a><a href="/">vybd.ai</a></footer>
+
+  <script>
+  (function () {
+    "use strict";
+    /* Session notes, newest first. Add one after each Sunday:
+       { date: "2026-11-15", title: "Should you tell clients you use AI?", body: "Two or three sentences on where it went." } */
+    var NOTES = [];
+
+    var TZ = "America/New_York";
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+    function label(iso, opts) { return new Date(iso + "T12:00:00Z").toLocaleDateString("en-US", Object.assign({ timeZone: "UTC" }, opts)); }
+    function track(event) {
+      var body = JSON.stringify({ event: event, path: location.pathname, referrer: document.referrer || null });
+      try { if (navigator.sendBeacon && navigator.sendBeacon("/api/oc/track", new Blob([body], { type: "application/json" }))) return; } catch (e) {}
+      fetch("/api/oc/track", { method: "POST", body: body, headers: { "content-type": "application/json" }, keepalive: true }).catch(function () {});
+    }
+    track("hub_view");
+    document.addEventListener("click", function (e) { var el = e.target.closest && e.target.closest("[data-track]"); if (el) track(el.getAttribute("data-track")); });
+
+    function nyParts() {
+      var p = {};
+      new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" })
+        .formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      return p;
+    }
+    function upcomingSundays(n) {
+      var p = nyParts(), base = new Date(Date.UTC(+p.year, +p.month - 1, +p.day));
+      var add = (7 - base.getUTCDay()) % 7; if (add === 0 && +p.hour >= 17) add = 7;
+      var out = []; for (var i = 0; i < n; i++) out.push(new Date(base.getTime() + (add + 7 * i) * 864e5).toISOString().slice(0, 10));
+      return out;
+    }
+
+    var dates = upcomingSundays(4);
+    function renderSessions(counts) {
+      document.getElementById("sessions").innerHTML = dates.map(function (iso, i) {
+        var c = counts && counts[iso];
+        var going = counts ? (c ? '<span>' + c + " going</span>" : '<span class="n">Be the first</span>') : "";
+        return '<li' + (i === 0 ? ' class="first"' : "") + '><span class="d">' + label(iso, { weekday: "long", month: "long", day: "numeric" }) + "</span>" +
+          '<span class="w">5pm · The Indian Tapas</span><span class="g">' + going + '<a href="/outside-context#join">Save a seat</a></span></li>';
+      }).join("");
+    }
+    renderSessions(null);
+    fetch("/api/oc/sessions").then(function (r) { return r.json(); }).then(function (d) {
+      var counts = {}; (d.sessions || []).forEach(function (s) { counts[s.sunday] = s.going; });
+      renderSessions(counts);
+      if (d.members >= 5) document.getElementById("count").textContent = d.members + " people have pulled up a chair so far.";
+    }).catch(function () {});
+
+    var notes = document.getElementById("notes");
+    notes.innerHTML = NOTES.length
+      ? '<div class="notes">' + NOTES.map(function (n) {
+          return '<article class="note"><time datetime="' + esc(n.date) + '">' + label(n.date, { month: "long", day: "numeric", year: "numeric" }) + "</time><h3>" + esc(n.title) + "</h3><p>" + esc(n.body) + "</p></article>";
+        }).join("") + "</div>"
+      : '<p class="empty">Notes go up here after each Sunday. Come to the first one and help write them.</p>';
+
+    var form = document.getElementById("help-form");
+    var msgLabel = document.getElementById("message-label");
+    var msg = document.getElementById("message");
+    var COPY = {
+      topic:   ["What should we talk about?", "Should I tell clients I use AI? What happens to junior roles?"],
+      host:    ["Anything we should know? (optional)", "Happy to welcome people and keep a table going."],
+      speaker: ["What would you lead? (optional)", "A 10-minute opener on pricing freelance work in the AI era."],
+      spread:  ["Where could you share it? (optional)", "My coworking space, a Slack group, my building."],
+      photos:  ["Anything we should know? (optional)", "I have a camera and can stay the whole time."],
+      venue:   ["Which place? (optional)", "A café or space that would host us."],
+      other:   ["How would you like to help?", "Tell us."]
+    };
+    form.addEventListener("change", function (e) {
+      if (e.target.name !== "role") return;
+      var c = COPY[e.target.value] || COPY.other;
+      msgLabel.textContent = c[0]; msg.placeholder = c[1];
+      setErr("message", "");
+    });
+    function setErr(id, m) {
+      var el = document.getElementById(id);
+      document.getElementById(id + "-err").textContent = m || "";
+      if (m) el.setAttribute("aria-invalid", "true"); else el.removeAttribute("aria-invalid");
+      el.setAttribute("aria-describedby", id + "-err");
+    }
+    ["name", "email", "message"].forEach(function (id) { document.getElementById(id).addEventListener("input", function () { setErr(id, ""); }); });
+
+    try { var me = JSON.parse(localStorage.getItem("oc_signup")) || {}; if (me.name) form.name.value = me.name; if (me.email) form.email.value = me.email; } catch (e) {}
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var role = form.role.value, name = form.name.value.trim(), email = form.email.value.trim(), message = msg.value.trim();
+      var needMsg = role === "topic" || role === "other";
+      var bad = { message: needMsg && !message ? "Tell us a little more." : "", name: !name ? "Tell us your name." : "",
+        email: !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? (email ? "That email doesn't look right." : "We need an email to reach you.") : "" };
+      Object.keys(bad).forEach(function (k) { setErr(k, bad[k]); });
+      var first = ["message", "name", "email"].filter(function (k) { return bad[k]; })[0];
+      if (first) { document.getElementById(first).focus(); return; }
+      var b = form.querySelector("button[type=submit]"); b.disabled = true; b.textContent = "Sending…";
+      document.getElementById("form-err").textContent = "";
+      try {
+        var r = await fetch("/api/oc/interest", { method: "POST", headers: { "content-type": "application/json" },
+          body: JSON.stringify({ kind: role === "topic" ? "topic" : "volunteer", role: role === "topic" ? null : role, name: name, email: email, message: message, website: form.website.value }) });
+        var d = {}; try { d = await r.json(); } catch (x) {}
+        if (!r.ok || !d.ok) { if (d.field) setErr(d.field, d.error); else document.getElementById("form-err").textContent = d.error || "We couldn't send that. Check your connection and try again."; return; }
+        track(role === "topic" ? "topic" : "volunteer");
+        document.getElementById("thanks-title").textContent = role === "topic" ? "Good one. It's on the list." : "Thank you, " + name.split(" ")[0] + ".";
+        document.getElementById("thanks-body").textContent = role === "topic" ? "We pick topics from these each week." : "We'll reach out before Sunday.";
+        form.hidden = true; var t = document.getElementById("thanks"); t.hidden = false; t.focus();
+      } catch (x) {
+        document.getElementById("form-err").textContent = "We couldn't send that. Check your connection and try again.";
+      } finally { b.disabled = false; b.textContent = "Send it"; }
+    });
+    document.getElementById("again").addEventListener("click", function () {
+      msg.value = ""; document.getElementById("thanks").hidden = true; form.hidden = false; msg.focus();
+    });
+  })();
+  </script>
+</body>
+</html>
