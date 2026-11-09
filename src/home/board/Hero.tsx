@@ -69,6 +69,7 @@ export function Hero() {
               return (
                 <div className={'row ' + d.kind} key={i}>
                   <Flap text={label(d)} len={18} delay={delay} className="c-l" />
+                  <span className="c-t">{label(d)}</span>
                   <Flap text={money(d.amount)} len={6} delay={delay + 60} align="right" className={'c-a' + (d.kind === 'mk' ? ' go' : '')} />
                   <span className="share" aria-hidden="true">
                     {Array.from({ length: SHARE_CELLS }, (_, k) => <s key={k} className={k < on ? 'on' : undefined} style={{ transitionDelay: `${delay + k * 18}ms` }} />)}
