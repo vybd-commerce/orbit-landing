@@ -13,5 +13,5 @@ export const FOOTER_GROUPS = [
   { title: 'Why Vybd', links: [['/essay', 'The essays'], ['#open', 'Our promises'], ['#plan', 'The plan'], ['#why', 'Where a price goes']] },
   { title: 'Customers', links: [['/case-studies', 'Case studies'], ['#calc', 'Profit calculator'], ['/us', 'Launch in the US']] },
   { title: 'Partners', links: [['/ecosystem', 'Join the network'], ['/ecosystem', 'Customs & compliance'], ['/ecosystem', '3PLs & freight']] },
-  { title: 'Company', links: [['/essay', 'About'], ['/lab', 'Lab'], ['/book', 'Contact']] },
+  { title: 'Company', links: [['/essay', 'About'], ['/lab', 'Lab'], ['/askinkind', 'Ask In Kind'], ['/book', 'Contact']] },
 ] as const

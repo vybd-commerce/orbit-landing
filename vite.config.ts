@@ -39,6 +39,7 @@ export default defineConfig({
         essay: path.resolve(__dirname, 'essay.html'),
         'test-drop': path.resolve(__dirname, 'test-drop.html'),
         'fund-raise': path.resolve(__dirname, 'fund-raise.html'),
+        askinkind: path.resolve(__dirname, 'askinkind.html'),
       },
     },
   },

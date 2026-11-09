@@ -1,0 +1,55 @@
+/* /askinkind, inside the board world (board.css). */
+.aik-hero .disp{font-size:clamp(68px,12vw,196px)}
+.aik-board .aik-rows{--cw:min(17px,calc((100cqi - 60px) / 37))}
+.aik-row{display:grid;grid-template-columns:auto 1fr auto;gap:0 clamp(10px,1.2vw,18px);align-items:center;padding:6px 0}
+.aik-row .c-a{justify-self:end}
+.aik-board .aik-rows{padding:14px 0 6px}
+.aik-stages{list-style:none;margin:10px 0 0;padding:14px 0 0;border-top:1px solid #2a2e35;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.aik-stages li{position:relative;padding-top:14px;font-size:13px;color:#7d807d;transition:color .4s}
+.aik-stages li::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;border-radius:1px;background:var(--cell);transition:background-color .4s}
+.aik-stages li.on{color:var(--flap)}
+.aik-stages li.on::before{background:var(--go)}
+
+.aik-cmp{border-top:1.5px solid var(--ink)}
+.aik-cmp .r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.6fr);gap:12px 32px;padding:18px 0;border-bottom:1px solid var(--line);font-size:17px}
+.aik-cmp .r.h{padding:12px 0}
+.aik-cmp .r.h .cap{color:var(--mute)}
+.aik-cmp [role=rowheader]{font-weight:700}
+.aik-cmp [role=cell]{color:var(--body)}
+.aik-cmp b{color:var(--ink);font-weight:650}
+
+.path.dark .copy .lede + .lede{margin-top:14px}
+
+.aik-flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+.aik-flow li{border-top:1.5px solid var(--ink);padding-top:22px;display:flex;flex-direction:column;gap:14px}
+.aik-flow p{margin:0;color:var(--body);text-wrap:pretty}
+
+.aik-who-h{margin-bottom:clamp(28px,3vw,44px)}
+.aik-roles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.aik-roles .panel{padding:clamp(20px,2vw,28px)}
+.aik-line{color:var(--flap-dim);margin:10px 0 18px;font-size:15px}
+.aik-roles ol{margin:0;padding:0;list-style:none;counter-reset:s;border-top:1px solid #2a2e35}
+.aik-roles li{counter-increment:s;display:grid;grid-template-columns:28px 1fr;padding:10px 0;border-bottom:1px solid #22262c;font-size:15px}
+.aik-roles li::before{content:counter(s);color:var(--go);font-weight:700}
+
+.aik-checks{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)}
+.aik-checks > div{border-top:4px solid var(--go);padding-top:20px}
+.aik-checks p{margin:12px 0 0;color:var(--body);text-wrap:pretty}
+
+.aik-close{padding:clamp(72px,9vw,128px) 0}
+.aik-close .lede{max-width:48ch}
+
+@media (max-width:1060px){
+  .aik-flow,.aik-roles,.aik-checks{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .aik-board .aik-rows{--cw:calc((100cqi - 44px) / 21)}
+  .aik-row{grid-template-columns:auto 1fr auto;gap:4px 8px;padding:8px 0;border-bottom:1px solid #22262c}
+  .aik-row .c-l{grid-column:1/-1}
+  .aik-row .c-a{grid-column:1;justify-self:start}
+  .aik-row .c-s{grid-column:3}
+  .aik-stages{grid-template-columns:1fr 1fr;row-gap:14px}
+  .aik-cmp .r{grid-template-columns:1fr 1fr}
+  .aik-cmp [role=rowheader]{grid-column:1/-1}
+  .aik-cmp .r.h span:first-child{display:none}
+}
