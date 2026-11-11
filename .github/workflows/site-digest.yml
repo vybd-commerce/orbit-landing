@@ -1,0 +1,21 @@
+# Daily vybd.ai analytics (Plausible) to the #website Discord channel, 9:00 ET.
+# Reuses repo secret OC_CRON_SECRET (= Vercel CRON_SECRET).
+name: Site analytics digest
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Day to report (YYYY-MM-DD). Blank = yesterday"
+        type: string
+        default: ""
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Post digest
+        run: |
+          curl -fsS --retry 2 -H "Authorization: Bearer ${{ secrets.OC_CRON_SECRET }}" \
+            "https://www.vybd.ai/api/site/digest${{ inputs.date && format('?date={0}', inputs.date) || '' }}"
