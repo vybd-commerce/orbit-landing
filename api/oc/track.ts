@@ -4,7 +4,7 @@
    is countable within a day but not traceable across days. */
 import { clean, oneOf, readJson, sha256, sql } from "./_lib.js";
 
-const EVENTS = ["view", "cta", "register", "onboard", "skip_onboard", "calendar", "community", "hub_view", "topic", "volunteer"] as const;
+const EVENTS = ["view", "cta", "register", "onboard", "skip_onboard", "calendar", "luma", "community", "hub_view", "topic", "volunteer"] as const;
 
 export async function POST(request: Request) {
     const body = await readJson(request);
