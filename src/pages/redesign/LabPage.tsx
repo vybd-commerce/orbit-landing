@@ -438,8 +438,6 @@ export default function LabPage() {
                     { label: "Case studies", href: "/case-studies" },
                     { label: "Brand Brain", href: "#brain" },
                 ]}
-                ctaHref="#status"
-                ctaLabel="Talk to us"
             />
 
             <Hero tx={tx} />
@@ -466,7 +464,7 @@ export default function LabPage() {
                             </p>
                             <div className="lb-status-row">
                                 <RdLink className="btn btn-mint" href="/book">
-                                    {tx("Talk to us")}
+                                    {tx("Book a call")}
                                 </RdLink>
                                 <a className="btn btn-ghost" href="mailto:hello@vybd.ai">
                                     {tx("Build it with us")}

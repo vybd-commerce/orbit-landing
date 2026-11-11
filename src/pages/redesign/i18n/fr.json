@@ -771,5 +771,7 @@
 "— reads routing": "— lit l'acheminement",
 "— reads voice": "— lit la voix",
 "— writes finding": "— écrit un résultat",
-"— writes result": "— écrit un résultat"
+"— writes result": "— écrit un résultat",
+"Book a call": "Réserver un appel",
+"Close menu": "Fermer le menu"
 }

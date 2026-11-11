@@ -184,7 +184,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <span>VYBD-LAUNCH-US</span>
                             <span>{tx("STEP 01")}</span>
                         </div>
-                        <RdLink className="btn btn-dark" href="#contact">
+                        <RdLink className="btn btn-dark" href="/book">
                             {tx("Start your launch")}
                         </RdLink>
                     </div>
@@ -257,7 +257,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <span>VYBD-SCALE-US</span>
                             <span>{tx("STEP 02")}</span>
                         </div>
-                        <RdLink className="btn btn-mint" href="#contact">
+                        <RdLink className="btn btn-mint" href="/book">
                             {tx("Talk to us about US Scale")}
                         </RdLink>
                     </div>

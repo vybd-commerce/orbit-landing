@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Lockup } from './Logo'
 import { STACK_TOTAL, USUAL_CHAIN, WITH_VYBD, money } from '@/home/data/stack'
 
 type View = 'a' | 'b'
@@ -40,8 +41,8 @@ export function Hero() {
   return (
     <section className="tile full hero" id="why" ref={section}>
       <div className="copy">
-        <div className="eyebrow rv">Vybd</div>
-        <h1 className="rv"><em>borderless.</em></h1>
+        <div className="rv"><Lockup /></div>
+        <h1 className="rv">Make it anywhere.<br /><em>Sell it everywhere.</em></h1>
         <p className="tag rv">We're bringing the cost of getting a product from the person who makes it to the person who uses it as close to zero as possible. Every cost that's left is visible, justified and earned.</p>
         <div className="links rv"><a className="pill fill" href="#chapters">Read the essay</a><a className="pill out" href="#compare">Find your Vybd</a></div>
         <div className="toggle rv" role="group" aria-label="Compare" data-view={view}>

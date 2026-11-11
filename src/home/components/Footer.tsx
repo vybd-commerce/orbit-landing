@@ -1,4 +1,5 @@
-import { FOOTER_GROUPS } from '@/home/data/nav'
+import { FOOTER_GROUPS, LANGUAGES } from '@/home/data/nav'
+import { pickLanguage } from './GlobalNav'
 
 export function Footer({ base = '' }: { base?: string }) {
   return (
@@ -17,7 +18,11 @@ export function Footer({ base = '' }: { base?: string }) {
       </div>
       <div className="bt">
         <span>Copyright © 2026 Vybd. All rights reserved. <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
-        <span>English · Français · Español · 中文 · 日本語 · 한국어</span>
+        <span className="langs">
+          {LANGUAGES.map(([code, name], i) => (
+            <span key={code}>{i > 0 && ' · '}<a href={code === 'en' ? '/' : `/${code}`} lang={code} onClick={(e) => { e.preventDefault(); pickLanguage(code) }}>{name}</a></span>
+          ))}
+        </span>
       </div>
     </div></footer>
   )

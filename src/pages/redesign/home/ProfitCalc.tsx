@@ -294,7 +294,7 @@ export default function ProfitCalc({ tx }: { tx: Tx }) {
                         <button type="button" className="btn btn-mint" onClick={copy} disabled={!r}>
                             {tx(copied ? "Copied to clipboard" : "Copy my estimate")}
                         </button>
-                        <RdLink className="btn pc2-ghost" href="#contact">
+                        <RdLink className="btn pc2-ghost" href="/book">
                             {tx("Talk it through with us")}
                         </RdLink>
                     </div>

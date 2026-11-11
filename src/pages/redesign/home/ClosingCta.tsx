@@ -11,7 +11,7 @@ export default function ClosingCta({
     tx,
     heading,
     text = US_TEXT,
-    button = "Talk to an operator",
+    button = "Book a call",
     href = "/book",
 }: {
     tx: Tx;

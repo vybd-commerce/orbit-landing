@@ -128,7 +128,7 @@ export function NextSteps() {
                         <h3>Custom pricing</h3>
                         <p>For $50M+ brands, grocers, retailers and distributors with their own warehouses, DCs and stores. Priced on the systems, sites and workflows in scope.</p>
                         <RdLink className="btn btn-dark" href="/book">
-                            Talk to an operator
+                            Book a call
                         </RdLink>
                     </div>
                     <ul className="ent-ticks of-list">

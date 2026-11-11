@@ -19,14 +19,14 @@ const STARTS = [
         title: "Get selling in the US.",
         body: "New brand or new to the US: sourcing, compliance, stores and listings, done by our team.",
         step: "Start with US Launch",
-        cta: { label: "Talk to an operator", href: "#contact" },
+        cta: { label: "Book a call", href: "/book" },
     },
     {
         k: "Already selling in the US",
         title: "Make it run better.",
         body: "Our agents and an operator run inventory, purchase orders, deductions and reporting with you.",
         step: "Start with US Scale",
-        cta: { label: "Talk to an operator", href: "#contact" },
+        cta: { label: "Book a call", href: "/book" },
     },
 ];
 

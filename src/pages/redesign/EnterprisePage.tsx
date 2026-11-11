@@ -53,7 +53,7 @@ export default function EnterprisePage() {
 
     return (
         <RdPage name="home" className="rd-ent">
-            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} ctaHref={BOOK} ctaLabel="Talk to an operator" />
+            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} />
 
             <section id="top" className="ent-hero">
                 <div className="hx-bg" aria-hidden="true" />
@@ -75,7 +75,7 @@ export default function EnterprisePage() {
                     </p>
                     <div className="ent-cta ent-in ent-d3">
                         <RdLink className="btn btn-dark" href={BOOK}>
-                            Talk to an operator
+                            Book a call
                         </RdLink>
                         <RdLink className="btn btn-text" href="#systems">
                             See how it works
@@ -114,7 +114,7 @@ export default function EnterprisePage() {
                     </>
                 }
                 text="Meet one of our operators. Walk through your systems and your biggest operating headaches, and leave the call with a rough plan and an honest reality check."
-                button="Talk to an operator"
+                button="Book a call"
             />
 
             <RdFooter />

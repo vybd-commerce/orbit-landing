@@ -156,7 +156,7 @@ export default function WhoWeHelp({ tx }: { tx: Tx }) {
                             <div className="wh-body">
                                 <h3>{tx(c.title)}</h3>
                                 <p>{tx(c.body)}</p>
-                                <RdLink className="wh-cta" href="#contact">
+                                <RdLink className="wh-cta" href="/book">
                                     {tx("That's me")}{" "}
                                     <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M5 12h14M13 6l6 6-6 6" />

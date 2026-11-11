@@ -225,25 +225,50 @@ function HeaderLanguage() {
     );
 }
 
-export function RdHeader({
-    logoHref,
-    links,
-    mobileLinks,
-    ctaHref = "#contact",
-    ctaLabel = "Get started",
-    logoDelay = 0.15,
-}: {
+/* The same top navigation on every page (DESIGN.md: Navigation). Pages no
+   longer pick their own top links; the in-page anchors a page passes in
+   (#services, #faq...) show as a slim "On this page" row under it. */
+export const GLOBAL_NAV: NavLink[] = [
+    { label: "Supply Chain", href: "/#chain" },
+    { label: "Enter the US", href: "/us" },
+    { label: "Enterprise", href: "/enterprise" },
+    { label: "How it works", href: "/product" },
+    { label: "Case studies", href: "/case-studies" },
+    { label: "Pricing", href: "/#compare" },
+];
+export const BOOK_HREF = "/book";
+export const BOOK_LABEL = "Book a call";
+
+function useGlobalNav(): NavLink[] {
+    const { pathname } = useLocation();
+    const bare = pathname.replace(/^\/(zh|ko|ja|fr|es)(?=\/|$)/, "") || "/";
+    return GLOBAL_NAV.map((l) => ({
+        ...l,
+        current: !l.href.includes("#") && (bare === l.href || bare.startsWith(l.href + "/")),
+    }));
+}
+
+export function RdHeader(props: {
     logoHref: string;
     /* seconds before the logo folds in; the home page waits out its intro */
     logoDelay?: number;
-    links: NavLink[];
-    mobileLinks: NavLink[];
+    /* this page's own links; only in-page anchors ("#faq") are kept, as the sub-nav */
+    links?: NavLink[];
+    /* kept for older call sites; the menu now uses the global links */
+    mobileLinks?: NavLink[];
     ctaHref?: string;
     ctaLabel?: string;
 }) {
+    const { logoHref, links, logoDelay = 0.15 } = props;
     const tx = useTx();
     const [open, setOpen] = useState(false);
     const close = () => setOpen(false);
+    const global = useGlobalNav();
+    const sections = (links ?? []).filter((l) => l.href.startsWith("#") && l.href !== "#top");
+    /* One action everywhere ("Book a call"); only the partner page (/ecosystem)
+       swaps it for its own sign-up. */
+    const ctaHref = props.ctaHref ?? BOOK_HREF;
+    const ctaLabel = props.ctaLabel ?? BOOK_LABEL;
 
     return (
         <header
@@ -258,8 +283,8 @@ export function RdHeader({
         >
             <div className="wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24, height: 56 }}>
                 <RdLogo href={logoHref} delay={logoDelay} />
-                <nav className="nav-links" style={{ display: "flex", gap: 36 }}>
-                    {links.map((l) => (
+                <nav className="nav-links" style={{ display: "flex", gap: 28 }}>
+                    {global.map((l) => (
                         <RdLink key={l.href} className="nav-link" href={l.href} current={l.current}>
                             {tx(l.label)}
                         </RdLink>
@@ -281,10 +306,21 @@ export function RdHeader({
                     </button>
                 </div>
             </div>
+            {sections.length > 0 && (
+                <nav className="subnav" aria-label={tx("On this page")}>
+                    <div className="wrap subnav-in">
+                        {sections.map((l) => (
+                            <a key={l.href} href={l.href}>
+                                {tx(l.label)}
+                            </a>
+                        ))}
+                    </div>
+                </nav>
+            )}
             {open && (
                 <nav className="mnav" aria-label={tx("Menu")}>
-                    {mobileLinks.map((l) => (
-                        <RdLink key={l.href} href={l.href} onClick={close}>
+                    {global.map((l) => (
+                        <RdLink key={l.href} href={l.href} onClick={close} current={l.current}>
                             {tx(l.label)}
                         </RdLink>
                     ))}

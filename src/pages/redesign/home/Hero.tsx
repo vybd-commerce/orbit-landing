@@ -150,7 +150,7 @@ export default function Hero({
     tx,
     line,
     sub = "Launching from abroad or already selling here: one team runs it.",
-    primary = { label: "Start your launch", href: "#contact" },
+    primary = { label: "Start your launch", href: "/book" },
     secondary = { label: "See how it works", href: "#how" },
     boxHref,
 }: {

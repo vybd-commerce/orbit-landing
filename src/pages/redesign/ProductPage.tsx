@@ -497,7 +497,7 @@ export default function ProductPage() {
                     <p className="rv">{tx("Book a technical walkthrough with the Vybd team. We'll show you exactly how it would work for your kind of product.")}</p>
                     <div className="hw-end-row rv">
                         <RdLink className="btn btn-mint" href="/book">
-                            {tx("Request a walkthrough")}
+                            {tx("Book a call")}
                         </RdLink>
                         <RdLink className="btn btn-ghost" href="/">
                             {tx("Back to home")}

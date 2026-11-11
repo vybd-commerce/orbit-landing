@@ -1,12 +1,19 @@
+/* Same links, same order as the SPA header (GLOBAL_NAV in
+   src/pages/redesign/chrome.tsx). Keep the two in step. */
 export const NAV_LINKS = [
-  { href: '#why', label: 'Why Vybd' },
   { href: '#chain', label: 'Supply Chain' },
   { href: '/us', label: 'Enter the US' },
   { href: '/enterprise', label: 'Enterprise' },
+  { href: '/product', label: 'How it works' },
+  { href: '/case-studies', label: 'Case studies' },
   { href: '#compare', label: 'Pricing' },
-  { href: '/ecosystem', label: 'Partners' },
-  { href: '/case-studies', label: 'Case Studies' },
 ]
+
+export const BOOK = { href: '/book', label: 'Book a call' }
+
+export const LANGUAGES = [
+  ['en', 'English'], ['zh', '中文'], ['ko', '한국어'], ['ja', '日本語'], ['fr', 'Français'], ['es', 'Español'],
+] as const
 
 export const FOOTER_GROUPS = [
   { title: 'Products', links: [['/product', 'Vybd Supply Chain'], ['/us', 'Vybd for the US'], ['/test-drop', 'Test Drop'], ['/enterprise', 'Vybd Enterprise'], ['#compare', 'Pricing']] },

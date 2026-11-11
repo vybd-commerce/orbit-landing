@@ -60,7 +60,7 @@ export default function SignupPage() {
 
     return (
         <RdPage name="home" className="rd-global no-loader">
-            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} ctaHref="/us#contact" ctaLabel="Talk to an operator" />
+            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} />
 
             <main className="wrap su">
                 <div className="su-card">

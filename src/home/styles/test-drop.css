@@ -67,7 +67,7 @@
 .dc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;text-align:left}
 .dc-controls,.dc-out{padding:28px;border-radius:28px;background:var(--gray)}
 .dc-out{background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
-.dc-reset{border:0;background:none;padding:0;margin-bottom:18px;font:inherit;font-size:14px;color:#0066cc;cursor:pointer}
+.dc-reset{border:0;background:none;padding:0;margin-bottom:18px;font:inherit;font-size:14px;color:var(--mint-text,#0E7C68);cursor:pointer}
 .dc-reset:hover{text-decoration:underline}
 .dc-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .dc-field label,.dc-range label{display:block;margin-bottom:6px;font-size:13px;color:var(--body)}
