@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { useReveal } from './hooks/useReveal'
-import { Logo } from './components/Logo'
+import { Lockup } from './components/Logo'
+import { GlobalNav } from './components/GlobalNav'
+import { Footer } from './components/Footer'
 import { Em } from './components/fundraise/Em'
 import { Moats } from './components/fundraise/Moats'
 import { PositioningMap } from './components/fundraise/PositioningMap'
@@ -12,7 +14,8 @@ import './styles/fund-raise.css'
 
 /* /fundraise (old path /fund-raise redirects here): the seed deck as a page for investors. Reachable by URL only:
    noindex (fund-raise.html + an X-Robots-Tag header in vercel.json), not in
-   the sitemap, the nav or any link on the site. Copy and numbers live in
+   the sitemap, the nav or any link on the site. It still wears the site's
+   global nav and footer so investors can wander into the rest of vybd.ai. Copy and numbers live in
    data/fundRaise.ts; styles in styles/fund-raise.css under .fr. Sections
    alternate white and navy canvases. */
 
@@ -48,15 +51,14 @@ export default function FundRaiseApp() {
   const eqMax = Math.max(...equity.steps.map((s) => s.m))
 
   return (
+    <>
+    <GlobalNav base="/" ribbon={false} />
     <div className="fr">
       <main id="top">
         {/* 1. Hero */}
         <section className="fr-sec navy fr-hero" aria-labelledby="hero-h">
           <div className="fr-in">
-            <div className="fr-bar">
-              <a className="fr-lockup" href="/" aria-label="Vybd home"><Logo />Vybd</a>
-              <a className="fr-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            </div>
+            <div className="fr-bar rv"><Lockup /></div>
             <div className="fr-hero-meta rv">
               <span className="fr-pill-chip">{hero.round}</span>
               <span className="fr-audience">{hero.audience}</span>
@@ -338,12 +340,8 @@ export default function FundRaiseApp() {
         </Sec>
       </main>
 
-      <footer className="fr-footer">
-        <div className="fr-in">
-          <span>Copyright © 2026 Vybd. All rights reserved.</span>
-          <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-        </div>
-      </footer>
     </div>
+    <Footer base="/" notes={false} />
+    </>
   )
 }

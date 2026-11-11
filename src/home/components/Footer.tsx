@@ -1,12 +1,13 @@
 import { FOOTER_GROUPS, LANGUAGES, pickLanguage } from '@/home/data/nav'
 
-export function Footer({ base = '' }: { base?: string }) {
+/** notes: the footnotes about illustrative figures; off where a page has none. */
+export function Footer({ base = '', notes = true }: { base?: string; notes?: boolean }) {
   return (
     <footer><div className="in">
-      <div className="fn">
+      {notes && <div className="fn">
         1. Dollar figures on this page are illustrative examples to show how Vybd works, not quotes. Real numbers depend on your category, channel and lane.<br />
         2. Partner scores shown are examples of how the network rates performance.
-      </div>
+      </div>}
       <div className="dir">
         {FOOTER_GROUPS.map((g) => (
           <div key={g.title}>
