@@ -153,8 +153,13 @@ export default function Hero({
     primary = { label: "Start your launch", href: "/book" },
     secondary = { label: "See how it works", href: "#how" },
     boxHref,
+    eyebrow = "Vybd",
+    title,
 }: {
     tx: Tx;
+    /* small line above the heading, and the heading itself (default "Borderless.") */
+    eyebrow?: string;
+    title?: string;
     line?: ReactNode;
     sub?: string | null;
     primary?: HeroLink | null;
@@ -257,8 +262,8 @@ export default function Hero({
             </div>
             <div className="hx-grid">
                 <div className="hx-copy">
-                    <div className="in d1 eyebrow">Vybd</div>
-                    <h1 className="in d2 hx-h">{tx("Borderless.")}</h1>
+                    <div className="in d1 eyebrow">{tx(eyebrow)}</div>
+                    <h1 className="in d2 hx-h">{title ?? tx("Borderless.")}</h1>
                     <div className="in d3 hx-tw">
                         {line ?? (
                             <>
