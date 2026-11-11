@@ -14,6 +14,13 @@
             "source": "/:path(Outside-Context|OutsideContext|outsidecontext)",
             "destination": "/outside-context",
             "permanent": true
+        },
+        { "source": "/fund-raise", "destination": "/fundraise", "permanent": true }
+    ],
+    "headers": [
+        {
+            "source": "/:path(fundraise|fund-raise|fund-raise\\.html)",
+            "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
         }
     ],
     "rewrites": [
@@ -34,6 +41,10 @@
             "destination": "/test-drop.html"
         },
         {
+            "source": "/fundraise",
+            "destination": "/fund-raise.html"
+        },
+        {
             "source": "/signup",
             "destination": "/signup.html"
         },
@@ -48,6 +59,10 @@
         {
             "source": "/essay",
             "destination": "/essay.html"
+        },
+        {
+            "source": "/:path(askinkind|ask-in-kind)",
+            "destination": "/askinkind.html"
         },
         {
             "source": "/(.*)",
