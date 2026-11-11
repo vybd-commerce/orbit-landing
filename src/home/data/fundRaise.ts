@@ -1,3 +1,5 @@
+import { PHOTOS } from './photos'
+
 /* /fundraise: every word and number on the investor page. Edit here;
    layout lives in FundRaiseApp.tsx and styles/fund-raise.css.
    In headlines, wrap one word in *asterisks* to set it in italic. */
@@ -226,18 +228,18 @@ export const equity = {
 
 export const team = {
   title: 'Team',
-  /* photo: path under public/, e.g. '/images/team/ashwin.jpg'. Initials show until then. */
+  /* photo: set in data/photos.ts. Initials show until then. */
   founders: [
     {
-      name: 'Ashwin Dhanasamy', initials: 'AD', role: 'CEO', focus: 'Product, tech, strategy', photo: '',
+      name: 'Ashwin Dhanasamy', initials: 'AD', role: 'CEO', focus: 'Product, tech, strategy', photo: PHOTOS.ashwin,
       bio: 'Built products from 0 to 1 across three teams. MS in Machine Learning (Stevens). Open-source contributor.',
     },
     {
-      name: 'Abhijit Shetty', initials: 'AS', role: 'COO', focus: 'Supply chain, ops, finance', photo: '',
+      name: 'Abhijit Shetty', initials: 'AS', role: 'COO', focus: 'Supply chain, ops, finance', photo: PHOTOS.abhi,
       bio: "20+ years transforming global CPG (The Body Shop, L'Oréal), retail and e-commerce operations.",
     },
     {
-      name: 'Ken Chester Jr', initials: 'KC', role: 'CMO', focus: 'Marketing, outreach', photo: '',
+      name: 'Ken Chester Jr', initials: 'KC', role: 'CMO', focus: 'Marketing, outreach', photo: PHOTOS.ken,
       bio: 'Antler Entrepreneur-in-Residence (2022). Raised NSF grant funding. Tech analyst, published in Yahoo News.',
     },
   ],
