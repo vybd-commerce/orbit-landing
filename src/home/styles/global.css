@@ -302,3 +302,20 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .ledger-art .t b,.partner-art span i,.cc .num,.essay .num,.essays-hd nav span,.mbox .num{color:var(--mint-text)}
 .cc .q em,.essays-hd h1 em{color:var(--mint-text)}
 .cc.dk .q em,.cc.dk .num{color:var(--mint)}
+
+/* ---------- case studies: three real cases on the home page ---------- */
+.cases{list-style:none;margin:36px auto 0;padding:0 22px;width:100%;max-width:1120px;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left}
+.case{display:flex;flex-direction:column;height:100%;box-sizing:border-box;padding:28px;background:#fff;border-radius:28px;box-shadow:inset 0 0 0 1px rgba(17,24,39,.06);transition:box-shadow .3s,transform .3s}
+.case:hover{box-shadow:inset 0 0 0 1px rgba(17,24,39,.06),0 26px 50px -30px rgba(15,27,51,.45);transform:translateY(-2px)}
+.case:focus-visible{outline:2px solid var(--mint-text);outline-offset:3px}
+.case-cat{font-size:13px;font-weight:600;color:var(--mint-text)}
+.case-brand{font:400 34px/1.05 var(--serif);color:var(--navy);margin-top:10px;letter-spacing:-.01em}
+.case-title{font-size:16px;line-height:1.4;color:var(--body);margin-top:10px}
+.case-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto;padding-top:24px}
+.case-metrics span{display:flex;flex-direction:column;gap:4px;font-size:13px;line-height:1.3;color:var(--mute);border-top:1px solid var(--line);padding-top:12px}
+.case-metrics b{font:400 28px/1 var(--serif);color:var(--navy)}
+.case-go{margin-top:20px;font-size:15px;font-weight:500;color:var(--ink)}
+.case-go::after{content:" →";transition:margin .25s}
+.case:hover .case-go::after{margin-left:4px}
+#cases .links{margin-top:28px}
+@media (max-width:833px){.cases{grid-template-columns:minmax(0,1fr);max-width:520px}}
