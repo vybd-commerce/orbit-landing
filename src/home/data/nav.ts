@@ -1,3 +1,5 @@
+import { rememberLocale, type Locale } from '@/i18n/locales'
+
 /* Same links, same order as the SPA header (GLOBAL_NAV in
    src/pages/redesign/chrome.tsx). Keep the two in step. */
 export const NAV_LINKS = [
@@ -22,3 +24,10 @@ export const FOOTER_GROUPS = [
   { title: 'Partners', links: [['/ecosystem', 'Join the network'], ['/ecosystem', 'Customs & compliance'], ['/ecosystem', '3PLs & freight']] },
   { title: 'Company', links: [['/essay', 'About'], ['/lab', 'Lab'], ['/book', 'Contact']] },
 ] as const
+
+/* Picking a language remembers it (the middleware reads the cookie) and
+   opens that locale's home. English stays on this page. */
+export function pickLanguage(code: string) {
+  rememberLocale(code as Locale)
+  if (code !== 'en') window.location.href = `/${code}`
+}

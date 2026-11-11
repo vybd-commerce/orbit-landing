@@ -1,5 +1,4 @@
-import { FOOTER_GROUPS, LANGUAGES } from '@/home/data/nav'
-import { pickLanguage } from './GlobalNav'
+import { FOOTER_GROUPS, LANGUAGES, pickLanguage } from '@/home/data/nav'
 
 export function Footer({ base = '' }: { base?: string }) {
   return (

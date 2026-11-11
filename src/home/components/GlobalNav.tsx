@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react'
-import { BOOK, LANGUAGES, NAV_LINKS } from '@/home/data/nav'
-import { rememberLocale, type Locale } from '@/i18n/locales'
+import { BOOK, LANGUAGES, NAV_LINKS, pickLanguage } from '@/home/data/nav'
 import { Logo } from './Logo'
-
-/* Picking a language remembers it (the middleware reads the cookie) and
-   opens that locale's home. English stays on this page. */
-export function pickLanguage(code: string) {
-  rememberLocale(code as Locale)
-  if (code !== 'en') window.location.href = `/${code}`
-}
 
 /** base: '' on the home page; '/' elsewhere so #anchors point back to the home page. */
 export function GlobalNav({ base = '', ribbon = true }: { base?: string; ribbon?: boolean }) {

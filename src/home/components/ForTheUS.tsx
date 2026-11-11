@@ -10,7 +10,7 @@ export function ForTheUS() {
       <div className="copy">
         <div className="eyebrow rv">For makers outside the US</div>
         <h2 className="prod rv">Vybd for the US</h2>
-        <p className="tag big rv">Made anywhere. <em style={{ color: 'var(--mint)' }}>Sold in the US.</em></p>
+        <p className="tag big rv">Made anywhere. <em style={{ color: 'var(--mint-text)' }}>Sold in the US.</em></p>
         <div className="links rv"><a className="pill fill" href="/us">Plan my launch</a><a className="pill out" href="/test-drop">Start with a Test Drop</a></div>
       </div>
       <div className="art"><div className="us-art rv">

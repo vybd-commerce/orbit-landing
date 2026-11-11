@@ -66,8 +66,37 @@
 .rd-home .sp-h em,.rd-home .co-c1 em,.rd-home .co-c2 em,.rd-home .wd-h2 em,.rd-home .hw2-h em,.rd-home .pr-h em,.rd-home .hx-w,
 .rd-home .sp-k,.rd-home .sp-more,.rd-home .lb-plus b,.rd-home .lb-calc-o b,.rd-home .lb-calc-go,.rd-home .pc2-pre,.rd-home .wh-idx,
 
-.rd-ent .h2 em,.rd-ent .ent-h1 em,.rd-ent .om-src small,.rd-ent .oc-step small,.rd-ent .ent-k,.rd-ent .ck-tr .up,.rd-ent .nx-num,
+.rd-ent .h2 em,.rd-ent .ent-h1 em,.rd-ent .om-src small,.rd-ent .oc-step:not(.on) small,.rd-ent .nx-out .ent-k,.rd-ent .of-alt .ent-k,.rd-ent .ck-tr .up,.rd-ent .nx-num,
 .rd-product .hw-h1 em,.rd-product .hw-h2 em,.rd-product .hw-pl-lbl b,.rd-product .db-kpi em,.rd-product .hw-layer li span,
 .rd-lab .lb-h1 em,.rd-lab .lb-h2 em,.rd-lab .lb-num,
 .rd-cases .cs-h1 em,.rd-cases .cs-cat,
 .rd-eco .eco-h1 em,.rd-eco .eco-h2 em{color:var(--mint-text)!important}
+
+/* Legibility pass (DESIGN.md: Mute Gray, The 11px Floor). Light grays
+   (#8A909B, #9CA3AF) measured about 3:1 on white; secondary text on light
+   backgrounds is #646B78 (5.4:1 on white, 4.9:1 on #F3F4F6). Text on navy
+   keeps its own lighter gray. */
+.rd-cases .cs-tag small,.rd-cases .cs-tick span em,
+.rd-case .lab-rows small,.rd-case .toc p,.rd-case .blk .k,
+.rd-ent .ent-fine,.rd-ent .ent-works small,
+.rd-home .bx-lbl,.rd-home .wd-k,.rd-home .wh-idx,.rd-home .co-count,.rd-home .hw2-k,.rd-home .lb-ft small,.rd-home .lb-k,
+.rd-home .pr-fine,.rd-home .pc2-k,.rd-home .pc2-suf,.rd-home .pc2-hint,.rd-home .pl-idx,.rd-home .plb small,
+.rd-lab .lb-plate small,.rd-lab .lb-ex-top,.rd-lab .lb-months-lbl,
+.rd-product .hw-pl-lbl small,.rd-product .hw-layer .mono,.rd-product .hw-step small,.rd-product .ag-chip small,
+.rd-product .ag-count,.rd-product .ag-note,.rd-product .db-kpi small,.rd-product .db-feed span,
+.rd-ent .hw2-k,.rd-home .pl-hint,.rd-cases .cs-fbtn sup{color:#646B78!important}
+.rd-product .sk-badge,.rd-product .db-tag,.rd-home .pc2-billable span{color:#5F6672!important}
+
+/* No functional text under 11px. */
+.rd-ent .om-src small,.rd-ent .oc-step small,.rd-ent .nx-num span,.rd-cases .cs-tag small,.rd-home .lb-k{font-size:11px!important}
+
+/* Ledger Mint is for light backgrounds only: active (navy) steps keep bright mint. */
+.rd-ent .oc-step.on small{color:var(--mint)!important}
+
+/* "What we do": steps you have not reached yet were dimmed to 2.4:1. */
+.rd.rd-home .wd-card{opacity:.82}
+.rd.rd-home .wd-step.is-on .wd-card,.rd.rd-home .wd-step.is-done .wd-card{opacity:1}
+
+/* The same labels on navy panels: bright mint or the light navy gray. */
+.rd-home .pc2-out .pc2-k,.rd-home .pc2-out .pc2-hint,.rd-product .hw-layer.mid .mono,.rd-lab .lb-plate.core small,.rd-lab .lb-core-plate small{color:#AEB6C4!important}
+.rd-product .sk-core .sk-badge{color:#C9F2E9!important}

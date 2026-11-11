@@ -169,3 +169,5 @@
 
 /* Ledger Mint for small mint text on light backgrounds. */
 .td .eyebrow,.td .badge,.td td.zero,.td .num{color:var(--mint-text,#0E7C68)}
+.td-offer .price em{color:var(--mint)}
+.td li.you small,.td .td-pillars b{color:var(--mint-text,#0E7C68)}

@@ -34,7 +34,7 @@ img,svg{max-width:100%}
 .gnav a:focus-visible,.gnav .menu:focus-visible{outline:2px solid var(--mint-text);outline-offset:3px;border-radius:6px}
 @media (max-width:1000px){.gnav .lks{display:none}.gnav .menu{display:inline-flex}}
 @media (max-width:520px){.gnav .book{display:none}}
-.mnav{display:none;position:fixed;inset:56px 0 0;z-index:49;background:rgba(255,255,255,.98);padding:16px clamp(20px,5vw,48px);flex-direction:column}
+.mnav{display:none;position:fixed;inset:56px 0 0;z-index:60;background:#fff;padding:16px clamp(20px,5vw,48px);flex-direction:column}
 .mnav a{font:600 22px/1 var(--sans);color:var(--ink);padding:16px 0;border-bottom:1px solid var(--line)}
 .mnav .pill{margin-top:20px;height:50px;justify-content:center;border-bottom:0;font-size:17px}
 .mnav.open{display:flex}
@@ -319,3 +319,10 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .case:hover .case-go::after{margin-left:4px}
 #cases .links{margin-top:28px}
 @media (max-width:833px){.cases{grid-template-columns:minmax(0,1fr);max-width:520px}}
+
+/* Legibility pass: the dim grays measured 1.9 to 2.8:1. */
+.toggle button{color:#5F6672}
+.sbar .rn small{color:#4E5868}
+.panel h5{color:#AEB9D0}
+.readfull{color:var(--mute)!important}
+.cmp li.no{color:#6e6e73;text-decoration:line-through;text-decoration-color:rgba(110,110,115,.5)}

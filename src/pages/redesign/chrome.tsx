@@ -228,7 +228,7 @@ function HeaderLanguage() {
 /* The same top navigation on every page (DESIGN.md: Navigation). Pages no
    longer pick their own top links; the in-page anchors a page passes in
    (#services, #faq...) show as a slim "On this page" row under it. */
-export const GLOBAL_NAV: NavLink[] = [
+const GLOBAL_NAV: NavLink[] = [
     { label: "Supply Chain", href: "/#chain" },
     { label: "Enter the US", href: "/us" },
     { label: "Enterprise", href: "/enterprise" },
@@ -236,8 +236,8 @@ export const GLOBAL_NAV: NavLink[] = [
     { label: "Case studies", href: "/case-studies" },
     { label: "Pricing", href: "/#compare" },
 ];
-export const BOOK_HREF = "/book";
-export const BOOK_LABEL = "Book a call";
+const BOOK_HREF = "/book";
+const BOOK_LABEL = "Book a call";
 
 function useGlobalNav(): NavLink[] {
     const { pathname } = useLocation();
