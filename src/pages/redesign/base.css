@@ -58,3 +58,16 @@
 /* Six global links need room: fold them into the menu below 1000px on every
    page (each page's own stylesheet only folds at 760px). */
 @media (max-width:1000px){.rd .nav-links{display:none!important}.rd .menu-btn{display:grid!important}.rd .mnav{display:flex!important}}
+
+/* Ledger Mint (DESIGN.md, The Mint Ink Rule): mint as text on white or light
+   gray is #0E7C68 (5.1:1 on white). Bright mint stays for fills, for text on
+   navy and for the decorative rubber stamps. */
+.rd{--mint-text:#0E7C68}
+.rd-home .sp-h em,.rd-home .co-c1 em,.rd-home .co-c2 em,.rd-home .wd-h2 em,.rd-home .hw2-h em,.rd-home .pr-h em,.rd-home .hx-w,
+.rd-home .sp-k,.rd-home .sp-more,.rd-home .lb-plus b,.rd-home .lb-calc-o b,.rd-home .lb-calc-go,.rd-home .pc2-pre,.rd-home .wh-idx,
+
+.rd-ent .h2 em,.rd-ent .ent-h1 em,.rd-ent .om-src small,.rd-ent .oc-step small,.rd-ent .ent-k,.rd-ent .ck-tr .up,.rd-ent .nx-num,
+.rd-product .hw-h1 em,.rd-product .hw-h2 em,.rd-product .hw-pl-lbl b,.rd-product .db-kpi em,.rd-product .hw-layer li span,
+.rd-lab .lb-h1 em,.rd-lab .lb-h2 em,.rd-lab .lb-num,
+.rd-cases .cs-h1 em,.rd-cases .cs-cat,
+.rd-eco .eco-h1 em,.rd-eco .eco-h2 em{color:var(--mint-text)!important}

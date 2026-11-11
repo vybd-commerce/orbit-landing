@@ -292,3 +292,13 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .essay li{margin-top:10px}
 .essay b{color:var(--ink);font-weight:600}
 .essay .soon{color:var(--mute);font-style:italic}
+
+/* Ledger Mint for mint text on light tiles (DESIGN.md: The Mint Ink Rule). */
+.eyebrow{color:var(--mint-text)}
+.dark .eyebrow{color:var(--mint)}
+.tag em{color:var(--mint-text)}
+.dark .tag em{color:var(--mint)}
+.sbar .vb b,.sbar .vb small{color:var(--mint-text)}
+.ledger-art .t b,.partner-art span i,.cc .num,.essay .num,.essays-hd nav span,.mbox .num{color:var(--mint-text)}
+.cc .q em,.essays-hd h1 em{color:var(--mint-text)}
+.cc.dk .q em,.cc.dk .num{color:var(--mint)}

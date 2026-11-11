@@ -2,7 +2,7 @@
    .pill, .more, .snav and .eyebrow; everything page-specific sits under .td. */
 
 .td .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-.td em{color:var(--mint)}
+.td em{color:var(--mint-text,#0E7C68)}
 
 /* hero */
 .td-hero{background:radial-gradient(120% 70% at 50% 0%,#fff 40%,#eef6f3 100%);padding-bottom:72px}
@@ -166,3 +166,6 @@
   .td-flow .n{grid-row:1/4;font-size:36px}.td-flow h3{margin:0}
   .dc-controls,.dc-out{padding:22px}
 }
+
+/* Ledger Mint for small mint text on light backgrounds. */
+.td .eyebrow,.td .badge,.td td.zero,.td .num{color:var(--mint-text,#0E7C68)}
