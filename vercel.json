@@ -61,6 +61,10 @@
             "destination": "/essay.html"
         },
         {
+            "source": "/waitlist",
+            "destination": "/waitlist.html"
+        },
+        {
             "source": "/:path(askinkind|ask-in-kind)",
             "destination": "/askinkind.html"
         },

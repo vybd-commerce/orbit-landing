@@ -37,6 +37,7 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         home: path.resolve(__dirname, 'home.html'),
         essay: path.resolve(__dirname, 'essay.html'),
+        waitlist: path.resolve(__dirname, 'waitlist.html'),
         'test-drop': path.resolve(__dirname, 'test-drop.html'),
         'fund-raise': path.resolve(__dirname, 'fund-raise.html'),
       },

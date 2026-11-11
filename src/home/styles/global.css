@@ -285,7 +285,11 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .essay .num{font:500 12px var(--mono);letter-spacing:.14em;color:var(--mint-h)}
 .essay > h1{margin:12px 0 0;font:400 clamp(36px,5vw,52px)/1.08 var(--serif);letter-spacing:-.015em;color:var(--ink)}
 .essay .dek{margin:14px 0 0;font-size:20px;color:var(--mute);line-height:1.45}
-.essay .by{margin:18px 0 36px;font-size:15px;font-weight:500;color:var(--ink)}
+.essay .by{display:flex;align-items:center;gap:12px;margin:18px 0 36px;font-size:15px;font-weight:500;color:var(--ink)}
+.essay .by img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
+.essay figure{margin:32px 0 0}
+.essay figure img{display:block;width:100%;height:auto;border-radius:16px}
+.essay figcaption{margin-top:10px;font-size:14px;line-height:1.45;color:var(--mute)}
 .essay h2{margin:44px 0 0;font:600 24px/1.25 var(--sans);letter-spacing:-.015em;color:var(--ink)}
 .essay p{margin:18px 0 0}
 .essay ul,.essay ol{margin:18px 0 0;padding-left:22px}
@@ -326,3 +330,21 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .panel h5{color:#AEB9D0}
 .readfull{color:var(--mute)!important}
 .cmp li.no{color:#6e6e73;text-decoration:line-through;text-decoration-color:rgba(110,110,115,.5)}
+
+/* ---------- /waitlist ---------- */
+.wl{min-height:calc(100svh - 56px - 160px);max-width:640px;margin:0 auto;padding:clamp(64px,12vh,128px) 22px 72px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.wl h1{margin:36px 0 0;font:400 clamp(44px,7vw,72px)/1.02 var(--serif);letter-spacing:-.02em;color:var(--navy)}
+.wl h1 em{color:var(--mint-text)}
+.wl-p{margin:18px 0 0;max-width:520px;font-size:19px;line-height:1.5;color:var(--body)}
+.wl-form{margin-top:32px;width:100%;max-width:480px;display:flex;gap:10px}
+.wl-form input[type=email]{flex:1;min-width:0;height:48px;padding:0 18px;border:1px solid var(--line);border-radius:99px;font:inherit;font-size:16px;color:var(--ink);background:#fff}
+.wl-form input[type=email]:focus{outline:2px solid var(--mint-text);outline-offset:1px;border-color:transparent}
+.wl-form .pill{height:48px;border:0;cursor:pointer;font:inherit;font-size:16px;font-weight:500;white-space:nowrap}
+.wl-form .pill:disabled{opacity:.6;cursor:default}
+.wl-done{margin-top:32px;padding:14px 22px;border-radius:99px;background:var(--mint-soft);color:var(--mint-text);font-weight:500}
+.wl-err{min-height:1.5em;margin:12px 0 0;font-size:14px;color:#B42318}
+.wl-alt{margin-top:28px;font-size:15px;color:var(--mute)}
+.wl-alt a{color:var(--mint-text);border-bottom:1px solid currentColor}
+.wl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+@media (max-width:520px){.wl-form{flex-direction:column}.wl-form input[type=email]{flex:none}.wl-form .pill{width:100%;justify-content:center}}

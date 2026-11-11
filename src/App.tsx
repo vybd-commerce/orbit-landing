@@ -12,7 +12,6 @@ import MockLandingPage from "./pages/MockLandingPage";
 import V2LandingPage from "./pages/V2LandingPage";
 import V3LandingPage from "./pages/V3LandingPage";
 import ConsultingPage from "./pages/ConsultingPage";
-import WaitlistPage from "./pages/WaitlistPage";
 import RainmakerPage from "./pages/RainmakerPage";
 import HelloPage from "./pages/HelloPage";
 import BookPage from "./pages/BookPage";
@@ -87,7 +86,6 @@ function App() {
         {/* The root's address while it was in review */}
         <Route path="/hello" element={<Navigate to="/" replace />} />
         {/* Previous root, back at its own address */}
-        <Route path="/waitlist" element={<WaitlistPage />} />
         {/* Sign-up for local representatives outside the US */}
         <Route path="/rainmaker" element={<RainmakerPage />} />
         <Route path="/zh/rainmaker" element={<RainmakerPage locale="zh" />} />
