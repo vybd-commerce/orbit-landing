@@ -81,34 +81,7 @@ export default function FundRaiseApp() {
           <p className="fr-foot rv">{problem.footer}</p>
         </Sec>
 
-        {/* 3. Solution (white, set off from the problem by a hairline) */}
-        <Sec id="solution" canvas="white">
-          <Head id="solution" eyebrow={solution.eyebrow} title={solution.title} />
-          <div className="fr-sol">
-            <div className="fr-decide rv">
-              <Label>{solution.brandLabel}</Label>
-              <ol className="fr-steps">
-                {solution.decisions.map((d) => (
-                  <li key={d.n}><span className="fr-dot">{d.n}</span><div><b>{d.title}</b><span>{d.body}</span></div></li>
-                ))}
-              </ol>
-              <div className="fr-stat">
-                <b>{solution.stat.value}</b><span>{solution.stat.label}</span>
-              </div>
-            </div>
-            <div className="fr-layers rv">
-              <Label>{solution.layersLabel}</Label>
-              {solution.layers.map((l) => (
-                <article key={l.name} className="fr-card">
-                  <h4>{l.name}</h4>
-                  <Chips items={l.items} tone="tint" />
-                </article>
-              ))}
-            </div>
-          </div>
-        </Sec>
-
-        {/* 4. Thesis */}
+        {/* 3. Thesis */}
         <Sec id="thesis" canvas="navy">
           <Head id="thesis" eyebrow={thesis.eyebrow} title={thesis.title} sub={thesis.line} />
           <div className="fr-flow rv" role="group" aria-label="How goods and work move">
@@ -145,6 +118,33 @@ export default function FundRaiseApp() {
             ))}
           </ol>
           <p className="fr-more rv"><a href={ESSAY_URL}>{thesis.essayLink}</a></p>
+        </Sec>
+
+        {/* 4. Solution (white, hairline above the model) */}
+        <Sec id="solution" canvas="white">
+          <Head id="solution" eyebrow={solution.eyebrow} title={solution.title} />
+          <div className="fr-sol">
+            <div className="fr-decide rv">
+              <Label>{solution.brandLabel}</Label>
+              <ol className="fr-steps">
+                {solution.decisions.map((d) => (
+                  <li key={d.n}><span className="fr-dot">{d.n}</span><div><b>{d.title}</b><span>{d.body}</span></div></li>
+                ))}
+              </ol>
+              <div className="fr-stat">
+                <b>{solution.stat.value}</b><span>{solution.stat.label}</span>
+              </div>
+            </div>
+            <div className="fr-layers rv">
+              <Label>{solution.layersLabel}</Label>
+              {solution.layers.map((l) => (
+                <article key={l.name} className="fr-card">
+                  <h4>{l.name}</h4>
+                  <Chips items={l.items} tone="tint" />
+                </article>
+              ))}
+            </div>
+          </div>
         </Sec>
 
         {/* 5. Business model */}
