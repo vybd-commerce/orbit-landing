@@ -1,6 +1,6 @@
 /* GET /api/oc/admin  (served at /outside-context/admin via vercel.json)
    Password-protected view of Outside Context registrations, onboarding answers and volunteer/topic
-   requests. HTTP Basic auth: any username, password = OC_ADMIN_PASSWORD (Vercel env var).
+   requests. Sign-in form; password = OC_ADMIN_PASSWORD (Vercel env var), kept as an HttpOnly session cookie for 14 days.
    ?format=csv downloads all signups as CSV. */
 import { sql } from "./_lib.js";
 
@@ -11,15 +11,30 @@ const FIELD_LABEL: Record<string, string> = {
     builder: "Works in tech", other: "Something else",
 };
 
-function unauthorized() {
-    return new Response("Password required.", {
-        status: 401,
-        headers: {
-            "www-authenticate": 'Basic realm="Outside Context admin", charset="UTF-8"',
-            "cache-control": "no-store",
-        },
-    });
-}
+const COOKIE = "oc_admin";
+const page = (title: string, body: string, status = 200, headers: Record<string, string> = {}) =>
+    new Response(`<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow">
+<title>${title}</title><style>
+:root { --paper:#F4F1EA; --ink:#111; --gray:#5F5F5F; --line:rgba(17,17,17,.2); --accent:#C4552D; --error:#A3311A; }
+* { box-sizing:border-box; margin:0; }
+body { background:var(--paper); color:var(--ink); font:17px/1.45 Georgia, "Times New Roman", serif; padding:clamp(48px,12vh,120px) 24px; }
+form { max-width:22rem; margin:0 auto; } h1 { font-weight:400; font-size:34px; }
+label { display:block; margin-top:28px; } input { width:100%; font:inherit; font-size:20px; padding:8px 0 10px; border:0;
+  border-bottom:1px solid var(--line); background:transparent; color:var(--ink); }
+input:focus { outline:none; border-color:var(--ink); }
+button { margin-top:28px; font:inherit; font-size:18px; padding:13px 28px; border-radius:999px; border:1px solid var(--ink);
+  background:var(--ink); color:var(--paper); cursor:pointer; } button:hover { background:var(--accent); border-color:var(--accent); }
+.err { margin-top:14px; color:var(--error); }
+</style></head><body>${body}</body></html>`,
+        { status, headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex", ...headers } });
+
+const loginPage = (message = "", status = 200) => page("Outside Context | Sign in", `<form method="post" action="/outside-context/admin">
+<h1>Outside Context admin</h1>
+<label for="pw">Password</label>
+<input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+${message ? `<p class="err" role="alert">${message}</p>` : ""}
+<button type="submit">Sign in</button></form>`, status);
 
 /* Constant-time string compare, so response timing doesn't leak the password. */
 function same(a: string, b: string) {
@@ -29,16 +44,37 @@ function same(a: string, b: string) {
     return diff === 0;
 }
 
-function authorized(request: Request) {
-    const expected = process.env.OC_ADMIN_PASSWORD;
-    if (!expected) return false; // fail closed when the password isn't configured
-    const header = request.headers.get("authorization") ?? "";
-    if (!header.startsWith("Basic ")) return false;
-    let decoded = "";
-    try { decoded = new TextDecoder().decode(Uint8Array.from(atob(header.slice(6)), (c) => c.charCodeAt(0))); }
-    catch { return false; }
-    const password = decoded.slice(decoded.indexOf(":") + 1);
-    return same(password, expected);
+/* Session token: HMAC of a fixed label under the password. Changing the password signs everyone out. */
+async function token(secret: string) {
+    const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode("oc-admin-session-v1"));
+    return Array.from(new Uint8Array(sig), (b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+const secret = () => (process.env.OC_ADMIN_PASSWORD ?? "").trim();
+
+async function signedIn(request: Request) {
+    const expected = secret();
+    if (!expected) return false;
+    const cookie = (request.headers.get("cookie") ?? "").split(/;\s*/).find((c) => c.startsWith(COOKIE + "="));
+    return !!cookie && same(cookie.slice(COOKIE.length + 1), await token(expected));
+}
+
+/* POST: check the password from the sign-in form, set a session cookie, go back to the page. */
+export async function POST(request: Request) {
+    const expected = secret();
+    if (!expected) return loginPage("The admin password isn't set on the server (OC_ADMIN_PASSWORD).", 500);
+    let given = "";
+    try { given = String((await request.formData()).get("password") ?? "").trim(); } catch { /* empty */ }
+    if (!same(given, expected)) return loginPage("That password didn't match. Check for typos and try again.", 401);
+    return new Response(null, {
+        status: 303,
+        headers: {
+            location: "/outside-context/admin",
+            "set-cookie": `${COOKIE}=${await token(expected)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${60 * 60 * 24 * 14}`,
+            "cache-control": "no-store",
+        },
+    });
 }
 
 const esc = (v: unknown) =>
@@ -56,7 +92,7 @@ const stamp = (v: unknown) =>
     v ? new Date(String(v)).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: "America/New_York" }) : "";
 
 export async function GET(request: Request) {
-    if (!authorized(request)) return unauthorized();
+    if (!(await signedIn(request))) return loginPage();
 
     const signups = (await sql`
         select name, email, field, field_other, to_char(sunday, 'YYYY-MM-DD') as sunday, source, utm_source,
