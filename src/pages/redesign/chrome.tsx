@@ -166,9 +166,8 @@ function RdLogo({ href, delay }: { href: string; delay: number }) {
     return (
         <RdLink
             href={href}
-            className="display lg"
+            className="lg nav-lockup"
             ariaLabel="Vybd home"
-            style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-.04em" }}
             onPointerEnter={() => {
                 const now = performance.now();
                 if (now - last.current < 1600) return;
@@ -176,13 +175,18 @@ function RdLogo({ href, delay }: { href: string; delay: number }) {
                 play(0);
             }}
         >
-            <svg className="lg-mark" ref={markRef} viewBox="0 0 100 92" width="28" height="26" aria-hidden="true">
-                {FACETS.map(([d, fill]) => (
-                    <path key={d} className="lg-f" d={d} fill={fill} />
-                ))}
-            </svg>
-            Vybd
-            <span className="lg-tag" aria-hidden="true">
+            {/* The lockup (DESIGN.md: Logo lockup): the V standing in for the V
+                of "Vybd", "ybd" in Instrument Serif, "Borderless" under it.
+                Same as Lockup in src/home/components/Logo.tsx. */}
+            <span className="nav-lockup-word" aria-hidden="true">
+                <svg className="lg-mark nav-lockup-v" ref={markRef} viewBox="4 4 92 84" aria-hidden="true">
+                    {FACETS.map(([d, fill]) => (
+                        <path key={d} className="lg-f" d={d} fill={fill} />
+                    ))}
+                </svg>
+                ybd
+            </span>
+            <span className="nav-lockup-tag" aria-hidden="true">
                 Borderless
             </span>
         </RdLink>

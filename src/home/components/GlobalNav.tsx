@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BOOK, LANGUAGES, NAV_LINKS, pickLanguage } from '@/home/data/nav'
-import { Logo } from './Logo'
+import { Lockup } from './Logo'
 
 /** base: '' on the home page; '/' elsewhere so #anchors point back to the home page. */
 export function GlobalNav({ base = '', ribbon = true }: { base?: string; ribbon?: boolean }) {
@@ -18,7 +18,7 @@ export function GlobalNav({ base = '', ribbon = true }: { base?: string; ribbon?
     <>
       <header className="gnav">
         <div className="in">
-          <a className="lg" href={base ? base : '#top'} aria-label="Vybd home"><Logo />Vybd<span className="lg-tag" aria-hidden="true">Borderless</span></a>
+          <a className="lg" href={base ? base : '#top'} aria-label="Vybd home"><Lockup /></a>
           <nav className="lks" aria-label="Main">
             {NAV_LINKS.map((l) => (
               <a key={l.href} className="lk" href={to(l.href)}>{l.label}</a>

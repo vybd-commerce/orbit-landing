@@ -190,13 +190,13 @@ Round and soft: pills for every button and chip, 28px corners for large cards, 1
 - **Internal Padding:** 36px.
 
 ### Navigation
-- One global nav on every page: the logo with "Borderless" beside it, then Where are you today?, How it works, Pricing, Enterprise, Case studies, Partners, then language and "Book a call". `NAV_LINKS` (src/home/data/nav.ts) and `GLOBAL_NAV` (src/pages/redesign/chrome.tsx) hold the same list.
+- One global nav on every page: the logo lockup, then Where are you today?, How it works, Pricing, Enterprise, Case studies, Partners, then language and "Book a call". `NAV_LINKS` (src/home/data/nav.ts) and `GLOBAL_NAV` (src/pages/redesign/chrome.tsx) hold the same list.
 - Links are 14px body gray, ink on hover, with the current page in ink.
 - Mobile: a menu button opens a full-width list with the same links and the action.
 
 ### Logo lockup
 - The folded V mark plus "ybd" in Instrument Serif; under it, "Borderless" in DM Sans, letterspaced, in mint (Ledger Mint on light).
-- In the header: the mark and "Vybd", then a hairline divider and "BORDERLESS" in 11px DM Sans, letterspaced, Ledger Mint (`.lg-tag`). Hidden below 400px.
+- In the header on every page: the same lockup at 28px ("ybd") with "Borderless" at 11px under it (`.gnav .lockup` on standalone pages, `.rd .nav-lockup` on the SPA).
 
 ## Do's and Don'ts
 

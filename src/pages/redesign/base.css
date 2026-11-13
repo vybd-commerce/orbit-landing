@@ -101,7 +101,10 @@
 .rd-home .pc2-out .pc2-k,.rd-home .pc2-out .pc2-hint,.rd-product .hw-layer.mid .mono,.rd-lab .lb-plate.core small,.rd-lab .lb-core-plate small{color:#AEB6C4!important}
 .rd-product .sk-core .sk-badge{color:#C9F2E9!important}
 
-/* "Borderless" beside the wordmark in the header (same as .gnav .lg-tag in
+/* The logo lockup in the header: the V as the V of "Vybd", "ybd" in
+   Instrument Serif, "Borderless" under it (same as .gnav .lockup in
    src/home/styles/global.css). */
-.rd .lg-tag{margin-left:4px;padding-left:11px;border-left:1px solid #E5E7EB;font:600 11px/1 "DM Sans",system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#0E7C68}
-@media (max-width:400px){.rd .lg-tag{display:none}}
+.rd .nav-lockup{display:inline-flex;flex-direction:column;align-items:center;gap:1px;color:#0F1B33;text-decoration:none}
+.rd .nav-lockup-word{display:inline-flex;align-items:baseline;font:400 28px/1 "Instrument Serif",Georgia,serif;letter-spacing:-.01em}
+.rd .nav-lockup-v{display:inline-block;width:auto;height:.7em;margin-right:-.03em;align-self:baseline;transform:translateY(.02em)}
+.rd .nav-lockup-tag{font:600 11px/1 "DM Sans",system-ui,sans-serif;letter-spacing:.2em;color:#0E7C68;padding-left:.2em}
