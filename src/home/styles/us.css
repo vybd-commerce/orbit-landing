@@ -43,7 +43,7 @@
 .usx .grid2 .tile{min-height:0}}
 .usx .hero{background:radial-gradient(120% 70% at 50% 0%,#fff 40%,#eef6f3 100%)}
 .usx .hero .copy{padding-top:68px;max-width:960px}
-.usx .hero h1{font:400 clamp(46px,7.2vw,88px)/.98 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.usx .hero h1{font:400 clamp(40px,5.6vw,68px)/1.02 var(--serif);letter-spacing:-.02em;margin:0;text-wrap:balance}
 .usx .hero h1 em{color:var(--mint)}
 .usx .hero .body{font-size:clamp(18px,1.9vw,22px);max-width:660px}
 .usx .us-art{position:relative;width:min(980px,96%);height:380px}
@@ -70,7 +70,7 @@
 .usx .tangle svg{position:absolute;inset:0;width:100%;height:100%}
 .usx .tangle svg path{fill:none;stroke:rgba(255,255,255,.22);stroke-width:1.4;stroke-dasharray:4 6}
 .usx .ws{position:absolute;transform:translate(-50%,-50%);padding:8px 14px;border-radius:99px;font-size:13px;font-weight:500;white-space:nowrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#dfe5ee}
-.usx .ws small{display:block;font:500 9.5px var(--mono);letter-spacing:.12em;color:#8d9ab3;text-transform:uppercase}
+.usx .ws small{display:block;font:500 11px var(--mono);letter-spacing:.12em;color:#AEB9D0;text-transform:uppercase}
 .usx .you{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:110px;height:110px;border-radius:50%;display:grid;place-items:center;text-align:center;background:#fff;color:var(--navy);font:400 22px/1 var(--serif);box-shadow:0 0 0 10px rgba(255,255,255,.06),0 0 0 22px rgba(255,255,255,.03)}
 .usx .you small{display:block;font:500 10px var(--mono);letter-spacing:.12em;color:var(--mute);margin-top:4px}
 @media (max-width:600px){.usx .tangle{height:440px;width:100%}
@@ -142,14 +142,14 @@
 .usx .mbox .go{margin-top:26px}
 .usx .ops-art{width:min(980px,94%);display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:14px;margin-bottom:-24px;perspective:1600px}
 .usx .panel{background:linear-gradient(180deg,#1a2a52,#142142);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:18px;text-align:left;color:#e8ecf3;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
-.usx .panel h5{margin:0 0 12px;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#8d9ab3;display:flex;justify-content:space-between;gap:8px}
-.usx .panel h5 span{color:var(--mint)}
+.usx .panel .ph{margin:0 0 12px;font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#AEB9D0;display:flex;justify-content:space-between;gap:8px}
+.usx .panel .ph span{color:var(--mint)}
 .usx .flow{display:grid;gap:8px}
 .usx .flow div{display:grid;grid-template-columns:18px 1fr auto;gap:10px;align-items:center;font-size:13px}
 .usx .flow i{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.25)}
 .usx .flow i.ok{background:var(--mint);border-color:var(--mint)}
 .usx .flow i.now{border-color:var(--mint);box-shadow:0 0 0 4px rgba(27,181,155,.2)}
-.usx .flow em{font-style:normal;color:#8d9ab3;font-size:12px}
+.usx .flow em{font-style:normal;color:#AEB9D0;font-size:12px}
 .usx .rows{display:grid;gap:9px}
 .usx .rw{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .usx .rw:last-child{border:0}
@@ -160,14 +160,14 @@
 .usx .agent .d{width:8px;height:8px;border-radius:50%;background:var(--mint);margin-top:6px;flex:none;box-shadow:0 0 0 4px rgba(27,181,155,.18)}
 .usx .agent .d.w{background:#f5b041;box-shadow:0 0 0 4px rgba(245,176,65,.18)}
 .usx .agent b{display:block;color:#fff;font-weight:500}
-.usx .agent span{color:#8d9ab3;font-size:12px}
+.usx .agent span{color:#AEB9D0;font-size:12px}
 .usx .p1{transform:rotateY(10deg) translateZ(-30px)}
 .usx .p3{transform:rotateY(-10deg) translateZ(-30px)}
 .usx .benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;max-width:900px;margin:34px auto 0;padding-inline:22px;text-align:left}
 .usx .benefits div{border-top:1px solid rgba(255,255,255,.18);padding-top:14px}
 .usx .benefits b{display:block;font:400 26px/1.1 var(--serif);color:#fff}
 .usx .benefits span{display:block;margin-top:6px;font-size:15px;color:#aab4c7}
-.usx .illus{position:absolute;right:16px;bottom:16px;z-index:3;font:500 10.5px var(--mono);letter-spacing:.12em;color:#8d9ab3;background:rgba(15,27,51,.8);padding:5px 10px;border-radius:99px}
+.usx .illus{position:absolute;right:16px;bottom:16px;z-index:3;font:500 11px var(--mono);letter-spacing:.12em;color:#AEB9D0;background:rgba(15,27,51,.8);padding:5px 10px;border-radius:99px}
 @media (max-width:833px){.usx .ops-art{grid-template-columns:minmax(0,1fr);width:min(420px,92%)}
 .usx .p1,.usx .p3{transform:none}
 .usx .p3{display:none}
@@ -215,7 +215,7 @@
 .usx .final svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.25;pointer-events:none}
 .usx .final svg.bg path{fill:none;stroke:var(--mint);stroke-width:1.4;stroke-dasharray:5 9}
 .usx .final .eyebrow{color:var(--mint);font:500 12px var(--mono);letter-spacing:.16em;text-transform:uppercase}
-.usx .final h2{position:relative;margin:14px auto 0;font:400 clamp(46px,7.4vw,96px)/.98 var(--serif);letter-spacing:-.02em;max-width:12ch;text-wrap:balance}
+.usx .final h2{position:relative;margin:0 auto;font:400 clamp(42px,6.2vw,76px)/1 var(--serif);letter-spacing:-.02em;max-width:12ch;text-wrap:balance}
 .usx .final h2 em{color:var(--mint)}
 .usx .final p{position:relative;margin:22px auto 0;max-width:560px;font-size:19px;color:#c4ccda}
 .usx .final p b{color:#fff;font-weight:600}
@@ -223,7 +223,7 @@
 .usx .final .pill{height:48px;padding:0 26px;font-size:16.5px}
 .usx .final .pill.fill{background:var(--mint);color:var(--navy)}
 .usx .final .pill.fill:hover{background:#3fd0b5}
-.usx .final small{position:relative;display:block;margin-top:16px;font-size:14px;color:#8d9ab3}
+.usx .final small{position:relative;display:block;margin-top:16px;font-size:14px;color:#AEB9D0}
 @media (prefers-reduced-motion:reduce){.usx .routes path{animation:none}}
 
 /* Additions to the design: the "Who we help" heading, a second route per
@@ -239,3 +239,18 @@
 .usx .usx-fn{max-width:1024px;margin:0 auto;padding:28px 22px 0;font-size:12px;line-height:1.5;color:var(--mute)}
 .usx .usx-fn p{margin:0 0 6px}
 .usx sup{font-size:.6em;margin-left:2px;color:var(--mute)}
+
+/* impeccable pass: Ledger Mint (#0E7C68) for every piece of mint text on a
+   light surface (DESIGN.md, The Mint Ink Rule); bright mint only on navy. */
+.usx .eyebrow,.usx .tag em,.usx .close-line em,.usx .hero h1 em,.usx .hub .fn i,.usx .pc .n em,.usx .cc .num,.usx .mbox .num,
+.usx .step:nth-child(2) .ico,.usx .step small,.usx .chips-art .ar{color:var(--mint-text)}
+.usx .dark .eyebrow,.usx .dark .tag em,.usx .dark .close-line em,.usx .cc.dk .num{color:var(--mint)}
+/* Drawn flags and arrows in place of emoji and text glyphs. */
+.usx .origin i{background:none;overflow:hidden}
+.usx .flag{display:block;width:100%;height:100%;border-radius:50%}
+.usx .chips-art span{display:inline-flex;align-items:center;gap:8px}
+.usx .chips-art .flag{width:18px;height:18px;flex:none}
+.usx .ico-arrow{display:block;width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.usx .chips-art .ar .ico-arrow{margin:0 auto}
+.usx .caps .nav button svg,.usx .mbox .x svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.usx .caps .nav button,.usx .mbox .x{display:inline-grid;place-items:center}

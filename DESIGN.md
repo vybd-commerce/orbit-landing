@@ -202,7 +202,7 @@ Round and soft: pills for every button and chip, 28px corners for large cards, 1
 
 ### Do:
 - **Do** use Ledger Mint (#0E7C68) for mint text on white or gray.
-- **Do** send every "talk to us" action to /book with the label "Book a call".
+- **Do** send every "talk to us" action to /book. The header and generic closing calls say "Book a call"; a CTA for one offer may name it ("Talk about US Scale", "Plan my launch") and carries its route (`/book?for=drop|launch|scale|enterprise|partner`).
 - **Do** keep illustrative figures labelled as illustrative.
 
 ### Don't:

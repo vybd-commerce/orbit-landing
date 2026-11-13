@@ -27,6 +27,14 @@ const Mark = () => (
   </svg>
 )
 
+const Flag = ({ code, name }: { code: string; name?: string }) => (
+  <img className="flag" src={`/images/flags/${code}.svg`} alt={name ?? ''} width={18} height={18} />
+)
+
+const Arrow = ({ down }: { down?: boolean }) => (
+  <svg className="ico-arrow" viewBox="0 0 24 24" aria-hidden="true">{down ? <path d="M12 4v16M6 14l6 6 6-6" /> : <path d="M4 12h16M14 6l6 6-6 6" />}</svg>
+)
+
 const Icon = ({ d }: { d: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
 )
@@ -111,14 +119,14 @@ function Capabilities() {
       <div className="nav">
         <a className="more" href="#pricing">See what it costs</a>
         <span>
-          <button type="button" aria-label="Previous" onClick={() => scroller.current?.scrollBy({ left: -360, behavior: 'smooth' })}>‹</button>
-          <button type="button" aria-label="Next" onClick={() => scroller.current?.scrollBy({ left: 360, behavior: 'smooth' })}>›</button>
+          <button type="button" aria-label="Previous" onClick={() => scroller.current?.scrollBy({ left: -360, behavior: 'smooth' })}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg></button>
+          <button type="button" aria-label="Next" onClick={() => scroller.current?.scrollBy({ left: 360, behavior: 'smooth' })}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg></button>
         </span>
       </div>
       <div className={'modal' + (c ? ' open' : '')} role="dialog" aria-modal="true" aria-labelledby="cap-h" onClick={(e) => e.target === e.currentTarget && close()}>
         {c && (
           <div className="mbox">
-            <button className="x" type="button" aria-label="Close" ref={closeBtn} onClick={close}>×</button>
+            <button className="x" type="button" aria-label="Close" ref={closeBtn} onClick={close}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg></button>
             <div className="num">0{open! + 1} · {c.short.toUpperCase()}</div>
             <div className="q">{c.q}</div>
             <h3 id="cap-h">{c.t}</h3>
@@ -142,15 +150,15 @@ function AudienceArt({ art }: { art: Audience['art'] }) {
           <g fill="#1BB59B"><rect x="20" y="74" width="12" height="12" rx="2" /><rect x="50" y="74" width="12" height="12" rx="2" /><rect x="80" y="74" width="12" height="12" rx="2" /></g>
           <path d="M0 106h150" stroke="#2c3e6b" strokeWidth="2" />
         </svg>
-        <span className="arrow">→</span>
+        <span className="arrow"><Arrow /></span>
         <div className="mini-box"><b>USA</b></div>
       </div>
     )
   if (art === 'flags')
     return (
       <div className="chips-art rv" aria-hidden="true">
-        <span>🇮🇳 India</span><span>🇰🇷 South Korea</span><span>🇨🇳 China</span><span>🇧🇩 Bangladesh</span><span>🇫🇷 France</span>
-        <span className="ar">↓</span><span className="us">🇺🇸 United States</span>
+        {([['in', 'India'], ['kr', 'South Korea'], ['cn', 'China'], ['bd', 'Bangladesh'], ['fr', 'France']] as const).map(([c, n]) => <span key={c}><Flag code={c} />{n}</span>)}
+        <span className="ar"><Arrow down /></span><span className="us"><Flag code="us" />United States</span>
       </div>
     )
   if (art === 'growth')
@@ -187,9 +195,9 @@ export default function UsApp() {
             <svg className="routes" viewBox="0 0 980 380" preserveAspectRatio="none">
               <path d="M120 290 C 300 120, 440 120, 560 170" /><path d="M110 120 C 300 40, 460 80, 560 165" /><path d="M880 70 C 760 40, 640 90, 590 160" />
             </svg>
-            <span className="origin" style={{ left: '3%', top: '68%' }}><i>🇮🇳</i>India</span>
-            <span className="origin" style={{ left: '2%', top: '22%' }}><i>🇰🇷</i>South Korea</span>
-            <span className="origin" style={{ right: '3%', top: '10%' }}><i>🇨🇳</i>China</span>
+            <span className="origin" style={{ left: '3%', top: '68%' }}><i><Flag code="in" /></i>India</span>
+            <span className="origin" style={{ left: '2%', top: '22%' }}><i><Flag code="kr" /></i>South Korea</span>
+            <span className="origin" style={{ right: '3%', top: '10%' }}><i><Flag code="cn" /></i>China</span>
             <div className="hq"><div className="box"><div className="lbl">US OPERATION<b>America</b><s /></div></div></div>
             <span className="ops-chip" style={{ left: '66%', top: '68%' }}><i />Warehouse</span>
             <span className="ops-chip" style={{ left: '73%', top: '44%' }}><i />Sales channels</span>
@@ -256,7 +264,7 @@ export default function UsApp() {
           </div>
           <div className="art"><div className="ops-art rv" aria-label="Illustrative Control Tower interface">
             <div className="panel p1">
-              <h5>US launch · Skincare brand <span>Week 6</span></h5>
+              <h3 className="ph">US launch · Skincare brand <span>Week 6</span></h3>
               <div className="flow">
                 {([['ok', 'Market research', 'Done'], ['ok', 'Labels & compliance', 'Done'], ['ok', 'Freight & customs', 'Done'], ['now', 'Warehouse receiving', 'In progress'], ['', 'Marketplace listings', 'Next'], ['', 'Launch campaign', 'Next']] as const).map(([k, s, st]) => (
                   <div key={s}><i className={k || undefined} /><span>{s}</span><em>{st}</em></div>
@@ -264,7 +272,7 @@ export default function UsApp() {
               </div>
             </div>
             <div className="panel">
-              <h5>Who's handling it <span>One team</span></h5>
+              <h3 className="ph">Who's handling it <span>One team</span></h3>
               <div className="rows">
                 {([['Market research', 'Vybd', false], ['Customs brokerage', 'Partner · coordinated', true], ['Warehousing', 'Partner · coordinated', true], ['Listings & ads', 'Vybd', false], ['Product & pricing calls', 'You', true]] as const).map(([s, who, p]) => (
                   <div className="rw" key={s}><span>{s}</span><em className={p ? 'p' : undefined}>{who}</em></div>
@@ -272,7 +280,7 @@ export default function UsApp() {
               </div>
             </div>
             <div className="panel p3">
-              <h5>Needs attention <span>2 open</span></h5>
+              <h3 className="ph">Needs attention <span>2 open</span></h3>
               <div className="agent"><i className="d" /><div><b>Reorder suggested, SKU-114</b><span>Stock runs low in 19 days</span></div></div>
               <div className="agent"><i className="d w" /><div><b>Freight invoice mismatch</b><span>Flagged for an operator</span></div></div>
               <div className="agent"><i className="d" /><div><b>Listings updated</b><span>Prices and stock in sync</span></div></div>
@@ -369,7 +377,6 @@ export default function UsApp() {
           <svg className="bg" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
             <path d="M-20 480 C 300 300, 520 520, 800 300 S 1100 140, 1240 120" /><path d="M-20 140 C 260 240, 540 80, 820 220 S 1080 420, 1240 380" />
           </svg>
-          <div className="eyebrow rv">Your next chapter starts here</div>
           <h2 className="rv">Your business belongs in America. <em>Let's build it.</em></h2>
           <p className="rv">You don't need to figure out America alone. <b>Tell us where you want to go. We'll help you get there.</b></p>
           <div className="links rv"><a className="pill fill" href={BOOK_LAUNCH}>Let's build your US business</a></div>

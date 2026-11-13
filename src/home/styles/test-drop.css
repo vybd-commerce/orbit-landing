@@ -35,12 +35,12 @@
 .td-flow li.you{background:var(--mint-soft);box-shadow:inset 0 0 0 1px #c9ede3}
 .td-flow .n{font:400 44px/1 var(--serif);color:var(--navy)}
 .td-flow small{font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
-.td-flow .you small{color:var(--mint-h)}
+.td-flow .you small{color:var(--mint-text)}
 .td-flow h3{margin-top:6px;font-size:17px}
 .td-flow p{margin:0;font-size:14.5px;line-height:1.45;color:var(--mute)}
 .td-pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
 .td-pillars div{padding:20px 22px;border-radius:20px;background:#fff;box-shadow:inset 0 3px 0 var(--mint);text-align:left}
-.td-pillars b{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint-h)}
+.td-pillars b{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint-text)}
 .td-pillars p{margin:8px 0 0;font-size:15px;color:var(--body)}
 
 /* who does what */
@@ -83,7 +83,7 @@
 .dc-out table{width:100%;border-collapse:collapse;font-size:14px}
 .dc-out th{text-align:left;font-weight:400;color:var(--body);padding:9px 12px 9px 0;border-bottom:1px solid var(--line)}
 .dc-out td{text-align:right;padding:9px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink)}
-.dc-out td.zero{color:var(--mint-h)}
+.dc-out td.zero{color:var(--mint-text)}
 .dc-out tfoot th{font-weight:600;color:var(--ink);border:0;padding-top:16px}
 .dc-out tfoot td{font:400 36px/1 var(--serif);color:var(--navy);border:0;padding-top:16px}
 .dc-out tfoot td.neg{color:#c2410c}
@@ -97,7 +97,7 @@
 .td-tiers .partner{background:var(--mint-soft)}
 .td-tiers .badge{align-self:flex-start;padding:4px 10px;border-radius:99px;background:var(--gray);font:500 11px var(--mono);letter-spacing:.06em;color:var(--body)}
 .td-tiers .drop .badge{background:rgba(27,181,155,.2);color:var(--mint)}
-.td-tiers .partner .badge{background:#fff;color:var(--mint-h)}
+.td-tiers .partner .badge{background:#fff;color:var(--mint-text)}
 .td-tiers h3{margin-top:16px;font-size:22px}
 .td-tiers .drop h3{color:#fff}
 .td-tiers .amt{margin-top:8px;font:400 40px/1 var(--serif);color:var(--navy)}
@@ -122,7 +122,7 @@
 .td-stats span{display:block;margin-top:8px;font-size:15px;color:var(--body)}
 .td-stats .hi span{color:#c4ccda}
 .td-story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:32px;text-align:left}
-.td-story small{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint-h)}
+.td-story small{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--mint-text)}
 .td-story p{margin:8px 0 0;font-size:16px;color:var(--body)}
 .td-origins{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px;margin-top:40px;padding-top:28px;border-top:1px solid var(--line);font-size:15px;color:var(--body)}
 .td-origins ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
@@ -131,7 +131,7 @@
 /* next steps */
 .td-next{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;text-align:left}
 .td-next article{padding:24px 22px 28px;border-radius:28px;background:#fff}
-.td-next .num{font:500 12px var(--mono);letter-spacing:.1em;color:var(--mint-h)}
+.td-next .num{font:500 12px var(--mono);letter-spacing:.1em;color:var(--mint-text)}
 .td-next .num span{margin-left:6px;color:var(--mute)}
 .td-next h3{margin-top:14px;font-size:22px}
 .td-next p{margin:8px 0 0;font-size:15px;color:var(--body)}
