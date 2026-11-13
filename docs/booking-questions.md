@@ -16,6 +16,7 @@ Set these on the event used by `BOOKING_URL` in `src/pages/BookPage.tsx`
    - Some US sales, want to grow
    - A US buyer or retailer is interested
    - Already selling, need help running it
+- Large operation ($50M+), want AI operations across our systems
 
 ## Optional
 
@@ -51,3 +52,8 @@ If you reorder the questions in Calendly, update this table to match.
   only); set brand colour to `#0f1b33`. The embed also passes this colour.
 - **Time zone:** nothing to set. Calendly detects the invitee's time zone and
   shows it, with a picker to change it, above the time slots.
+
+
+## Route tag
+
+Every CTA links to `/book?for=drop|launch|scale|enterprise|partner`. BookPage.tsx swaps the heading for that route and passes it to Calendly as `utm_content`, so each booking shows which page sent it.

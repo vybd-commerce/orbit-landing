@@ -76,13 +76,14 @@ function cookie(header: string | null, name: string) {
         .find(([k]) => k === name)?.[1];
 }
 
-/* English "/" is the standalone landing page (home.html, built from src/home).
+/* English "/" is the standalone landing page (us-en.html, built from
+   src/home/UsApp.tsx; the earlier home.html now lives at /borderless).
    A vercel.json rewrite can't do this: dist/index.html exists, and Vercel
    serves files before rewrites. Same mechanism as rewrite() in @vercel/functions. */
 function serveAsIs(request: Request) {
     if (new URL(request.url).pathname !== "/") return;
     return new Response(null, {
-        headers: { "x-middleware-rewrite": new URL("/home.html", request.url).toString() },
+        headers: { "x-middleware-rewrite": new URL("/us-en.html", request.url).toString() },
     });
 }
 

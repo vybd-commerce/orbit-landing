@@ -171,3 +171,6 @@
 .td .eyebrow,.td .badge,.td td.zero,.td .num{color:var(--mint-text,#0E7C68)}
 .td-offer .price em{color:var(--mint)}
 .td li.you small,.td .td-pillars b{color:var(--mint-text,#0E7C68)}
+/* Long labels ("Talk to us about US Scale") in narrow tier cards: grow the
+   pill instead of letting text spill past its fixed height. */
+.td-tiers .pill{height:auto;min-height:44px;padding:11px 20px;line-height:1.25;text-align:center;justify-content:center;white-space:normal}

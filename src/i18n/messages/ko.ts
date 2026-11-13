@@ -5,7 +5,7 @@ export const ko: Messages = {
     meta: {
         homeTitle: "해외 브랜드의 미국 시장 진출 | Vybd",
         homeDescription: "해외 브랜드와 제조사의 미국 진출을 돕고, 진출 이후의 운영까지 맡습니다.",
-        bookTitle: "미국 진출 상담 예약 | Vybd",
+        bookTitle: "상담 예약 | Vybd",
         thanksTitle: "예약이 완료되었습니다 | Vybd",
     },
 
@@ -269,13 +269,22 @@ export const ko: Messages = {
 
     book: {
         back: "뒤로",
-        title: "미국 진출 상담 예약",
+        title: "Vybd 상담 예약",
         points: [
             "30분 화상 통화",
             "미국에 제품을 들여온 경험이 있는 실무 전문가와 함께",
             "함께 일하시든 아니든, 명확한 다음 단계를 가져가실 수 있습니다",
         ],
         proof: "이 국가들의 브랜드가 이미 저희와 함께 미국에서 판매하고 있습니다.",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "미국 진출 상담 예약", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가와 함께", flags: true },
+            drop: { title: "Test Drop 소개 상담 예약", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가와 함께", flags: true },
+            scale: { title: "US Scale 상담 예약", operator: "브랜드의 미국 운영을 맡고 있는 운영 전문가와 함께", flags: false },
+            enterprise: { title: "시니어 운영 전문가와 상담", operator: "Vybd 시니어 운영 전문가와 귀사의 시스템과 물류 경로에 대해", flags: false },
+            partner: { title: "파트너 상담 예약", operator: "Vybd 네트워크를 만드는 팀과 함께", flags: false },
+        },
         pickTime: "시간 선택",
         loading: "예약 가능한 시간을 불러오는 중…",
         failed: "캘린더를 불러오지 못했습니다.",

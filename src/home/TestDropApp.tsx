@@ -137,7 +137,7 @@ export default function TestDropApp() {
                 <p className="terms">{t.terms}</p>
                 {t.line && <p className="line">{t.line}</p>}
                 <Ticks items={t.points} />
-                <a className={'pill ' + (t.style === 'plain' ? 'out' : 'fill')} href={BOOK}>{t.cta}</a>
+                <a className={'pill ' + (t.style === 'plain' ? 'out' : 'fill')} href={t.href ?? BOOK}>{t.cta}</a>
               </article>
             ))}
           </div>
@@ -156,7 +156,8 @@ export default function TestDropApp() {
           <div className="td-origins rv">
             <span>We work with brands and manufacturers from</span>
             <ul>{ORIGINS.map((o) => <li key={o}>{o}</li>)}</ul>
-            <a className="more" href={CASE_STUDIES_URL}>Read the case studies</a>
+            <a className="more" href="/work/bayangrom">Read the Bayangrom story</a>
+            <a className="more" href={CASE_STUDIES_URL}>More case studies</a>
           </div>
         </Sec>
 

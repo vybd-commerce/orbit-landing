@@ -1,6 +1,7 @@
 import { useReveal } from './hooks/useReveal'
 import { GlobalNav } from './components/GlobalNav'
 import { Hero } from './components/Hero'
+import { StartRoutes } from './components/StartRoutes'
 import { SupplyChain } from './components/SupplyChain'
 import { ForTheUS } from './components/ForTheUS'
 import { TileGrid } from './components/TileGrid'
@@ -16,6 +17,7 @@ export default function App() {
       <GlobalNav />
       <main id="top">
         <Hero />
+        <StartRoutes />
         <SupplyChain />
         <ForTheUS />
         <TileGrid />

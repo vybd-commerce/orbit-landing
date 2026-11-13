@@ -134,7 +134,7 @@ function Hero({ tx }: { tx: Tx }) {
 
 function Who({ tx }: { tx: Tx }) {
     return (
-        <section className="eco-sec" aria-labelledby="eco-h2a" style={{ paddingTop: 0 }}>
+        <section id="who" className="eco-sec" aria-labelledby="eco-h2a" style={{ paddingTop: 0 }}>
             <div className="wrap">
                 <div className="eco-kicker mono">
                     <b>01</b> {tx("Who it's for")}

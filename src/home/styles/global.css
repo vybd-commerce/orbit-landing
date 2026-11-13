@@ -233,7 +233,9 @@ img,svg{max-width:100%}
 /* ---------- compare (which vybd is for you) ---------- */
 .cmp{max-width:1024px;margin:0 auto;padding:100px 22px 90px;text-align:center}
 .cmp h2{margin:0;font:600 clamp(32px,4vw,48px)/1.08 var(--sans);letter-spacing:-.025em}
-.cmp .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:56px;text-align:center}
+.cmp{max-width:1180px}
+.cmp .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:56px;text-align:center}
+@media (max-width:1000px){.cmp .cols{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:56px}}
 .cmp .col{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 6px;min-width:0}
 .cmp .ico{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;margin-bottom:14px}
 .cmp .ico svg{width:36px;height:36px}
@@ -348,3 +350,33 @@ footer .bt{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;pa
 .wl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wl-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 @media (max-width:520px){.wl-form{flex-direction:column}.wl-form input[type=email]{flex:none}.wl-form .pill{width:100%;justify-content:center}}
+
+/* ---------- "Where are you today?": one route per kind of visitor ---------- */
+.routes-sec{max-width:1180px;margin:0 auto;padding:88px 22px 72px;text-align:center}
+.routes-sec h2{margin:0;font:600 clamp(32px,4vw,48px)/1.08 var(--sans);letter-spacing:-.025em}
+.routes-sec h2 em{font:400 1.08em var(--serif);color:var(--mint-text)}
+.routes-sub{margin:12px auto 0;max-width:560px;font-size:17px;color:var(--body)}
+.route-list{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;text-align:left}
+.route-list li{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:26px 24px;border-radius:28px;background:var(--gray)}
+.route-list li.dk{background:var(--navy);color:#fff}
+.route-k{font-size:13px;font-weight:600;color:var(--mint-text)}
+.route-list li.dk .route-k{color:var(--mint)}
+.route-t{font:400 28px/1.08 var(--serif);color:var(--navy);letter-spacing:-.01em}
+.route-list li.dk .route-t{color:#fff}
+.route-b{font-size:15px;line-height:1.45;color:var(--body)}
+.route-list li.dk .route-b{color:#C9D2E3}
+.route-offer{margin-top:auto;padding-top:14px;width:100%;border-top:1px solid var(--line);font:500 12.5px/1.4 var(--mono);color:var(--ink)}
+.route-list li.dk .route-offer{border-color:rgba(255,255,255,.14);color:#fff}
+.route-list .pill{margin-top:6px}
+.route-list li.dk .pill.fill{background:var(--mint);color:var(--navy)}.route-list li.dk .pill.fill:hover{background:#3fd0b5}
+.route-aside{font-size:14px;font-weight:500;color:var(--mint-text)}.route-aside::after{content:" ›"}.route-aside:hover{text-decoration:underline}
+.route-list li.dk .route-aside{color:var(--mint)}
+.route-list a:focus-visible{outline:2px solid var(--mint-text);outline-offset:3px}
+@media (max-width:1060px){.route-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.route-list{grid-template-columns:minmax(0,1fr)}.routes-sec{padding:64px 16px 56px}}
+
+/* "Borderless" beside the wordmark in the header: the home tagline, carried
+   on every page (DESIGN.md: Logo lockup). Same rule as .rd .lg-tag in
+   src/pages/redesign/base.css. */
+.gnav .lg-tag{margin-left:4px;padding-left:11px;border-left:1px solid var(--line);font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--mint-text)}
+@media (max-width:400px){.gnav .lg-tag{display:none}}

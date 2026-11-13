@@ -12,10 +12,10 @@ export function SupplyChain() {
   return (
     <section className="tile full dark" id="chain">
       <div className="copy">
-        <div className="eyebrow rv" style={{ color: 'var(--mint)' }}>For brands already selling</div>
-        <h2 className="prod rv">Vybd Supply Chain</h2>
+        <div className="eyebrow rv" style={{ color: 'var(--mint)' }}>For brands already selling in the US</div>
+        <h2 className="prod rv">US Scale</h2>
         <p className="tag big rv">Run it better. <em style={{ color: 'var(--mint)' }}>Pay only for what earns its place.</em></p>
-        <div className="links rv"><a className="pill fill" href="/signup">Start for $33/mo</a><a className="pill out" href="/product">Learn more</a></div>
+        <div className="links rv"><a className="pill fill" href="/us#pricing">From $3K/mo + 12%</a><a className="pill out" href="/product">How it works</a></div>
       </div>
       <div className="art"><div className="ops-art rv">
         <div className="panel p1">

@@ -5,7 +5,7 @@ export const zh: Messages = {
     meta: {
         homeTitle: "国际品牌进入美国市场 | Vybd",
         homeDescription: "我们帮助国际品牌和制造商进入美国市场，并在落地后负责运营。",
-        bookTitle: "预约美国市场咨询 | Vybd",
+        bookTitle: "预约咨询 | Vybd",
         thanksTitle: "预约成功 | Vybd",
     },
 
@@ -269,13 +269,22 @@ export const zh: Messages = {
 
     book: {
         back: "返回",
-        title: "预约美国市场咨询",
+        title: "预约 Vybd 咨询",
         points: [
             "30 分钟视频通话",
             "与一位曾将产品引入美国的实操专家交流",
             "无论是否与我们合作，您都会带着清晰的下一步离开",
         ],
         proof: "来自这些国家的品牌，已经通过我们在美国销售。",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "预约美国市场咨询", operator: "由曾把产品带入美国市场的运营专家接待", flags: true },
+            drop: { title: "预约 Test Drop 介绍", operator: "由曾把产品带入美国市场的运营专家接待", flags: true },
+            scale: { title: "预约 US Scale 咨询", operator: "由为品牌运营美国业务的运营专家接待", flags: false },
+            enterprise: { title: "与资深运营专家交流", operator: "由 Vybd 资深运营专家接待，聊您的系统和线路", flags: false },
+            partner: { title: "预约合作伙伴通话", operator: "由搭建 Vybd 网络的团队接待", flags: false },
+        },
         pickTime: "选择时间",
         loading: "正在加载可预约时间…",
         failed: "日历未能加载。",

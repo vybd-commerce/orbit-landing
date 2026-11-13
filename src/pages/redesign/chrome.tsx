@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 import { Link, useLocation } from "react-router-dom";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import TrustpilotWidget from "../../components/TrustpilotWidget";
-import { useLocalePath } from "../../i18n/context";
+import { useLocale, useLocalePath } from "../../i18n/context";
 import { LOCALES, NATIVE_NAMES, isLocalizedPath, type Locale } from "../../i18n/locales";
 import { useChangeLocale } from "../../i18n/useChangeLocale";
 import { prefersReducedMotion } from "./motion";
@@ -19,6 +19,15 @@ export type NavLink = { label: string; href: string; current?: boolean };
 
 /* Internal route ("/lab", "/us#services") through the router, in the current
    locale; in-page anchors and external links as plain <a>. */
+/* Pages built as their own HTML entries (vite.config.ts, vercel.json), not
+   SPA routes: a client-side <Link> would land on an empty SPA route, so they
+   get a plain <a>. */
+const STANDALONE = ["/test-drop", "/essay", "/askinkind", "/waitlist", "/fundraise", "/outside-context"];
+const isStandalone = (path: string) => STANDALONE.some((p) => path === p || path.startsWith(p + "/") || path.startsWith(p + "?") || path.startsWith(p + "#"));
+/* English /us is its own entry too (us-en.html, src/home/UsApp.tsx); the
+   other locales' /xx/us stay on the SPA. */
+const isEnglishUs = (href: string, locale: Locale) => locale === "en" && /^\/us($|[#?])/.test(href);
+
 export function RdLink({
     href,
     className,
@@ -39,10 +48,12 @@ export function RdLink({
     current?: boolean;
 }) {
     const lp = useLocalePath();
+    const locale = useLocale();
     const aria = current ? ("page" as const) : undefined;
-    if (href.startsWith("/")) {
-        const [path, hash] = href.split("#");
-        const to = isLocalizedPath(path) ? lp(path) : path;
+    if (href.startsWith("/") && !isStandalone(href) && !(import.meta.env.PROD && isEnglishUs(href, locale))) {
+        const [pathAndQuery, hash] = href.split("#");
+        const [path, query] = pathAndQuery.split("?");
+        const to = (isLocalizedPath(path) ? lp(path) : path) + (query ? `?${query}` : "");
         return (
             <Link
                 to={to + (hash ? `#${hash}` : "")}
@@ -171,6 +182,9 @@ function RdLogo({ href, delay }: { href: string; delay: number }) {
                 ))}
             </svg>
             Vybd
+            <span className="lg-tag" aria-hidden="true">
+                Borderless
+            </span>
         </RdLink>
     );
 }
@@ -229,21 +243,26 @@ function HeaderLanguage() {
    longer pick their own top links; the in-page anchors a page passes in
    (#services, #faq...) show as a slim "On this page" row under it. */
 const GLOBAL_NAV: NavLink[] = [
-    { label: "Supply Chain", href: "/#chain" },
-    { label: "Enter the US", href: "/us" },
+    { label: "Where are you today?", href: "/#start" },
+    { label: "How it works", href: "/#how" },
+    { label: "Pricing", href: "/#pricing" },
     { label: "Enterprise", href: "/enterprise" },
-    { label: "How it works", href: "/product" },
     { label: "Case studies", href: "/case-studies" },
-    { label: "Pricing", href: "/#compare" },
+    { label: "Partners", href: "/ecosystem" },
 ];
+/* Other locales' homes don't have #how or #pricing yet (the English landing,
+   src/home/UsApp.tsx, isn't translated); their /us page does. */
+const LOCALE_NAV_HREF: Record<string, string> = { "/#how": "/us#how", "/#pricing": "/us#pricing" };
 const BOOK_HREF = "/book";
 const BOOK_LABEL = "Book a call";
 
 function useGlobalNav(): NavLink[] {
     const { pathname } = useLocation();
     const bare = pathname.replace(/^\/(zh|ko|ja|fr|es)(?=\/|$)/, "") || "/";
+    const english = bare === pathname;
     return GLOBAL_NAV.map((l) => ({
         ...l,
+        href: english ? l.href : LOCALE_NAV_HREF[l.href] ?? l.href,
         current: !l.href.includes("#") && (bare === l.href || bare.startsWith(l.href + "/")),
     }));
 }
@@ -344,8 +363,11 @@ const FOLLOW: [string, string][] = [
 export function RdFooter({ current }: { current?: "product" | "cases" | "lab" }) {
     const tx = useTx();
     const explore: [string, string, boolean][] = [
-        ["How It Works", "/product", current === "product"],
-        ["Case Studies", "/case-studies", current === "cases"],
+        ["Enter the US", "/us", false],
+        ["Test Drop", "/test-drop", false],
+        ["Enterprise", "/enterprise", false],
+        ["How it works", "/product", current === "product"],
+        ["Case studies", "/case-studies", current === "cases"],
         ["Lab", "/lab", current === "lab"],
     ];
     return (
@@ -366,9 +388,20 @@ export function RdFooter({ current }: { current?: "product" | "cases" | "lab" })
                 <div className="hf-col">
                     <h2 className="hf-head">{tx("Company")}</h2>
                     <ul>
-                        {/* TODO(footer): real route, as in HelloFooter */}
                         <li>
-                            <a href="#">{tx("About us")}</a>
+                            <RdLink href="/essay">{tx("About us")}</RdLink>
+                        </li>
+                        <li>
+                            <RdLink href="/askinkind">{tx("Ask In Kind")}</RdLink>
+                        </li>
+                    </ul>
+                    <h2 className="hf-head hf-head--gap">{tx("Partners")}</h2>
+                    <ul>
+                        <li>
+                            <RdLink href="/ecosystem">{tx("Join the network")}</RdLink>
+                        </li>
+                        <li>
+                            <RdLink href="/rainmaker">{tx("Rainmaker program")}</RdLink>
                         </li>
                     </ul>
                 </div>

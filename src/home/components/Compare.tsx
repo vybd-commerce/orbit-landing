@@ -1,6 +1,8 @@
 import { PLANS, type Plan } from '@/home/data/pricing'
 
 function PlanIcon({ kind }: { kind: Plan['icon'] }) {
+  if (kind === 'plan')
+    return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M6 3h9l4 4v14H6z" /><path d="M15 3v4h4M9 12h7M9 16h5" /></svg>
   if (kind === 'chain')
     return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M4 18V9M10 18V5M16 18v-7M22 18H2" /></svg>
   if (kind === 'us')

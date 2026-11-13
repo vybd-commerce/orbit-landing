@@ -6,7 +6,7 @@ import { useTx } from "./i18n";
 import { APP_MONTHLY } from "./home/pricingTiers";
 import "./HomePage.css";
 
-/* /signup: the stand-in sign-up for Vybd Plan until the product's own
+/* /signup: early-access sign-up for Vybd Plan (not live yet) until the product's own
    sign-up is live. Name, email and an optional brand idea. Posts JSON to
    WAITLIST_ENDPOINT (src/lib/links.ts) when one is set; until then it
    opens a prefilled email to SIGNUP_EMAIL, so no sign-up is dropped.
@@ -64,17 +64,17 @@ export default function SignupPage() {
 
             <main className="wrap su">
                 <div className="su-card">
-                    <span className="su-k">{tx("Vybd Plan")}</span>
-                    <h1 className="su-h">{tx("Plan your brand.")}</h1>
+                    <span className="su-k">{tx("Vybd Plan · Early access")}</span>
+                    <h1 className="su-h">{tx("Plan your US launch.")}</h1>
                     <p className="su-p">
-                        {tx("Research your market, find your customer and positioning, and leave with a brand plan you can act on.")}{" "}
-                        <b>{tx("Free for a week, then ${n} a month.").replace("{n}", String(APP_MONTHLY))}</b>
+                        {tx("Research US demand, competitors, pricing and channels for your product, then leave with a US go-to-market plan you can act on.")}{" "}
+                        <b>{tx("Opening soon. Free for your first week, then ${n} a month.").replace("{n}", String(APP_MONTHLY))}</b>
                     </p>
 
                     {status === "done" || status === "mailed" ? (
                         <p className="su-done" role="status">
                             {status === "done" ? (
-                                tx("You're in. We'll email you your access.")
+                                tx("You're on the list. We'll email you when Vybd Plan opens.")
                             ) : (
                                 <>
                                     {tx("Your email app should open with your sign-up. If it didn't, send it to")}{" "}
@@ -99,7 +99,7 @@ export default function SignupPage() {
                                 <textarea rows={3} value={fields.idea} onChange={set("idea")} />
                             </label>
                             <button type="submit" className="btn btn-mint" disabled={status === "sending"}>
-                                {status === "sending" ? tx("Signing you up…") : tx("Start your free week")}
+                                {status === "sending" ? tx("Signing you up…") : tx("Get early access")}
                             </button>
                             {status === "error" && (
                                 <p className="su-err" role="alert">

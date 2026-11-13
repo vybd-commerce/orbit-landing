@@ -23,8 +23,20 @@ Vybd brings the cost of getting a product from the person who makes it to the pe
 Visitors evaluate Vybd before a sales call. They read pricing, use the profit calculator and the Test Drop calculator, check case studies, read the founder essays, then book a call (/book) or start Vybd Plan (/signup). Pages are shared by link in Slack, WhatsApp, LinkedIn and iMessage, so link-preview meta per page matters (`pageMeta.ts`). Many visitors are non-native English speakers. The redesign SPA pages are localized into zh, ko, ja, fr and es.
 
 ## Capabilities and Constraints
-- Offers: Vybd Supply Chain (from $33/mo, free week), Vybd for the US ($20K launch, then $3K/mo + 12%), Test Drop ($3,000 + 15% of US sales, up to 500 units), Vybd Enterprise (custom). Source: `src/home/data/pricing.ts`, `src/home/data/testDrop.ts`.
-- Stack: Vite + React 19 + TypeScript on Vercel. `/` is `home.html` (src/home). `/test-drop`, `/essay` and `/fundraise` are separate entries. Other routes use the SPA in `index.html`. Routes, i18n and pageMeta must keep working.
+- Offer map (single source of truth for copy; confirmed 2026-11-12). Every page names and prices these the same way:
+
+  | Visitor | Route | Offer | Primary CTA |
+  |---|---|---|---|
+  | Exploring the US, self-serve | /waitlist, /signup | Vybd Plan: US research + go-to-market app, $33/mo, first week free. **Not live: early access only** | Get early access |
+  | Maker abroad, wants to test | /test-drop | Test Drop: $3,000 + 15% of US sales, up to 500 units | Book a Test Drop intro (/book?for=drop) |
+  | Maker abroad or new brand, ready | /us | US Launch: $20,000 once | Plan my launch (/book?for=launch) |
+  | Already selling in the US, under $50M | /us#pricing | US Scale: from $3,000/mo + 12% of US sales | Talk to us about US Scale (/book?for=scale) |
+  | $50M+ operator | /enterprise | Vybd Enterprise: custom | Talk to an operator (/book?for=enterprise) |
+  | Service partner (broker, 3PL, agency) | /ecosystem | Network listing | Join the network |
+  | Local rep outside the US | /rainmaker | Commission / share | Apply |
+
+  Prices live in `src/home/data/pricing.ts`, `src/home/data/testDrop.ts` and `src/pages/redesign/home/Pricing.tsx` + `pricingTiers.ts`; change them together. "Vybd Supply Chain" is retired as a product name. The English landing page at `/` (and `/us`) is "Build your business in America" (`src/home/UsApp.tsx`, served from `us-en.html`); right after its hero, "Where are you today?" (`src/home/components/StartRoutes.tsx`, data in `src/home/data/routes.ts`) routes every visitor type, including Enterprise and partners. The earlier borderless home is at `/borderless`. One header on every page: `NAV_LINKS` in `src/home/data/nav.ts` and `GLOBAL_NAV` in `src/pages/redesign/chrome.tsx`, kept in step.
+- Stack: Vite + React 19 + TypeScript on Vercel. `/` is `us-en.html` (src/home/UsApp.tsx); `/borderless` is `home.html` (src/home/App.tsx). `/test-drop`, `/essay` and `/fundraise` are separate entries. Other routes use the SPA in `index.html`. Routes, i18n and pageMeta must keep working.
 - Ask In Kind (askinkind.org) is Vybd's social impact logistics lab: communities post needs as items, companies pledge goods, carriers move them. It is free and holds no cash.
 
 ## Brand Commitments

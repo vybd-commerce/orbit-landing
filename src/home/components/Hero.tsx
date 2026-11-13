@@ -44,7 +44,7 @@ export function Hero() {
         <div className="rv"><Lockup /></div>
         <h1 className="rv">Make it anywhere.<br /><em>Sell it everywhere.</em></h1>
         <p className="tag rv">We're bringing the cost of getting a product from the person who makes it to the person who uses it as close to zero as possible. Every cost that's left is visible, justified and earned.</p>
-        <div className="links rv"><a className="pill fill" href="/waitlist?from=home">Join the waitlist</a><a className="pill out" href="#compare">Find your Vybd</a></div>
+        <div className="links rv"><a className="pill fill" href="#start">Find your route</a><a className="pill out" href="/waitlist?from=home">Get Vybd Plan early</a></div>
         <div className="toggle rv" role="group" aria-label="Compare" data-view={view}>
           <button type="button" aria-pressed={view === 'a'} onClick={() => pick('a')}>The usual chain</button>
           <button type="button" aria-pressed={view === 'b'} onClick={() => pick('b')}>With Vybd</button>

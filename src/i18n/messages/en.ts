@@ -8,7 +8,7 @@ export const en = {
         homeTitle: "US market entry for international brands | Vybd",
         homeDescription:
             "We take international brands and manufacturers into the US, and run the operations once they're here.",
-        bookTitle: "Book a US entry call | Vybd",
+        bookTitle: "Book a call | Vybd",
         thanksTitle: "You're booked | Vybd",
     },
 
@@ -280,13 +280,22 @@ export const en = {
 
     book: {
         back: "Back",
-        title: "Book a US entry call",
+        title: "Book a call with Vybd",
         points: [
             "30 minutes on video",
             "With an operator who has brought products into the US",
             "You'll leave with a clear next step, whether or not you work with us",
         ],
         proof: "Brands from these countries already sell in the US with us.",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "Book a US entry call", operator: "With an operator who has brought products into the US", flags: true },
+            drop: { title: "Book a Test Drop intro", operator: "With an operator who has brought products into the US", flags: true },
+            scale: { title: "Book a US Scale call", operator: "With an operator who runs US operations for brands", flags: false },
+            enterprise: { title: "Talk to a senior operator", operator: "With a senior Vybd operator, about your systems and lanes", flags: false },
+            partner: { title: "Book a partner call", operator: "With the team that builds the Vybd network", flags: false },
+        },
         pickTime: "Pick a time",
         loading: "Loading available times…",
         failed: "The calendar didn't load.",

@@ -27,7 +27,7 @@ const LINKS = [
     { label: "FAQ", href: "#faq" },
 ];
 
-const BOOK = "/book";
+const BOOK = "/book?for=enterprise";
 
 export default function EnterprisePage() {
     const tx = useTx();
@@ -53,7 +53,7 @@ export default function EnterprisePage() {
 
     return (
         <RdPage name="home" className="rd-ent">
-            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} />
+            <RdHeader logoHref="/" links={LINKS} mobileLinks={LINKS} ctaHref={BOOK} />
 
             <section id="top" className="ent-hero">
                 <div className="hx-bg" aria-hidden="true" />
@@ -62,7 +62,7 @@ export default function EnterprisePage() {
                 </div>
                 <div className="wrap ent-hero-in">
                     <span className="ent-chip ent-in">
-                        <i /> For $50M+ brands, grocers and retailers
+                        <i /> For $50M+ brands, grocers, retailers and distributors
                     </span>
                     <h1 className="ent-h1 ent-in ent-d1">
                         Already at scale.

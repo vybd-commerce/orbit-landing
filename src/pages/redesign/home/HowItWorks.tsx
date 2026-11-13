@@ -6,7 +6,7 @@ import type { Tx } from "../i18n";
 const STEPS = [
     {
         title: "Tell us what you sell",
-        body: "A short call about what you make and what you want. We then look at how it would sell in the US.",
+        body: "A short call about what you make and where you are with the US. We then look at how it would sell, or sell better, there.",
         tag: "A short call",
     },
     {
@@ -15,8 +15,8 @@ const STEPS = [
         tag: "Clear costs",
     },
     {
-        title: "You start selling",
-        body: "Your product goes on sale in the US. We run it day to day while you focus on making it.",
+        title: "You sell, we run it",
+        body: "Your product goes on sale in the US, or your current US business moves onto the plan. We run it day to day while you focus on the brand.",
         tag: "We run it",
     },
 ];

@@ -100,3 +100,8 @@
 /* The same labels on navy panels: bright mint or the light navy gray. */
 .rd-home .pc2-out .pc2-k,.rd-home .pc2-out .pc2-hint,.rd-product .hw-layer.mid .mono,.rd-lab .lb-plate.core small,.rd-lab .lb-core-plate small{color:#AEB6C4!important}
 .rd-product .sk-core .sk-badge{color:#C9F2E9!important}
+
+/* "Borderless" beside the wordmark in the header (same as .gnav .lg-tag in
+   src/home/styles/global.css). */
+.rd .lg-tag{margin-left:4px;padding-left:11px;border-left:1px solid #E5E7EB;font:600 11px/1 "DM Sans",system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#0E7C68}
+@media (max-width:400px){.rd .lg-tag{display:none}}

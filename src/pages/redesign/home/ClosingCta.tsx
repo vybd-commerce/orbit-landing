@@ -5,7 +5,7 @@ import type { Tx } from "../i18n";
 /* Closing call to book, on navy with shipping routes. Defaults are the US
    copy; the Borderless home (/) passes its own heading and button, and no line. */
 
-const US_TEXT = "Meet one of our operators. Leave the call with a rough plan and an honest reality check.";
+const US_TEXT = "Coming to the US or already here, meet one of our operators. Leave the call with a rough plan and an honest reality check.";
 
 export default function ClosingCta({
     tx,

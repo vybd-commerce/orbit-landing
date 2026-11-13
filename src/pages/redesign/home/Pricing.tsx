@@ -5,7 +5,7 @@ import { APP_MONTHLY, MIN_MONTHLY_FEE, REVENUE_SHARE, SIGNUP_URL, softwareTier }
 
 /* Plans drawn as shipping labels, in order: Vybd Plan (the self-serve app
    for a US market plan: research, positioning, pricing; flat monthly,
-   first week free), then the services where our team does the work: a
+   first week free; early access until it opens), a Test Drop strip, then the services where our team does the work: a
    one-time US Launch (sourcing to shelves, for new brands and new
    entries) and the monthly US Scale (where anyone already selling in the
    US starts), whose card carries a slider for the yearly cost at a given
@@ -113,7 +113,9 @@ export default function Pricing({ tx }: { tx: Tx }) {
                 <h2 className="pr-h">
                     {tx("Pick your")} <em>{tx("postage.")}</em>
                 </h2>
-                <p className="pr-sub">{tx("Work out your US plan with Vybd Plan for $33 a month. When you're ready, our team launches you, then runs it with you. Already selling in the US? Start with US Scale.")}</p>
+                <p className="pr-sub">
+                    {tx("Not sure yet? Test with one Test Drop. Ready? Our team launches you with US Launch, then runs it with you on US Scale. Already selling in the US? Start with US Scale.")}
+                </p>
             </div>
             <article className="lb lb-app rv">
                 <div className="lb-top">
@@ -126,8 +128,8 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <h3>{tx("Vybd Plan")}</h3>
                             <div className="lb-stamp" aria-hidden="true">
                                 <div>
-                                    {tx("FREE")}
-                                    <small>{tx("FIRST WEEK")}</small>
+                                    {tx("EARLY")}
+                                    <small>{tx("ACCESS")}</small>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +138,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                                 ${APP_MONTHLY}
                                 <small>{tx("/ month")}</small>
                             </div>
-                            <div className="lb-once">{tx("Free for your first week")}</div>
+                            <div className="lb-once">{tx("Opening soon. First week free.")}</div>
                             <p className="lb-note">
                                 {tx("Plan tells you what to do. Sourcing, compliance, stores, freight and running the operation are US Launch and US Scale, done by our team.")}
                             </p>
@@ -151,12 +153,19 @@ export default function Pricing({ tx }: { tx: Tx }) {
                                 <span>{tx("STEP 00")}</span>
                             </div>
                             <RdLink className="btn btn-mint" href={SIGNUP_URL}>
-                                {tx("Start your free week")}
+                                {tx("Get early access")}
                             </RdLink>
                         </div>
                     </div>
                 </div>
             </article>
+            <div className="lb-part lb-drop rv">
+                <b>{tx("TEST DROP")}</b>
+                <span>
+                    {tx("Not ready for a full launch? Test the US with one drop of up to 500 units: $3,000 one time plus 15% of US sales.")}{" "}
+                    <RdLink href="/test-drop">{tx("See the Test Drop")}</RdLink>
+                </span>
+            </div>
             <div className="pr-grid">
                 <article className="lb rv">
                     <div className="lb-top">
@@ -184,7 +193,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <span>VYBD-LAUNCH-US</span>
                             <span>{tx("STEP 01")}</span>
                         </div>
-                        <RdLink className="btn btn-dark" href="/book">
+                        <RdLink className="btn btn-dark" href="/book?for=launch">
                             {tx("Start your launch")}
                         </RdLink>
                     </div>
@@ -215,6 +224,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <span>{tx("of US sales")}</span>
                         </div>
                     </div>
+                    <p className="lb-fit">{tx("For brands already selling in the US.")}</p>
                     <Contents tx={tx} items={SCALE} />
                     <div className="lb-calc">
                         <div className="lb-calc-l">
@@ -257,7 +267,7 @@ export default function Pricing({ tx }: { tx: Tx }) {
                             <span>VYBD-SCALE-US</span>
                             <span>{tx("STEP 02")}</span>
                         </div>
-                        <RdLink className="btn btn-mint" href="/book">
+                        <RdLink className="btn btn-mint" href="/book?for=scale">
                             {tx("Talk to us about US Scale")}
                         </RdLink>
                     </div>

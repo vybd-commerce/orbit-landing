@@ -7,7 +7,7 @@ export const es: Messages = {
         homeTitle: "Entrar al mercado de EE. UU. | Vybd",
         homeDescription:
             "Llevamos marcas y fabricantes internacionales a EE.\u00a0UU. y gestionamos sus operaciones una vez allí.",
-        bookTitle: "Reserve una llamada para entrar en EE.\u00a0UU. | Vybd",
+        bookTitle: "Reserve una llamada | Vybd",
         thanksTitle: "Reserva confirmada | Vybd",
     },
 
@@ -271,13 +271,22 @@ export const es: Messages = {
 
     book: {
         back: "Volver",
-        title: "Reserve una llamada para entrar en EE.\u00a0UU.",
+        title: "Reserve una llamada con Vybd",
         points: [
             "30 minutos por videollamada",
             "Con un operador que ya ha llevado productos a EE.\u00a0UU.",
             "Saldrá con un siguiente paso claro, trabaje o no con nosotros",
         ],
         proof: "Marcas de estos países ya venden en EE.\u00a0UU. con nosotros.",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "Reserve una llamada para entrar en EE.\u00a0UU.", operator: "Con un operador que ya ha llevado productos a EE.\u00a0UU.", flags: true },
+            drop: { title: "Reserve una presentación del Test Drop", operator: "Con un operador que ya ha llevado productos a EE.\u00a0UU.", flags: true },
+            scale: { title: "Reserve una llamada de US Scale", operator: "Con un operador que gestiona operaciones en EE.\u00a0UU. para marcas", flags: false },
+            enterprise: { title: "Hable con un operador sénior", operator: "Con un operador sénior de Vybd, sobre sus sistemas y rutas", flags: false },
+            partner: { title: "Reserve una llamada de socios", operator: "Con el equipo que construye la red de Vybd", flags: false },
+        },
         pickTime: "Elegir un horario",
         loading: "Cargando horarios disponibles…",
         failed: "El calendario no se cargó.",

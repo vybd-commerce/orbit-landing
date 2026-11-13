@@ -5,7 +5,7 @@ import { Lockup } from './components/Logo'
 import { track } from '@/lib/analytics'
 import { WAITLIST_ENDPOINT } from '@/lib/links'
 
-/* /waitlist: email sign-up for the Vybd app. Posts to WAITLIST_ENDPOINT
+/* /waitlist: email early-access sign-up for Vybd Plan, the self-serve app. Posts to WAITLIST_ENDPOINT
    (api/site/waitlist.ts, vybd_waitlist table). `website` is a honeypot.
    ?from= says which link brought them (the home hero sends from=home). */
 
@@ -52,8 +52,8 @@ export default function WaitlistApp() {
       <GlobalNav base="/" ribbon={false} />
       <main className="wl" id="top">
         <Lockup />
-        <h1>The Vybd app is <em>coming.</em></h1>
-        <p className="wl-p">Plan, launch and run your brand in the US from one place. Join the waitlist and we'll email you when it opens.</p>
+        <h1>Vybd Plan is <em>coming.</em></h1>
+        <p className="wl-p">Research US demand, competitors, pricing and channels for your product, then leave with a US go-to-market plan. $33 a month, with your first week free. Join the waitlist and we'll email you when it opens.</p>
         {status === 'done' ? (
           <p className="wl-done" role="status">You're on the list. We'll email you when your spot opens.</p>
         ) : (
@@ -70,7 +70,7 @@ export default function WaitlistApp() {
         )}
         {/* Reserved height so an error appearing doesn't shift the layout. */}
         <p className="wl-err" role="alert">{status === 'error' ? error : ''}</p>
-        <p className="wl-alt">Launching a brand now? <a href="/book">Book a call</a> and we'll do it with you.</p>
+        <p className="wl-alt">Ready to launch now? <a href="/us">See US Launch</a> or <a href="/test-drop">start with a Test Drop</a>.</p>
       </main>
       <Footer base="/" notes={false} />
     </>

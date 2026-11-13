@@ -1,7 +1,8 @@
 /* Copy and numbers for /test-drop (TestDropApp.tsx), ported from
-   src/pages/redesign/testdrop (the "Sell in the US" deck). This ladder (Test Drop,
-   Launch, Scale, Partner) is newer than the "Vybd for the US" card in
-   data/pricing.ts. Reconcile the two before linking them side by side. */
+   src/pages/redesign/testdrop (the "Sell in the US" deck). The ladder after
+   the Test Drop (US Launch, US Scale, Partner) is the one on /us
+   (src/pages/redesign/home/Pricing.tsx) and the home page (data/pricing.ts);
+   change all three together. */
 
 /* Test Drop terms, shared by the offer, the calculator and the FAQ. */
 export const DROP_FEE = 3_000;
@@ -10,7 +11,7 @@ export const DROP_MAX_UNITS = 500;
 export const STORAGE_DAYS = 90;
 export const GO_LIVE = "4–6 weeks";
 
-export const BOOK = "/book";
+export const BOOK = "/book?for=drop";
 
 export const FREIGHT_NOTE = `Free freight covers up to ${DROP_MAX_UNITS} units, depending on dimensions and weight. Customs fees and import duties are not included.`;
 
@@ -30,7 +31,7 @@ export const PILLARS: [string, string][] = [
     ["AI-enabled execution", "Routine tasks automated, issues surfaced earlier."],
 ];
 
-export const YOU_OWN = ["Product, inventory and pricing", "Freight from your country and import duties*", "Marketing and your audience", "Drop timing and creative"];
+export const YOU_OWN = ["Product, inventory and pricing", "Import duties, and freight beyond the Test Drop*", "Marketing and your audience", "Drop timing and creative"];
 export const WE_OWN = ["US import and customs clearance", "US compliance and admin", "Warehousing, fulfillment and returns", "Sales reporting and payouts"];
 
 export const INCLUDED = [
@@ -51,6 +52,8 @@ export type Tier = {
     line?: string;
     points: string[];
     cta: string;
+    /** Where the CTA goes; BOOK when unset. */
+    href?: string;
     style: "drop" | "plain" | "partner";
 };
 
@@ -67,29 +70,30 @@ export const TIERS: Tier[] = [
         style: "drop",
     },
     {
-        badge: "Up to 2,000 units/mo",
-        name: "Launch",
-        price: "$1,000/mo",
-        terms: "+ 10% of US sales + warehouse fees as used",
-        line: "Run your US store year-round.",
-        points: ["Always-on US store with regular restocks", "Pay-per-order warehousing", "Marketplace setup when you're ready", "Stock alerts before you run out", "Monthly sales and margin report", "Software included"],
-        cta: "Talk about Launch",
+        badge: "When the drop proves demand",
+        name: "US Launch",
+        price: "$20,000",
+        terms: "paid once",
+        line: "Landed, listed and selling 90 days from first stock.",
+        points: ["Sourcing and manufacturer matching", "FDA and compliance support, label review", "Amazon, Walmart and Shopify store set up", "Listings, product copy, images and video", "US buyer list and launch plan"],
+        cta: "Talk about US Launch",
+        href: "/book?for=launch",
         style: "plain",
     },
     {
-        badge: "2,000+ units/mo",
-        name: "Scale",
-        price: "$3,000/mo",
-        terms: "+ 8% of US sales + warehouse fees as used",
+        badge: "Selling every month",
+        name: "US Scale",
+        price: "From $3,000/mo",
+        terms: "+ 12% of US sales + shipping and warehousing as used",
         line: "AI agents do the work, you approve the big calls.",
         points: [
-            "Amazon, Walmart and wholesale",
-            "Demand forecast by product and channel",
-            "Replenishment plans to avoid stockouts and excess",
-            "Alerts on delivery, cost and stock issues",
-            "Monthly scorecard: growth, service, margin, cash",
+            "Our agents run inventory, purchase orders, deductions and reporting",
+            "A senior operator, 8 hours a month",
+            "Ongoing content and listing updates",
+            "Monthly market and buyer research",
         ],
-        cta: "Talk about Scale",
+        cta: "Talk about US Scale",
+        href: "/book?for=scale",
         style: "plain",
     },
     {
@@ -153,6 +157,6 @@ export const FAQ: [string, string][] = [
     ],
     [
         "What happens if the drop sells well?",
-        "Move to Launch to keep your US store open year-round with regular restocks, then to Scale when you pass 2,000 units a month. You grow at the pace your sales justify.",
+        "Move to US Launch for a full launch: sourcing, compliance, stores and listings, landed and selling 90 days from first stock. Then US Scale runs it month to month. You grow at the pace your sales justify.",
     ],
 ];

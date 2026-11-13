@@ -15,7 +15,8 @@
             "destination": "/outside-context",
             "permanent": true
         },
-        { "source": "/fund-raise", "destination": "/fundraise", "permanent": true }
+        { "source": "/fund-raise", "destination": "/fundraise", "permanent": true },
+        { "source": "/:path(askinkind|ask-in-kind)", "destination": "https://askinkind.org", "permanent": false }
     ],
     "headers": [
         {
@@ -26,7 +27,11 @@
     "rewrites": [
         {
             "source": "/us",
-            "destination": "/us.html"
+            "destination": "/us-en.html"
+        },
+        {
+            "source": "/borderless",
+            "destination": "/home.html"
         },
         {
             "source": "/:locale(zh|ko|ja|fr|es)/us",
@@ -35,6 +40,42 @@
         {
             "source": "/enterprise",
             "destination": "/enterprise.html"
+        },
+        {
+            "source": "/product",
+            "destination": "/product.html"
+        },
+        {
+            "source": "/:locale(zh|ko|ja|fr|es)/product",
+            "destination": "/product.html"
+        },
+        {
+            "source": "/lab",
+            "destination": "/lab.html"
+        },
+        {
+            "source": "/:locale(zh|ko|ja|fr|es)/lab",
+            "destination": "/lab.html"
+        },
+        {
+            "source": "/case-studies",
+            "destination": "/case-studies.html"
+        },
+        {
+            "source": "/:locale(zh|ko|ja|fr|es)/case-studies",
+            "destination": "/case-studies.html"
+        },
+        {
+            "source": "/ecosystem",
+            "destination": "/ecosystem.html"
+        },
+        {
+            "source": "/rainmaker",
+            "destination": "/rainmaker.html"
+        },
+        {
+            "source": "/:locale(zh|ko)/rainmaker",
+            "destination": "/rainmaker.html"
         },
         {
             "source": "/test-drop",
@@ -63,10 +104,6 @@
         {
             "source": "/waitlist",
             "destination": "/waitlist.html"
-        },
-        {
-            "source": "/:path(askinkind|ask-in-kind)",
-            "destination": "/askinkind.html"
         },
         {
             "source": "/(.*)",

@@ -3,12 +3,12 @@ import { rememberLocale, type Locale } from '@/i18n/locales'
 /* Same links, same order as the SPA header (GLOBAL_NAV in
    src/pages/redesign/chrome.tsx). Keep the two in step. */
 export const NAV_LINKS = [
-  { href: '#chain', label: 'Supply Chain' },
-  { href: '/us', label: 'Enter the US' },
+  { href: '/#start', label: 'Where are you today?' },
+  { href: '/#how', label: 'How it works' },
+  { href: '/#pricing', label: 'Pricing' },
   { href: '/enterprise', label: 'Enterprise' },
-  { href: '/product', label: 'How it works' },
   { href: '/case-studies', label: 'Case studies' },
-  { href: '#compare', label: 'Pricing' },
+  { href: '/ecosystem', label: 'Partners' },
 ]
 
 export const BOOK = { href: '/book', label: 'Book a call' }
@@ -18,11 +18,11 @@ export const LANGUAGES = [
 ] as const
 
 export const FOOTER_GROUPS = [
-  { title: 'Products', links: [['/product', 'Vybd Supply Chain'], ['/us', 'Vybd for the US'], ['/test-drop', 'Test Drop'], ['/enterprise', 'Vybd Enterprise'], ['#compare', 'Pricing']] },
-  { title: 'Why Vybd', links: [['/essay', 'The essays'], ['#open', 'Our promises'], ['#plan', 'The plan'], ['#why', 'Where a price goes']] },
-  { title: 'Customers', links: [['/case-studies', 'Case studies'], ['#calc', 'Profit calculator'], ['/us', 'Launch in the US']] },
-  { title: 'Partners', links: [['/ecosystem', 'Join the network'], ['/ecosystem', 'Customs & compliance'], ['/ecosystem', '3PLs & freight']] },
-  { title: 'Company', links: [['/essay', 'About'], ['/lab', 'Lab'], ['/book', 'Contact']] },
+  { title: 'Products', links: [['/waitlist?from=footer', 'Vybd Plan (early access)'], ['/test-drop', 'Test Drop'], ['/#pricing', 'US Launch'], ['/#pricing', 'US Scale'], ['/enterprise', 'Vybd Enterprise'], ['/#pricing', 'Pricing']] },
+  { title: 'Why Vybd', links: [['/borderless', 'Borderless'], ['/essay', 'The essays'], ['/borderless#open', 'Our promises'], ['/borderless#plan', 'The plan'], ['/borderless#why', 'Where a price goes']] },
+  { title: 'Customers', links: [['/case-studies', 'Case studies'], ['/#calc', 'Profit calculator'], ['/product', 'How the system works']] },
+  { title: 'Partners', links: [['/ecosystem', 'Join the network'], ['/ecosystem#who', 'Customs, 3PLs & agencies'], ['/rainmaker', 'Rainmaker program']] },
+  { title: 'Company', links: [['/essay', 'About'], ['/lab', 'Lab'], ['/askinkind', 'Ask In Kind'], ['/book', 'Contact']] },
 ] as const
 
 /* Picking a language remembers it (the middleware reads the cookie) and

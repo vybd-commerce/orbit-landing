@@ -7,7 +7,6 @@ import IdeaSection from "./home/IdeaSection";
 import Loader from "./home/Loader";
 import { shouldShowLoader } from "./home/loaderSession";
 import TierCards from "./home/TierCards";
-import { SIGNUP_URL } from "./home/pricingTiers";
 import "./HomePage.css";
 
 /* The home at /: the global "Borderless." page. The hero, the idea, three
@@ -18,7 +17,7 @@ import "./HomePage.css";
    intro plays once per session on whichever of the two is opened first. */
 
 const LINKS = [
-    { label: "Pricing", href: "#tiers" },
+    { label: "Pricing", href: "#start" },
     { label: "Enter the US", href: "/us" },
     { label: "Enterprise", href: "/enterprise" },
     { label: "Case studies", href: "/case-studies" },
@@ -52,8 +51,8 @@ export default function HomePage() {
                         </>
                     }
                     text={null}
-                    button="Get Vybd"
-                    href={SIGNUP_URL}
+                    button="Find your route"
+                    href="/us#start"
                 />
             </div>
 

@@ -116,9 +116,9 @@ export default function ProofLabels({ tx }: { tx: Tx }) {
             <div className="pl-wrap">
                 <div className="pl-copy">
                     <h2 id="pl-title" className="pl-title">
-                        {tx("Already in the US.")}
+                        {tx("Brands we've brought to the US.")}
                     </h2>
-                    <p className="pl-sub">{tx("Real brands already selling in the US, and what they achieved with us.")}</p>
+                    <p className="pl-sub">{tx("Real brands from India, South Korea, China and the US: sales, pre-orders and funding, from first stock to scale.")}</p>
                     <div className="pl-idx">
                         {pad(active + 1)} / {pad(N)}
                     </div>

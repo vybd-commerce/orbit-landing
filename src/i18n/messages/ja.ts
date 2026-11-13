@@ -5,7 +5,7 @@ export const ja: Messages = {
     meta: {
         homeTitle: "海外ブランドの米国市場進出 | Vybd",
         homeDescription: "海外のブランドやメーカーの米国進出を支援し、進出後のオペレーションまで担います。",
-        bookTitle: "米国進出のご相談を予約 | Vybd",
+        bookTitle: "ご相談を予約 | Vybd",
         thanksTitle: "ご予約が完了しました | Vybd",
     },
 
@@ -269,13 +269,22 @@ export const ja: Messages = {
 
     book: {
         back: "戻る",
-        title: "米国進出のご相談を予約",
+        title: "Vybd とのご相談を予約",
         points: [
             "ビデオ通話で 30 分",
             "米国への製品展開を手がけてきた実務担当者が対応します",
             "ご契約の有無にかかわらず、明確な次の一歩をお持ち帰りいただけます",
         ],
         proof: "これらの国のブランドが、すでに私たちと米国で販売しています。",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "米国進出のご相談を予約", operator: "米国に製品を届けてきたオペレーターが対応します", flags: true },
+            drop: { title: "Test Drop のご紹介を予約", operator: "米国に製品を届けてきたオペレーターが対応します", flags: true },
+            scale: { title: "US Scale のご相談を予約", operator: "ブランドの米国事業を運営するオペレーターが対応します", flags: false },
+            enterprise: { title: "シニアオペレーターに相談", operator: "Vybd のシニアオペレーターが、御社のシステムと物流ルートについて対応します", flags: false },
+            partner: { title: "パートナー向けのご相談を予約", operator: "Vybd ネットワークをつくるチームが対応します", flags: false },
+        },
         pickTime: "日時を選ぶ",
         loading: "空き時間を読み込み中…",
         failed: "カレンダーを読み込めませんでした。",

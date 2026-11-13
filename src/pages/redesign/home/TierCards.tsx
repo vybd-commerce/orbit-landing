@@ -3,8 +3,8 @@ import type { Tx } from "../i18n";
 import { SIGNUP_URL } from "./pricingTiers";
 
 /* The three sizes on the Borderless home (/), under the idea: Plan
-   (the self-serve Vybd Plan app, up to $10M, with US Launch and US Scale
-   as services on top), Scale ($10M-$50M on 3PLs) and Enterprise
+   (the self-serve Vybd Plan app, early access, with Test Drop, US Launch
+   and US Scale as services on top), US Scale (already selling in the US) and Enterprise
    ($50M+ with their own warehouses). Each card has its CTA (sign up or
    contact sales) at the bottom, and a link in the top row to the page
    that goes deeper (/us or /enterprise). Styles: .tc-* in HomePage.css. */
@@ -26,19 +26,20 @@ const TIERS: Tier[] = [
     {
         id: "plan",
         name: "Plan",
-        who: "For anyone with a brand idea, or a young brand finding its feet.",
-        price: "Free for a week",
-        priceNote: "then $33 / month",
+        who: "For makers and young brands working out whether, and how, to sell in the US.",
+        price: "Early access",
+        priceNote: "then $33 / month, first week free",
         includes: [
-            "Learn how brands are built, step by step",
-            "Research your market and competitors",
-            "Find your customer and your positioning",
-            "Work out your name, story and pricing",
-            "Leave with a brand plan you can act on",
+            "US demand and competitors in your category",
+            "Who buys it in the US, and how to position it",
+            "US pricing and margins",
+            "Which channels to start on: Amazon, Walmart, DTC or retail",
+            "Leave with a US go-to-market plan",
         ],
         addOns: {
             title: "Ready to make it real? Our team builds it",
             items: [
+                "Test the US first: one Test Drop of up to 500 units, $3,000 + 15% of US sales",
                 "Sourcing and manufacturer matching",
                 "FDA and compliance support, label review",
                 "Amazon, Walmart and Shopify store set up",
@@ -48,26 +49,26 @@ const TIERS: Tier[] = [
                 "A senior operator, 8 hours a month",
             ],
         },
-        cta: { label: "Start your free week", href: SIGNUP_URL },
+        cta: { label: "Get early access", href: SIGNUP_URL },
         more: { label: "See pricing", href: "/us#pricing" },
         featured: true,
     },
     {
         id: "scale",
-        name: "Scale",
-        who: "For brands doing $10M to $50M, running on 3PLs.",
+        name: "US Scale",
+        who: "For brands already selling in the US, up to $50M, running on 3PLs.",
         price: "Starts at $3K",
         priceNote: "per month, plus 12% of US sales",
         includes: [
-            "Everything in US Launch and US Scale",
+            "Our agents run inventory, purchase orders, deductions and reporting",
             "Multi-3PL, multi-channel orchestration",
             "Deductions and chargeback recovery",
             "Supplier management",
             "ERP and EDI integrations",
             "A dedicated operator",
         ],
-        cta: { label: "Contact sales", href: "/book" },
-        more: { label: "How it works", href: "/us" },
+        cta: { label: "Talk to us about US Scale", href: "/book?for=scale" },
+        more: { label: "See pricing", href: "/us#pricing" },
     },
     {
         id: "enterprise",
@@ -76,14 +77,14 @@ const TIERS: Tier[] = [
         price: "Custom",
         priceNote: null,
         includes: [
-            "Everything in Scale",
+            "Everything in US Scale",
             "Agents across warehouses, stores and DCs",
             "NetSuite, SAP, Dynamics 365 and Odoo connected",
             "Forecasting across large SKU counts",
             "A dedicated team and SLAs",
             "Security review",
         ],
-        cta: { label: "Contact sales", href: "/book" },
+        cta: { label: "Talk to an operator", href: "/book?for=enterprise" },
         more: { label: "How it works", href: "/enterprise" },
     },
 ];
@@ -102,7 +103,7 @@ const Check = () => (
 
 export default function TierCards({ tx }: { tx: Tx }) {
     return (
-        <section id="tiers" className="wrap tc" aria-label={tx("Plans")}>
+        <section id="start" className="wrap tc" aria-label={tx("Plans")}>
             <h2 className="tc-h rv">{tx("Pick your size.")}</h2>
             <div className="tc-grid">
                 {TIERS.map((t) => (

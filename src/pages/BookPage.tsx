@@ -8,7 +8,8 @@ import { useLocale, useLocalePath, useT } from "../i18n/context";
 import "./BookPage.css";
 
 /* ── Booking config (edit here) ──────────────────────────────────────────
-   The Calendly event for the US entry call. Its booking form should carry
+   The Calendly event for every booking (US entry, Test Drop, Scale,
+   Enterprise, partners; ?for= says which). Its booking form should carry
    the questions in docs/booking-questions.md, in that order, for the
    prefill keys below to line up. While empty, /book shows a placeholder
    instead of the scheduler. */
@@ -64,8 +65,19 @@ function loadCalendly() {
     return calendlyLoad;
 }
 
-function embedUrl() {
+/* Which CTA sent them: /book?for=drop|launch|scale|enterprise|partner.
+   Picks the copy variant and rides along to Calendly as utm_content, so
+   each booking shows the route it came from. */
+type Route = keyof ReturnType<typeof useT>["book"]["variants"];
+const ROUTES = ["launch", "drop", "scale", "enterprise", "partner"] as const satisfies readonly Route[];
+function routeFromQuery(): Route | null {
+    const v = new URLSearchParams(window.location.search).get("for");
+    return (ROUTES as readonly string[]).includes(v ?? "") ? (v as Route) : null;
+}
+
+function embedUrl(route: Route | null) {
     const u = new URL(BOOKING_URL);
+    if (route) u.searchParams.set("utm_content", route);
     /* Our left column carries the details, so hide Calendly's own pane. */
     u.searchParams.set("hide_landing_page_details", "1");
     u.searchParams.set("hide_event_type_details", "1");
@@ -99,6 +111,12 @@ export default function BookPage() {
     const navigate = useNavigate();
     const embedRef = useRef<HTMLDivElement>(null);
     const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+    const [route] = useState(routeFromQuery);
+    const variant = route ? t.book.variants[route] : null;
+    const points = variant ? [t.book.points[0], variant.operator, t.book.points[2]] : t.book.points;
+    const showFlags = variant ? variant.flags : true;
+    /* Back to the page that sent them when it is one of ours; home otherwise. */
+    const cameFromSite = typeof document !== "undefined" && document.referrer.startsWith(window.location.origin);
 
     useEffect(() => {
         if (!BOOKING_URL) return;
@@ -108,52 +126,62 @@ export default function BookPage() {
                 const el = embedRef.current;
                 if (!alive || !el || !window.Calendly) return;
                 el.innerHTML = "";
-                window.Calendly.initInlineWidget({ url: embedUrl(), parentElement: el, prefill: prefillFromQuery() });
+                window.Calendly.initInlineWidget({ url: embedUrl(route), parentElement: el, prefill: prefillFromQuery() });
                 setStatus("ready");
             })
             .catch(() => alive && setStatus("error"));
         return () => {
             alive = false;
         };
-    }, []);
+    }, [route]);
 
     useEffect(() => {
         const onMessage = (e: MessageEvent) => {
             if (e.origin !== "https://calendly.com") return;
             if (e.data?.event === "calendly.event_scheduled") {
-                track("booking_completed", { lang: locale });
+                track("booking_completed", { lang: locale, route: route ?? "none" });
                 navigate(localePath(locale, "/book/thanks"));
             }
         };
         window.addEventListener("message", onMessage);
         return () => window.removeEventListener("message", onMessage);
-    }, [navigate, locale]);
+    }, [navigate, locale, route]);
 
     return (
         <main className="bk-page">
             <div className="bk-panel">
                 <section className="bk-info">
-                    <a href={to("/")} className="bk-back">
+                    <a
+                        href={to("/")}
+                        className="bk-back"
+                        onClick={(e) => {
+                            if (!cameFromSite) return;
+                            e.preventDefault();
+                            window.history.back();
+                        }}
+                    >
                         <ArrowLeft aria-hidden="true" />
                         {t.book.back}
                     </a>
-                    <h1 className="bk-title">{t.book.title}</h1>
+                    <h1 className="bk-title">{variant ? variant.title : t.book.title}</h1>
                     <ul className="bk-points">
                         {POINT_ICONS.map((Icon, i) => (
                             <li key={i}>
                                 <Icon aria-hidden="true" />
-                                <span>{t.book.points[i]}</span>
+                                <span>{points[i]}</span>
                             </li>
                         ))}
                     </ul>
-                    <div className="bk-proof">
-                        <span className="bk-flags">
-                            {FLAGS.map((code) => (
-                                <img key={code} src={`/images/flags/${code}.svg`} alt={t.countries[code]} width={28} height={28} />
-                            ))}
-                        </span>
-                        <p>{t.book.proof}</p>
-                    </div>
+                    {showFlags && (
+                        <div className="bk-proof">
+                            <span className="bk-flags">
+                                {FLAGS.map((code) => (
+                                    <img key={code} src={`/images/flags/${code}.svg`} alt={t.countries[code]} width={28} height={28} />
+                                ))}
+                            </span>
+                            <p>{t.book.proof}</p>
+                        </div>
+                    )}
                 </section>
 
                 <section className="bk-scheduler" aria-label={t.book.pickTime}>

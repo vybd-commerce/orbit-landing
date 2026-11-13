@@ -28,7 +28,7 @@ export function TileGrid() {
           <div className="eyebrow rv" style={mint}>For $50M+ operators</div>
           <h2 className="prod rv">Vybd Enterprise</h2>
           <p className="tag rv">AI agents for the whole operation.</p>
-          <div className="links rv"><a className="more" href="/enterprise">Learn more</a><a className="more" href="/book">Talk to sales</a></div>
+          <div className="links rv"><a className="more" href="/enterprise">Learn more</a><a className="more" href="/book?for=enterprise">Talk to an operator</a></div>
         </div>
         <div className="art"><div className="ent-art rv" aria-hidden="true">
           {ENT_CELLS.map((d, i) =>
@@ -86,7 +86,7 @@ export function TileGrid() {
           <div className="eyebrow rv">For partners</div>
           <h2 className="prod rv">Earn your place.</h2>
           <p className="tag rv">Real work, paid visibly, scored openly.</p>
-          <div className="links rv"><a className="more" href="/ecosystem">Join the network</a></div>
+          <div className="links rv"><a className="more" href="/ecosystem">Join the network</a><a className="more" href="/rainmaker">Become a Rainmaker</a></div>
         </div>
         <div className="art"><div className="partner-art rv">
           {PARTNER_SCORES.map(([k, v]) => <span key={k}>{k} <i>{v}</i></span>)}

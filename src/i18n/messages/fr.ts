@@ -7,7 +7,7 @@ export const fr: Messages = {
         homeTitle: "Entrer sur le marché américain | Vybd",
         homeDescription:
             "Nous accompagnons les marques et fabricants internationaux sur le marché américain, puis nous gérons leurs opérations sur place.",
-        bookTitle: "Réservez un appel pour entrer aux États-Unis | Vybd",
+        bookTitle: "Réservez un appel | Vybd",
         thanksTitle: "C'est réservé | Vybd",
     },
 
@@ -271,13 +271,22 @@ export const fr: Messages = {
 
     book: {
         back: "Retour",
-        title: "Réservez un appel pour entrer aux États-Unis",
+        title: "Réservez un appel avec Vybd",
         points: [
             "30 minutes en visio",
             "Avec un opérateur qui a déjà lancé des produits aux États-Unis",
             "Vous repartez avec une prochaine étape claire, que vous travailliez avec nous ou non",
         ],
         proof: "Des marques de ces pays vendent déjà aux États-Unis avec nous.",
+        /* /book?for=… (the CTA that sent them): title, second point, and
+           whether the country-flags proof line shows. */
+        variants: {
+            launch: { title: "Réservez un appel pour entrer aux États-Unis", operator: "Avec un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
+            drop: { title: "Réservez une présentation du Test Drop", operator: "Avec un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
+            scale: { title: "Réservez un appel US Scale", operator: "Avec un opérateur qui gère des opérations américaines pour des marques", flags: false },
+            enterprise: { title: "Parlez à un opérateur senior", operator: "Avec un opérateur senior de Vybd, sur vos systèmes et vos flux", flags: false },
+            partner: { title: "Réservez un appel partenaire", operator: "Avec l'équipe qui construit le réseau Vybd", flags: false },
+        },
         pickTime: "Choisir un créneau",
         loading: "Chargement des créneaux disponibles…",
         failed: "Le calendrier ne s'est pas chargé.",

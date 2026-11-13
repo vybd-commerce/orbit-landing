@@ -6,7 +6,7 @@ import type { Tx } from "../i18n";
    headline (heading={null}). */
 
 const US_BODY =
-    "You need a team that's already here. Vybd is that team. We handle the rules, the stock, the shipping and the customers, so selling in the US feels as easy as selling at home.";
+    "You need a team that's already here. Vybd is that team. We handle the rules, the stock, the shipping and the customers, so selling in the US feels as easy as selling at home. Already selling here? We run the operation so you can grow it.";
 
 export default function IdeaSection({ tx, heading, body = US_BODY }: { tx: Tx; heading?: ReactNode | null; body?: string }) {
     return (

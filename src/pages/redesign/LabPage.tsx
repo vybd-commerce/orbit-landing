@@ -66,7 +66,7 @@ function Hero({ tx }: { tx: Tx }) {
         const id = window.setInterval(() => setLog((l) => l + 1), 2200);
         return () => clearInterval(id);
     }, []);
-    const words = tx.seg("labh1", ["What", " ", "we're", " ", "building", " ", "behind", " ", "the", " ", "agency."]);
+    const words = tx.seg("labh1", ["What", " ", "we're", " ", "building", " ", "behind", " ", "the", " ", "launches."]);
     const delays = ["0s", ".06s", ".12s", ".18s", ".24s", ".3s"];
 
     return (

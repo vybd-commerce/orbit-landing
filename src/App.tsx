@@ -43,12 +43,12 @@ function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   );
 }
 
-/* In production "/" is home.html (src/home, see vercel.json), a separate page.
-   Client-side links to "/" land here, so reload to pick it up. Other locales
-   and dev keep the SPA home. */
+/* In production "/" is us-en.html (src/home/UsApp.tsx, see middleware.ts), a separate page.
+   Client-side links to "/" land here, so reload to pick it up, keeping any
+   #anchor (/#start, /#compare). Other locales and dev keep the SPA home. */
 function EnRoot({ children }: { children: ReactNode }) {
   if (import.meta.env.PROD) {
-    window.location.replace("/");
+    window.location.replace("/" + window.location.hash);
     return null;
   }
   return <>{children}</>;

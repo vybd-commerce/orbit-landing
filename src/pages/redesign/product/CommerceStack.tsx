@@ -15,7 +15,7 @@ const ic = (children: ReactNode) => (
 );
 
 const MODS: Mod[] = [
-    { name: "Market Intelligence", items: ["Demand Forecasting", "Competitor Analysis", "Price Optimization"], icon: ic(<path d="M4 19V9M10 19V5M16 19v-7M22 19H2" />) },
+    { name: "Market research", items: ["Demand Forecasting", "Competitor Analysis", "Price Optimization"], icon: ic(<path d="M4 19V9M10 19V5M16 19v-7M22 19H2" />) },
     {
         name: "Compliance",
         items: ["Regulatory Monitoring", "Risk Detection", "Document Validation"],
@@ -27,7 +27,7 @@ const MODS: Mod[] = [
         ),
     },
     {
-        name: "E-Commerce",
+        name: "Online sales",
         items: ["Catalog Sync", "Channel Management", "SEO Automation"],
         icon: ic(
             <>
@@ -59,7 +59,7 @@ const MODS: Mod[] = [
         ),
     },
     {
-        name: "Support",
+        name: "Customer support",
         items: ["Ticket Routing", "Sentiment Analysis", "Auto-Responses"],
         icon: ic(
             <>
