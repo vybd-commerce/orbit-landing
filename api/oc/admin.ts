@@ -26,15 +26,33 @@ input:focus { outline:none; border-color:var(--ink); }
 button { margin-top:28px; font:inherit; font-size:18px; padding:13px 28px; border-radius:999px; border:1px solid var(--ink);
   background:var(--ink); color:var(--paper); cursor:pointer; } button:hover { background:var(--accent); border-color:var(--accent); }
 .err { margin-top:14px; color:var(--error); }
+.field { position:relative; } .field input { padding-right:48px; }
+.eye { position:absolute; right:0; bottom:4px; margin:0; padding:0; width:44px; height:44px; display:grid; place-items:center;
+  background:transparent; border:0; border-radius:999px; color:var(--gray); }
+.eye:hover { background:transparent; color:var(--ink); } .eye:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.eye svg { width:22px; height:22px; } .eye .off, .eye[aria-pressed="true"] .on { display:none; } .eye[aria-pressed="true"] .off { display:block; }
 </style></head><body>${body}</body></html>`,
         { status, headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex", ...headers } });
 
 const loginPage = (message = "", status = 200) => page("Outside Context | Sign in", `<form method="post" action="/outside-context/admin">
 <h1>Outside Context admin</h1>
 <label for="pw">Password</label>
-<input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+<div class="field"><input id="pw" name="password" type="password" autocomplete="current-password" required autofocus>
+<button class="eye" type="button" id="eye" aria-pressed="false" aria-label="Show password" aria-controls="pw">
+<svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+<svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.9 10.9 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+</button></div>
 ${message ? `<p class="err" role="alert">${message}</p>` : ""}
-<button type="submit">Sign in</button></form>`, status);
+<button type="submit">Sign in</button></form>
+<script>
+document.getElementById("eye").addEventListener("click", function () {
+  var pw = document.getElementById("pw"), show = pw.type === "password";
+  pw.type = show ? "text" : "password";
+  this.setAttribute("aria-pressed", String(show));
+  this.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  pw.focus();
+});
+</script>`, status);
 
 /* Constant-time string compare, so response timing doesn't leak the password. */
 function same(a: string, b: string) {
