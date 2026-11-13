@@ -464,7 +464,7 @@ export default function LabPage() {
                             </p>
                             <div className="lb-status-row">
                                 <RdLink className="btn btn-mint" href="/book">
-                                    {tx("Book a call")}
+                                    {tx("Talk to us")}
                                 </RdLink>
                                 <a className="btn btn-ghost" href="mailto:hello@vybd.ai">
                                     {tx("Build it with us")}

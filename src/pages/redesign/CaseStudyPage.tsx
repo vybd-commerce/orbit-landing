@@ -305,10 +305,10 @@ export default function CaseStudyPage() {
                     <h2 className="rv">
                         {tx("Let's build your next")} <em>{tx("growth chapter.")}</em>
                     </h2>
-                    <p className="rv">{tx("Book a free call and we'll show you how your brand could grow in the US.")}</p>
+                    <p className="rv">{tx("Tell us about your brand and we'll show you how it could grow in the US.")}</p>
                     <div className="cta-row rv">
                         <RdLink className="btn btn-mint" href="/book">
-                            {tx("Book a call")}
+                            {tx("Talk to us")}
                         </RdLink>
                         <RdLink className="btn btn-ghost" href="/case-studies">
                             {tx("All case studies")}

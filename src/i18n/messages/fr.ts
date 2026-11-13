@@ -7,8 +7,8 @@ export const fr: Messages = {
         homeTitle: "Entrer sur le marché américain | Vybd",
         homeDescription:
             "Nous accompagnons les marques et fabricants internationaux sur le marché américain, puis nous gérons leurs opérations sur place.",
-        bookTitle: "Réservez un appel | Vybd",
-        thanksTitle: "C'est réservé | Vybd",
+        bookTitle: "Nous contacter | Vybd",
+        thanksTitle: "Merci | Vybd",
     },
 
     header: {
@@ -244,8 +244,8 @@ export const fr: Messages = {
 
     contact: {
         title: "Planifions votre lancement aux États-Unis.",
-        sub: "30 minutes avec un opérateur, pas un commercial. Choisissez un créneau dans votre fuseau horaire.",
-        cta: "Réserver un appel",
+        sub: "Parlez-nous un peu de votre marque. Un opérateur, pas un commercial, vous répondra par e-mail.",
+        cta: "Nous contacter",
     },
 
     footer: {
@@ -271,34 +271,44 @@ export const fr: Messages = {
 
     book: {
         back: "Retour",
-        title: "Réservez un appel avec Vybd",
+        title: "Parler à Vybd",
         points: [
-            "30 minutes en visio",
-            "Avec un opérateur qui a déjà lancé des produits aux États-Unis",
-            "Vous repartez avec une prochaine étape claire, que vous travailliez avec nous ou non",
+            "Deux questions courtes, moins d'une minute",
+            "Lu par un opérateur qui a déjà lancé des produits aux États-Unis",
+            "Nous répondons par e-mail avec une prochaine étape claire, que vous travailliez avec nous ou non",
         ],
         proof: "Des marques de ces pays vendent déjà aux États-Unis avec nous.",
         /* /book?for=… (the CTA that sent them): title, second point, and
            whether the country-flags proof line shows. */
         variants: {
-            launch: { title: "Réservez un appel pour entrer aux États-Unis", operator: "Avec un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
-            drop: { title: "Réservez une présentation du Test Drop", operator: "Avec un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
-            scale: { title: "Réservez un appel US Scale", operator: "Avec un opérateur qui gère des opérations américaines pour des marques", flags: false },
-            enterprise: { title: "Parlez à un opérateur senior", operator: "Avec un opérateur senior de Vybd, sur vos systèmes et vos flux", flags: false },
-            partner: { title: "Réservez un appel partenaire", operator: "Avec l'équipe qui construit le réseau Vybd", flags: false },
+            launch: { title: "Préparer votre lancement aux États-Unis", operator: "Lu par un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
+            drop: { title: "Commencer par un Test Drop", operator: "Lu par un opérateur qui a déjà lancé des produits aux États-Unis", flags: true },
+            scale: { title: "Parler de US Scale", operator: "Lu par un opérateur qui gère les opérations américaines de marques", flags: false },
+            enterprise: { title: "Parler à un opérateur senior", operator: "Lu par un opérateur senior de Vybd, en tenant compte de vos systèmes et de vos flux", flags: false },
+            partner: { title: "Rejoindre le réseau Vybd", operator: "Lu par l'équipe qui construit le réseau Vybd", flags: false },
         },
-        pickTime: "Choisir un créneau",
-        loading: "Chargement des créneaux disponibles…",
-        failed: "Le calendrier ne s'est pas chargé.",
-        openTab: "Ouvrir dans un nouvel onglet",
-        notConfigured: "Scheduler not configured yet: set BOOKING_URL in src/pages/BookPage.tsx.",
-        emailFallback: "Le calendrier ne s'affiche pas\u00a0? Écrivez-nous à",
-        emailFallbackAfter: " et nous trouverons un créneau.",
+        /* The contact form that replaced the Calendly scheduler. */
+        form: {
+            label: "Parlez-nous de vous",
+            email: "E-mail professionnel",
+            name: "Votre nom",
+            company: "Marque ou site web",
+            message: "Que fabriquez-vous, et qu'attendez-vous de nous ?",
+            messagePlaceholder: "Une marque de soins de Séoul qui se vend bien chez elle. Nous voulons tester les États-Unis.",
+            send: "Envoyer",
+            sending: "Envoi…",
+            note: "Nous l'utilisons uniquement pour vous répondre.",
+            errorEmail: "Saisissez une adresse e-mail valide.",
+            errorGeneric: "L'envoi n'a pas abouti. Vérifiez votre connexion et réessayez.",
+        },
+        /* Under the form; the address sits between these two. */
+        emailFallback: "Vous préférez l'e-mail ? Écrivez directement à",
+        emailFallbackAfter: ".",
     },
 
     thanks: {
-        title: "C'est réservé.",
-        body: "Une invitation d'agenda est en route. Répondez-y avec tout ce que vous voulez nous montrer avant l'appel (photos produit, liste de prix, vos canaux actuels aux États-Unis).",
+        title: "Merci. Nous revenons vers vous.",
+        body: "Un opérateur va lire votre message et vous répondre par e-mail depuis hello@vybd.ai. Si vous avez des photos produit, une grille tarifaire ou vos canaux actuels aux États-Unis, envoyez-les en réponse.",
         back: "Retour à Vybd",
     },
 };

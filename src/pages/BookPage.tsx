@@ -1,73 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CircleCheck, UserRound, Video } from "lucide-react";
+import { ArrowLeft, CircleCheck, Mail, UserRound } from "lucide-react";
 import { track } from "../lib/analytics";
 import { useBookShell } from "../hooks/useBookShell";
 import { localePath } from "../i18n/locales";
 import { useLocale, useLocalePath, useT } from "../i18n/context";
 import "./BookPage.css";
 
-/* ── Booking config (edit here) ──────────────────────────────────────────
-   The Calendly event for every booking (US entry, Test Drop, Scale,
-   Enterprise, partners; ?for= says which). Its booking form should carry
-   the questions in docs/booking-questions.md, in that order, for the
-   prefill keys below to line up. While empty, /book shows a placeholder
-   instead of the scheduler. */
-const BOOKING_URL: string = "https://calendly.com/hello-vybd/vybd-discovery-call";
+/* ── Contact config (edit here) ──────────────────────────────────────────
+   /book used to embed a Calendly scheduler. It is now a short form: email,
+   name, brand, one question. api/site/contact.ts stores each request in
+   vybd_contacts (Neon) and posts it to the site's Discord channel, and we
+   reply by email. Every "Talk to us" link on the site points here, with
+   ?for= saying which offer sent them. */
+const CONTACT_ENDPOINT = "/api/site/contact";
 
-/* Brand colours passed to the embed (hex without #). */
-const EMBED_COLORS = { primary_color: "0f1b33", text_color: "0f1b33", background_color: "ffffff" };
-
-/* Calendly prefill keys for the custom questions, in the order they are
-   set up on the event (Name and Email are Calendly's built-in fields).
-   Any of these present on /book's own URL are passed through, e.g.
-   /book?email=jo@brand.com&a1=Brand%20Co. */
-const PREFILL_KEYS = ["name", "email", "a1", "a2", "a3", "a4", "a5", "a6"] as const;
-
-/* Shown under the scheduler for anyone it fails for: Calendly is slow or
-   blocked in some countries, mainland China among them. */
-const BOOKING_EMAIL = "hello@vybd.ai";
-
-const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
+/* Shown under the form for anyone who would rather write. */
+const CONTACT_EMAIL = "hello@vybd.ai";
 
 /* Text for each, in order, is the copy's book.points. */
-const POINT_ICONS = [Video, UserRound, CircleCheck];
+const POINT_ICONS = [Mail, UserRound, CircleCheck];
 
 const FLAGS = ["in", "kr", "cn"] as const;
-
-declare global {
-    interface Window {
-        Calendly?: {
-            initInlineWidget: (opts: {
-                url: string;
-                parentElement: HTMLElement;
-                prefill?: { name?: string; email?: string; customAnswers?: Record<string, string> };
-            }) => void;
-        };
-    }
-}
-
-/* One script tag for the whole app, however often /book mounts. */
-let calendlyLoad: Promise<void> | null = null;
-function loadCalendly() {
-    if (window.Calendly) return Promise.resolve();
-    calendlyLoad ??= new Promise<void>((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = CALENDLY_SCRIPT;
-        s.async = true;
-        s.onload = () => resolve();
-        s.onerror = () => {
-            calendlyLoad = null;
-            reject(new Error("Calendly failed to load"));
-        };
-        document.head.appendChild(s);
-    });
-    return calendlyLoad;
-}
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /* Which CTA sent them: /book?for=drop|launch|scale|enterprise|partner.
-   Picks the copy variant and rides along to Calendly as utm_content, so
-   each booking shows the route it came from. */
+   Picks the copy variant and is stored with the request. */
 type Route = keyof ReturnType<typeof useT>["book"]["variants"];
 const ROUTES = ["launch", "drop", "scale", "enterprise", "partner"] as const satisfies readonly Route[];
 function routeFromQuery(): Route | null {
@@ -75,77 +33,79 @@ function routeFromQuery(): Route | null {
     return (ROUTES as readonly string[]).includes(v ?? "") ? (v as Route) : null;
 }
 
-function embedUrl(route: Route | null) {
-    const u = new URL(BOOKING_URL);
-    if (route) u.searchParams.set("utm_content", route);
-    /* Our left column carries the details, so hide Calendly's own pane. */
-    u.searchParams.set("hide_landing_page_details", "1");
-    u.searchParams.set("hide_event_type_details", "1");
-    Object.entries(EMBED_COLORS).forEach(([k, v]) => u.searchParams.set(k, v));
-    return u.toString();
+/* Older links carried ?email= and ?name= for Calendly; keep prefilling from them. */
+function prefill(key: "email" | "name") {
+    return new URLSearchParams(window.location.search).get(key)?.slice(0, 200) ?? "";
 }
 
-function prefillFromQuery() {
-    const q = new URLSearchParams(window.location.search);
-    const customAnswers: Record<string, string> = {};
-    let name: string | undefined;
-    let email: string | undefined;
-    PREFILL_KEYS.forEach((k) => {
-        const v = q.get(k);
-        if (!v) return;
-        if (k === "name") name = v;
-        else if (k === "email") email = v;
-        else customAnswers[k] = v;
-    });
-    return { name, email, customAnswers };
-}
-
-/* /book: details on the left, Calendly's inline scheduler on the right.
-   Calendly detects the visitor's time zone and shows it with a picker. A
-   booking fires "booking_completed" and moves on to /book/thanks. */
+/* /book: details on the left, the contact form on the right. Sending fires
+   "contact_sent" and moves on to /book/thanks. */
 export default function BookPage() {
     const t = useT();
     const locale = useLocale();
     const to = useLocalePath();
     useBookShell(t.meta.bookTitle);
     const navigate = useNavigate();
-    const embedRef = useRef<HTMLDivElement>(null);
-    const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
     const [route] = useState(routeFromQuery);
     const variant = route ? t.book.variants[route] : null;
     const points = variant ? [t.book.points[0], variant.operator, t.book.points[2]] : t.book.points;
     const showFlags = variant ? variant.flags : true;
     /* Back to the page that sent them when it is one of ours; home otherwise. */
     const cameFromSite = typeof document !== "undefined" && document.referrer.startsWith(window.location.origin);
+    const fromPage = useRef(cameFromSite ? new URL(document.referrer).pathname : null);
+
+    const [email, setEmail] = useState(() => prefill("email"));
+    const [name, setName] = useState(() => prefill("name"));
+    const [company, setCompany] = useState("");
+    const [message, setMessage] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [formError, setFormError] = useState("");
+    const [sending, setSending] = useState(false);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const honeypot = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        if (!BOOKING_URL) return;
-        let alive = true;
-        loadCalendly()
-            .then(() => {
-                const el = embedRef.current;
-                if (!alive || !el || !window.Calendly) return;
-                el.innerHTML = "";
-                window.Calendly.initInlineWidget({ url: embedUrl(route), parentElement: el, prefill: prefillFromQuery() });
-                setStatus("ready");
-            })
-            .catch(() => alive && setStatus("error"));
-        return () => {
-            alive = false;
-        };
-    }, [route]);
+        track("contact_view", { lang: locale, route: route ?? "none" });
+    }, [locale, route]);
 
-    useEffect(() => {
-        const onMessage = (e: MessageEvent) => {
-            if (e.origin !== "https://calendly.com") return;
-            if (e.data?.event === "calendly.event_scheduled") {
-                track("booking_completed", { lang: locale, route: route ?? "none" });
-                navigate(localePath(locale, "/book/thanks"));
+    async function onSubmit(e: FormEvent) {
+        e.preventDefault();
+        if (sending) return;
+        const clean = email.trim();
+        if (!EMAIL.test(clean)) {
+            setEmailError(t.book.form.errorEmail);
+            emailRef.current?.focus();
+            return;
+        }
+        setEmailError("");
+        setFormError("");
+        setSending(true);
+        try {
+            const utm = new URLSearchParams(window.location.search).get("utm_source");
+            const res = await fetch(CONTACT_ENDPOINT, {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({
+                    email: clean, name, company, message, route, lang: locale,
+                    page: fromPage.current, utm_source: utm, website: honeypot.current?.value ?? "",
+                }),
+            });
+            const data = (await res.json().catch(() => ({}))) as { ok?: boolean; field?: string };
+            if (!res.ok || !data.ok) {
+                if (data.field === "email") {
+                    setEmailError(t.book.form.errorEmail);
+                    emailRef.current?.focus();
+                } else setFormError(t.book.form.errorGeneric);
+                return;
             }
-        };
-        window.addEventListener("message", onMessage);
-        return () => window.removeEventListener("message", onMessage);
-    }, [navigate, locale, route]);
+            track("contact_sent", { lang: locale, route: route ?? "none" });
+            navigate(localePath(locale, "/book/thanks"));
+        } catch {
+            setFormError(t.book.form.errorGeneric);
+        } finally {
+            setSending(false);
+        }
+    }
 
     return (
         <main className="bk-page">
@@ -184,30 +144,71 @@ export default function BookPage() {
                     )}
                 </section>
 
-                <section className="bk-scheduler" aria-label={t.book.pickTime}>
-                    {BOOKING_URL ? (
-                        <div className="bk-embed-wrap">
-                            {status !== "ready" && (
-                                <p className="bk-status" role="status">
-                                    {status === "error" ? (
-                                        <>
-                                            {t.book.failed}{" "}
-                                            <a href={BOOKING_URL} target="_blank" rel="noreferrer">
-                                                {t.book.openTab}
-                                            </a>
-                                        </>
-                                    ) : (
-                                        t.book.loading
-                                    )}
+                <section className="bk-scheduler" aria-label={t.book.form.label}>
+                    <form className="bk-form" onSubmit={onSubmit} noValidate>
+                        <div className="bk-field">
+                            <label htmlFor="bk-email">{t.book.form.email}</label>
+                            <input
+                                ref={emailRef}
+                                id="bk-email"
+                                type="email"
+                                inputMode="email"
+                                autoComplete="email"
+                                maxLength={254}
+                                required
+                                value={email}
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    if (emailError) setEmailError("");
+                                }}
+                                aria-invalid={emailError ? true : undefined}
+                                aria-describedby={emailError ? "bk-email-err" : undefined}
+                            />
+                            {emailError && (
+                                <p className="bk-err" id="bk-email-err">
+                                    {emailError}
                                 </p>
                             )}
-                            <div ref={embedRef} className="bk-embed" />
                         </div>
-                    ) : (
-                        <p className="bk-status bk-status--solo">{t.book.notConfigured}</p>
-                    )}
+                        <div className="bk-row">
+                            <div className="bk-field">
+                                <label htmlFor="bk-name">{t.book.form.name}</label>
+                                <input id="bk-name" type="text" autoComplete="name" maxLength={120} value={name} onChange={(e) => setName(e.target.value)} />
+                            </div>
+                            <div className="bk-field">
+                                <label htmlFor="bk-company">{t.book.form.company}</label>
+                                <input id="bk-company" type="text" autoComplete="organization" maxLength={200} value={company} onChange={(e) => setCompany(e.target.value)} />
+                            </div>
+                        </div>
+                        <div className="bk-field">
+                            <label htmlFor="bk-message">{t.book.form.message}</label>
+                            <textarea
+                                id="bk-message"
+                                rows={5}
+                                maxLength={2000}
+                                placeholder={t.book.form.messagePlaceholder}
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
+                        </div>
+                        <div className="bk-hp" aria-hidden="true">
+                            <label htmlFor="bk-website">Leave this empty</label>
+                            <input ref={honeypot} id="bk-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                        </div>
+                        <div className="bk-actions">
+                            <button type="submit" className="bk-send" disabled={sending}>
+                                {sending ? t.book.form.sending : t.book.form.send}
+                            </button>
+                            <p className="bk-note">{t.book.form.note}</p>
+                        </div>
+                        {formError && (
+                            <p className="bk-err bk-err--form" role="alert">
+                                {formError}
+                            </p>
+                        )}
+                    </form>
                     <p className="bk-fallback">
-                        {t.book.emailFallback} <a href={`mailto:${BOOKING_EMAIL}`}>{BOOKING_EMAIL}</a>
+                        {t.book.emailFallback} <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
                         {t.book.emailFallbackAfter}
                     </p>
                 </section>

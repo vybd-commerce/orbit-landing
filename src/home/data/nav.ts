@@ -11,7 +11,7 @@ export const NAV_LINKS = [
   { href: '/ecosystem', label: 'Partners' },
 ]
 
-export const BOOK = { href: '/book', label: 'Book a call' }
+export const BOOK = { href: '/book', label: 'Talk to us' }
 
 export const LANGUAGES = [
   ['en', 'English'], ['zh', '中文'], ['ko', '한국어'], ['ja', '日本語'], ['fr', 'Français'], ['es', 'Español'],

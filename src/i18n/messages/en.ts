@@ -8,8 +8,8 @@ export const en = {
         homeTitle: "US market entry for international brands | Vybd",
         homeDescription:
             "We take international brands and manufacturers into the US, and run the operations once they're here.",
-        bookTitle: "Book a call | Vybd",
-        thanksTitle: "You're booked | Vybd",
+        bookTitle: "Talk to us | Vybd",
+        thanksTitle: "Thanks | Vybd",
     },
 
     header: {
@@ -253,8 +253,8 @@ export const en = {
 
     contact: {
         title: "Let's plan your US launch.",
-        sub: "30 minutes with an operator, not a salesperson. Pick a time in your own time zone.",
-        cta: "Book a call",
+        sub: "Tell us a little about your brand. An operator, not a salesperson, will reply by email.",
+        cta: "Talk to us",
     },
 
     footer: {
@@ -280,37 +280,44 @@ export const en = {
 
     book: {
         back: "Back",
-        title: "Book a call with Vybd",
+        title: "Talk to Vybd",
         points: [
-            "30 minutes on video",
-            "With an operator who has brought products into the US",
-            "You'll leave with a clear next step, whether or not you work with us",
+            "Two short questions, under a minute",
+            "Read by an operator who has brought products into the US",
+            "We reply by email with a clear next step, whether or not you work with us",
         ],
         proof: "Brands from these countries already sell in the US with us.",
         /* /book?for=… (the CTA that sent them): title, second point, and
            whether the country-flags proof line shows. */
         variants: {
-            launch: { title: "Book a US entry call", operator: "With an operator who has brought products into the US", flags: true },
-            drop: { title: "Book a Test Drop intro", operator: "With an operator who has brought products into the US", flags: true },
-            scale: { title: "Book a US Scale call", operator: "With an operator who runs US operations for brands", flags: false },
-            enterprise: { title: "Talk to a senior operator", operator: "With a senior Vybd operator, about your systems and lanes", flags: false },
-            partner: { title: "Book a partner call", operator: "With the team that builds the Vybd network", flags: false },
+            launch: { title: "Plan your US launch", operator: "Read by an operator who has brought products into the US", flags: true },
+            drop: { title: "Start with a Test Drop", operator: "Read by an operator who has brought products into the US", flags: true },
+            scale: { title: "Talk about US Scale", operator: "Read by an operator who runs US operations for brands", flags: false },
+            enterprise: { title: "Talk to a senior operator", operator: "Read by a senior Vybd operator, with your systems and lanes in mind", flags: false },
+            partner: { title: "Join the Vybd network", operator: "Read by the team that builds the Vybd network", flags: false },
         },
-        pickTime: "Pick a time",
-        loading: "Loading available times…",
-        failed: "The calendar didn't load.",
-        openTab: "Open it in a new tab",
-        notConfigured: "Scheduler not configured yet: set BOOKING_URL in src/pages/BookPage.tsx.",
-        /* Shown under the scheduler: Calendly can be slow or blocked in some
-           countries, mainland China among them. */
-        emailFallback: "Calendar not loading? Email us at",
-        /* Follows the address directly, so it carries its own leading space. */
-        emailFallbackAfter: " and we'll find a time.",
+        /* The contact form that replaced the Calendly scheduler. */
+        form: {
+            label: "Tell us about you",
+            email: "Work email",
+            name: "Your name",
+            company: "Brand or website",
+            message: "What do you make, and what do you need from us?",
+            messagePlaceholder: "Skincare from Seoul, selling well at home. We want to test the US.",
+            send: "Send",
+            sending: "Sending…",
+            note: "We only use this to reply to you.",
+            errorEmail: "Enter a valid email address.",
+            errorGeneric: "That didn't send. Check your connection and try again.",
+        },
+        /* Under the form; the address sits between these two. */
+        emailFallback: "Prefer email? Write to",
+        emailFallbackAfter: " directly.",
     },
 
     thanks: {
-        title: "You're booked.",
-        body: "A calendar invite is on its way. Reply to it with anything you want us to look at before the call (product photos, a price list, your current US channels).",
+        title: "Thanks. We'll be in touch.",
+        body: "An operator will read this and reply by email from hello@vybd.ai. If you have product photos, a price list or your current US channels, send them in your reply.",
         back: "Back to Vybd",
     },
 };

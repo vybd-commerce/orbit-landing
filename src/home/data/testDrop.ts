@@ -126,7 +126,7 @@ export const PROOF = {
 export const ORIGINS = ["India", "South Korea", "China", "France"];
 
 export const NEXT: [string, string, string][] = [
-    ["Free · 30 minutes", "Intro call", "Your brand, your audience and your goals for the US."],
+    ["Free · by email", "Intro", "Your brand, your audience and your goals for the US."],
     ["You choose", "Pick the drop", `Choose designs and quantities, up to ${DROP_MAX_UNITS} units.`],
     ["We handle it", "Ship to us", "We bring it in, clear customs and stock it."],
     [`Typically ${GO_LIVE}`, "Go live", "Your drop goes on sale to US customers."],

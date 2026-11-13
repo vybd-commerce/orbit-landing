@@ -159,7 +159,7 @@ A two-color brand (navy and mint) on white, with cool grays for text and surface
 
 Content sits in a 1120px container with a fluid gutter (clamp(20px, 5vw, 48px)). Section rhythm is clamp(72px, 8vw, 132px). Headings center in story sections and left-align in feature sections. Below 760px, grids collapse to one column and nav links fold into the menu.
 
-The header is a 56px sticky bar, white at 78% with a blur, the same on every page: logo, global links, language, one action ("Book a call").
+The header is a 56px sticky bar, white at 78% with a blur, the same on every page: logo, global links, language, one action ("Talk to us").
 
 ## Elevation & Depth
 
@@ -190,7 +190,7 @@ Round and soft: pills for every button and chip, 28px corners for large cards, 1
 - **Internal Padding:** 36px.
 
 ### Navigation
-- One global nav on every page: the logo lockup, then Where are you today?, How it works, Pricing, Enterprise, Case studies, Partners, then language and "Book a call". `NAV_LINKS` (src/home/data/nav.ts) and `GLOBAL_NAV` (src/pages/redesign/chrome.tsx) hold the same list.
+- One global nav on every page: the logo lockup, then Where are you today?, How it works, Pricing, Enterprise, Case studies, Partners, then language and "Talk to us". `NAV_LINKS` (src/home/data/nav.ts) and `GLOBAL_NAV` (src/pages/redesign/chrome.tsx) hold the same list.
 - Links are 14px body gray, ink on hover, with the current page in ink.
 - Mobile: a menu button opens a full-width list with the same links and the action.
 
@@ -202,7 +202,7 @@ Round and soft: pills for every button and chip, 28px corners for large cards, 1
 
 ### Do:
 - **Do** use Ledger Mint (#0E7C68) for mint text on white or gray.
-- **Do** send every "talk to us" action to /book. The header and generic closing calls say "Book a call"; a CTA for one offer may name it ("Talk about US Scale", "Plan my launch") and carries its route (`/book?for=drop|launch|scale|enterprise|partner`).
+- **Do** send every "talk to us" action to /book. /book is a short contact form (email, name, brand, one question), not a scheduler. The header and generic closing calls say "Talk to us"; a CTA for one offer may name it ("Talk about US Scale", "Plan my launch") and carries its route (`/book?for=drop|launch|scale|enterprise|partner`).
 - **Do** keep illustrative figures labelled as illustrative.
 
 ### Don't:

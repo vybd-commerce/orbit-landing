@@ -5,8 +5,8 @@ export const ko: Messages = {
     meta: {
         homeTitle: "해외 브랜드의 미국 시장 진출 | Vybd",
         homeDescription: "해외 브랜드와 제조사의 미국 진출을 돕고, 진출 이후의 운영까지 맡습니다.",
-        bookTitle: "상담 예약 | Vybd",
-        thanksTitle: "예약이 완료되었습니다 | Vybd",
+        bookTitle: "문의하기 | Vybd",
+        thanksTitle: "접수되었습니다 | Vybd",
     },
 
     header: {
@@ -242,8 +242,8 @@ export const ko: Messages = {
 
     contact: {
         title: "미국 진출을 함께 계획하세요.",
-        sub: "영업 담당자가 아닌 실무 전문가와 30분. 현지 시간대에 맞춰 시간을 고르세요.",
-        cta: "상담 예약하기",
+        sub: "브랜드에 대해 간단히 알려주세요. 영업 담당자가 아닌 운영 전문가가 이메일로 답변드립니다.",
+        cta: "문의하기",
     },
 
     footer: {
@@ -269,34 +269,44 @@ export const ko: Messages = {
 
     book: {
         back: "뒤로",
-        title: "Vybd 상담 예약",
+        title: "Vybd에 문의하기",
         points: [
-            "30분 화상 통화",
-            "미국에 제품을 들여온 경험이 있는 실무 전문가와 함께",
-            "함께 일하시든 아니든, 명확한 다음 단계를 가져가실 수 있습니다",
+            "짧은 질문 두 개, 1분이면 충분합니다",
+            "미국에 제품을 들여온 경험이 있는 운영 전문가가 읽습니다",
+            "함께 일하든 아니든, 이메일로 명확한 다음 단계를 알려드립니다",
         ],
         proof: "이 국가들의 브랜드가 이미 저희와 함께 미국에서 판매하고 있습니다.",
         /* /book?for=… (the CTA that sent them): title, second point, and
            whether the country-flags proof line shows. */
         variants: {
-            launch: { title: "미국 진출 상담 예약", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가와 함께", flags: true },
-            drop: { title: "Test Drop 소개 상담 예약", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가와 함께", flags: true },
-            scale: { title: "US Scale 상담 예약", operator: "브랜드의 미국 운영을 맡고 있는 운영 전문가와 함께", flags: false },
-            enterprise: { title: "시니어 운영 전문가와 상담", operator: "Vybd 시니어 운영 전문가와 귀사의 시스템과 물류 경로에 대해", flags: false },
-            partner: { title: "파트너 상담 예약", operator: "Vybd 네트워크를 만드는 팀과 함께", flags: false },
+            launch: { title: "미국 런칭 계획하기", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가가 읽습니다", flags: true },
+            drop: { title: "Test Drop으로 시작하기", operator: "미국에 제품을 들여온 경험이 있는 운영 전문가가 읽습니다", flags: true },
+            scale: { title: "US Scale 상담", operator: "브랜드의 미국 운영을 맡고 있는 운영 전문가가 읽습니다", flags: false },
+            enterprise: { title: "시니어 운영 전문가와 상담", operator: "Vybd 시니어 운영 전문가가 귀사의 시스템과 물류 경로를 고려해 읽습니다", flags: false },
+            partner: { title: "Vybd 네트워크 참여", operator: "Vybd 네트워크를 만드는 팀이 읽습니다", flags: false },
         },
-        pickTime: "시간 선택",
-        loading: "예약 가능한 시간을 불러오는 중…",
-        failed: "캘린더를 불러오지 못했습니다.",
-        openTab: "새 탭에서 열기",
-        notConfigured: "Scheduler not configured yet: set BOOKING_URL in src/pages/BookPage.tsx.",
-        emailFallback: "캘린더가 열리지 않나요?",
-        emailFallbackAfter: "로 이메일을 보내주시면 일정을 잡아드립니다.",
+        /* The contact form that replaced the Calendly scheduler. */
+        form: {
+            label: "회사 소개",
+            email: "업무용 이메일",
+            name: "이름",
+            company: "브랜드 또는 웹사이트",
+            message: "어떤 제품을 만들고, 저희에게 어떤 도움이 필요하신가요?",
+            messagePlaceholder: "서울의 스킨케어 브랜드로, 국내에서 잘 팔리고 있습니다. 미국 시장을 테스트하고 싶습니다.",
+            send: "보내기",
+            sending: "보내는 중…",
+            note: "답변 용도로만 사용합니다.",
+            errorEmail: "올바른 이메일 주소를 입력해 주세요.",
+            errorGeneric: "전송되지 않았습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.",
+        },
+        /* Under the form; the address sits between these two. */
+        emailFallback: "이메일이 더 편하시면",
+        emailFallbackAfter: "로 직접 보내주세요.",
     },
 
     thanks: {
-        title: "예약이 완료되었습니다.",
-        body: "캘린더 초대장이 발송되었습니다. 통화 전에 저희가 살펴보길 원하는 자료(제품 사진, 가격표, 현재 미국 판매 채널 등)가 있다면 초대장에 회신해 주세요.",
+        title: "감사합니다. 곧 연락드리겠습니다.",
+        body: "운영 전문가가 내용을 읽고 hello@vybd.ai에서 이메일로 답변드립니다. 제품 사진, 가격표, 현재 미국 판매 채널이 있다면 답장으로 보내주세요.",
         back: "Vybd로 돌아가기",
     },
 };

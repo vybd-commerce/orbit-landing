@@ -13,7 +13,7 @@ export const hero = {
   lines: ['Make it anywhere.', '*Sell it everywhere.*'],
   sub: 'Market entry and operations for CPG and physical-product brands, with equity in the winners.',
   round: 'Seed round · $3M',
-  cta: 'Book a call',
+  cta: 'Talk to us',
 }
 
 export const problem = {
@@ -268,5 +268,5 @@ export const raise = {
     '−50% operator hours per customer',
   ],
   closing: 'The US is market one. Then every major trade corridor in the world.',
-  cta: 'Book a call',
+  cta: 'Talk to us',
 }

@@ -1,7 +1,7 @@
-// Single destination for the site's one action. Both the header/hero CTA
-// and the final CTA form point here, so the booking link only ever needs
-// changing in one place.
-export const CALENDLY_URL = "https://calendly.com/hello-vybd/vybd-discovery-call";
+// Single destination for the site's one action: the /book contact form
+// (it replaced the Calendly scheduler). Older pages import this name, and
+// /book still prefills ?email= and ?name=.
+export const CALENDLY_URL = "/book";
 
 // Where waitlist and /signup forms POST, as JSON { email, source, name?, idea? }.
 // api/site/waitlist.ts stores them in the vybd_waitlist table (Neon). Set to

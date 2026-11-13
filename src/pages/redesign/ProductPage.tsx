@@ -494,10 +494,10 @@ export default function ProductPage() {
                     <h2 className="rv">
                         {tx("Want to go")} <em>{tx("deeper?")}</em>
                     </h2>
-                    <p className="rv">{tx("Book a technical walkthrough with the Vybd team. We'll show you exactly how it would work for your kind of product.")}</p>
+                    <p className="rv">{tx("Tell us what you make and we'll show you exactly how it would work for your kind of product.")}</p>
                     <div className="hw-end-row rv">
                         <RdLink className="btn btn-mint" href="/book">
-                            {tx("Book a call")}
+                            {tx("Talk to us")}
                         </RdLink>
                         <RdLink className="btn btn-ghost" href="/">
                             {tx("Back to home")}

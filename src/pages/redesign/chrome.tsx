@@ -258,7 +258,7 @@ const GLOBAL_NAV: NavLink[] = [
    src/home/UsApp.tsx, isn't translated); their /us page does. */
 const LOCALE_NAV_HREF: Record<string, string> = { "/#how": "/us#how", "/#pricing": "/us#pricing" };
 const BOOK_HREF = "/book";
-const BOOK_LABEL = "Book a call";
+const BOOK_LABEL = "Talk to us";
 
 function useGlobalNav(): NavLink[] {
     const { pathname } = useLocation();
@@ -288,7 +288,7 @@ export function RdHeader(props: {
     const close = () => setOpen(false);
     const global = useGlobalNav();
     const sections = (links ?? []).filter((l) => l.href.startsWith("#") && l.href !== "#top");
-    /* One action everywhere ("Book a call"); only the partner page (/ecosystem)
+    /* One action everywhere ("Talk to us", the /book contact form); only the partner page (/ecosystem)
        swaps it for its own sign-up. */
     const ctaHref = props.ctaHref ?? BOOK_HREF;
     const ctaLabel = props.ctaLabel ?? BOOK_LABEL;

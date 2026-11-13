@@ -340,7 +340,7 @@ export default function CaseStudiesPage() {
                     <p className="rv">{tx("Tell us what you make. We'll show you what it takes to sell it in the US.")}</p>
                     <div className="cs-cta-row">
                         <RdLink className="btn btn-mint" href="/book">
-                            {tx("Book a call")}
+                            {tx("Talk to us")}
                         </RdLink>
                         <RdLink className="btn btn-ghost" href="/">
                             {tx("Back to home")}

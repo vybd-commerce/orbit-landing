@@ -83,8 +83,8 @@ const INCLUDES = [
 
 const NEXT = [
     [
-        "Free · 30 minutes",
-        "Talk to an operator.",
+        "Free · by email",
+        "Tell an operator.",
         "Walk us through where reporting, purchasing, inventory, fulfillment or margin visibility breaks down, and which systems you run.",
         "You leave with",
         "A rough plan, an honest reality check, and whether we can help.",
@@ -128,7 +128,7 @@ export function NextSteps() {
                         <h3>Custom pricing</h3>
                         <p>For $50M+ brands, grocers, retailers and distributors with their own warehouses, DCs and stores. Priced on the systems, sites and workflows in scope.</p>
                         <RdLink className="btn btn-dark" href="/book?for=enterprise">
-                            Book a call
+                            Talk to us
                         </RdLink>
                     </div>
                     <ul className="ent-ticks of-list">

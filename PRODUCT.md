@@ -20,7 +20,7 @@ Vybd brings the cost of getting a product from the person who makes it to the pe
 **Borderless / zero rent in the chain** (confirmed lead). The usual chain hands much of the price to importer markup, payment delays, marketplace margin and ad platforms ("rent"). Vybd replaces that with services that are priced openly, plus a disclosed Vybd fee (12% in the illustrative $40 example). Mechanism: AI agents and specialists work through one control tower that shares one view of stock, shipping, compliance and orders. The brand approves every big decision.
 
 ## Operating Context
-Visitors evaluate Vybd before a sales call. They read pricing, use the profit calculator and the Test Drop calculator, check case studies, read the founder essays, then book a call (/book) or start Vybd Plan (/signup). Pages are shared by link in Slack, WhatsApp, LinkedIn and iMessage, so link-preview meta per page matters (`pageMeta.ts`). Many visitors are non-native English speakers. The redesign SPA pages are localized into zh, ko, ja, fr and es.
+Visitors evaluate Vybd before a sales call. They read pricing, use the profit calculator and the Test Drop calculator, check case studies, read the founder essays, then send a short note through the /book contact form (email plus two questions; we reply by email) or start Vybd Plan (/signup). Pages are shared by link in Slack, WhatsApp, LinkedIn and iMessage, so link-preview meta per page matters (`pageMeta.ts`). Many visitors are non-native English speakers. The redesign SPA pages are localized into zh, ko, ja, fr and es.
 
 ## Capabilities and Constraints
 - Offer map (single source of truth for copy; confirmed 2026-11-12). Every page names and prices these the same way:
@@ -28,7 +28,7 @@ Visitors evaluate Vybd before a sales call. They read pricing, use the profit ca
   | Visitor | Route | Offer | Primary CTA |
   |---|---|---|---|
   | Exploring the US, self-serve | /waitlist, /signup | Vybd Plan: US research + go-to-market app, $33/mo, first week free. **Not live: early access only** | Get early access |
-  | Maker abroad, wants to test | /test-drop | Test Drop: $3,000 + 15% of US sales, up to 500 units | Book a Test Drop intro (/book?for=drop) |
+  | Maker abroad, wants to test | /test-drop | Test Drop: $3,000 + 15% of US sales, up to 500 units | Start with a Test Drop (/book?for=drop) |
   | Maker abroad or new brand, ready | /us | US Launch: $20,000 once | Plan my launch (/book?for=launch) |
   | Already selling in the US, under $50M | /us#pricing | US Scale: from $3,000/mo + 12% of US sales | Talk to us about US Scale (/book?for=scale) |
   | $50M+ operator | /enterprise | Vybd Enterprise: custom | Talk to an operator (/book?for=enterprise) |

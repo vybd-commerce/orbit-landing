@@ -75,7 +75,7 @@ export default function EnterprisePage() {
                     </p>
                     <div className="ent-cta ent-in ent-d3">
                         <RdLink className="btn btn-dark" href={BOOK}>
-                            Book a call
+                            Talk to us
                         </RdLink>
                         <RdLink className="btn btn-text" href="#systems">
                             See how it works
@@ -114,7 +114,7 @@ export default function EnterprisePage() {
                     </>
                 }
                 text="Meet one of our operators. Walk through your systems and your biggest operating headaches, and leave the call with a rough plan and an honest reality check."
-                button="Book a call"
+                button="Talk to us"
             />
 
             <RdFooter />

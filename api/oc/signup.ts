@@ -2,7 +2,7 @@
    Step 1 (register): { name, email, field, field_other?, sunday, source, utm_source?, website? }
    Step 2 (onboard):  { email, ai_use }  updates the existing row.
    `website` is a honeypot: humans never see it, bots fill it. */
-import { clean, json, oneOf, readJson, sql } from "./_lib.js";
+import { clean, json, notifyDiscord, oneOf, readJson, sql } from "./_lib.js";
 
 const FIELDS = ["freelancer", "builder", "professional", "student", "other"] as const;
 const SOURCES = ["poster", "friend", "linkedin", "instagram", "other"] as const;
@@ -24,6 +24,7 @@ export async function POST(request: Request) {
                 update oc_signups set ai_use = ${aiUse}, onboarded = true, updated_at = now()
                 where email = ${email} returning id`;
             if (!rows.length) return json({ ok: false, error: "We couldn't find your signup. Register first." }, 404);
+            if (aiUse) await notifyDiscord(process.env.DISCORD_WEBHOOK_URL, "Outside Context", `**${email}** on AI and their work:\n> ${aiUse}`);
             return json({ ok: true });
         }
 
@@ -39,6 +40,10 @@ export async function POST(request: Request) {
                 name = excluded.name, field = excluded.field, field_other = excluded.field_other,
                 sunday = excluded.sunday, source = coalesce(excluded.source, oc_signups.source),
                 updated_at = now()`;
+        const field = oneOf(body.field, FIELDS);
+        const does = field === "other" ? clean(body.field_other, 120) ?? "other" : field;
+        await notifyDiscord(process.env.DISCORD_WEBHOOK_URL, "Outside Context",
+            `**New sign-up:** ${name} · ${email}${does ? ` · ${does}` : ""} · Sunday ${sunday ?? "?"}${body.source ? ` · via ${clean(body.source, 20)}` : ""}`);
         return json({ ok: true });
     } catch (err) {
         console.error("oc signup failed", err);

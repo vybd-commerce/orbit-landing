@@ -37,3 +37,19 @@ export async function sha256(s: string) {
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
     return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("").slice(0, 32);
 }
+
+/* Post one message to a Discord webhook. Never throws and gives up after 3s, so a slow or
+   missing webhook can't break the request that triggered it. Mentions are disabled. */
+export async function notifyDiscord(webhook: string | undefined, username: string, content: string) {
+    if (!webhook) return;
+    try {
+        await fetch(webhook, {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ username, content: content.slice(0, 1900), allowed_mentions: { parse: [] } }),
+            signal: AbortSignal.timeout(3000),
+        });
+    } catch (err) {
+        console.error("discord notify failed", err);
+    }
+}

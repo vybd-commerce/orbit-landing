@@ -1,5 +1,5 @@
 /* /book and /book/thanks: the /hello panel look, two columns on desktop
- * (details 40%, scheduler 60%), stacked on mobile with details first. */
+ * (details 40%, contact form 60%), stacked on mobile with details first. */
 
 .bk-page {
     min-height: 100dvh;
@@ -132,35 +132,128 @@
         0 16px 40px -16px rgba(15, 27, 51, 0.16);
 }
 
-/* Tall enough for the calendar and the day's time slots side by side,
-   so the iframe never needs its own scrollbar on desktop. */
-.bk-embed {
-    height: 720px;
-}
+/* ── Contact form ───────────────────────────────────── */
 
-.bk-status {
-    position: absolute;
-    inset: 0;
+.bk-form {
+    padding: clamp(24px, 3vw, 44px);
     display: grid;
-    place-items: center;
+    gap: 22px;
+}
+
+.bk-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.bk-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f1b33;
+}
+
+.bk-field input,
+.bk-field textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 16px;
+    color: #0f1b33;
+    background: #fff;
+    border: 1px solid #d9dde3;
+    border-radius: 12px;
+    padding: 12px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.bk-field textarea {
+    resize: vertical;
+    min-height: 132px;
+    line-height: 1.5;
+}
+
+.bk-field input::placeholder,
+.bk-field textarea::placeholder {
+    color: #8a909b;
+}
+
+.bk-field input:hover,
+.bk-field textarea:hover {
+    border-color: #b6bcc6;
+}
+
+.bk-field input:focus,
+.bk-field textarea:focus {
+    outline: none;
+    border-color: #0f1b33;
+    box-shadow: 0 0 0 3px rgba(15, 27, 51, 0.12);
+}
+
+.bk-field [aria-invalid="true"] {
+    border-color: #b42318;
+}
+
+.bk-err {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: #b42318;
+}
+
+.bk-err--form {
     margin: 0;
-    padding: 24px;
-    font-size: 15px;
-    color: #7d838f;
-    text-align: center;
 }
 
-.bk-status--solo {
-    position: static;
-    min-height: 480px;
+.bk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
 }
 
-/* Holds the loading/error overlay to the calendar, clear of the fallback. */
-.bk-embed-wrap {
-    position: relative;
+.bk-send {
+    height: 50px;
+    padding: 0 30px;
+    border: 0;
+    border-radius: 999px;
+    background: #0f1b33;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 
-/* Email fallback under the scheduler, for anyone Calendly fails for. */
+.bk-send:hover {
+    background: #18264a;
+}
+
+.bk-send:focus-visible {
+    outline: 2px solid #0f1b33;
+    outline-offset: 3px;
+}
+
+.bk-send:disabled {
+    opacity: 0.7;
+    cursor: progress;
+}
+
+.bk-note {
+    margin: 0;
+    font-size: 14px;
+    color: #5b6270;
+}
+
+.bk-hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* Email address under the form, for anyone who would rather write. */
 .bk-fallback {
     margin: 0;
     padding: 14px 24px 16px;
@@ -214,9 +307,8 @@
         grid-template-columns: 1fr;
     }
 
-    /* Calendly stacks calendar and times when narrow. */
-    .bk-embed {
-        height: 1000px;
+    .bk-row {
+        grid-template-columns: 1fr;
     }
 }
 

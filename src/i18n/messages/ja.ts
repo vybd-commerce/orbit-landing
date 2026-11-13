@@ -5,8 +5,8 @@ export const ja: Messages = {
     meta: {
         homeTitle: "海外ブランドの米国市場進出 | Vybd",
         homeDescription: "海外のブランドやメーカーの米国進出を支援し、進出後のオペレーションまで担います。",
-        bookTitle: "ご相談を予約 | Vybd",
-        thanksTitle: "ご予約が完了しました | Vybd",
+        bookTitle: "お問い合わせ | Vybd",
+        thanksTitle: "送信しました | Vybd",
     },
 
     header: {
@@ -242,8 +242,8 @@ export const ja: Messages = {
 
     contact: {
         title: "米国での立ち上げを、一緒に計画しましょう。",
-        sub: "営業担当ではなく、実務担当者との 30 分。ご自身のタイムゾーンで時間を選べます。",
-        cta: "相談を予約する",
+        sub: "ブランドについて簡単に教えてください。営業ではなく、運営の担当者がメールでご連絡します。",
+        cta: "お問い合わせ",
     },
 
     footer: {
@@ -269,34 +269,44 @@ export const ja: Messages = {
 
     book: {
         back: "戻る",
-        title: "Vybd とのご相談を予約",
+        title: "Vybd に相談する",
         points: [
-            "ビデオ通話で 30 分",
-            "米国への製品展開を手がけてきた実務担当者が対応します",
-            "ご契約の有無にかかわらず、明確な次の一歩をお持ち帰りいただけます",
+            "短い質問が2つ、1分以内で終わります",
+            "米国に製品を展開した経験のある運営担当者が拝見します",
+            "ご契約の有無にかかわらず、明確な次の一歩をメールでお伝えします",
         ],
         proof: "これらの国のブランドが、すでに私たちと米国で販売しています。",
         /* /book?for=… (the CTA that sent them): title, second point, and
            whether the country-flags proof line shows. */
         variants: {
-            launch: { title: "米国進出のご相談を予約", operator: "米国に製品を届けてきたオペレーターが対応します", flags: true },
-            drop: { title: "Test Drop のご紹介を予約", operator: "米国に製品を届けてきたオペレーターが対応します", flags: true },
-            scale: { title: "US Scale のご相談を予約", operator: "ブランドの米国事業を運営するオペレーターが対応します", flags: false },
-            enterprise: { title: "シニアオペレーターに相談", operator: "Vybd のシニアオペレーターが、御社のシステムと物流ルートについて対応します", flags: false },
-            partner: { title: "パートナー向けのご相談を予約", operator: "Vybd ネットワークをつくるチームが対応します", flags: false },
+            launch: { title: "米国進出を計画する", operator: "米国に製品を展開した経験のある運営担当者が拝見します", flags: true },
+            drop: { title: "Test Drop から始める", operator: "米国に製品を展開した経験のある運営担当者が拝見します", flags: true },
+            scale: { title: "US Scale について相談", operator: "ブランドの米国運営を担う担当者が拝見します", flags: false },
+            enterprise: { title: "シニア担当者に相談", operator: "Vybd のシニア担当者が、貴社のシステムと物流ルートを踏まえて拝見します", flags: false },
+            partner: { title: "Vybd ネットワークに参加", operator: "Vybd ネットワークを構築するチームが拝見します", flags: false },
         },
-        pickTime: "日時を選ぶ",
-        loading: "空き時間を読み込み中…",
-        failed: "カレンダーを読み込めませんでした。",
-        openTab: "新しいタブで開く",
-        notConfigured: "Scheduler not configured yet: set BOOKING_URL in src/pages/BookPage.tsx.",
-        emailFallback: "カレンダーが表示されない場合は",
-        emailFallbackAfter: " までメールでご連絡ください。日程を調整します。",
+        /* The contact form that replaced the Calendly scheduler. */
+        form: {
+            label: "御社について",
+            email: "勤務先メールアドレス",
+            name: "お名前",
+            company: "ブランド名またはウェブサイト",
+            message: "どんな製品をつくっていて、私たちに何を求めていますか？",
+            messagePlaceholder: "ソウルのスキンケアブランドです。国内で好調なので、米国で試してみたいです。",
+            send: "送信",
+            sending: "送信中…",
+            note: "ご返信のためだけに使用します。",
+            errorEmail: "有効なメールアドレスを入力してください。",
+            errorGeneric: "送信できませんでした。接続を確認して、もう一度お試しください。",
+        },
+        /* Under the form; the address sits between these two. */
+        emailFallback: "メールの方がよろしければ、",
+        emailFallbackAfter: " まで直接ご連絡ください。",
     },
 
     thanks: {
-        title: "ご予約が完了しました。",
-        body: "カレンダーの招待状をお送りしました。通話前に確認してほしい資料（製品写真、価格表、現在の米国での販売チャネルなど）があれば、招待状に返信してお送りください。",
+        title: "ありがとうございます。追ってご連絡します。",
+        body: "運営担当者が内容を確認し、hello@vybd.ai からメールでご返信します。製品写真、価格表、現在の米国での販売チャネルがあれば、返信でお送りください。",
         back: "Vybd に戻る",
     },
 };

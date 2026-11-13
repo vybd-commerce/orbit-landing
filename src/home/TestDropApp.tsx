@@ -52,7 +52,7 @@ export default function TestDropApp() {
         <div className="in">
           <b>Test Drop</b>
           {LINKS.map((l) => <a key={l.href} href={l.href}>{l.label}</a>)}
-          <a className="buy" href={BOOK}>Book an intro</a>
+          <a className="buy" href={BOOK}>Talk to us</a>
         </div>
       </nav>
 
@@ -63,7 +63,7 @@ export default function TestDropApp() {
             <h1 className="rv">Sell in the US.<br />Start with <em>one</em> drop.</h1>
             <p className="tag rv">From import and storage to fulfillment, reporting and AI-enabled operations, without building your own US team.</p>
             <div className="links rv">
-              <a className="pill fill" href={BOOK}>Book a 30-minute intro</a>
+              <a className="pill fill" href={BOOK}>Tell us about your brand</a>
               <a className="pill out" href="#numbers">Run your numbers</a>
             </div>
             <ul className="td-facts rv" aria-label="Test Drop at a glance">
@@ -107,7 +107,7 @@ export default function TestDropApp() {
           <div className="td-offer rv">
             <div className="price">
               <b>$3,000</b><span>one time</span><em>+ 15% of US sales</em>
-              <a className="pill fill" href={BOOK}>Book a 30-minute intro</a>
+              <a className="pill fill" href={BOOK}>Tell us about your brand</a>
             </div>
             <div><h3>Included</h3><Ticks items={INCLUDED} /></div>
             <div><h3>You cover</h3><Ticks items={YOU_COVER} plain /></div>
@@ -184,8 +184,8 @@ export default function TestDropApp() {
         <section className="tile dark td-close">
           <div className="copy">
             <h2 className="rv">Your first US drop<br /><em>starts with one call.</em></h2>
-            <p className="tag rv">30 minutes on your brand, your audience and your goals. Leave with a clear view of what a Test Drop would look like for you.</p>
-            <div className="links rv"><a className="pill fill" href={BOOK}>Book a 30-minute intro</a></div>
+            <p className="tag rv">Two short questions about your brand, your audience and your goals. We reply by email with what a Test Drop would look like for you.</p>
+            <div className="links rv"><a className="pill fill" href={BOOK}>Tell us about your brand</a></div>
           </div>
         </section>
       </main>
