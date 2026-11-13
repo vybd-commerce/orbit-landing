@@ -19,6 +19,15 @@ import './styles/us.css'
    /us (vercel.json) from us-en.html. /zh/us and the other locales stay on the
    SPA (src/pages/redesign/UsPage.tsx); the old home is at /borderless. */
 
+/* Enterprise tile: the systems Vybd connects to (as on /enterprise) and the
+   kind of work its agents bring back for approval. */
+const ENT_SYSTEMS = ['NetSuite', 'SAP', 'Dynamics 365', 'Odoo', 'WMS', '3PLs', 'Retail EDI']
+const ENT_AGENTS: [string, string, boolean][] = [
+  ['Reorder drafted across 3 DCs', 'Waiting for your approval', false],
+  ['Retailer deduction flagged', 'Dispute packet ready for review', true],
+  ['Weekly operating report', 'Sales, stock and margin, every channel', false],
+]
+
 const Mark = () => (
   <svg viewBox="4 4 92 84" aria-hidden="true">
     <path d="M4 4 L36 4 L50 46 Z" fill="#5FD6BF" /><path d="M4 4 L50 46 L38 88 Z" fill="#1BB59B" />
@@ -370,6 +379,17 @@ export default function UsApp() {
               <p className="tag rv">AI agents across many lanes, on top of the systems you already run.</p>
               <div className="links rv"><a className="more" href="/enterprise">See Enterprise</a><a className="more" href="/book?for=enterprise">Talk to an operator</a></div>
             </div>
+            <div className="art"><div className="ent-stack rv" aria-label="Illustrative: your systems feed Vybd's agents, which bring decisions to your team">
+              <ul className="ent-sys">{ENT_SYSTEMS.map((x) => <li key={x}>{x}</li>)}</ul>
+              <svg className="ent-join" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 15l6 6 6-6" /></svg>
+              <div className="panel">
+                <h3 className="ph">Agents + your operator <span>Illustrative</span></h3>
+                {ENT_AGENTS.map(([t, sub, warn]) => (
+                  <div className="agent" key={t}><i className={'d' + (warn ? ' w' : '')} /><div><b>{t}</b><span>{sub}</span></div></div>
+                ))}
+              </div>
+              <p className="ent-note">Your ERP and WMS stay. Your team approves every call.</p>
+            </div></div>
           </section>
         </div>
 

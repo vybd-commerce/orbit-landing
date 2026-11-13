@@ -254,3 +254,16 @@
 .usx .chips-art .ar .ico-arrow{margin:0 auto}
 .usx .caps .nav button svg,.usx .mbox .x svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .usx .caps .nav button,.usx .mbox .x{display:inline-grid;place-items:center}
+
+/* Links: ink/Ledger Mint, never link blue (DESIGN.md Don'ts). */
+.usx .more{color:var(--mint-text)}
+.usx .dark .more{color:var(--mint)}
+
+/* Enterprise tile next to the calculator: systems in, agents out. */
+.usx .ent-stack{width:min(440px,88%);margin:8px auto 48px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.usx .ent-sys{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.usx .ent-sys li{padding:7px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);font:500 12px var(--mono);color:#DCE3EE}
+.usx .ent-join{width:22px;height:22px;stroke:var(--mint);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.usx .ent-stack .panel{width:100%}
+.usx .ent-stack .agent span{display:block}
+.usx .ent-note{margin:4px 0 0;font-size:14px;color:#AEB9D0;text-align:center}
