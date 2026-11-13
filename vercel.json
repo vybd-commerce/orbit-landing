@@ -90,6 +90,10 @@
             "destination": "/signup.html"
         },
         {
+            "source": "/outside-context/admin",
+            "destination": "/api/oc/admin"
+        },
+        {
             "source": "/outside-context/community",
             "destination": "/outside-context-community.html"
         },

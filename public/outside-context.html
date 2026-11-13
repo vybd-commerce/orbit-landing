@@ -7,12 +7,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Outside Context | Figuring out the future of work, together</title>
-  <meta name="description" content="A Jersey City community for freelancers, builders, professionals and anyone rethinking how they work alongside AI. Sundays, 5pm, The Indian Tapas, Exchange Place." />
+  <meta name="description" content="A Jersey City community where people from every field talk about what AI means for their work. No jargon, no tech background needed. Sundays, 5pm, The Indian Tapas, Exchange Place." />
   <link rel="canonical" href="https://www.vybd.ai/outside-context" />
   <meta name="theme-color" content="#F4F1EA" />
   <link rel="icon" type="image/svg+xml" href="/outside-context-icon.svg" />
-  <meta property="og:title" content="AI changed the rules. Now what?" />
-  <meta property="og:description" content="Outside Context: a Jersey City community figuring out the future of work, together. Sundays, 5pm, The Indian Tapas, Exchange Place." />
+  <meta property="og:title" content="Outside Context | The future of work, in plain words" />
+  <meta property="og:description" content="People from every field, talking about what AI means for their work. No jargon, no tech background needed. Sundays, 5pm, The Indian Tapas, Exchange Place, Jersey City." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.vybd.ai/outside-context" />
   <meta property="og:image" content="https://www.vybd.ai/og-outside-context.png" />
@@ -20,8 +20,8 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Outside Context. AI changed the rules. Now what? Come talk about it." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AI changed the rules. Now what?" />
-  <meta name="twitter:description" content="Outside Context: a Jersey City community figuring out the future of work, together. Sundays, 5pm, The Indian Tapas, Exchange Place." />
+  <meta name="twitter:title" content="Outside Context | The future of work, in plain words" />
+  <meta name="twitter:description" content="People from every field, talking about what AI means for their work. No jargon, no tech background needed. Sundays, 5pm, The Indian Tapas, Exchange Place, Jersey City." />
   <meta name="twitter:image" content="https://www.vybd.ai/og-outside-context.png" />
   <link rel="preload" href="/fonts/EBGaramond-Latin-Regular.woff" as="font" type="font/woff" crossorigin />
   <script defer data-domain="vybd.ai" src="https://plausible.io/js/script.js"></script>
@@ -44,15 +44,58 @@
       text-align: center; font-kerning: normal; -webkit-font-smoothing: antialiased; padding: clamp(48px, 9vh, 96px) 24px 40px;
       caret-color: var(--accent); }
     main { flex: 1; display: flex; flex-direction: column; align-items: center; max-width: 640px; width: 100%; }
-    .mark { width: clamp(120px, 22vw, 168px); height: auto; transform: translateX(8%); }
-    h1 { margin-top: clamp(28px, 5vh, 48px); font-weight: 400; font-size: clamp(56px, 13vw, 104px); line-height: .94; letter-spacing: -.012em; }
-    .sub { margin-top: 22px; font-style: italic; font-size: clamp(26px, 5.4vw, 38px); line-height: 1.1; }
-    .rule { width: 44px; height: 1px; background: var(--ink); margin: clamp(48px, 8vh, 72px) auto 24px; }
-    .wordmark { font-weight: 500; font-size: 22px; letter-spacing: .08em; }
-    .tagline { margin-top: 10px; font-size: 19px; color: var(--gray); }
-    .desc { margin-top: 18px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 30em; text-wrap: balance; }
-    .when { margin-top: 28px; font-size: 21px; line-height: 1.4; }
-    .when .sep { color: var(--gray); padding: 0 .3em; }
+    /* ---------- top bar ---------- */
+    body { padding-top: clamp(20px, 3.5vh, 36px); }
+    .top { width: min(1120px, calc(100vw - 48px)); display: flex; align-items: center; gap: 12px; }
+    .mark { width: 40px; height: auto; overflow: visible; flex: none; }
+    .wordmark { font-weight: 500; font-size: 17px; letter-spacing: .08em; }
+
+    /* ---------- hero: what this is, and a picture of it ---------- */
+    .hero { width: min(1120px, calc(100vw - 48px)); margin-top: clamp(40px, 9vh, 104px);
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); column-gap: clamp(32px, 5vw, 80px);
+      align-items: center; text-align: left; }
+    .hero h1 { font-weight: 400; font-size: clamp(46px, 6.6vw, 84px); line-height: .98; letter-spacing: -.015em; text-wrap: balance; }
+    .hero-lede { margin-top: 24px; font-size: clamp(19px, 1.8vw, 22px); line-height: 1.5; color: var(--gray); max-width: 30em; text-wrap: pretty; }
+    .hero-link { display: inline-block; margin-top: 28px; font-size: 19px; color: var(--ink); text-decoration: underline;
+      text-decoration-color: rgba(17,17,17,.3); text-underline-offset: .22em; transition: text-decoration-color .2s; }
+    .hero-link:hover { text-decoration-color: var(--accent); }
+    .hero-fig { margin: 0; }
+    .fig { --hairline-plate: #F4F1EA; --hairline-hi: #C4552D; --hairline-edge: #111111; --hairline-mid: #5F5F5F;
+      --hairline-lo: rgba(17,17,17,.42); --hairline-stroke: 0.9; width: 100%; }
+    .steps { list-style: none; display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: -7%; position: relative;
+      font-size: 17px; font-style: italic; color: var(--gray); }
+    .steps li { transition: color .5s var(--ease); }
+    .steps li + li::before { content: ""; display: inline-block; width: 28px; height: 1px; background: var(--line);
+      vertical-align: middle; margin-right: 14px; }
+    .steps li.on { color: var(--ink); }
+    @media (prefers-reduced-motion: reduce) { .steps li { transition: none; } }
+    @media (max-width: 859px) {
+      .hero { grid-template-columns: 1fr; row-gap: 28px; }
+      .hero-fig { width: min(100%, 460px); margin: 0 auto; }
+    }
+
+    /* ---------- essay: why the community exists ---------- */
+    .essay { margin-top: clamp(96px, 15vh, 160px); width: 100%; max-width: 35rem; text-align: left; }
+    .essay h2 { font-size: clamp(40px, 7vw, 64px); line-height: .98; margin-bottom: clamp(24px, 4vh, 36px); }
+    .essay p { font-size: clamp(20px, 2.6vw, 23px); line-height: 1.5; text-wrap: pretty; }
+    .essay p + p { margin-top: 1em; }
+    .essay cite { font-style: italic; }
+    .essay .turn { margin-top: 1.4em; font-style: italic; font-size: clamp(28px, 5.6vw, 38px); line-height: 1.12; color: var(--accent); text-wrap: balance; }
+
+    /* ---------- what this is for ---------- */
+    h2 { font-weight: 400; font-size: clamp(38px, 7vw, 56px); line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
+    .purpose { margin-top: clamp(96px, 15vh, 144px); padding-top: clamp(48px, 8vh, 72px); border-top: 1px solid var(--ink); width: 100%; }
+    .purpose .lede { margin: 22px auto 0; width: 100%; font-size: 20px; line-height: 1.5; color: var(--gray); max-width: 31em; text-wrap: pretty; }
+    .promises { margin-top: clamp(44px, 7vh, 64px); display: grid; grid-template-columns: 1fr 1fr; gap: 36px 40px; text-align: left; }
+    .promises > div { padding-top: 16px; border-top: 1px solid var(--line); }
+    .promises dt { font-size: 23px; font-weight: 500; line-height: 1.2; }
+    .promises dd { margin-top: 8px; font-size: 18px; line-height: 1.45; color: var(--gray); }
+    @media (max-width: 560px) { .promises { grid-template-columns: 1fr; gap: 28px; } }
+
+    /* ---------- the Sunday ---------- */
+    .sundays { scroll-margin-top: 32px; width: 100%; margin-top: clamp(96px, 15vh, 144px); display: flex; flex-direction: column; align-items: center; }
+    .desc { margin-top: 12px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 30em; text-wrap: balance; }
+    .when { margin-top: 18px; font-size: 22px; line-height: 1.4; }
     .when a { border-bottom: 1px solid rgba(17,17,17,.25); color: inherit; text-decoration: none; transition: border-color .2s; }
     .when a:hover { border-color: var(--accent); }
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
@@ -69,7 +112,7 @@
     .btn.ghost { background: transparent; color: var(--ink); }
     .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
     .btn svg { width: 18px; height: 18px; flex: none; }
-    .cta { margin-top: 36px; }
+    .cta { margin-top: 32px; }
     .cta-note { margin-top: 12px; font-size: 16px; color: var(--gray); font-style: italic; }
 
     /* ---------- sign-up ---------- */
@@ -140,7 +183,6 @@
     footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(107,107,107,.3); }
     footer a:hover { color: var(--ink); }
     @media (max-width: 420px) {
-      .when .sep { display: block; height: 0; overflow: hidden; }
       .actions { flex-direction: column; align-items: stretch; }
       .actions .btn { width: 100%; }
       .link-btn { align-self: center; }
@@ -149,19 +191,53 @@
 </head>
 <body>
   <main>
-    <svg class="mark" viewBox="-50.9 -58.48 127.953 109.38" aria-hidden="true">
-      <circle cx="0" cy="0" r="50" fill="none" stroke="#111111" stroke-width="0.9" />
-      <circle cx="67.553" cy="-49.08" r="8.5" fill="#C4552D" />
-    </svg>
-    <h1>AI changed<br />the rules.<br />Now what?</h1>
-    <p class="sub">Come talk about it.</p>
-    <div class="rule" aria-hidden="true"></div>
-    <p class="wordmark">OUTSIDE CONTEXT</p>
-    <p class="tagline">Figuring out the future of work, together.</p>
-    <p class="desc">A Jersey City community for freelancers, builders, professionals and anyone rethinking how they work alongside AI. Real conversations, people from every field.</p>
-    <p class="when">Sundays · 5pm<span class="sep">·</span><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Indian+Tapas+Exchange+Place+Jersey+City" target="_blank" rel="noopener">The Indian Tapas, Exchange Place</a></p>
-    <a class="btn cta" href="#join" data-track="cta">Save me a seat</a>
-    <p class="cta-note">Free. Takes thirty seconds.</p>
+    <header class="top">
+      <svg class="mark" viewBox="-50.9 -58.48 127.953 109.38" aria-hidden="true">
+        <circle cx="0" cy="0" r="50" fill="none" stroke="#111111" stroke-width="2" />
+        <circle cx="67.553" cy="-49.08" r="10" fill="#C4552D" />
+      </svg>
+      <p class="wordmark">OUTSIDE CONTEXT</p>
+    </header>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">Figure out the future of work, together.</h1>
+        <p class="hero-lede">Outside Context is a Jersey City community where people from every field talk about what AI means for their work. Plain words. No tech background needed.</p>
+        <a class="hero-link" href="#come">Come to a Sunday</a>
+      </div>
+      <figure class="hero-fig">
+        <div class="fig" id="fig"></div>
+        <figcaption><ol class="steps" aria-hidden="true"><li class="on">On our own</li><li>Talking</li><li>Together</li></ol></figcaption>
+      </figure>
+    </section>
+
+    <article class="essay" aria-labelledby="essay-title">
+      <h2 id="essay-title">Everything began as energy.</h2>
+      <p>Over billions of years it took countless forms. One of them is us.</p>
+      <p>In <cite>Sapiens</cite>, Yuval Noah Harari argues that humans came to run this planet not because we are the strongest, but because we can talk to each other. Talking let us work together, in numbers no other species can match.</p>
+      <p>Now he points out that AI has learned our language too. It could help billions of people understand each other and work together better than ever. It could also take that power out of our hands.</p>
+      <p class="turn">Good if we stay in control. Bad if we don&rsquo;t.</p>
+    </article>
+
+    <section class="purpose" aria-labelledby="purpose-title">
+      <h2 id="purpose-title">Staying in control starts with a&nbsp;conversation.</h2>
+      <p class="lede">Outside Context is a place to have it. Most talk about AI happens inside tech. This one happens outside it: people from every line of work, asking what AI means for their jobs, their fields and their futures. Not how it works. What it means for&nbsp;us.</p>
+
+      <dl class="promises">
+        <div><dt>No jargon.</dt><dd>Plain words only. If a term needs explaining, someone explains it, and nobody minds being asked.</dd></div>
+        <div><dt>Every field.</dt><dd>Teachers, nurses, chefs, lawyers, artists, shop owners, students. The more different the room, the better the conversation.</dd></div>
+        <div><dt>No wrong questions.</dt><dd>Nobody is selling anything and nobody is keeping score. Say what you think, change your mind, or just listen.</dd></div>
+        <div><dt>Tech people too.</dt><dd>If you build this stuff, come. Leave the slides at home and hear how the rest of the world sees what you make.</dd></div>
+      </dl>
+    </section>
+
+    <section class="sundays" id="come" aria-labelledby="sundays-title">
+      <h2 id="sundays-title">Every Sunday at&nbsp;5pm.</h2>
+      <p class="when"><a href="https://www.google.com/maps/search/?api=1&amp;query=The+Indian+Tapas+Exchange+Place+Jersey+City" target="_blank" rel="noopener">The Indian Tapas, Exchange Place</a></p>
+      <p class="desc">Free. Come once or every week. Walk in, or save a seat so we set out enough&nbsp;chairs.</p>
+      <a class="btn cta" href="#join" data-track="cta">Save me a seat</a>
+      <p class="cta-note">Takes thirty seconds.</p>
+    </section>
 
     <section class="join" id="join" aria-labelledby="join-title">
       <h2 id="join-title">Pull up a chair</h2>
@@ -180,12 +256,12 @@
           <p class="err" id="email-err"></p>
         </div>
         <fieldset class="q">
-          <legend>What do you do?</legend>
+          <legend>What do you do?<span class="hint">Any answer is the right answer.</span></legend>
           <div class="chips">
-            <label class="chip"><input type="radio" name="field" value="freelancer" /><span>Freelancer</span></label>
-            <label class="chip"><input type="radio" name="field" value="builder" /><span>Builder</span></label>
-            <label class="chip"><input type="radio" name="field" value="professional" /><span>Professional</span></label>
-            <label class="chip"><input type="radio" name="field" value="student" /><span>Student</span></label>
+            <label class="chip"><input type="radio" name="field" value="professional" /><span>I work for a company</span></label>
+            <label class="chip"><input type="radio" name="field" value="freelancer" /><span>I work for myself</span></label>
+            <label class="chip"><input type="radio" name="field" value="student" /><span>I&rsquo;m studying</span></label>
+            <label class="chip"><input type="radio" name="field" value="builder" /><span>I work in tech</span></label>
             <label class="chip"><input type="radio" name="field" value="other" /><span>Something else</span></label>
           </div>
           <div id="field-other-wrap" hidden>
@@ -221,9 +297,9 @@
       <!-- Step 2: onboarding -->
       <form class="step" id="step-onboard" hidden novalidate>
         <div class="q">
-          <label for="ai_use">You're in, <span data-first-name>friend</span>. One question before Sunday: how does AI show up in your work right now?
-            <span class="hint">A sentence is plenty. It helps us shape the conversation.</span></label>
-          <textarea id="ai_use" name="ai_use" maxlength="1000" placeholder="I use it to draft proposals, but I'm not sure what it means for my rates…"></textarea>
+          <label for="ai_use">You're in, <span data-first-name>friend</span>. One question before Sunday: what's on your mind about AI and your work?
+            <span class="hint">A sentence is plenty. &ldquo;I haven&rsquo;t touched it yet&rdquo; is a great answer too.</span></label>
+          <textarea id="ai_use" name="ai_use" maxlength="1000" placeholder="I'm a teacher and my students use it for homework. I don't know if I should worry…"></textarea>
         </div>
         <div class="actions">
           <button class="btn" type="submit">Send</button>
@@ -457,6 +533,31 @@
       if (me.email) document.getElementById("email").value = me.email;
     }
   })();
+  </script>
+  <script type="module">
+    import { mountEnergy, TOUR } from "/vendor/hairline-energy.js";
+    const el = document.getElementById("fig");
+    const steps = [...document.querySelectorAll(".steps li")];
+    const STEP = { rest: 0, scattered: 0, talking: 1, connected: 2 };
+    const mark = (i) => steps.forEach((s, j) => s.classList.toggle("on", j === i));
+    // The figure reports its own state, so the caption stays true for the loop and for a visitor's pointer.
+    const fig = mountEnergy(el, { intensity: 0.55, label: (text) => { if (text in STEP) mark(STEP[text]); } });
+    el.setAttribute("role", "img");
+    el.setAttribute("aria-label", "Scattered shapes that link up, one by one, until they form one connected network.");
+
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      fig.drive(TOUR[2]); // hold the finished picture
+    } else {
+      // On our own, then talking, then together; let go and start again.
+      const LOOP = [[null, 1800], [TOUR[0], 1200], [TOUR[1], 1600], [TOUR[2], 3400]];
+      let i = 0, timer = null, visible = false, hovering = false;
+      const tick = () => { const [pt, ms] = LOOP[i]; fig.drive(pt); i = (i + 1) % LOOP.length; timer = setTimeout(tick, ms); };
+      const start = () => { if (!timer && visible && !hovering) { i = 0; tick(); } };
+      const stop = () => { clearTimeout(timer); timer = null; };
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? start() : stop(); }).observe(el);
+      el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hovering = true; stop(); } });
+      el.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovering = false; setTimeout(start, 800); } });
+    }
   </script>
 </body>
 </html>
