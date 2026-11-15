@@ -76,6 +76,21 @@
     .form-err { margin-top: 16px; color: var(--error); font-size: 17px; }
     .form-err:empty { display: none; }
 
+    .topic { margin-top: clamp(48px, 8vh, 72px); }
+    .topic .kicker { font-size: 17px; font-style: italic; color: var(--gray); }
+    .topic h2 { margin-top: 6px; font-weight: 400; font-size: clamp(32px, 6vw, 40px); line-height: 1.05; letter-spacing: -.01em; text-wrap: balance; }
+    .topic h2 + p { margin-top: 12px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 32em; }
+    .prompts { list-style: none; margin-top: 26px; border-top: 1px solid var(--ink); }
+    .prompt { padding: 22px 0 18px; border-bottom: 1px solid var(--line); }
+    .prompt h3 { font-weight: 500; font-size: 21px; line-height: 1.25; }
+    .prompt-text { margin-top: 10px; border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; background: rgba(255,255,255,.35);
+      font-size: 18px; line-height: 1.45; overflow-wrap: anywhere; }
+    .prompt-text p + p { margin-top: .7em; }
+    .copy { appearance: none; background: none; border: 0; font: inherit; font-size: 18px; color: var(--gray); cursor: pointer; min-height: 44px;
+      text-decoration: underline; text-decoration-color: rgba(95,95,95,.4); text-underline-offset: .2em; padding: 8px 0; }
+    .copy:hover { color: var(--ink); text-decoration-color: var(--accent); }
+    .copy.done { color: var(--ink); text-decoration: none; }
+
     .posts { margin-top: clamp(56px, 9vh, 80px); border-top: 1px solid var(--ink); }
     .post { padding: 22px 0; border-bottom: 1px solid var(--line); }
     .post .by { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
@@ -104,6 +119,56 @@
       <h1>The board.</h1>
       <p class="lede">A question you're sitting with, something you tried, a link worth sharing. Anyone can post.</p>
     </header>
+
+    <!-- Today's discussion topic. To change it, edit this section: the title, the intro, and one
+         <li class="prompt"> per prompt. Each Copy button copies the paragraphs in its .prompt-text. -->
+    <section class="topic" aria-labelledby="topic-title">
+      <p class="kicker">Today's topic</p>
+      <h2 id="topic-title">Let your AI introduce you</h2>
+      <p>Pick any one prompt, paste it into the AI you use most, and post what it says about you. Read it before you post: if it reveals anything private, ask it to try again.</p>
+      <ol class="prompts">
+        <li class="prompt">
+          <h3>1. Introduce me to the room</h3>
+          <div class="prompt-text">
+            <p>I'm at a meetup about how people use AI, and you're introducing me to the room. Based on what you know about me (memory, past chats, or just this chat), write a short introduction the way a witty friend would: who I am as an AI user, what I keep coming to you for, one gentle roast, and one genuine compliment. End with a question the person next to me can ask me.</p>
+            <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
+          </div>
+          <button class="copy" type="button">Copy prompt</button>
+        </li>
+        <li class="prompt">
+          <h3>2. The duo</h3>
+          <div class="prompt-text">
+            <p>I'm at a meetup about how people use AI, and you're introducing the two of us as a duo. Based on what you know about me (memory, past chats, or just this chat), tell the room who you are to me, who I am to you, and how we actually work together. Include one thing I do that drives you a little crazy and one thing you respect. End with a question the person next to me can ask us.</p>
+            <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
+          </div>
+          <button class="copy" type="button">Copy prompt</button>
+        </li>
+        <li class="prompt">
+          <h3>3. The toast</h3>
+          <div class="prompt-text">
+            <p>I'm at a meetup about how people use AI, and you're giving a 30-second best-friend toast about me as an AI user. Based on what you know about me (memory, past chats, or just this chat), open with a story-like observation about how I use you, add one gentle roast, and finish on one sincere line. End with a question the person next to me can ask me.</p>
+            <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
+          </div>
+          <button class="copy" type="button">Copy prompt</button>
+        </li>
+        <li class="prompt">
+          <h3>4. The speaker bio</h3>
+          <div class="prompt-text">
+            <p>I'm at a meetup about how people use AI, and you're writing my speaker bio using only what you've learned from how I use you, not my actual résumé. Based on what you know about me (memory, past chats, or just this chat), write it in the third person, in a mock-serious conference tone, with one gentle roast and one genuine compliment hidden in it. End with the title of the talk I'd obviously give.</p>
+            <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
+          </div>
+          <button class="copy" type="button">Copy prompt</button>
+        </li>
+        <li class="prompt">
+          <h3>5. The nature documentary</h3>
+          <div class="prompt-text">
+            <p>I'm at a meetup about how people use AI, and you're narrating me as a species of AI user being observed in the wild. Based on what you know about me (memory, past chats, or just this chat), describe my habitat, my feeding habits (what I keep coming to you for), and one strange behavior, in a hushed nature-documentary voice. Include one gentle roast and one genuine compliment. End with a question the person next to me can ask me.</p>
+            <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
+          </div>
+          <button class="copy" type="button">Copy prompt</button>
+        </li>
+      </ol>
+    </section>
 
     <form id="post-form" novalidate>
       <div class="q">
@@ -135,6 +200,35 @@
       fetch("/api/oc/track", { method: "POST", body: body, headers: { "content-type": "application/json" }, keepalive: true }).catch(function () {});
     }
     track("board_view");
+
+    /* Copy buttons on the topic prompts. Clipboard API first; falls back to a hidden textarea
+       for in-app browsers (WhatsApp, Instagram) where navigator.clipboard is missing or blocked. */
+    function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).catch(function () { return fallbackCopy(text); });
+      return fallbackCopy(text);
+    }
+    function fallbackCopy(text) {
+      return new Promise(function (resolve, reject) {
+        var t = document.createElement("textarea");
+        t.value = text; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.top = "-1000px"; t.style.fontSize = "16px";
+        document.body.appendChild(t); t.select(); t.setSelectionRange(0, text.length);
+        var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+        t.remove(); ok ? resolve() : reject();
+      });
+    }
+    document.querySelectorAll(".prompt .copy").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var paras = btn.parentNode.querySelectorAll(".prompt-text p");
+        var text = Array.prototype.map.call(paras, function (p) { return p.textContent.trim(); }).join("\n\n");
+        copyText(text).then(function () {
+          btn.textContent = "Copied"; btn.classList.add("done");
+        }, function () {
+          btn.textContent = "Select the text above to copy";
+        });
+        clearTimeout(btn._t);
+        btn._t = setTimeout(function () { btn.textContent = "Copy prompt"; btn.classList.remove("done"); }, 2200);
+      });
+    });
 
     var form = document.getElementById("post-form");
     var bodyEl = document.getElementById("body");
