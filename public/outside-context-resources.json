@@ -1,0 +1,40 @@
+{
+  "_readme": "Content for /outside-context/resources (page: outside-context-resources.html). Edit, save, deploy. Categories show in this order. Each item: title, url (https), note (one line on why it's worth it), tag (optional: article | video | course | tool). Every [PLACEHOLDER] entry below is a stand-in to replace.",
+  "categories": [
+    {
+      "name": "Start here",
+      "items": [
+        { "title": "[PLACEHOLDER] A plain-language intro to how AI models work", "url": "https://example.com/", "note": "Replace with a short explainer you'd send a friend who's new to this.", "tag": "article" },
+        { "title": "[PLACEHOLDER] A 20-minute talk on what's actually changing", "url": "https://example.com/", "note": "Replace with a video that sets the scene without hype.", "tag": "video" }
+      ]
+    },
+    {
+      "name": "AI at work",
+      "items": [
+        { "title": "[PLACEHOLDER] How one team rebuilt a workflow with AI", "url": "https://example.com/", "note": "Replace with a concrete case study from a real job.", "tag": "article" },
+        { "title": "[PLACEHOLDER] Talking to clients about using AI", "url": "https://example.com/", "note": "Replace with something on honesty, pricing and trust.", "tag": "article" }
+      ]
+    },
+    {
+      "name": "Tools to try",
+      "items": [
+        { "title": "[PLACEHOLDER] A general-purpose assistant", "url": "https://example.com/", "note": "Replace with the tool you'd tell someone to try first.", "tag": "tool" },
+        { "title": "[PLACEHOLDER] A tool for notes and research", "url": "https://example.com/", "note": "Replace with something that saves real time on reading.", "tag": "tool" }
+      ]
+    },
+    {
+      "name": "Reading",
+      "items": [
+        { "title": "[PLACEHOLDER] A long essay on the future of work", "url": "https://example.com/", "note": "Replace with a piece worth an evening.", "tag": "article" },
+        { "title": "[PLACEHOLDER] A newsletter that stays level-headed", "url": "https://example.com/", "note": "Replace with one weekly read that skips the noise.", "tag": "article" }
+      ]
+    },
+    {
+      "name": "Courses",
+      "items": [
+        { "title": "[PLACEHOLDER] A free beginner course", "url": "https://example.com/", "note": "Replace with a course that takes a weekend, not a semester.", "tag": "course" },
+        { "title": "[PLACEHOLDER] A hands-on course for builders", "url": "https://example.com/", "note": "Replace with something for people who want to make things.", "tag": "course" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<!-- Outside Context message board. Served at /outside-context/board via vercel.json.
+     Posts via GET/POST /api/oc/board. Open posting: no login. If this browser signed up on
+     /outside-context (localStorage "oc_signup"), the post carries that name automatically.
+     Post text is only ever set with textContent, never as HTML. -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Board | Outside Context</title>
+  <meta name="description" content="The Outside Context message board. Questions, thoughts and links between Sundays." />
+  <link rel="canonical" href="https://www.vybd.ai/outside-context/board" />
+  <meta name="theme-color" content="#F4F1EA" />
+  <link rel="icon" type="image/svg+xml" href="/outside-context-icon.svg" />
+  <meta property="og:title" content="Outside Context · The board" />
+  <meta property="og:description" content="Questions, thoughts and links between Sundays." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.vybd.ai/outside-context/board" />
+  <meta property="og:image" content="https://www.vybd.ai/og-outside-context.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.vybd.ai/og-outside-context.png" />
+  <link rel="preload" href="/fonts/EBGaramond-Latin-Regular.woff" as="font" type="font/woff" crossorigin />
+  <script defer data-domain="vybd.ai" src="https://plausible.io/js/script.js"></script>
+  <style>
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: "EB Garamond"; src: url("/fonts/EBGaramond-Latin-Italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+    :root { --paper: #F4F1EA; --ink: #111111; --gray: #5F5F5F; --line: rgba(17,17,17,.2); --accent: #C4552D; --error: #A3311A;
+      --ease: cubic-bezier(.16, 1, .3, 1); color-scheme: light; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: var(--paper); }
+    ::selection { background: var(--accent); color: var(--paper); }
+    body { min-height: 100svh; display: flex; flex-direction: column; align-items: center; background: var(--paper); color: var(--ink);
+      font-family: "EB Garamond", Georgia, "Times New Roman", serif; font-kerning: normal; -webkit-font-smoothing: antialiased;
+      padding: clamp(40px, 7vh, 72px) 24px 40px; caret-color: var(--accent); }
+    main { width: 100%; max-width: 36rem; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    a { color: inherit; text-underline-offset: .18em; }
+
+    .top { display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; }
+    .top svg { width: 34px; height: auto; }
+    .top span { font-weight: 500; font-size: 17px; letter-spacing: .08em; }
+    header.intro { text-align: center; margin-top: clamp(40px, 8vh, 72px); }
+    h1 { font-weight: 400; font-size: clamp(48px, 11vw, 84px); line-height: .95; letter-spacing: -.012em; text-wrap: balance; }
+    .lede { margin: 20px auto 0; font-size: 20px; line-height: 1.45; color: var(--gray); max-width: 28em; text-wrap: balance; }
+
+    form { margin-top: clamp(40px, 7vh, 64px); }
+    .q { margin-top: 24px; }
+    .q:first-child { margin-top: 0; }
+    .q > label { display: block; font-size: 19px; font-weight: 500; line-height: 1.3; margin-bottom: 10px; }
+    .q .hint { font-weight: 400; color: var(--gray); font-style: italic; font-size: 17px; margin-left: .35em; }
+    input[type="text"], textarea { width: 100%; font: inherit; font-size: 20px; color: var(--ink); background: transparent;
+      border: 0; border-bottom: 1px solid var(--line); border-radius: 0; padding: 8px 0 10px; transition: border-color .2s; }
+    textarea { border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; min-height: 7.5em; resize: vertical; line-height: 1.4; background: rgba(255,255,255,.35); }
+    input::placeholder, textarea::placeholder { color: #737373; font-style: italic; opacity: 1; }
+    input[type="text"]:hover, textarea:hover { border-color: rgba(17,17,17,.45); }
+    input:focus, textarea:focus { outline: none; border-color: var(--ink); }
+    input[type="text"]:focus-visible { box-shadow: 0 1px 0 0 var(--ink); }
+    textarea:focus-visible { box-shadow: 0 0 0 1px var(--ink); }
+    [aria-invalid="true"] { border-color: var(--error) !important; }
+    .meta { display: flex; justify-content: space-between; gap: 16px; margin-top: 6px; font-size: 16px; }
+    .err { color: var(--error); }
+    .counter { margin-left: auto; color: var(--gray); font-variant-numeric: tabular-nums; }
+    .counter.over { color: var(--error); }
+    .as { margin-top: 20px; font-size: 18px; color: var(--gray); font-style: italic; }
+    .as strong { font-style: normal; font-weight: 500; color: var(--ink); }
+    .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .actions { margin-top: 28px; }
+    .btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: .55em;
+      font: inherit; font-size: 20px; line-height: 1; padding: 16px 30px 17px; min-height: 52px; border-radius: 999px;
+      border: 1px solid var(--ink); background: var(--ink); color: var(--paper); text-decoration: none; cursor: pointer;
+      transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease); }
+    .btn:hover { background: var(--accent); border-color: var(--accent); }
+    .btn:active { transform: translateY(1px); }
+    .btn[disabled] { cursor: progress; opacity: .7; }
+    .form-err { margin-top: 16px; color: var(--error); font-size: 17px; }
+    .form-err:empty { display: none; }
+
+    .posts { margin-top: clamp(56px, 9vh, 80px); border-top: 1px solid var(--ink); }
+    .post { padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .post .by { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+    .post .name { font-weight: 500; font-size: 19px; overflow-wrap: anywhere; }
+    .post time { font-size: 16px; color: var(--gray); font-style: italic; }
+    .post p { margin-top: 8px; font-size: 19px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .post.new { animation: rise .7s var(--ease) both; }
+    @keyframes rise { from { opacity: .001; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .post.new { animation: none; } }
+    .empty { padding: 26px 0; border-bottom: 1px solid var(--ink); font-size: 19px; line-height: 1.5; font-style: italic; color: var(--gray); }
+
+    footer { margin-top: 88px; font-size: 15px; color: var(--gray); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; }
+    footer a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(107,107,107,.3); }
+    footer a:hover { color: var(--ink); }
+    @media (max-width: 480px) { .btn { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="top" href="/outside-context" aria-label="Outside Context home">
+      <svg viewBox="-50.9 -58.48 127.953 109.38" aria-hidden="true"><circle cx="0" cy="0" r="50" fill="none" stroke="#111" stroke-width="2.2" /><circle cx="67.553" cy="-49.08" r="9.5" fill="#C4552D" /></svg>
+      <span>OUTSIDE CONTEXT</span>
+    </a>
+
+    <header class="intro">
+      <h1>The board.</h1>
+      <p class="lede">A question you're sitting with, something you tried, a link worth sharing. Anyone can post.</p>
+    </header>
+
+    <form id="post-form" novalidate>
+      <div class="q">
+        <label for="body">What's on your mind?</label>
+        <textarea id="body" name="body" maxlength="1000" aria-describedby="body-err counter" placeholder="Has anyone found a good way to explain AI use to clients?"></textarea>
+        <div class="meta"><span class="err" id="body-err"></span><span class="counter" id="counter" aria-live="polite">0 / 1000</span></div>
+      </div>
+      <div class="q" id="name-q">
+        <label for="name">Name <span class="hint">(optional)</span></label>
+        <input id="name" name="name" type="text" autocomplete="name" maxlength="60" placeholder="Anonymous" />
+      </div>
+      <p class="as" id="as" hidden>Posting as <strong id="as-name"></strong></p>
+      <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+      <div class="actions"><button class="btn" type="submit">Post</button></div>
+      <p class="form-err" role="alert" id="form-err"></p>
+    </form>
+
+    <section class="posts" id="posts" aria-label="Posts" aria-busy="true"></section>
+  </main>
+  <footer><a href="/outside-context">Outside Context</a><a href="/outside-context/community">Community</a><a href="/outside-context/resources">Resources</a><a href="/">vybd.ai</a></footer>
+
+  <script>
+  (function () {
+    "use strict";
+    var TZ = "America/New_York", MAX = 1000;
+    function track(event) {
+      var body = JSON.stringify({ event: event, path: location.pathname, referrer: document.referrer || null });
+      try { if (navigator.sendBeacon && navigator.sendBeacon("/api/oc/track", new Blob([body], { type: "application/json" }))) return; } catch (e) {}
+      fetch("/api/oc/track", { method: "POST", body: body, headers: { "content-type": "application/json" }, keepalive: true }).catch(function () {});
+    }
+    track("board_view");
+
+    var form = document.getElementById("post-form");
+    var bodyEl = document.getElementById("body");
+    var counter = document.getElementById("counter");
+    var bodyErr = document.getElementById("body-err");
+    var formErr = document.getElementById("form-err");
+    var postsEl = document.getElementById("posts");
+
+    /* Visitor already identified through the sign-up flow: use their name, hide the field. */
+    var me = {};
+    try { me = JSON.parse(localStorage.getItem("oc_signup")) || {}; } catch (e) {}
+    var myName = typeof me.name === "string" ? me.name.trim().slice(0, 60) : "";
+    if (myName) {
+      document.getElementById("name-q").hidden = true;
+      document.getElementById("as-name").textContent = myName;
+      document.getElementById("as").hidden = false;
+    }
+
+    function when(iso) {
+      var d = new Date(iso);
+      return d.toLocaleDateString("en-US", { timeZone: TZ, month: "short", day: "numeric" }) + ", " +
+        d.toLocaleTimeString("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit" }).replace(" ", "").toLowerCase();
+    }
+    /* Built with createElement + textContent so post text can never become HTML. */
+    function postNode(p, isNew) {
+      var a = document.createElement("article"); a.className = "post" + (isNew ? " new" : "");
+      var by = document.createElement("div"); by.className = "by";
+      var n = document.createElement("span"); n.className = "name"; n.textContent = p.display_name || "Anonymous";
+      var t = document.createElement("time"); t.dateTime = p.created_at; t.textContent = when(p.created_at);
+      var b = document.createElement("p"); b.textContent = p.body;
+      by.appendChild(n); by.appendChild(t); a.appendChild(by); a.appendChild(b);
+      return a;
+    }
+    function emptyNote(text) { var e = document.createElement("p"); e.className = "empty"; e.id = "empty"; e.textContent = text; return e; }
+
+    fetch("/api/oc/board", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
+      var posts = (d && d.posts) || [];
+      postsEl.textContent = "";
+      if (!d.ok) postsEl.appendChild(emptyNote("Couldn't load posts. Refresh to try again."));
+      else if (!posts.length) postsEl.appendChild(emptyNote("Nothing here yet. Be the first to post."));
+      else posts.forEach(function (p) { postsEl.appendChild(postNode(p, false)); });
+    }).catch(function () {
+      postsEl.textContent = "";
+      postsEl.appendChild(emptyNote("Couldn't load posts. Refresh to try again."));
+    }).finally(function () { postsEl.setAttribute("aria-busy", "false"); });
+
+    function setBodyErr(m) {
+      bodyErr.textContent = m || "";
+      if (m) bodyEl.setAttribute("aria-invalid", "true"); else bodyEl.removeAttribute("aria-invalid");
+    }
+    function count() {
+      var n = bodyEl.value.length;
+      counter.textContent = n + " / " + MAX;
+      counter.classList.toggle("over", n > MAX);
+    }
+    bodyEl.addEventListener("input", function () { count(); setBodyErr(""); });
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var text = bodyEl.value.trim();
+      if (!text) { setBodyErr("Write something first."); bodyEl.focus(); return; }
+      if (text.length > MAX) { setBodyErr("Keep it to " + MAX + " characters or fewer."); bodyEl.focus(); return; }
+      var btn = form.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Posting…";
+      formErr.textContent = "";
+      try {
+        var r = await fetch("/api/oc/board", { method: "POST", headers: { "content-type": "application/json" },
+          body: JSON.stringify({ body: text, name: myName || document.getElementById("name").value.trim(), email: myName && me.email ? me.email : undefined, website: document.getElementById("website").value }) });
+        var d = {}; try { d = await r.json(); } catch (x) {}
+        if (!r.ok || !d.ok) { if (d.field === "body") { setBodyErr(d.error); bodyEl.focus(); } else formErr.textContent = d.error || "We couldn't post that. Check your connection and try again."; return; }
+        track("board_post");
+        if (d.post) {
+          var empty = document.getElementById("empty"); if (empty) empty.remove();
+          postsEl.insertBefore(postNode(d.post, true), postsEl.firstChild);
+        }
+        bodyEl.value = ""; count();
+      } catch (x) {
+        formErr.textContent = "We couldn't post that. Check your connection and try again.";
+      } finally { btn.disabled = false; btn.textContent = "Post"; }
+    });
+  })();
+  </script>
+</body>
+</html>

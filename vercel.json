@@ -98,6 +98,14 @@
             "destination": "/outside-context-community.html"
         },
         {
+            "source": "/outside-context/resources",
+            "destination": "/outside-context-resources.html"
+        },
+        {
+            "source": "/outside-context/board",
+            "destination": "/outside-context-board.html"
+        },
+        {
             "source": "/:path(outside-context|outsidecontext)",
             "destination": "/outside-context.html"
         },
