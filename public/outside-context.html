@@ -49,6 +49,11 @@
     .top { width: min(1120px, calc(100vw - 48px)); display: flex; align-items: center; gap: 12px; }
     .mark { width: 40px; height: auto; overflow: visible; flex: none; }
     .wordmark { font-weight: 500; font-size: 17px; letter-spacing: .08em; }
+    .top { flex-wrap: wrap; row-gap: 0; }
+    .nav { margin-left: auto; display: flex; gap: 22px; font-size: 17px; }
+    .nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--gray); text-decoration: none; transition: color .2s; }
+    .nav a:hover { color: var(--ink); }
+    @media (max-width: 520px) { .nav { margin-left: 0; width: 100%; gap: 20px; font-size: 16px; } }
 
     /* ---------- hero: what this is, and a picture of it ---------- */
     .hero { width: min(1120px, calc(100vw - 48px)); margin-top: clamp(40px, 9vh, 104px);
@@ -197,6 +202,7 @@
         <circle cx="67.553" cy="-49.08" r="10" fill="#C4552D" />
       </svg>
       <p class="wordmark">OUTSIDE CONTEXT</p>
+      <nav class="nav" aria-label="Outside Context"><a href="/outside-context/community">Community</a><a href="/outside-context/resources">Resources</a><a href="/outside-context/board">Board</a></nav>
     </header>
 
     <section class="hero" aria-labelledby="hero-title">

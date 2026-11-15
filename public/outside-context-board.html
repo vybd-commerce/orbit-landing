@@ -47,6 +47,10 @@
     .top { display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; }
     .top svg { width: 34px; height: auto; }
     .top span { font-weight: 500; font-size: 17px; letter-spacing: .08em; }
+    .nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 22px; margin-top: 10px; font-size: 17px; }
+    .nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--gray); text-decoration: none; transition: color .2s; }
+    .nav a:hover { color: var(--ink); }
+    .nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: .3em; }
     header.intro { text-align: center; margin-top: clamp(40px, 8vh, 72px); }
     h1 { font-weight: 400; font-size: clamp(48px, 11vw, 84px); line-height: .95; letter-spacing: -.012em; text-wrap: balance; }
     .lede { margin: 20px auto 0; font-size: 20px; line-height: 1.45; color: var(--gray); max-width: 28em; text-wrap: balance; }
@@ -134,6 +138,7 @@
       <svg viewBox="-50.9 -58.48 127.953 109.38" aria-hidden="true"><circle cx="0" cy="0" r="50" fill="none" stroke="#111" stroke-width="2.2" /><circle cx="67.553" cy="-49.08" r="9.5" fill="#C4552D" /></svg>
       <span>OUTSIDE CONTEXT</span>
     </a>
+    <nav class="nav" aria-label="Outside Context"><a href="/outside-context">Home</a><a href="/outside-context/community">Community</a><a href="/outside-context/resources">Resources</a><a href="/outside-context/board" aria-current="page">Board</a></nav>
 
     <header class="intro">
       <h1>The board.</h1>
