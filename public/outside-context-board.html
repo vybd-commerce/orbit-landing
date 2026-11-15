@@ -83,20 +83,33 @@
     .form-err { margin-top: 16px; color: var(--error); font-size: 17px; }
     .form-err:empty { display: none; }
 
-    .topic { margin-top: clamp(48px, 8vh, 72px); }
+    .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: clamp(40px, 7vh, 64px); }
+    .tab { appearance: none; font: inherit; font-size: 18px; line-height: 1.1; min-height: 44px; padding: 10px 18px; border-radius: 999px;
+      border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+    .tab:hover { border-color: var(--ink); }
+    .tab[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+    .general-intro { margin-top: 32px; font-size: 18px; line-height: 1.45; color: var(--gray); }
+    .general-intro + form { margin-top: 32px; }
+    .topic { margin-top: 32px; }
     .topic .kicker { font-size: 17px; font-style: italic; color: var(--gray); }
     .topic h2 { margin-top: 6px; font-weight: 400; font-size: clamp(32px, 6vw, 40px); line-height: 1.05; letter-spacing: -.01em; text-wrap: balance; }
     .topic h2 + p { margin-top: 12px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 32em; }
     .prompts { list-style: none; margin-top: 26px; border-top: 1px solid var(--ink); }
-    .prompt { padding: 22px 0 18px; border-bottom: 1px solid var(--line); }
+    .prompt { padding: 16px 0 10px; border-bottom: 1px solid var(--line); }
+    .prompt-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
     .prompt h3 { font-weight: 500; font-size: 21px; line-height: 1.25; }
-    .prompt-text { margin-top: 10px; border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; background: rgba(255,255,255,.35);
+    .prompt .desc { margin-top: 2px; font-size: 17px; line-height: 1.45; color: var(--gray); }
+    .prompt summary { display: inline-flex; align-items: center; min-height: 40px; font-size: 16px; font-style: italic; color: var(--gray); cursor: pointer; list-style: none; }
+    .prompt summary::-webkit-details-marker { display: none; }
+    .prompt summary:hover { color: var(--ink); }
+    .prompt details[open] summary { color: var(--ink); }
+    .prompt-text { margin: 2px 0 10px; border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; background: rgba(255,255,255,.35);
       font-size: 18px; line-height: 1.45; overflow-wrap: anywhere; }
     .prompt-text p + p { margin-top: .7em; }
-    .copy { appearance: none; background: none; border: 0; font: inherit; font-size: 18px; color: var(--gray); cursor: pointer; min-height: 44px;
-      text-decoration: underline; text-decoration-color: rgba(95,95,95,.4); text-underline-offset: .2em; padding: 8px 0; }
-    .copy:hover { color: var(--ink); text-decoration-color: var(--accent); }
-    .copy.done { color: var(--ink); text-decoration: none; }
+    .copy { appearance: none; background: none; border: 0; font: inherit; font-size: 18px; color: var(--ink); cursor: pointer; min-height: 44px; flex: none;
+      text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: .2em; padding: 8px 0; white-space: nowrap; }
+    .copy:hover { color: var(--accent); }
+    .copy.done { color: var(--gray); text-decoration: none; }
 
     .posts { margin-top: clamp(56px, 9vh, 80px); border-top: 1px solid var(--ink); }
     .post { padding: 22px 0; border-bottom: 1px solid var(--line); }
@@ -124,63 +137,74 @@
 
     <header class="intro">
       <h1>The board.</h1>
-      <p class="lede">A question you're sitting with, something you tried, a link worth sharing. Anyone can post.</p>
+      <p class="lede">Introduce yourself, or post anything in General. Anyone can post.</p>
     </header>
 
-    <!-- Today's discussion topic. To change it, edit this section: the title, the intro, and one
-         <li class="prompt"> per prompt. Each Copy button copies the paragraphs in its .prompt-text. -->
-    <section class="topic" aria-labelledby="topic-title">
+    <!-- Sections. Keys must match SECTIONS in api/oc/board.ts. Link straight to one with #introduce or #general. -->
+    <div class="tabs" role="group" aria-label="Board section">
+      <button class="tab" type="button" data-section="introduce" aria-pressed="true">Introduce yourself</button>
+      <button class="tab" type="button" data-section="general" aria-pressed="false">General</button>
+    </div>
+
+    <!-- Today's discussion topic (Introduce yourself). To change it, edit this section: the title, the intro,
+         and one <li class="prompt"> per prompt: title, one-line description, and the full prompt inside
+         <details>. Copy prompt copies the paragraphs in that prompt's .prompt-text. -->
+    <section class="topic" data-panel="introduce" aria-labelledby="topic-title">
       <p class="kicker">Today's topic</p>
       <h2 id="topic-title">Let your AI introduce you</h2>
       <p>Pick any one prompt, paste it into the AI you use most, and post what it says about you. Read it before you post: if it reveals anything private, ask it to try again.</p>
       <ol class="prompts">
         <li class="prompt">
-          <h3>1. Introduce me to the room</h3>
-          <div class="prompt-text">
+          <div class="prompt-head"><h3>1. Introduce me to the room</h3><button class="copy" type="button">Copy prompt</button></div>
+          <p class="desc">A witty friend introduces you: one roast, one compliment.</p>
+          <details><summary>Read the full prompt</summary><div class="prompt-text">
             <p>I'm at a meetup about how people use AI, and you're introducing me to the room. Based on what you know about me (memory, past chats, or just this chat), write a short introduction the way a witty friend would: who I am as an AI user, what I keep coming to you for, one gentle roast, and one genuine compliment. End with a question the person next to me can ask me.</p>
             <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
-          </div>
-          <button class="copy" type="button">Copy prompt</button>
+          </div></details>
         </li>
         <li class="prompt">
-          <h3>2. The duo</h3>
-          <div class="prompt-text">
+          <div class="prompt-head"><h3>2. The duo</h3><button class="copy" type="button">Copy prompt</button></div>
+          <p class="desc">You and your AI, introduced as a team.</p>
+          <details><summary>Read the full prompt</summary><div class="prompt-text">
             <p>I'm at a meetup about how people use AI, and you're introducing the two of us as a duo. Based on what you know about me (memory, past chats, or just this chat), tell the room who you are to me, who I am to you, and how we actually work together. Include one thing I do that drives you a little crazy and one thing you respect. End with a question the person next to me can ask us.</p>
             <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
-          </div>
-          <button class="copy" type="button">Copy prompt</button>
+          </div></details>
         </li>
         <li class="prompt">
-          <h3>3. The toast</h3>
-          <div class="prompt-text">
+          <div class="prompt-head"><h3>3. The toast</h3><button class="copy" type="button">Copy prompt</button></div>
+          <p class="desc">A 30-second best-friend toast about how you use AI.</p>
+          <details><summary>Read the full prompt</summary><div class="prompt-text">
             <p>I'm at a meetup about how people use AI, and you're giving a 30-second best-friend toast about me as an AI user. Based on what you know about me (memory, past chats, or just this chat), open with a story-like observation about how I use you, add one gentle roast, and finish on one sincere line. End with a question the person next to me can ask me.</p>
             <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
-          </div>
-          <button class="copy" type="button">Copy prompt</button>
+          </div></details>
         </li>
         <li class="prompt">
-          <h3>4. The speaker bio</h3>
-          <div class="prompt-text">
+          <div class="prompt-head"><h3>4. The speaker bio</h3><button class="copy" type="button">Copy prompt</button></div>
+          <p class="desc">A mock-serious conference bio, and the talk you'd give.</p>
+          <details><summary>Read the full prompt</summary><div class="prompt-text">
             <p>I'm at a meetup about how people use AI, and you're writing my speaker bio using only what you've learned from how I use you, not my actual résumé. Based on what you know about me (memory, past chats, or just this chat), write it in the third person, in a mock-serious conference tone, with one gentle roast and one genuine compliment hidden in it. End with the title of the talk I'd obviously give.</p>
             <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
-          </div>
-          <button class="copy" type="button">Copy prompt</button>
+          </div></details>
         </li>
         <li class="prompt">
-          <h3>5. The nature documentary</h3>
-          <div class="prompt-text">
+          <div class="prompt-head"><h3>5. The nature documentary</h3><button class="copy" type="button">Copy prompt</button></div>
+          <p class="desc">You, narrated as a species of AI user in the wild.</p>
+          <details><summary>Read the full prompt</summary><div class="prompt-text">
             <p>I'm at a meetup about how people use AI, and you're narrating me as a species of AI user being observed in the wild. Based on what you know about me (memory, past chats, or just this chat), describe my habitat, my feeding habits (what I keep coming to you for), and one strange behavior, in a hushed nature-documentary voice. Include one gentle roast and one genuine compliment. End with a question the person next to me can ask me.</p>
             <p>Keep it safe to share with strangers: no names, employers, health, money, relationships, or anything private. Under 100 words, written to be read out loud.</p>
-          </div>
-          <button class="copy" type="button">Copy prompt</button>
+          </div></details>
         </li>
       </ol>
     </section>
 
+    <section class="general-intro" data-panel="general" hidden>
+      <p>Anything else: a question you're sitting with, something you tried, a link worth sharing.</p>
+    </section>
+
     <form id="post-form" novalidate>
       <div class="q">
-        <label for="body">What's on your mind?</label>
-        <textarea id="body" name="body" maxlength="1000" aria-describedby="body-err counter" placeholder="Has anyone found a good way to explain AI use to clients?"></textarea>
+        <label for="body">Your post</label>
+        <textarea id="body" name="body" maxlength="1000" aria-describedby="body-err counter" placeholder="Paste what your AI said about you."></textarea>
         <div class="meta"><span class="err" id="body-err"></span><span class="counter" id="counter" aria-live="polite">0 / 1000</span></div>
       </div>
       <div class="q" id="name-q">
@@ -225,12 +249,14 @@
     }
     document.querySelectorAll(".prompt .copy").forEach(function (btn) {
       btn.addEventListener("click", function () {
-        var paras = btn.parentNode.querySelectorAll(".prompt-text p");
+        var item = btn.closest(".prompt");
+        var paras = item.querySelectorAll(".prompt-text p");
         var text = Array.prototype.map.call(paras, function (p) { return p.textContent.trim(); }).join("\n\n");
         copyText(text).then(function () {
           btn.textContent = "Copied"; btn.classList.add("done");
         }, function () {
-          btn.textContent = "Select the text above to copy";
+          item.querySelector("details").open = true;
+          btn.textContent = "Copy it below";
         });
         clearTimeout(btn._t);
         btn._t = setTimeout(function () { btn.textContent = "Copy prompt"; btn.classList.remove("done"); }, 2200);
@@ -271,16 +297,41 @@
     }
     function emptyNote(text) { var e = document.createElement("p"); e.className = "empty"; e.id = "empty"; e.textContent = text; return e; }
 
+    /* Sections: one shared form and post list, filtered by the active section. */
+    var SECTIONS = {
+      introduce: { label: "Introduce yourself", placeholder: "Paste what your AI said about you.", empty: "No introductions yet. Pick a prompt above and go first." },
+      general:   { label: "General", placeholder: "Has anyone found a good way to explain AI use to clients?", empty: "Nothing here yet. Be the first to post." }
+    };
+    var section = location.hash.slice(1) in SECTIONS ? location.hash.slice(1) : "introduce";
+    var allPosts = null, loadFailed = false;
+
+    function renderPosts() {
+      postsEl.textContent = "";
+      postsEl.setAttribute("aria-label", SECTIONS[section].label + " posts");
+      if (loadFailed) { postsEl.appendChild(emptyNote("Couldn't load posts. Refresh to try again.")); return; }
+      if (!allPosts) return;
+      var mine = allPosts.filter(function (p) { return (p.section || "general") === section; });
+      if (!mine.length) postsEl.appendChild(emptyNote(SECTIONS[section].empty));
+      else mine.forEach(function (p) { postsEl.appendChild(postNode(p, false)); });
+    }
+    function setSection(s, fromClick) {
+      section = s;
+      document.querySelectorAll(".tab").forEach(function (t) { t.setAttribute("aria-pressed", String(t.getAttribute("data-section") === s)); });
+      document.querySelectorAll("[data-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-panel") !== s; });
+      bodyEl.placeholder = SECTIONS[s].placeholder;
+      setBodyErr(""); formErr.textContent = "";
+      if (fromClick) try { history.replaceState(null, "", "#" + s); } catch (e) {}
+      renderPosts();
+    }
+    document.querySelectorAll(".tab").forEach(function (t) {
+      t.addEventListener("click", function () { setSection(t.getAttribute("data-section"), true); });
+    });
+    window.addEventListener("hashchange", function () { var h = location.hash.slice(1); if (h in SECTIONS && h !== section) setSection(h, false); });
+
     fetch("/api/oc/board", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (d) {
-      var posts = (d && d.posts) || [];
-      postsEl.textContent = "";
-      if (!d.ok) postsEl.appendChild(emptyNote("Couldn't load posts. Refresh to try again."));
-      else if (!posts.length) postsEl.appendChild(emptyNote("Nothing here yet. Be the first to post."));
-      else posts.forEach(function (p) { postsEl.appendChild(postNode(p, false)); });
-    }).catch(function () {
-      postsEl.textContent = "";
-      postsEl.appendChild(emptyNote("Couldn't load posts. Refresh to try again."));
-    }).finally(function () { postsEl.setAttribute("aria-busy", "false"); });
+      if (!d.ok) loadFailed = true; else allPosts = d.posts || [];
+    }).catch(function () { loadFailed = true; })
+      .finally(function () { renderPosts(); postsEl.setAttribute("aria-busy", "false"); });
 
     function setBodyErr(m) {
       bodyErr.textContent = m || "";
@@ -292,6 +343,7 @@
       counter.classList.toggle("over", n > MAX);
     }
     bodyEl.addEventListener("input", function () { count(); setBodyErr(""); });
+    setSection(section, false);
 
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -302,13 +354,16 @@
       formErr.textContent = "";
       try {
         var r = await fetch("/api/oc/board", { method: "POST", headers: { "content-type": "application/json" },
-          body: JSON.stringify({ body: text, name: myName || document.getElementById("name").value.trim(), email: myName && me.email ? me.email : undefined, website: document.getElementById("website").value }) });
+          body: JSON.stringify({ section: section, body: text, name: myName || document.getElementById("name").value.trim(), email: myName && me.email ? me.email : undefined, website: document.getElementById("website").value }) });
         var d = {}; try { d = await r.json(); } catch (x) {}
         if (!r.ok || !d.ok) { if (d.field === "body") { setBodyErr(d.error); bodyEl.focus(); } else formErr.textContent = d.error || "We couldn't post that. Check your connection and try again."; return; }
         track("board_post");
         if (d.post) {
-          var empty = document.getElementById("empty"); if (empty) empty.remove();
-          postsEl.insertBefore(postNode(d.post, true), postsEl.firstChild);
+          if (allPosts) allPosts.unshift(d.post);
+          if (d.post.section === section) {
+            var empty = document.getElementById("empty"); if (empty) empty.remove();
+            postsEl.insertBefore(postNode(d.post, true), postsEl.firstChild);
+          }
         }
         bodyEl.value = ""; count();
       } catch (x) {

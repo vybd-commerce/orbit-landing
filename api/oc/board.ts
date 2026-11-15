@@ -4,13 +4,16 @@
    used to link the post to oc_signups for moderation; it is never returned. `website` is a honeypot.
    Rate limit: 5 posts per 10 minutes per visitor, keyed on sha256(ip + HASH_SALT), never the raw IP.
    Hide a post: update oc_board_posts set hidden = true where id = <id>;  (see db/README.md) */
-import { clean, json, readJson, sha256, sql } from "./_lib.js";
+import { clean, json, oneOf, readJson, sha256, sql } from "./_lib.js";
+
+const SECTIONS = ["introduce", "general"] as const;
+const SECTION_LABEL = { introduce: "Introduce yourself", general: "General" } as const;
 
 const MAX_BODY = 1000;
 const LIMIT = 5;
 const WINDOW_MINUTES = 10;
 
-type Post = { id: string; body: string; display_name: string; created_at: string };
+type Post = { id: string; section: string; body: string; display_name: string; created_at: string };
 
 /* Post one message to Discord. Never throws, gives up after 3s, mentions disabled. */
 async function notifyDiscord(webhook: string | undefined, username: string, content: string) {
@@ -41,8 +44,8 @@ function cleanBody(v: unknown): string {
 export async function GET() {
     try {
         const posts = (await sql`
-            select id::text, body, display_name, created_at from oc_board_posts
-            where not hidden order by created_at desc limit 100`) as Post[];
+            select id::text, section, body, display_name, created_at from oc_board_posts
+            where not hidden order by created_at desc limit 200`) as Post[];
         return json({ ok: true, posts });
     } catch (err) {
         console.error("oc board list failed", err);
@@ -58,6 +61,7 @@ export async function POST(request: Request) {
     const body = cleanBody(data.body);
     if (!body) return json({ ok: false, field: "body", error: "Write something first." }, 400);
     if (body.length > MAX_BODY) return json({ ok: false, field: "body", error: `Keep it to ${MAX_BODY} characters or fewer.` }, 400);
+    const section = oneOf(data.section, SECTIONS) ?? "general";
     const name = clean(data.name, 60) ?? "Anonymous";
     const email = clean(data.email, 254)?.toLowerCase() ?? null;
 
@@ -71,12 +75,12 @@ export async function POST(request: Request) {
         if (recent.n >= LIMIT) return json({ ok: false, error: "You're posting a lot. Try again in a few minutes." }, 429);
 
         const [post] = (await sql`
-            insert into oc_board_posts (body, display_name, signup_id, ip_hash)
-            values (${body}, ${name}, (select id from oc_signups where email = ${email}), ${ipHash})
-            returning id::text, body, display_name, created_at`) as Post[];
+            insert into oc_board_posts (section, body, display_name, signup_id, ip_hash)
+            values (${section}, ${body}, ${name}, (select id from oc_signups where email = ${email}), ${ipHash})
+            returning id::text, section, body, display_name, created_at`) as Post[];
 
         await notifyDiscord(process.env.DISCORD_WEBHOOK_URL, "Outside Context",
-            `**Board post #${post.id}** by ${name}:\n> ${body.replace(/\n/g, "\n> ")}`);
+            `**Board post #${post.id}** in ${SECTION_LABEL[section]} by ${name}:\n> ${body.replace(/\n/g, "\n> ")}`);
         return json({ ok: true, post });
     } catch (err) {
         console.error("oc board post failed", err);
