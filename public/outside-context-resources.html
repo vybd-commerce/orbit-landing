@@ -57,6 +57,16 @@
     .items .ext { font-size: .8em; color: var(--gray); margin-left: .25em; }
     .items .tag { grid-column: 2; grid-row: 1; font-size: 16px; font-style: italic; color: var(--gray); }
     .items p { grid-column: 1 / -1; font-size: 17px; line-height: 1.45; color: var(--gray); }
+    .sec-intro { margin-top: 10px; font-size: 18px; line-height: 1.45; color: var(--gray); max-width: 32em; }
+    .steps { list-style: none; }
+    .steps > li { margin-top: 36px; }
+    .steps h3 { font-weight: 500; font-size: 22px; line-height: 1.25; }
+    .steps .items { margin-top: 12px; }
+    /* Phone: labels can be long ("Free to watch, certificate is paid"), so they sit under the note. */
+    @media (max-width: 560px) {
+      .items li { grid-template-columns: 1fr; }
+      .items .tag { grid-column: 1; grid-row: 3; font-size: 15px; }
+    }
     .empty { margin-top: 26px; padding: 26px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-size: 19px; line-height: 1.5; font-style: italic; color: var(--gray); }
 
     footer { margin-top: 88px; font-size: 15px; color: var(--gray); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; }
@@ -96,8 +106,8 @@
     var list = document.getElementById("list");
     fetch("/outside-context-resources.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (d) {
       var cats = (d && d.categories) || [];
-      list.innerHTML = cats.map(function (c, i) {
-        var items = (c.items || []).map(function (it) {
+      function itemsHtml(list) {
+        var rows = (list || []).map(function (it) {
           var url = safeUrl(it.url);
           if (!url || !it.title) return "";
           return "<li><a href=\"" + esc(url) + "\" target=\"_blank\" rel=\"noopener\">" + esc(it.title) +
@@ -105,9 +115,20 @@
             (it.tag ? "<span class=\"tag\">" + esc(it.tag) + "</span>" : "") +
             (it.note ? "<p>" + esc(it.note) + "</p>" : "") + "</li>";
         }).join("");
-        if (!items) return "";
+        return rows ? "<ul class=\"items\">" + rows + "</ul>" : "";
+      }
+      list.innerHTML = cats.map(function (c, i) {
+        var body = itemsHtml(c.items);
+        /* Optional numbered steps, each with its own items. */
+        var steps = (c.steps || []).map(function (s, j) {
+          var rows = itemsHtml(s.items);
+          return rows ? "<li><h3>Step " + (j + 1) + ": " + esc(s.name) + "</h3>" + rows + "</li>" : "";
+        }).join("");
+        if (steps) body += "<ol class=\"steps\">" + steps + "</ol>";
+        if (!body) return "";
         var id = "cat-" + i;
-        return "<section aria-labelledby=\"" + id + "\"><h2 id=\"" + id + "\">" + esc(c.name) + "</h2><ul class=\"items\">" + items + "</ul></section>";
+        return "<section aria-labelledby=\"" + id + "\"><h2 id=\"" + id + "\">" + esc(c.name) + "</h2>" +
+          (c.intro ? "<p class=\"sec-intro\">" + esc(c.intro) + "</p>" : "") + body + "</section>";
       }).join("") || '<p class="empty">The list is being put together. Check back after Sunday.</p>';
     }).catch(function () {
       list.innerHTML = '<p class="empty">Couldn\'t load the list. Refresh to try again.</p>';

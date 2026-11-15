@@ -1,39 +1,45 @@
 {
-  "_readme": "Content for /outside-context/resources (page: outside-context-resources.html). Edit, save, deploy. Categories show in this order. Each item: title, url (https), note (one line on why it's worth it), tag (optional: article | video | course | tool). Every [PLACEHOLDER] entry below is a stand-in to replace.",
+  "_readme": "Content for /outside-context/resources (page: outside-context-resources.html). Edit, save, deploy. Sections show in this order. A section has a name, an optional intro line, and either items or numbered steps (each step: name + items). Each item: title (the link text), url (https), note (one line), tag (optional small label, e.g. Free).",
   "categories": [
     {
-      "name": "Start here",
+      "name": "Learn the basics",
+      "intro": "Start here. No background needed for the first one.",
       "items": [
-        { "title": "[PLACEHOLDER] A plain-language intro to how AI models work", "url": "https://example.com/", "note": "Replace with a short explainer you'd send a friend who's new to this.", "tag": "article" },
-        { "title": "[PLACEHOLDER] A 20-minute talk on what's actually changing", "url": "https://example.com/", "note": "Replace with a video that sets the scene without hype.", "tag": "video" }
+        { "title": "Prompt Engineering Interactive Tutorial (Anthropic)", "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial", "note": "Nine short chapters on getting better answers from AI. Has a Google Sheets version if you don't code.", "tag": "Free" },
+        { "title": "ChatGPT Prompt Engineering for Developers (DeepLearning.AI)", "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", "note": "A short course for people who write code. Needs basic Python.", "tag": "Free" },
+        { "title": "Agentic AI, taught by Andrew Ng (DeepLearning.AI)", "url": "https://www.deeplearning.ai/courses/agentic-ai/", "note": "How AI agents plan, use tools and check their own work. About ten hours of video.", "tag": "Free to watch, certificate is paid" }
       ]
     },
     {
-      "name": "AI at work",
-      "items": [
-        { "title": "[PLACEHOLDER] How one team rebuilt a workflow with AI", "url": "https://example.com/", "note": "Replace with a concrete case study from a real job.", "tag": "article" },
-        { "title": "[PLACEHOLDER] Talking to clients about using AI", "url": "https://example.com/", "note": "Replace with something on honesty, pricing and trust.", "tag": "article" }
-      ]
-    },
-    {
-      "name": "Tools to try",
-      "items": [
-        { "title": "[PLACEHOLDER] A general-purpose assistant", "url": "https://example.com/", "note": "Replace with the tool you'd tell someone to try first.", "tag": "tool" },
-        { "title": "[PLACEHOLDER] A tool for notes and research", "url": "https://example.com/", "note": "Replace with something that saves real time on reading.", "tag": "tool" }
-      ]
-    },
-    {
-      "name": "Reading",
-      "items": [
-        { "title": "[PLACEHOLDER] A long essay on the future of work", "url": "https://example.com/", "note": "Replace with a piece worth an evening.", "tag": "article" },
-        { "title": "[PLACEHOLDER] A newsletter that stays level-headed", "url": "https://example.com/", "note": "Replace with one weekly read that skips the noise.", "tag": "article" }
-      ]
-    },
-    {
-      "name": "Courses",
-      "items": [
-        { "title": "[PLACEHOLDER] A free beginner course", "url": "https://example.com/", "note": "Replace with a course that takes a weekend, not a semester.", "tag": "course" },
-        { "title": "[PLACEHOLDER] A hands-on course for builders", "url": "https://example.com/", "note": "Replace with something for people who want to make things.", "tag": "course" }
+      "name": "Own your AI",
+      "intro": "You don't need anyone's permission, subscription or server to use AI. Here's how to run it yourself.",
+      "steps": [
+        {
+          "name": "Run a model on your laptop",
+          "items": [
+            { "title": "LM Studio", "url": "https://lmstudio.ai", "note": "The easiest way to start. Pick a model, click download, start chatting. Nothing leaves your computer.", "tag": "Free" },
+            { "title": "Jan", "url": "https://jan.ai", "note": "An open-source alternative to ChatGPT that runs fully offline.", "tag": "Free, open source" },
+            { "title": "Ollama", "url": "https://ollama.com", "note": "For developers. One command to run a model and get a local API.", "tag": "Free, open source" },
+            { "title": "GPT4All", "url": "https://www.nomic.ai/gpt4all", "note": "Works on older laptops with no graphics card.", "tag": "Free, open source" }
+          ]
+        },
+        {
+          "name": "Give it knowledge you own",
+          "items": [
+            { "title": "Kiwix", "url": "https://kiwix.org", "note": "Download all of Wikipedia, plus medical references and repair guides, and read them with no internet.", "tag": "Free, open source" },
+            { "title": "Project N.O.M.A.D.", "url": "https://www.projectnomad.us", "note": "Offline Wikipedia, local AI, maps and courses in one install. A weekend project; needs a Linux machine.", "tag": "Free, open source" },
+            { "title": "Kolibri", "url": "https://learningequality.org/kolibri/", "note": "Khan Academy-style courses that work offline.", "tag": "Free, open source" },
+            { "title": "Project Gutenberg", "url": "https://www.gutenberg.org", "note": "Over 75,000 free books to download and keep.", "tag": "Free" },
+            { "title": "Internet Archive", "url": "https://archive.org", "note": "A free library of books, recordings and archived websites.", "tag": "Free" }
+          ]
+        },
+        {
+          "name": "Give it hands",
+          "items": [
+            { "title": "Hermes Agent (Nous Research)", "url": "https://hermes-agent.nousresearch.com", "note": "An open-source agent that runs on your machine and keeps its memory there. Free to run; you pay for a model unless you connect a local one.", "tag": "Free, open source" },
+            { "title": "Hugging Face", "url": "https://huggingface.co", "note": "Where open AI models are published. Browse what you can run yourself.", "tag": "Free" }
+          ]
+        }
       ]
     }
   ]
