@@ -16,6 +16,7 @@ import RainmakerPage from "./pages/RainmakerPage";
 import HelloPage from "./pages/HelloPage";
 import BookPage from "./pages/BookPage";
 import BookThanksPage from "./pages/BookThanksPage";
+import RobotsPage from "./pages/RobotsPage";
 import LocaleScope from "./i18n/LocaleScope";
 import { LOCALES, localePath, type Locale } from "./i18n/locales";
 
@@ -77,6 +78,8 @@ function App() {
         <Route path="/ecosystem" element={<Rd locale="en"><RdEcosystemPage /></Rd>} />
         {/* For established US brands: operations, data and agents. English only for now. */}
         <Route path="/enterprise" element={<Rd locale="en"><RdEnterprisePage /></Rd>} />
+        {/* Foreign Robot Clearinghouse: FCC Covered List and Section 232 guide. English only for now. */}
+        <Route path="/robots" element={<RobotsPage />} />
         {/* Vybd Plan sign-up, until the product's own is live. English only for now. */}
         <Route path="/signup" element={<Rd locale="en"><RdSignupPage /></Rd>} />
         {/* The root before the redesign, kept reachable while it settles */}

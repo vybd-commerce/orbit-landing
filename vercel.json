@@ -66,6 +66,10 @@
             "destination": "/case-studies.html"
         },
         {
+            "source": "/robots",
+            "destination": "/robots.html"
+        },
+        {
             "source": "/ecosystem",
             "destination": "/ecosystem.html"
         },

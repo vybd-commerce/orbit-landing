@@ -71,6 +71,15 @@ export const PAGES: Record<string, PageMeta & { name: string }> = {
         image: "/og-home.png",
         imageAlt: "Vybd. Borderless. Supply chain intelligence.",
     },
+    "/robots": {
+        name: "robots",
+        title: "Foreign Robot Clearinghouse by Vybd | Bringing robots into the US",
+        description:
+            "Since July 28, 2026, new foreign-produced mobile robots can't get FCC authorization. See who gets blocked, check your robot, and find your route into the US.",
+        ogTitle: "Your robot can still enter.",
+        image: "/og-robots.jpg",
+        imageAlt: "A white quadruped robot beside an open wooden shipping crate in a warehouse",
+    },
     "/ecosystem": {
         name: "ecosystem",
         title: "Join the Vybd Ecosystem | US market-entry partners",
