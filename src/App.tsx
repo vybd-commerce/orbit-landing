@@ -44,6 +44,17 @@ function Rd({ locale, children }: { locale: Locale; children: ReactNode }) {
   );
 }
 
+/* In production "/" is home.html (src/home, see vercel.json), a separate page.
+   Client-side links to "/" land here, so reload to pick it up. Other locales
+   and dev keep the SPA home. */
+function EnRoot({ children }: { children: ReactNode }) {
+  if (import.meta.env.PROD) {
+    window.location.replace("/");
+    return null;
+  }
+  return <>{children}</>;
+}
+
 function App() {
   return (
     <Router>
@@ -52,7 +63,7 @@ function App() {
             /book in English, /zh, /zh/book and so on for the rest (see
             src/i18n). */}
         {LOCALES.flatMap((locale) => [
-          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={<Rd locale={locale}><RdHomePage /></Rd>} />,
+          <Route key={`${locale}-home`} path={localePath(locale, "/")} element={locale === "en" ? <EnRoot><Rd locale={locale}><RdHomePage /></Rd></EnRoot> : <Rd locale={locale}><RdHomePage /></Rd>} />,
           <Route key={`${locale}-us`} path={localePath(locale, "/us")} element={<Rd locale={locale}><RdUsPage /></Rd>} />,
           /* The Borderless page's address while it was in preview */
           <Route key={`${locale}-vybd`} path={localePath(locale, "/vybd")} element={<Navigate to={localePath(locale, "/")} replace />} />,

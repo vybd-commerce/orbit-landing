@@ -1,0 +1,3 @@
+EB Garamond (Latin subset, used by /outside-context)
+Copyright 2017 The EB Garamond Project Authors (https://github.com/octaviopardo/EBGaramond12)
+Licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
